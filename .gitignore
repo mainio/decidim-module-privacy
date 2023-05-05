@@ -21,6 +21,6 @@ development_app/
 .rbenv-vars
 node_modules
 
-# Asset compilation
+# Asset compilation:
 public/sw.js
 public/sw.js.map
