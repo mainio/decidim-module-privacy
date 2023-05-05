@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.16.5",
+    "@babel/preset-env": "^7.21.5",
     "@decidim/dev": "^0.27.2",
     "@decidim/eslint-config": "^0.27.2",
     "@decidim/stylelint-config": "^0.27.2",
