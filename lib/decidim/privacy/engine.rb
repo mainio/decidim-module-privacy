@@ -10,13 +10,24 @@ module Decidim
       isolate_namespace Decidim::Privacy
 
       routes do
-        # Add engine routes here
-        # resources :privacy
-        # root to: "privacy#index"
+        authenticate(:user) do
+          resource :privacy_settings, only: [:show, :update], controller: "privacy_settings", path: "/privacy_settings"
+        end
       end
 
-      initializer "Privacy.webpacker.assets_path" do
-        Decidim.register_assets_path File.expand_path("app/packs", root)
+      initializer "decidim_privacy.mount_routes", before: "decidim.mount_routes" do
+        Decidim::Core::Engine.routes.append do
+          mount Decidim::Privacy::Engine => "/"
+        end
+      end
+
+      initializer "decidim_pricacy.add_privacy_settings_to_account", before: "decidim.user_menu" do
+        Decidim.menu :user_menu do |menu|
+          menu.add_item :privacy_settings,
+                        t("privacy_settings", scope: "layouts.decidim.user_profile"),
+                        decidim_privacy.privacy_settings_path,
+                        position: 1.1
+        end
       end
     end
   end
