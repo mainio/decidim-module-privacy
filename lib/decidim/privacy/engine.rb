@@ -29,6 +29,15 @@ module Decidim
                         position: 1.1
         end
       end
+
+      initializer "decidim_privacy.add_customizations", after: "decidim.action_controller" do
+        config.to_prepare do
+          # commands
+          Decidim::UpdateNotificationsSettings.include(
+            Decidim::Privacy::UpdateNotificationsSettingsExtensions
+          )
+        end
+      end
     end
   end
 end

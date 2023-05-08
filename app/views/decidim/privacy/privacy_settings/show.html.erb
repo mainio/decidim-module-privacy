@@ -17,5 +17,13 @@
       <span class="switch-label"><%= t(".enable_private_messaging") %></span>
     <% end %>
   </div>
-  <%= f.submit t(".update_privacy_settings") %>
+
+  <div class="switch tiny switch-with-label allow_public_contact">
+    <label>
+      <%= f.check_box :allow_public_contact, label: false, class: "switch-input" %>
+      <span class="switch-paddle"></span>
+      <span class="switch-label"><%= t(".allow_public_contact") %></span>
+    </label>
+  </div>
+  <%= f.submit t(".save_privacy_settings") %>
 <% end %>
