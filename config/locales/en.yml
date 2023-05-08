@@ -4,4 +4,12 @@ en:
     decidim:
       user_profile:
         privacy_settings: Privacy settings
-
+  decidim:
+    privacy:
+      privacy_settings:
+        show:
+          profile_publicity: "<p>These privacy settings allow you to control how you appear on this platform publicly. You can decide to remain completely anonymous but it will limit what you can do on this platform.</p><p><strong>profile publicity</strong></p><p>Making your profile public allows you to perform public activities on this platform, such as sending comments, participating in discussions, creating proposals, etc.</p><p>When you make your profile public, other participants can see your name publicly on this platform and also see public information about you, such as your name, nickname and avatar image, your public activity on this platform, your followers and who you follow.</p>"
+          private_messaging: <p><strong>Private messaging</p><p>These settings allow you to communicate with other participants on this platform. Other participants can send you private messages and you can send them to others as well. Your profile needs to be public in order to enable this feature because other people need to find you from this platform in order to have a conversation with you.</p>
+          enable_public_profile: Enable public profile
+          enable_private_messaging: Enable private messaging
+          update_privacy_settings: Update privacy settings
