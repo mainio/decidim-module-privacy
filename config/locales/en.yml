@@ -17,3 +17,13 @@ en:
         update:
           error: There was a problem updating your privacy settings.
           success: Your privacy settings were successfully updated.
+      partials:
+        privacy_consent:
+          make_profile_public: Make your profile public
+          content: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>Your name</li><li>Your nickname</li><li>Your avatar image</li><li>Your public activity on this platform, such as your comments, proposals, etc.</li><li>Your followers and who you follow on this platform</li></ul>"
+          close_modal: Close
+          agree_to_public_profile: I agree that a public profile is created about me
+          do_not_agree: No, I do not want to make my profile public
+
+
+

@@ -27,9 +27,15 @@ module Decidim
       attr_reader :form, :user
 
       def update_privacy_settings
-        user.published_at = Time.current if form.published_at
+        user.published_at = update_published_at
         user.allow_private_messaging = form.allow_private_messaging
         user.direct_message_types = form.direct_message_types
+      end
+
+      def update_published_at
+        return Time.current if form.published_at
+
+        nil
       end
     end
   end

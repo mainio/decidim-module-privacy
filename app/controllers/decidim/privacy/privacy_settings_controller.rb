@@ -26,6 +26,26 @@ module Decidim
 
         render action: :show
       end
+
+      def update_publicity
+        enforce_permission_to :read, :user, current_user: current_user
+        @form = form(::Decidim::Privacy::PublishAccountForm).from_params(params)
+
+        UpdateAccountPublicity.call(@form) do
+          on(:ok) do
+            render json: after_update_action
+          end
+        end
+      end
+
+      private
+
+      def after_update_action
+        {
+          url: params[:after_success_url],
+          method: params[:method]
+        }
+      end
     end
   end
 end
