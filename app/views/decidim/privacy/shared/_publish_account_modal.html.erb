@@ -14,10 +14,16 @@
        <div class="field">
          <%= f.check_box :agree_public_profile,label: t("agree_to_public_profile", scope: "decidim.privacy.partials.privacy_consent"), required: true %>
        </div>
-       <div class="field margin-top-1">
-        <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent") %>
+       <div class="button--double margin-1">
+        <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button expanded" %>
+       </div>
+       <div class="text-center">
+       <button class="link" data-close aria-label="<%= t("close_modal", scope: "decidim.privacy.partials.privacy_consent") %>" type="button">
+        <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
+       </button>
        </div>
      <% end %>
     </div>
   </div>
 </div>
+<%= javascript_pack_tag "decidim_account_publish_handler" %>

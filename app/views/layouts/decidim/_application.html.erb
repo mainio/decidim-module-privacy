@@ -21,7 +21,7 @@
 
     <%= render partial: "decidim/shared/confirm_modal" %>
     <%= render partial: "decidim/shared/login_modal" unless current_user %>
-    <%= render partial: "decidim/privacy/shared/account_privacy_modal" if current_user && !current_user.published_at %>
+    <%= render partial: "decidim/privacy/shared/publish_account_modal" if current_user && !current_user.published_at %>
     <%= render partial: "decidim/shared/authorization_modal" %>
     <%= render partial: "layouts/decidim/decidim_javascript" %>
     <%= render partial: "layouts/decidim/data_consent_warning" %>

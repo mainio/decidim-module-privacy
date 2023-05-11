@@ -31,9 +31,9 @@ module Decidim
         enforce_permission_to :read, :user, current_user: current_user
         @form = form(::Decidim::Privacy::PublishAccountForm).from_params(params)
 
-        UpdateAccountPublicity.call(@form) do
+        UpdateAccountPublicity.call(current_user, @form) do
           on(:ok) do
-            render json: after_update_action
+            render json: "SUCCESS"
           end
         end
       end

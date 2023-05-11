@@ -13,9 +13,9 @@ module Decidim
         authenticate(:user) do
           resource :privacy_settings, only: [:show, :update], controller: "privacy_settings", path: "/privacy_settings"
           # We only let access of the xhr requests for the privacy settings update
-          match "/update_account_publicity", to: "privacy_settings#update_publicity", via: :post, constraints: ->(request) { request.xhr? }
+          # match "/update_account_publicity", to: "privacy_settings#update_publicity", via: :post, constraints: ->(request) { request.xhr? }
 
-          post :privacy_consent, controller: "privacy_settings", path: "/consent_to_privacy"
+          put "consent_to_privacy", to: "privacy_settings#update_publicity", as: "update_account_publicity", constraints: ->(request) { request.xhr? }
         end
       end
 

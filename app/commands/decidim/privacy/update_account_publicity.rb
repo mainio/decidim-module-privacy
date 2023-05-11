@@ -19,7 +19,7 @@ module Decidim
       private
 
       def update_user_account
-        user.update!(published_at: Time.current)
+        @user.update!(published_at: Time.current)
       end
     end
   end
