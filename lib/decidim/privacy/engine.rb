@@ -40,6 +40,11 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
+
+          # Core functionality
+          Decidim::ActionAuthorizationHelper.include(
+            Decidim::Privacy::ActionAuthorizationHelperExtensions
+          )
         end
       end
     end

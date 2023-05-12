@@ -1,7 +1,11 @@
-$(() => {
-  $("#privacy-consent").on("open.zf.reveal", function() {
-    console.log("LOADED");
-    const openerId = $("#privacy-consent").data("open");
-    console.log("Opener ID: ", openerId);
+$(document).ready(function() {
+
+  $(".publish-modal").on("click", function(el) {
+    let redirectUrl = $(el.target).data("redirect-url");
+    $("#publishAccountModal .update-privacy").attr("data-redirect-url", redirectUrl);
+  });
+
+  $(document).on("ajax:complete", ".update-privacy", function(event, response) {
+    console.log(response)
   });
 })

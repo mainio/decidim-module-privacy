@@ -33,18 +33,11 @@ module Decidim
 
         UpdateAccountPublicity.call(current_user, @form) do
           on(:ok) do
-            render json: "SUCCESS"
+            respond_to do |format|
+              format.json { render json: {user: "something"}, status: :ok }
+            end
           end
         end
-      end
-
-      private
-
-      def after_update_action
-        {
-          url: params[:after_success_url],
-          method: params[:method]
-        }
       end
     end
   end

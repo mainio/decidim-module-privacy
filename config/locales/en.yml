@@ -5,6 +5,9 @@ en:
       user_profile:
         privacy_settings: Privacy settings
   decidim:
+    components:
+      privacy:
+        name: Privacy settings
     privacy:
       privacy_settings:
         show:

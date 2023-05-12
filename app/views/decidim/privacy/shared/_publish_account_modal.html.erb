@@ -1,4 +1,4 @@
-<div class="reveal" id="privacy-consent" data-reveal role="dialog" aria-modal="true" aria-labelledby="privacy-modal-label">
+<div class="reveal" id="publishAccountModal" data-reveal role="dialog" aria-modal="true" aria-labelledby="privacy-modal-label">
   <div class="reveal__header">
     <h2 id="privacy-consent-label" class="reveal__title text-center"><%= t("make_profile_public", scope:"decidim.privacy.partials.privacy_consent") %></h2>
     <button class="close-button" data-close aria-label="<%= t("close_modal", scope: "decidim.privacy.partials.privacy_consent") %>"
@@ -10,17 +10,17 @@
     <div class="columns medium-10 medium-centered">
      <%= t("content", scope:"decidim.privacy.partials.privacy_consent").try(:html_safe) %>
 
-     <%= decidim_form_for(Decidim::Privacy::PublishAccountForm.new, url: decidim_privacy.update_account_publicity_path, html: { class: "public-account-form update_privacy" }, method: :put, remote: true) do |f| %>
+     <%= decidim_form_for(Decidim::Privacy::PublishAccountForm.new, url: decidim_privacy.update_account_publicity_path, html: { class: "public-account-form update-privacy" }, method: :put, remote: true) do |f| %>
        <div class="field">
          <%= f.check_box :agree_public_profile,label: t("agree_to_public_profile", scope: "decidim.privacy.partials.privacy_consent"), required: true %>
        </div>
        <div class="button--double margin-1">
-        <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button expanded" %>
+         <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button expanded" %>
        </div>
        <div class="text-center">
-       <button class="link" data-close aria-label="<%= t("close_modal", scope: "decidim.privacy.partials.privacy_consent") %>" type="button">
-        <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
-       </button>
+         <button class="link" data-close aria-label="<%= t("close_modal", scope: "decidim.privacy.partials.privacy_consent") %>" type="button">
+           <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
+         </button>
        </div>
      <% end %>
     </div>
