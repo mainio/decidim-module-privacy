@@ -3,40 +3,41 @@ $(() => {
   if ($publishAccountModal.length < 1) {
     $publishAccountModal = null;
   }
+  let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
 
-  let publishRedirect = localStorage.getItem("loginRedirect");
-  if (publishRedirect && $publishAccountModal) {
-    $publishAccountModal.foundation("open");
-    localStorage.removeItem("loginRedirect");
-  }
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
   // have logged in. These elements might or might not have the publish requirement, but if they will have the data-open of publishAccountModal, then they
   // we should open the modal.
 
-  $("#loginModal").on("open.zf.reveal", () => {
-    localStorage.setItem("loginRedirect", true);
-  });
-
-  $("#loginModal").on("closed.zf.reveal", () => {
-    localStorage.removeItem("loginRedirect");
-  });
-
   if ($publishAccountModal) {
-    $publishAccountModal.on("open.zf.reveal", (ev) => {
-      let redirectUrl = $(ev.target).attr("data-redirect-url");
-      $(".update-privacy").closest("form").attr("data-redirect-url", redirectUrl);
+    if (triggeredLoginElement) {
+      let element = document.getElementById(triggeredLoginElement)
+      if (element) {
+        $publishAccountModal.foundation("open")
+        $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"))
+      }
+      localStorage.removeItem("loginRedirect");
+    }
+    document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+      el.addEventListener("click", (ev) => {
+        console.log($publishAccountModal.find("form"))
+        $publishAccountModal.find("form").attr("data-redirect-url", ev.target.getAttribute("data-redirect-url"))
+      })
     });
 
     $publishAccountModal.on("closed.zf.reveal", () => {
-      $("[data-triggering-modal]:first").removeAttr("data-triggering-modal");
+      $publishAccountModal.find("form").removeAttr("data-redirect-url")
     });
   }
 
   document.querySelectorAll("[data-open='loginModal']").forEach((el) => {
     el.addEventListener("click", (ev) => {
-      console.log("OPEN LOGIN");
-      console.log(ev.target.id);
+      localStorage.setItem("loginTriggeringElement", ev.target.id);
     })
+  });
+
+  $("#loginModal").on("closed.zf.reveal", () => {
+    localStorage.removeItem("loginTriggeringElement");
   });
 
   // We need to know which element triggered the publish modal to open, to redirect
@@ -46,8 +47,7 @@ $(() => {
   })
 
   // The ajax:complete or ajax:success does not get the response from the controller
-  $(document).on("ajax:complete", $(".update-privacy").closest("form"), function() {
-    let triggeringElement = $("[data-triggering-modal]:first");
-    window.location.href = triggeringElement.data("redirect-url");
+  $(document).on("ajax:complete", $(".update-privacy").closest("form"), function(el) {
+    window.location.href = el.target.getAttribute("data-redirect-url");
   });
 })
