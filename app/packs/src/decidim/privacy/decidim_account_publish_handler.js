@@ -15,8 +15,8 @@ $(() => {
       if (element) {
         $publishAccountModal.foundation("open")
         $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"))
+        localStorage.removeItem("loginTriggeringElement");
       }
-      localStorage.removeItem("loginRedirect");
     }
     document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
       el.addEventListener("click", (ev) => {
@@ -48,6 +48,8 @@ $(() => {
 
   // The ajax:complete or ajax:success does not get the response from the controller
   $(document).on("ajax:complete", $(".update-privacy").closest("form"), function(el) {
+
     window.location.href = el.target.getAttribute("data-redirect-url");
   });
+
 })
