@@ -8,6 +8,14 @@ module Decidim
 
         current_user.published_at.present?
       end
+
+      def ensure_public_account
+        return true if public_account?
+
+        flash[:notice] = t("decidim.privacy.publish_account.unauthorized")
+
+        redirect_back(fallback_location: decidim.root_path)
+      end
     end
   end
 end

@@ -34,7 +34,7 @@ module Decidim
         UpdateAccountPublicity.call(current_user, @form) do
           on(:ok) do
             respond_to do |format|
-              format.json { render json: {user: "something"}, status: :ok }
+              format.json { render json: {}, status: :ok }
             end
           end
         end

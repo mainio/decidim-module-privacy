@@ -34,11 +34,23 @@ module Decidim
         end
       end
 
+      initializer "decidim_budgets.add_cells_view_paths" do
+        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/cells")
+      end
+
       initializer "decidim_privacy.add_customizations", after: "decidim.action_controller" do
         config.to_prepare do
           # commands
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
+          )
+
+          # controllers
+          Decidim::ApplicationController.include(
+            Decidim::Privacy::ApplicationControllerExtensions
+          )
+          Decidim::Proposals::ProposalsController.include(
+            Decidim::Privacy::ProposalsControllerExtensions
           )
 
           # Core functionality

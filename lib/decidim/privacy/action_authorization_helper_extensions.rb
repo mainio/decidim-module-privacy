@@ -5,6 +5,7 @@ module Decidim
     module ActionAuthorizationHelperExtensions
       extend ActiveSupport::Concern
       extend ::Decidim::Privacy::PrivacyHelper
+
       included do
         private
 
@@ -27,10 +28,12 @@ module Decidim
           if !current_user
             html_options = clean_authorized_to_data_open(html_options)
 
+            html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options["data-open"] = "loginModal"
             url = "#"
           elsif current_user.published_at.blank?
             html_options = clean_authorized_to_data_open(html_options)
+            html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options[:class] += " publish-modal"
             html_options["data-open"] = "publishAccountModal"
             url = "#"
@@ -51,6 +54,12 @@ module Decidim
           end
         end
         # rubocop: enable Metrics/PerceivedComplexity
+      end
+
+      private # rubocop:disable Lint/UselessAccessModifier
+
+      def generate_authorized_action_id(tag, action, url)
+        "authorize-#{Digest::MD5.hexdigest("#{tag}#{action}#{url}")}"
       end
     end
   end

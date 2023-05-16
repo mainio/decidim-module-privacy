@@ -27,6 +27,9 @@ en:
           close_modal: Close
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
+      publish_account:
+        unauthorized: Only public account are allowed to perform this action.
+
 
 
 
