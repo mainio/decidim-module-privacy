@@ -34,8 +34,9 @@ module Decidim
         end
       end
 
-      initializer "decidim_budgets.add_cells_view_paths" do
+      initializer "decidim_privacy.add_cells_view_paths", before: "decidim_comments.add_cells_view_paths" do
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/cells")
+        Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
       end
 
       initializer "decidim_privacy.add_customizations", after: "decidim.action_controller" do
@@ -50,10 +51,26 @@ module Decidim
             Decidim::Privacy::ApplicationControllerExtensions
           )
           Decidim::Proposals::ProposalsController.include(
-            Decidim::Privacy::ProposalsControllerExtensions
+            # Decidim::Privacy::ProposalsControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
+          )
+          Decidim::Proposals::CollaborativeDraftsController.include(
+            # Decidim::Privacy::CollaborativeDraftsControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
+          )
+          Decidim::Debates::DebatesController.include(
+            # Decidim::Privacy::DebatesControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
+          )
+          Decidim::Meetings::MeetingsController.include(
+            # Decidim::Privacy::MeetingsControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
           )
 
-          # Core functionality
+          # models
+          Decidim::User.include(Decidim::Privacy::UserExtensions)
+
+          # helpers
           Decidim::ActionAuthorizationHelper.include(
             Decidim::Privacy::ActionAuthorizationHelperExtensions
           )

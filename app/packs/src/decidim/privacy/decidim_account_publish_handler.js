@@ -18,10 +18,16 @@ $(() => {
         localStorage.removeItem("loginTriggeringElement");
       }
     }
+
     document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
       el.addEventListener("click", (ev) => {
-        console.log($publishAccountModal.find("form"))
-        $publishAccountModal.find("form").attr("data-redirect-url", ev.target.getAttribute("data-redirect-url"))
+        let redirectUrl = ev.target.getAttribute("data-redirect-url")
+        if (redirectUrl) {
+          $publishAccountModal.find("form").attr("data-redirect-url", ev.target.getAttribute("data-redirect-url"))
+        } else {
+          // Its a post request
+          $publishAccountModal.find("form").attr("data-submit-form-button", ev.target.id)
+        }
       })
     });
 
@@ -40,16 +46,27 @@ $(() => {
     localStorage.removeItem("loginTriggeringElement");
   });
 
-  // We need to know which element triggered the publish modal to open, to redirect
-  // the user to the redirect-url
-  $(document).on("click", ".publish-modal", (ev) => {
-    $(ev.target).attr("data-triggering-modal", true)
-  })
+  // const removeAllPublishModals = () => {
+  //   document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+  //     el.removeAttribute("data-open")
+  //   })
+  // }
 
-  // The ajax:complete or ajax:success does not get the response from the controller
-  $(document).on("ajax:complete", $(".update-privacy").closest("form"), function(el) {
+  // const submitFormFor = (postRequest) => {
+  //   console.log(document.getElementById(postRequest).closest("form"))
+  //   document.getElementById(postRequest).closest("form").submit()
+  // }
 
-    window.location.href = el.target.getAttribute("data-redirect-url");
+  $(document).on("ajax:complete", $(".update-privacy").closest("form"), (el) => {
+    let redirectDestination =  el.target.getAttribute("data-redirect-url")
+    if (redirectDestination) {
+      window.location.href = el.target.getAttribute("data-redirect-url");
+    } else {
+      // This is a post request
+      // removeAllPublishModals()
+      // $publishAccountModal.foundation("close")
+      // let submittedFormId = el.target.getAttribute("data-submit-form-button")
+      // submitFormFor(submittedFormId)
+    }
   });
-
-})
+});

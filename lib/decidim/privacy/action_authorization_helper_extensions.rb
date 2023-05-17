@@ -4,7 +4,6 @@ module Decidim
   module Privacy
     module ActionAuthorizationHelperExtensions
       extend ActiveSupport::Concern
-      extend ::Decidim::Privacy::PrivacyHelper
 
       included do
         private
@@ -31,17 +30,19 @@ module Decidim
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options["data-open"] = "loginModal"
             url = "#"
-          elsif current_user.published_at.blank?
-            html_options = clean_authorized_to_data_open(html_options)
-            html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
-            html_options[:class] += " publish-modal"
-            html_options["data-open"] = "publishAccountModal"
-            url = "#"
           elsif action && !action_authorized_to(action, resource: resource, permissions_holder: permissions_holder).ok?
             html_options = clean_authorized_to_data_open(html_options)
 
             html_options["data-open"] = "authorizationModal"
             html_options["data-open-url"] = modal_path(action, resource)
+            url = "#"
+          end
+
+          if current_user && !current_user.public?
+            html_options = clean_authorized_to_data_open(html_options)
+            html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
+            html_options["data-privacy"] = { open: html_options["data-open"], openUrl: html_options["data-open-url"] }.compact.to_json
+            html_options["data-open"] = "publishAccountModal"
             url = "#"
           end
 
