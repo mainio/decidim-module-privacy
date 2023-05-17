@@ -39,7 +39,7 @@ module Decidim
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
       end
 
-      initializer "decidim_privacy.add_customizations", after: "decidim.action_controller" do
+      initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
         config.to_prepare do
           # commands
           Decidim::UpdateNotificationsSettings.include(
@@ -49,6 +49,9 @@ module Decidim
           # controllers
           Decidim::ApplicationController.include(
             Decidim::Privacy::ApplicationControllerExtensions
+          )
+          Decidim::Comments::CommentsController.include(
+            Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Proposals::ProposalsController.include(
             Decidim::Privacy::PrivacyActionsExtensions
@@ -60,9 +63,6 @@ module Decidim
             Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Meetings::MeetingsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Comments::CommentsController.include(
             Decidim::Privacy::PrivacyActionsExtensions
           )
 

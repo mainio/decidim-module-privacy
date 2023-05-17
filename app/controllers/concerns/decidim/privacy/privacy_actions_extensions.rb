@@ -7,19 +7,17 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        [:new, :create, :update, :publish, :complete].each do |action|
-          before_action :ensure_public_account, only: action if respond_to?(action)
-        end
+        before_action :ensure_public_account!, only: [:new, :create, :update, :publish, :complete]
+      end
 
-        private
+      private
 
-        def ensure_public_account
-          return true if current_user&.public?
+      def ensure_public_account!
+        return true if current_user&.public?
 
-          flash[:notice] = t("decidim.privacy.publish_account.unauthorized")
+        flash[:notice] = t("decidim.privacy.publish_account.unauthorized")
 
-          redirect_back(fallback_location: decidim.root_path)
-        end
+        redirect_back(fallback_location: decidim.root_path)
       end
     end
   end
