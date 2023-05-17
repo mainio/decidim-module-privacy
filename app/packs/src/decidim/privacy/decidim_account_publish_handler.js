@@ -6,8 +6,7 @@ $(() => {
   let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
 
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
-  // have logged in. These elements might or might not have the publish requirement, but if they will have the data-open of publishAccountModal, then they
-  // we should open the modal.
+  // have logged in. These elements might or might not have the public account requirement to show the modal.
 
   if ($publishAccountModal) {
     if (triggeredLoginElement) {
@@ -24,9 +23,6 @@ $(() => {
         let redirectUrl = ev.target.getAttribute("data-redirect-url")
         if (redirectUrl) {
           $publishAccountModal.find("form").attr("data-redirect-url", ev.target.getAttribute("data-redirect-url"))
-        } else {
-          // Its a post request
-          $publishAccountModal.find("form").attr("data-submit-form-button", ev.target.id)
         }
       })
     });
@@ -46,27 +42,55 @@ $(() => {
     localStorage.removeItem("loginTriggeringElement");
   });
 
-  // const removeAllPublishModals = () => {
-  //   document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
-  //     el.removeAttribute("data-open")
-  //   })
-  // }
+  const setCommentData = (buttonElement) => {
+    buttonElement.setAttribute("data-popup-comment-id", buttonElement.closest("form").id)
+  }
 
-  // const submitFormFor = (postRequest) => {
-  //   console.log(document.getElementById(postRequest).closest("form"))
-  //   document.getElementById(postRequest).closest("form").submit()
-  // }
+  const handleCommentAction = (ev) => {
+    if ($publishAccountModal !== null) {
+      ev.preventDefault();
+      setCommentData(ev.target)
+      $publishAccountModal.foundation("open");
+    }
+  };
+  const handleCommentForms = (wrapper) => {
+    wrapper.querySelectorAll("form").forEach((commentForm) => {
+      commentForm.querySelectorAll("button[type='submit'], input[type='submit']").forEach((button) => {
+        // button.removeEventListener("click", handleCommentAction);
+        button.addEventListener("click", handleCommentAction);
+      });
+    });
+  };
 
-  $(document).on("ajax:complete", $(".update-privacy").closest("form"), (el) => {
+  document.querySelectorAll("[data-decidim-comments]").forEach((commentsWrapper) => {
+    const component = $(commentsWrapper).data("comments");
+    const originalAddReply = component.addReply.bind(component);
+    const originalAddThread = component.addThread.bind(component);
+
+    component.addReply = (...args) => {
+      originalAddReply(...args)
+      handleCommentForms(commentsWrapper);
+    };
+    component.addThread = (...args) => {
+      originalAddThread(...args);
+      handleCommentForms(commentsWrapper);
+    };
+    handleCommentForms(commentsWrapper);
+  });
+
+  const handleCommentSubmission = () => {
+    $("[data-popup-comment-id]").click();
+  }
+
+  $(".update-privacy").closest("form").on("ajax:complete", (el) => {
     let redirectDestination =  el.target.getAttribute("data-redirect-url")
     if (redirectDestination) {
       window.location.href = el.target.getAttribute("data-redirect-url");
     } else {
-      // This is a post request
-      // removeAllPublishModals()
-      // $publishAccountModal.foundation("close")
-      // let submittedFormId = el.target.getAttribute("data-submit-form-button")
-      // submitFormFor(submittedFormId)
+      $publishAccountModal.foundation("close");
+      $publishAccountModal.remove();
+      $publishAccountModal = null;
+      handleCommentSubmission();
     }
   });
 });
