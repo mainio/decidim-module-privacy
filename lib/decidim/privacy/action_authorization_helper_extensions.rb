@@ -19,7 +19,6 @@ module Decidim
             url = arguments[1]
             html_options = arguments[2]
           end
-
           html_options ||= {}
           resource = html_options.delete(:resource)
           permissions_holder = html_options.delete(:permissions_holder)
@@ -38,11 +37,12 @@ module Decidim
             url = "#"
           end
 
-          if current_user && !current_user.public?
+          if current_user && !current_user.public? && html_options["data-open"]
             html_options = clean_authorized_to_data_open(html_options)
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options["data-privacy"] = { open: html_options["data-open"], openUrl: html_options["data-open-url"] }.compact.to_json
             html_options["data-open"] = "publishAccountModal"
+            html_options.delete("data-open-url")
             url = "#"
           end
 
