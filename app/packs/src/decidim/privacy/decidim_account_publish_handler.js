@@ -7,6 +7,19 @@ $(() => {
 
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
   // have logged in. These elements might or might not have the public account requirement to show the modal.
+  const setFormValues =  (ev) => {
+    if (!$publishAccountModal) {
+      return
+    }
+
+    let redirectUrl = ev.target.getAttribute("data-redirect-url")
+    let dataPrivacy = ev.target.getAttribute("data-privacy")
+    if (dataPrivacy && dataPrivacy !== "{}") {
+      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id)
+    } else {
+      $publishAccountModal.find("form").attr("data-redirect-url", redirectUrl)
+    }
+  }
 
   if ($publishAccountModal) {
     if (triggeredLoginElement) {
@@ -19,12 +32,7 @@ $(() => {
     }
 
     document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
-      el.addEventListener("click", (ev) => {
-        let redirectUrl = ev.target.getAttribute("data-redirect-url")
-        if (redirectUrl) {
-          $publishAccountModal.find("form").attr("data-redirect-url", ev.target.getAttribute("data-redirect-url"))
-        }
-      })
+      el.addEventListener("click", setFormValues)
     });
 
     $publishAccountModal.on("closed.zf.reveal", () => {
@@ -56,7 +64,7 @@ $(() => {
   const handleCommentForms = (wrapper) => {
     wrapper.querySelectorAll("form").forEach((commentForm) => {
       commentForm.querySelectorAll("button[type='submit'], input[type='submit']").forEach((button) => {
-        // button.removeEventListener("click", handleCommentAction);
+        button.removeEventListener("click", handleCommentAction);
         button.addEventListener("click", handleCommentAction);
       });
     });
@@ -77,19 +85,42 @@ $(() => {
     };
     handleCommentForms(commentsWrapper);
   });
+  const removePublishModal = () => {
+    document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
+      item.removeEventListener("click", setFormValues)
+      let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+      if (dataPrivacy.open && dataPrivacy.openUrl) {
+        item.setAttribute("data-open", dataPrivacy.open);
+        $(item).data("open", dataPrivacy.open);
+        item.setAttribute("data-open-url", dataPrivacy.openUrl);
+        $(item).data("open-url", dataPrivacy.openUrl);
+        item.removeAttribute("data-privacy");
+      } else {
+        item.removeAttribute("data-open");
+      }
+    })
+    $publishAccountModal.foundation("close");
+    $publishAccountModal.remove();
+    $publishAccountModal = null;
+  }
 
   const handleCommentSubmission = () => {
+    removePublishModal();
     $("[data-popup-comment-id]").click();
+  }
+  const handleAuthorizationPopup = (el) => {
+    removePublishModal();
+    $(`#${el}`).click();
   }
 
   $(".update-privacy").closest("form").on("ajax:complete", (el) => {
     let redirectDestination =  el.target.getAttribute("data-redirect-url")
+    let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
     if (redirectDestination) {
       window.location.href = el.target.getAttribute("data-redirect-url");
+    } else if (dataTriggeringPrivacy) {
+      handleAuthorizationPopup(dataTriggeringPrivacy);
     } else {
-      $publishAccountModal.foundation("close");
-      $publishAccountModal.remove();
-      $publishAccountModal = null;
       handleCommentSubmission();
     }
   });
