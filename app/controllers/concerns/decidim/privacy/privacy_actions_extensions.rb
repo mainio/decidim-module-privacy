@@ -17,7 +17,7 @@ module Decidim
 
         flash[:notice] = t("decidim.privacy.publish_account.unauthorized")
 
-        redirect_back(fallback_location: decidim.root_path)
+        render "decidim/privacy/privacy_block"
       end
     end
   end
