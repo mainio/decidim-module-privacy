@@ -2,22 +2,41 @@
 
 module Decidim
   module Privacy
+    class ActionForbidden < ::Decidim::ActionForbidden; end
+
     # This is the concern that adds publicity checks to the included controllers
     module PrivacyActionsExtensions
       extend ActiveSupport::Concern
 
       included do
-        before_action :ensure_public_account!, only: [:new, :create, :update, :publish, :complete]
+        helper_method :public_action?, :allowed_publicly_to?
+
+        rescue_from Decidim::Privacy::ActionForbidden, with: :user_is_not_public
+
+        def enforce_permission_to(action, subject, extra_context = {})
+          super
+
+          raise ActionForbidden unless allowed_publicly_to?(action)
+        end
+      end
+
+      def allowed_publicly_to?(action)
+        return true unless user_signed_in?
+        return true unless public_action?(action)
+
+        current_user.public?
+      end
+
+      def public_action?(action)
+        return false unless respond_to?(:public_actions, true)
+
+        public_actions.include?(action)
       end
 
       private
 
-      def ensure_public_account!
-        return true if current_user&.public?
-
-        flash[:notice] = t("decidim.privacy.publish_account.unauthorized")
-
-        redirect_back(fallback_location: decidim.root_path)
+      def user_is_not_public
+        render plain: "Joonas, please add your stuff here!"
       end
     end
   end

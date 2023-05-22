@@ -54,10 +54,13 @@ module Decidim
             Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Proposals::ProposalsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
+            Decidim::Privacy::ProposalsControllerExtensions
+          )
+          Decidim::Proposals::ProposalVotesController.include(
+            Decidim::Privacy::ProposalsControllerExtensions
           )
           Decidim::Proposals::CollaborativeDraftsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
+            Decidim::Privacy::ProposalsControllerExtensions
           )
           Decidim::Debates::DebatesController.include(
             Decidim::Privacy::PrivacyActionsExtensions
