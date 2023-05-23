@@ -49,6 +49,9 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
+          Decidim::CreateRegistration.include(
+            Decidim::Privacy::CreateRegistrationExtensions
+          )
 
           # controllers
           Decidim::ApplicationController.include(
@@ -71,6 +74,9 @@ module Decidim
           )
           Decidim::Meetings::MeetingsController.include(
             Decidim::Privacy::PrivacyActionsExtensions
+          )
+          Decidim::Admin::OfficializationsController.include(
+            Decidim::Privacy::OfficializationsControllerExtensions
           )
 
           # models
