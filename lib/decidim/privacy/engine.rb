@@ -40,6 +40,10 @@ module Decidim
       end
 
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
+        ActiveSupport.on_load(:active_record) do
+          self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
+        end
+
         config.to_prepare do
           # commands
           Decidim::UpdateNotificationsSettings.include(
