@@ -9,21 +9,24 @@
       <span class="switch-label"><%= t(".enable_public_profile") %></span>
     <% end %>
   </div>
-  <%= t(".private_messaging").try("html_safe") %>
-  <div class="switch tiny switch-with-label notifications_from_followed">
-    <%= f.label :allow_private_messaging do %>
-      <%= f.check_box :allow_private_messaging, label: false, class: "switch-input" %>
-      <span class="switch-paddle"></span>
-      <span class="switch-label"><%= t(".enable_private_messaging") %></span>
-    <% end %>
-  </div>
+  <div id="toggle-privacy-messaging">
+    <%= t(".private_messaging").try("html_safe") %>
+    <div class="switch tiny switch-with-label notifications_from_followed">
+      <%= f.label :allow_private_messaging do %>
+        <%= f.check_box :allow_private_messaging, label: false, class: "switch-input" %>
+        <span class="switch-paddle"></span>
+        <span class="switch-label"><%= t(".enable_private_messaging") %></span>
+      <% end %>
+    </div>
 
-  <div class="switch tiny switch-with-label allow_public_contact">
-    <label>
-      <%= f.check_box :allow_public_contact, label: false, class: "switch-input" %>
-      <span class="switch-paddle"></span>
-      <span class="switch-label"><%= t(".allow_public_contact") %></span>
-    </label>
+    <div class="switch tiny switch-with-label allow_public_contact">
+      <label>
+        <%= f.check_box :allow_public_contact, label: false, class: "switch-input" %>
+        <span class="switch-paddle"></span>
+        <span class="switch-label"><%= t(".allow_public_contact") %></span>
+      </label>
+    </div>
   </div>
   <%= f.submit t(".save_privacy_settings") %>
 <% end %>
+<%= javascript_pack_tag "decidim_privacy_settings" %>
