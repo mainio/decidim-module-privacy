@@ -114,7 +114,7 @@ $(() => {
   }
 
   $(".update-privacy").closest("form").on("ajax:complete", (el) => {
-    let redirectDestination =  el.target.getAttribute("data-redirect-url")
+    let redirectDestination =  el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
     if (redirectDestination) {
       window.location.href = el.target.getAttribute("data-redirect-url");
