@@ -38,6 +38,10 @@ module Decidim
       def user_is_not_public
         render plain: "Joonas, please add your stuff here!"
       end
+
+      def public_actions
+        [:new, :create, :update, :publish, :complete]
+      end
     end
   end
 end
