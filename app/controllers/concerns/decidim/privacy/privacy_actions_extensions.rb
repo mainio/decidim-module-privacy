@@ -40,7 +40,7 @@ module Decidim
       end
 
       def public_actions
-        [:new, :create, :update, :publish, :complete]
+        [:create, :edit, :update]
       end
     end
   end
