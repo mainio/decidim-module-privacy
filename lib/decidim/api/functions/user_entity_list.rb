@@ -20,9 +20,9 @@ module Decidim
         @query = Decidim::UserBaseEntity
                  .where(organization: ctx[:current_organization])
                  .where.not(published_at: nil)
-                 .not_deleted
                  .confirmed
                  .not_blocked
+                 .where(deleted_at: nil)
                  .includes(avatar_attachment: :blob)
         add_filter_keys(args[:filter])
         add_order_keys(args[:order].to_h)
