@@ -95,6 +95,9 @@ module Decidim
           Decidim::ProfilesController.include(
             Decidim::Privacy::ProfilesControllerExtensions
           )
+          Decidim::UserActivitiesController.include(
+            Decidim::Privacy::ProfilesControllerExtensions
+          )
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
