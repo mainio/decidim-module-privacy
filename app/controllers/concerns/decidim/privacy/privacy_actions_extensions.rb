@@ -40,6 +40,10 @@ module Decidim
 
         render "decidim/privacy/privacy_block"
       end
+
+      def public_actions
+        [:create, :edit, :update]
+      end
     end
   end
 end

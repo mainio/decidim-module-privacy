@@ -11,5 +11,6 @@ module Decidim
   module Privacy
     autoload :PrivacyHelper, "decidim/privacy/privacy_helper"
     autoload :ActionAuthorizationHelperExtensions, "decidim/privacy/action_authorization_helper_extensions"
+    autoload :OrmAdapter, "decidim/privacy/orm_adapter"
   end
 end

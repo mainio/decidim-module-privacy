@@ -40,6 +40,10 @@ module Decidim
       end
 
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
+        ActiveSupport.on_load(:active_record) do
+          self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
+        end
+
         config.to_prepare do
           # cells
           Decidim::CollapsibleListCell.include(
@@ -50,6 +54,9 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
+          Decidim::CreateRegistration.include(
+            Decidim::Privacy::CreateRegistrationExtensions
+          )
 
           # controllers
           Decidim::ApplicationController.include(
@@ -59,13 +66,13 @@ module Decidim
             Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Proposals::ProposalsController.include(
-            Decidim::Privacy::ProposalsControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Proposals::ProposalVotesController.include(
-            Decidim::Privacy::ProposalsControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Proposals::CollaborativeDraftsController.include(
-            Decidim::Privacy::ProposalsControllerExtensions
+            Decidim::Privacy::PrivacyActionsExtensions
           )
           Decidim::Debates::DebatesController.include(
             Decidim::Privacy::PrivacyActionsExtensions
@@ -73,10 +80,26 @@ module Decidim
           Decidim::Meetings::MeetingsController.include(
             Decidim::Privacy::PrivacyActionsExtensions
           )
+          Decidim::Admin::OfficializationsController.include(
+            Decidim::Privacy::OfficializationsControllerExtensions
+          )
+          Decidim::Admin::ImpersonatableUsersController.include(
+            Decidim::Privacy::ImpersonatableUsersControllerExtensions
+          )
+          Decidim::Admin::ModeratedUsersController.include(
+            Decidim::Privacy::ModeratedUsersControllerExtensions
+          )
+          Decidim::Admin::ImpersonationsController.include(
+            Decidim::Privacy::ImpersonationsControllerExtensions
+          )
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
+<<<<<<< HEAD
           Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+=======
+          Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
+>>>>>>> fabcd75ea61877e92821fd1957e7a7603ade4312
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
