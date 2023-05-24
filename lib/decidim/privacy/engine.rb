@@ -87,6 +87,7 @@ module Decidim
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
+          Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
