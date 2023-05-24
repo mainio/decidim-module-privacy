@@ -41,6 +41,11 @@ module Decidim
 
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
         config.to_prepare do
+          # cells
+          Decidim::CollapsibleListCell.include(
+            Decidim::Privacy::CollapsibleListCellExtensions
+          )
+
           # commands
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
@@ -71,6 +76,7 @@ module Decidim
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
+          Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(

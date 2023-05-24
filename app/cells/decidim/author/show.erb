@@ -1,0 +1,33 @@
+<% if (
+  model.is_a?(Decidim::UserPresenter) ||
+  model.is_a?(Decidim::User) ||
+  model.is_a?(Decidim::AuthorPresenter) ||
+  model.is_a?(Decidim::UserGroupPresenter) ||
+  model.is_a?(Decidim::UserBaseEntity)) &&
+  !model.public?%>
+  <% return %>
+<% end %>
+
+<% if model.is_a?(Decidim::User)%>
+  <% raise "hevi" %>
+<% end %>
+
+<div class="<%= author_classes %>">
+  <div class="author-data__main">
+    <%= render :profile %>
+  </div>
+
+  <% if actionable? %>
+    <div class="author-data__extra">
+      <%= render :date %>
+
+      <%= render :comments %>
+
+      <%= render :endorsements %>
+
+      <%= render :flag %>
+
+      <%= render :withdraw %>
+    </div>
+  <% end %>
+</div>
