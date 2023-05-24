@@ -84,6 +84,9 @@ module Decidim
           Decidim::Admin::ModeratedUsersController.include(
             Decidim::Privacy::ModeratedUsersControllerExtensions
           )
+          Decidim::Admin::ImpersonationsController.include(
+            Decidim::Privacy::ImpersonationsControllerExtensions
+          )
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
