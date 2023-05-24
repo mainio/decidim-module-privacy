@@ -95,11 +95,8 @@ module Decidim
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
-<<<<<<< HEAD
           Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
-=======
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
->>>>>>> fabcd75ea61877e92821fd1957e7a7603ade4312
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
