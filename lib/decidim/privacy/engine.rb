@@ -98,6 +98,9 @@ module Decidim
           Decidim::UserActivitiesController.include(
             Decidim::Privacy::ProfilesControllerExtensions
           )
+          Decidim::UserTimelineController.include(
+            Decidim::Privacy::ProfilesControllerExtensions
+          )
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
