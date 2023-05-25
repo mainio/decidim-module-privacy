@@ -1,17 +1,11 @@
 <% if (
   model.is_a?(Decidim::UserPresenter) ||
   model.is_a?(Decidim::User) ||
-  model.is_a?(Decidim::AuthorPresenter) ||
   model.is_a?(Decidim::UserGroupPresenter) ||
   model.is_a?(Decidim::UserBaseEntity)) &&
   !model.public?%>
-  <% return %>
-<% end %>
-
-<% if model.is_a?(Decidim::User)%>
-  <% raise "hevi" %>
-<% end %>
-
+  <% return%>
+<% else %>
 <div class="<%= author_classes %>">
   <div class="author-data__main">
     <%= render :profile %>
@@ -31,3 +25,4 @@
     </div>
   <% end %>
 </div>
+<% end %>
