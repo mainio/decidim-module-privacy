@@ -6,7 +6,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       def public?
-        published_at.present?
+        true
       end
     end
   end
