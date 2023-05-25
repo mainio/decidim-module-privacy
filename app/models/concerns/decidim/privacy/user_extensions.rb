@@ -19,6 +19,10 @@ module Decidim
         def public?
           published_at.present?
         end
+
+        def private_messaging?
+          allow_private_messaging == true
+        end
       end
     end
   end
