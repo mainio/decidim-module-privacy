@@ -16,8 +16,25 @@ module Decidim
           )
         end
 
+        searchable_fields({
+                            # scope_id: :decidim_scope_id,
+                            organization_id: :decidim_organization_id,
+                            A: :name,
+                            B: :nickname,
+                            datetime: :created_at
+                          },
+                          index_on_create: ->(user) { !(user.deleted? || user.blocked?) && user.public? },
+                          index_on_update: ->(user) { !(user.deleted? || user.blocked?) && user.public? })
+        before_save :ensure_encrypted_password
+        before_save :save_password_change
+
         def public?
           published_at.present?
+        end
+
+        # this method was added to this model so it can be hidden from search
+        def hidden?
+          !public?
         end
 
         def private_messaging?
