@@ -1,14 +1,15 @@
 $(() => {
   let privacyMessagingText = document.getElementById("toggle-privacy-messaging");
-  let PrivacyMessaging = document.getElementById("user_published_at");
-  if (PrivacyMessaging && PrivacyMessaging.value !== "1") {
-    privacyMessagingText.classList.add("hide");
+  let accountPublicity = document.getElementById("user_published_at");
+
+  if (accountPublicity && accountPublicity.dataset.publicity === "true") {
+    privacyMessagingText.classList.remove("hide");
   }
   const toggleVisibility = () => {
     privacyMessagingText.classList.toggle("hide");
   };
 
-  PrivacyMessaging.addEventListener("click", () => {
+  accountPublicity.addEventListener("click", () => {
     toggleVisibility();
   });
 });
