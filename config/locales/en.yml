@@ -8,6 +8,8 @@ en:
     components:
       privacy:
         name: Privacy settings
+    members:
+      no_members: This group doesn't have any public members.
     privacy:
       privacy_settings:
         show:
