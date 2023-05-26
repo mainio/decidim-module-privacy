@@ -1,0 +1,22 @@
+<div class="wrapper">
+  <div class="row collapse">
+    <div class="row collapse">
+      <div class="columns large-8 large-centered text-center page-title">
+        <h1><%= t(".title") %></h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="columns large-6 text-center medium-centered">
+        <div class="card">
+          <div class="card__content">
+            <%= t(".content").try("html_safe") %>
+          </div>
+        </div>
+      </div>
+      <div class="columns large-4 medium-centered">
+        <%= link_to t(".back"), :back, class: "button expanded" %>
+      </div>
+    </div>
+  </div>
+</div>
