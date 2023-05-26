@@ -106,6 +106,8 @@ module Decidim
           Decidim::User.include(Decidim::Privacy::UserExtensions)
           Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
+          Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
+          Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
