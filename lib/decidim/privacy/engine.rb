@@ -104,6 +104,9 @@ module Decidim
           Decidim::UserActivitiesController.include(
             Decidim::Privacy::UserActivitiesControllerExtensions
           )
+          Decidim::Messaging::ConversationsController.include(
+            Decidim::Privacy::ConversationsControllerExtensions
+          )
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
