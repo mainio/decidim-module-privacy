@@ -9,7 +9,7 @@ module Decidim
         before_action :authenticate_user!, :private_messaging_allowed?
 
         def private_messaging_allowed?
-          return true if current_user.allow_private_messaging && current_user.published_at.present?
+          return true unless current_user.private_messaging_disabled?
 
           render "decidim/privacy/message_block"
         end
