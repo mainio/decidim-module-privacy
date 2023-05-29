@@ -33,6 +33,7 @@ en:
         title: This account is private
         content: To access this user's profile, they have to make it public.
         back: Previous page
+        unnamed_user: Unnamed user
       partials:
         privacy_consent:
           make_profile_public: Make your profile public
