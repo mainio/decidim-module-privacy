@@ -4,12 +4,12 @@
   <%= t(".profile_publicity").try("html_safe") %>
   <div class="switch tiny switch-with-label notifications_from_followed">
     <%= f.label :published_at do %>
-      <%= f.check_box :published_at, label: false, class: "switch-input" %>
+      <%= f.check_box :published_at, data:{ publicity: @privacy_settings.published_at }, label: false, class: "switch-input" %>
       <span class="switch-paddle"></span>
       <span class="switch-label"><%= t(".enable_public_profile") %></span>
     <% end %>
   </div>
-  <div id="toggle-privacy-messaging">
+  <div id="toggle-privacy-messaging" class="hide">
     <%= t(".private_messaging").try("html_safe") %>
     <div class="switch tiny switch-with-label notifications_from_followed">
       <%= f.label :allow_private_messaging do %>
