@@ -3,9 +3,8 @@
 module Decidim
   module Privacy
     class OrmAdapter < ::OrmAdapter::ActiveRecord
-      # @see OrmAdapter::Base#get
-      def get(id)
-        klass.unscoped.where(klass.primary_key => wrap_key(id)).first
+      def initialize(klass)
+        @klass = klass.unscoped
       end
     end
   end
