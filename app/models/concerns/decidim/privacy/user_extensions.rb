@@ -5,6 +5,8 @@ module Decidim
     module UserExtensions
       extend ActiveSupport::Concern
       included do
+        before_update :update_followers_count
+
         default_scope { where.not(published_at: nil) }
         # we need to remove the default scope for the registeration, so as to check the uniqueness of
         # accounts through all of the accounts
@@ -39,6 +41,20 @@ module Decidim
 
         def private_messaging?
           allow_private_messaging == true
+        end
+
+        private
+
+        def update_followers_count
+          return unless published_at_changed?
+
+          transaction do
+            if published_at.nil?
+              followers.map { |follower| follower.update(following_count: follower.following_count - 1) }
+            else
+              followers.map { |follower| follower.update(following_count: follower.following_count + 1) }
+            end
+          end
         end
       end
     end
