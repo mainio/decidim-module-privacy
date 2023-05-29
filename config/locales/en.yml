@@ -10,6 +10,10 @@ en:
         name: Privacy settings
     members:
       no_members: This group doesn't have any public members.
+    messaging:
+      conversations:
+        show:
+          private: Private user
     privacy:
       message_block:
         title: Private messaging is not enabled
@@ -43,6 +47,9 @@ en:
           do_not_agree: No, I do not want to make my profile public
       publish_account:
         unauthorized: Only public account are allowed to perform this action.
+    profile:
+      private: Private user
+      private_info: <i>This user has decided to make their profile private or disabled the messaging feature. New messages to this conversation have been therefore disabled.</i>
 
 
 

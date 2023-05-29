@@ -34,13 +34,13 @@ module Decidim
           published_at.present?
         end
 
+        def private_messaging_disabled?
+          !public? || allow_private_messaging == false
+        end
+
         # this method was added to this model so it can be hidden from search
         def hidden?
           !public?
-        end
-
-        def private_messaging?
-          allow_private_messaging == true
         end
 
         private
