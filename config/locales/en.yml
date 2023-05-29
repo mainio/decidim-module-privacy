@@ -27,7 +27,7 @@ en:
           error: There was a problem updating your privacy settings.
           success: Your privacy settings were successfully updated.
       privacy_block:
-        title: Publification of account needed
+        title: Publication of account needed
         content: "<p class='text-center'>You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
       private_account:
         title: This account is private
