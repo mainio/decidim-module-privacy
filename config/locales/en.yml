@@ -13,7 +13,7 @@ en:
     messaging:
       conversations:
         show:
-          private: Private user
+          private_account: You can't have a conversation with private accounts.
     privacy:
       message_block:
         title: Private messaging is not enabled
