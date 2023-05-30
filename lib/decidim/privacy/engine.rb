@@ -125,6 +125,9 @@ module Decidim
           Decidim::ActionAuthorizationHelper.include(
             Decidim::Privacy::ActionAuthorizationHelperExtensions
           )
+
+          # presenters
+          Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
         end
       end
     end
