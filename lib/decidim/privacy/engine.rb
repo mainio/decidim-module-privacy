@@ -49,6 +49,7 @@ module Decidim
           Decidim::CollapsibleListCell.include(
             Decidim::Privacy::CollapsibleListCellExtensions
           )
+          Decidim::ActivityCell.include(Decidim::Privacy::ActivityCellExtensions)
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
