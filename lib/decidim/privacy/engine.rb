@@ -112,8 +112,10 @@ module Decidim
           )
 
           # models
-          Decidim::User.include(Decidim::Privacy::UserExtensions)
-          Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+          if Decidim::Privacy.apply_user_extensions?
+            Decidim::User.include(Decidim::Privacy::UserExtensions)
+            Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+          end
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
           Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
           Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
