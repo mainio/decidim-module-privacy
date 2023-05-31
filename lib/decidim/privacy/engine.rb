@@ -111,6 +111,9 @@ module Decidim
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
           )
+          Decidim::Assemblies::AssemblyMembersController.include(
+            Decidim::Privacy::AssemblyMembersControllerExtensions
+          )
 
           # models
           Decidim::User.include(Decidim::Privacy::UserExtensions)
