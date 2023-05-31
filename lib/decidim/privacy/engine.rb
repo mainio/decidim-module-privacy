@@ -49,6 +49,7 @@ module Decidim
           Decidim::CollapsibleListCell.include(
             Decidim::Privacy::CollapsibleListCellExtensions
           )
+          Decidim::ActivityCell.include(Decidim::Privacy::ActivityCellExtensions)
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
@@ -109,6 +110,9 @@ module Decidim
           )
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
+          )
+          Decidim::Assemblies::AssemblyMembersController.include(
+            Decidim::Privacy::AssemblyMembersControllerExtensions
           )
 
           # models
