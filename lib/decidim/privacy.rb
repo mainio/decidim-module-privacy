@@ -8,5 +8,6 @@ module Decidim
   module Privacy
     autoload :PrivacyHelper, "decidim/privacy/privacy_helper"
     autoload :OrmAdapter, "decidim/privacy/orm_adapter"
+    autoload :CommentSerializerExtensions, "decidim/privacy/comment_serializer_extensions"
   end
 end
