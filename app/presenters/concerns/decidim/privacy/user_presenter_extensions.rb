@@ -44,7 +44,10 @@ module Decidim
         private
 
         def public_user?
-          __getobj__.published_at.present?
+          object = __getobj__
+          return true if object.is_a?(::Decidim::UserGroup)
+
+          object.published_at.present?
         end
       end
     end
