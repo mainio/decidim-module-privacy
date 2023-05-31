@@ -41,6 +41,7 @@ module Decidim
 
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
         ActiveSupport.on_load(:active_record) do
+          remove_const(:OrmAdapter) if const_defined?(:OrmAdapter)
           self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
         end
 
