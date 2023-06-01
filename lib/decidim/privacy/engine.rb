@@ -115,6 +115,9 @@ module Decidim
           Decidim::Assemblies::AssemblyMembersController.include(
             Decidim::Privacy::AssemblyMembersControllerExtensions
           )
+          Decidim::Admin::OrganizationController.include(
+            Decidim::Privacy::AdminOrganizationControllerExtensions
+          )
 
           # models
           if Decidim::Privacy.apply_user_extensions?
