@@ -41,6 +41,7 @@ module Decidim
 
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
         ActiveSupport.on_load(:active_record) do
+          remove_const(:OrmAdapter) if const_defined?(:OrmAdapter)
           self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
         end
 
@@ -49,6 +50,7 @@ module Decidim
           Decidim::CollapsibleListCell.include(
             Decidim::Privacy::CollapsibleListCellExtensions
           )
+          Decidim::ActivityCell.include(Decidim::Privacy::ActivityCellExtensions)
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
@@ -113,10 +115,15 @@ module Decidim
           Decidim::Messaging::ReplyToConversation.include(
             Decidim::Privacy::ReplyToConversationExtensions
           )
+          Decidim::Assemblies::AssemblyMembersController.include(
+            Decidim::Privacy::AssemblyMembersControllerExtensions
+          )
 
           # models
-          Decidim::User.include(Decidim::Privacy::UserExtensions)
-          Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+          if Decidim::Privacy.apply_user_extensions?
+            Decidim::User.include(Decidim::Privacy::UserExtensions)
+            Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+          end
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
           Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
           Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
