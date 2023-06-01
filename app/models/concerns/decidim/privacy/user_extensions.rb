@@ -7,7 +7,17 @@ module Decidim
       included do
         before_update :update_followers_count
 
-        default_scope { where.not(published_at: nil) }
+        default_scope { profile_published }
+
+        # Provides the entire collection of users, including the unpublished
+        # ones which is necessary for some relations. This
+        #
+        # Once the following PR is merged, this becomes useful:
+        # https://github.com/decidim/decidim/pull/10939
+        scope :entire_collection, -> { unscope(where: :deleted_at) }
+        scope :profile_published, -> { where.not(published_at: nil) }
+        scope :profile_private, -> { entire_collection.where(published_at: nil) }
+
         # we need to remove the default scope for the registeration, so as to check the uniqueness of
         # accounts through all of the accounts
         def self.find_for_authentication(warden_conditions)
