@@ -120,6 +120,8 @@ module Decidim
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
           Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
           Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
+          Decidim::Comments::Comment.include(Decidim::Privacy::ModelAuthorExtensions)
+          Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
