@@ -137,6 +137,9 @@ module Decidim
 
           # presenters
           Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
+
+          # serializer
+          Decidim::Proposals::ProposalSerializer.include(Decidim::Privacy::ProposalSerializerExtensions)
         end
       end
     end
