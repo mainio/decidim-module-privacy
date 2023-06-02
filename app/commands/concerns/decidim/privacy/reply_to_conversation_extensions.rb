@@ -7,9 +7,7 @@ module Decidim
 
       included do
         def call
-          if conversation.interlocutors(sender).count == 1 && conversation.interlocutors(sender).first.private_messaging_disabled?
-            return
-          end
+          return if conversation.interlocutors(sender).count == 1 && conversation.interlocutors(sender).first.private_messaging_disabled?
 
           if form.invalid?
             message.valid?

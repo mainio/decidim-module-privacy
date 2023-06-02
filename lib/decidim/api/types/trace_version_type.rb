@@ -11,7 +11,7 @@ module Decidim
 
       def editor
         author = Decidim.traceability.version_editor(object)
-        author if public_author?  || author.is_a?(Decidim::UserGroup)
+        author if public_author? || author.is_a?(Decidim::UserGroup)
       end
       field :changeset, GraphQL::Types::JSON, description: "Object with the changes in this version", null: true
 
