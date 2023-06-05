@@ -201,6 +201,10 @@ module Decidim
             Decidim::Conferences::Admin::ConferenceRegistrationInviteForm.include(
               Decidim::Privacy::UnscopedOrganizationUsers
             )
+            Decidim::Conferences::ConferenceRegistration.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::ConferenceSpeaker.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Conferences::Admin::ConferenceSpeakerForm.include(Decidim::Privacy::UnscopedOrganizationUsers)
+            Decidim::ConferenceUserRole.include(Decidim::Privacy::UnscopedUserRelation)
           end
         end
       end
