@@ -54,7 +54,9 @@ module Decidim
           Decidim::CollapsibleListCell.include(
             Decidim::Privacy::CollapsibleListCellExtensions
           )
-          Decidim::ActivityCell.include(Decidim::Privacy::ActivityCellExtensions)
+          Decidim::ActivityCell.include(
+            Decidim::Privacy::ActivityCellExtensions
+          )
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
@@ -70,36 +72,6 @@ module Decidim
           # controllers
           Decidim::ApplicationController.include(
             Decidim::Privacy::ApplicationControllerExtensions
-          )
-          Decidim::Comments::CommentsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Proposals::ProposalsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Proposals::ProposalVotesController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Proposals::CollaborativeDraftsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Debates::DebatesController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Meetings::MeetingsController.include(
-            Decidim::Privacy::PrivacyActionsExtensions
-          )
-          Decidim::Admin::OfficializationsController.include(
-            Decidim::Privacy::OfficializationsControllerExtensions
-          )
-          Decidim::Admin::ImpersonatableUsersController.include(
-            Decidim::Privacy::ImpersonatableUsersControllerExtensions
-          )
-          Decidim::Admin::ModeratedUsersController.include(
-            Decidim::Privacy::ModeratedUsersControllerExtensions
-          )
-          Decidim::Admin::ImpersonationsController.include(
-            Decidim::Privacy::ImpersonationsControllerExtensions
           )
           Decidim::ProfilesController.include(
             Decidim::Privacy::ProfilesControllerExtensions
@@ -119,8 +91,8 @@ module Decidim
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
           )
-          Decidim::Assemblies::AssemblyMembersController.include(
-            Decidim::Privacy::AssemblyMembersControllerExtensions
+          Decidim::Messaging::ReplyToConversation.include(
+            Decidim::Privacy::ReplyToConversationExtensions
           )
           Decidim::Admin::OrganizationController.include(
             Decidim::Privacy::AdminOrganizationControllerExtensions
@@ -138,8 +110,6 @@ module Decidim
           end
           Decidim::Meetings::Invite.include(Decidim::Privacy::InviteExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
-          Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
-          Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
@@ -148,6 +118,80 @@ module Decidim
 
           # presenters
           Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
+
+          # Initialize concerns for each installed Decidim-module
+
+          if Decidim.const_defined?("Proposals")
+            # serializers
+            Decidim::Proposals::ProposalSerializer.include(Decidim::Privacy::ProposalSerializerExtensions)
+
+            # controllers
+            Decidim::Proposals::ProposalsController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+            Decidim::Proposals::ProposalVotesController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+            Decidim::Proposals::CollaborativeDraftsController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+
+            # models
+            Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
+            Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
+          end
+
+          if Decidim.const_defined?("Comments")
+            # controllers
+            Decidim::Comments::CommentsController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+
+            # models
+            Decidim::Comments::Comment.include(Decidim::Privacy::ModelAuthorExtensions)
+          end
+
+          if Decidim.const_defined?("Debates")
+            # controllers
+            Decidim::Debates::DebatesController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+          end
+
+          if Decidim.const_defined?("Meetings")
+            # controllers
+            Decidim::Meetings::MeetingsController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+          end
+
+          if Decidim.const_defined?("Admin")
+            # controllers
+            Decidim::Admin::OfficializationsController.include(
+              Decidim::Privacy::OfficializationsControllerExtensions
+            )
+            Decidim::Admin::ImpersonatableUsersController.include(
+              Decidim::Privacy::ImpersonatableUsersControllerExtensions
+            )
+            Decidim::Admin::ModeratedUsersController.include(
+              Decidim::Privacy::ModeratedUsersControllerExtensions
+            )
+            Decidim::Admin::ImpersonationsController.include(
+              Decidim::Privacy::ImpersonationsControllerExtensions
+            )
+          end
+
+          if Decidim.const_defined?("Assemblies")
+            # controllers
+            Decidim::Assemblies::AssemblyMembersController.include(
+              Decidim::Privacy::AssemblyMembersControllerExtensions
+            )
+          end
+
+          if Decidim.const_defined?("Initiatives")
+            # models
+            Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
+          end
         end
       end
     end

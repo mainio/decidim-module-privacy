@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.summary = "A module that enables privacy configurations"
   s.description = "Enable privacy configuration to Decidim."
 
-  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,lib}/**/*", "LICENSE-AGPLv3.txt", "Rakefile", "README.md", "db/migrate"]
 
   s.add_dependency "decidim-core", Decidim::Privacy.decidim_version
   s.add_development_dependency "decidim-admin", Decidim::Privacy.decidim_version
