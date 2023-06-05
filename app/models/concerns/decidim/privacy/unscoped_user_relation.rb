@@ -2,7 +2,7 @@
 
 module Decidim
   module Privacy
-    module InviteExtensions
+    module UnscopedUserRelation
       extend ActiveSupport::Concern
 
       included do
