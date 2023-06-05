@@ -95,11 +95,6 @@ module Decidim
             Decidim::Privacy::AdminOrganizationControllerExtensions
           )
 
-          # forms
-          Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
-            Decidim::Privacy::MeetingRegistrationInviteFormExtensions
-          )
-
           # models
           if Decidim::Privacy.apply_user_extensions?
             Decidim::User.include(Decidim::Privacy::UserExtensions)
@@ -117,8 +112,10 @@ module Decidim
           Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
 
           # Initialize concerns for each installed Decidim-module
-
-          Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation) if Decidim.const_defined?("Budgets")
+          if Decidim.const_defined?("Budgets")
+            # models
+            Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation)
+          end
 
           if Decidim.const_defined?("Proposals")
             # serializers
@@ -164,6 +161,10 @@ module Decidim
             Decidim::Meetings::MeetingsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
             )
+            # forms
+            Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
+              Decidim::Privacy::UnscopedOrganizationUsers
+            )
           end
 
           if Decidim.const_defined?("Admin")
@@ -192,6 +193,14 @@ module Decidim
           if Decidim.const_defined?("Initiatives")
             # models
             Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
+          end
+
+          if Decidim.const_defined?("Conferences")
+            # models
+            Decidim::Conferences::ConferenceInvite.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Conferences::Admin::ConferenceRegistrationInviteForm.include(
+              Decidim::Privacy::UnscopedOrganizationUsers
+            )
           end
         end
       end

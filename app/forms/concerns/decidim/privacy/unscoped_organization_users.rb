@@ -2,7 +2,7 @@
 
 module Decidim
   module Privacy
-    module MeetingRegistrationInviteFormExtensions
+    module UnscopedOrganizationUsers
       extend ActiveSupport::Concern
 
       included do
