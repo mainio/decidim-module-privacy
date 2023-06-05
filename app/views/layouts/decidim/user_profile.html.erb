@@ -1,7 +1,7 @@
 <% subtitle = content_for(:subtitle) %>
 
 <%= render "layouts/decidim/application" do %>
-<% if controller_name == "privacy_settings" || controller_name == "account"%>
+<% if controller_name == "privacy_settings" && current_user.public? || controller_name == "account" && current_user.public? %>
   <div class="callout secondary">
     <div class="row margin-bottom-1">
       <div class="columns small-12">
