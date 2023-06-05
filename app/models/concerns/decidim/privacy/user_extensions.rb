@@ -14,7 +14,7 @@ module Decidim
         #
         # Once the following PR is merged, this becomes useful:
         # https://github.com/decidim/decidim/pull/10939
-        scope :entire_collection, -> { unscope(where: :deleted_at) }
+        scope :entire_collection, -> { unscope(where: :published_at) }
         scope :profile_published, -> { where.not(published_at: nil) }
         scope :profile_private, -> { entire_collection.where(published_at: nil) }
 
