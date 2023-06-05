@@ -105,8 +105,7 @@ module Decidim
             Decidim::User.include(Decidim::Privacy::UserExtensions)
             Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           end
-          Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
-          Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation)
+
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
 
           # helpers
@@ -118,6 +117,8 @@ module Decidim
           Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
 
           # Initialize concerns for each installed Decidim-module
+
+          Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation) if Decidim.const_defined?("Budgets")
 
           if Decidim.const_defined?("Proposals")
             # serializers
@@ -157,6 +158,8 @@ module Decidim
           end
 
           if Decidim.const_defined?("Meetings")
+            # models
+            Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
             # controllers
             Decidim::Meetings::MeetingsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
