@@ -108,7 +108,8 @@ module Decidim
             Decidim::User.include(Decidim::Privacy::UserExtensions)
             Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           end
-          Decidim::Meetings::Invite.include(Decidim::Privacy::InviteExtensions)
+          Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
 
           # helpers
