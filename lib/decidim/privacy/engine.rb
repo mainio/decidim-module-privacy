@@ -65,9 +65,6 @@ module Decidim
           Decidim::CreateRegistration.include(
             Decidim::Privacy::CreateRegistrationExtensions
           )
-          # Decidim::Meetings::Admin::InviteUserToJoinMeeting.include(
-          #   Decidim::Privacy::InviteUserToJoinMeetingExtensions
-          # )
 
           # controllers
           Decidim::ApplicationController.include(
