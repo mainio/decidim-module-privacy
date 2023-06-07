@@ -23,6 +23,8 @@ jobs:
         with:
           bundler-cache: true
       - uses: actions/setup-node@v3
+        with:
+          node-version-file: .node-version
       - name: Get npm cache directory path
         id: npm-cache-dir-path
         run: echo "::set-output name=dir::$(npm get cache)-lint"
