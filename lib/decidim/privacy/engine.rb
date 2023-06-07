@@ -47,6 +47,10 @@ module Decidim
 
         # core
         config.to_prepare do
+          # this has to be added because of a bug in decidim core, other 'valid_email2' gem will not be
+          # available through the account form, which leads an error.
+          Decidim::User # rubocop:disable Lint/Void
+
           # cells
           Decidim::CollapsibleListCell.include(
             Decidim::Privacy::CollapsibleListCellExtensions
@@ -91,12 +95,21 @@ module Decidim
           Decidim::Messaging::ReplyToConversation.include(
             Decidim::Privacy::ReplyToConversationExtensions
           )
+          Decidim::Admin::OrganizationController.include(
+            Decidim::Privacy::AdminOrganizationControllerExtensions
+          )
+
+          # forms
+          Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
+            Decidim::Privacy::MeetingRegistrationInviteFormExtensions
+          )
 
           # models
           if Decidim::Privacy.apply_user_extensions?
             Decidim::User.include(Decidim::Privacy::UserExtensions)
             Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           end
+
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
 
           # helpers
@@ -119,6 +132,8 @@ module Decidim
           )
 
           # Initialize concerns for each installed Decidim-module
+
+          Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation) if Decidim.const_defined?("Budgets")
 
           if Decidim.const_defined?("Proposals")
             # serializers
@@ -158,6 +173,8 @@ module Decidim
           end
 
           if Decidim.const_defined?("Meetings")
+            # models
+            Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
             # controllers
             Decidim::Meetings::MeetingsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
