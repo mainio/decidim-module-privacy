@@ -18,7 +18,7 @@ module Decidim
         def private_user?
           return unless params[:nickname]
 
-          Decidim::User.unscoped.find_by(nickname: params[:nickname]).published_at.nil?
+          Decidim::User.entire_collection.find_by(nickname: params[:nickname]).published_at.nil?
         end
       end
     end

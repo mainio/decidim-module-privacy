@@ -62,6 +62,7 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
+          # Decidim::CreateOmniauthRegistration.include(Decidim::Privacy::CreateOmniauthRegistrationExtensions)
           Decidim::CreateRegistration.include(
             Decidim::Privacy::CreateRegistrationExtensions
           )
@@ -96,9 +97,35 @@ module Decidim
           )
 
           # models
+          Decidim::ActionLog.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Authorization.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::ImpersonationLog.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Notification.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Reminder.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Report.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::ShareToken.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::HasPrivateUsers.include(Decidim::Privacy::HasPrivateUsersExtensions)
+          # Decidim::AuthorizationTransfer.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::UserReport.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Follow.include(Decidim::Privacy::UnscopedUserRelation)
+          if decidim.const_defined?("Elections")
+            Decidim::Elections::Trustee.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Elections::Vote.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Votings::MonitoringCommitteeMember.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Votings::InPersonVote.include(Decidim::Privacy::UnscopedUserRelation)
+          end
+          Decidim::UserBlock.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Gamification::BadgeScore.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::UserModeration.include(Decidim::Privacy::UnscopedUserRelation)
+
+          # forms
+          Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
+          Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
           if Decidim::Privacy.apply_user_extensions?
             Decidim::User.include(Decidim::Privacy::UserExtensions)
             Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+            Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           end
 
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)

@@ -9,7 +9,7 @@ module Decidim
         private
 
         def base_query_finder
-          UserModeration.joins(:user).unscoped.where(decidim_users: { decidim_organization_id: current_organization.id })
+          UserModeration.joins(:user).entire_collection.where(decidim_users: { decidim_organization_id: current_organization.id })
         end
       end
     end

@@ -8,7 +8,7 @@ module Decidim
         private
 
         def collection
-          @collection ||= current_organization.users.unscoped.where(admin: false, roles: [])
+          @collection ||= current_organization.users.entire_collection.where(admin: false, roles: [])
         end
       end
     end
