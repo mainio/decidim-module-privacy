@@ -37,3 +37,7 @@ jobs:
         run: npm ci
       - run: bundle exec rubocop -P
         name: Lint Ruby files
+      - run: npm run stylelint
+        name: Lint SCSS files
+      - run: bundle exec rubocop -P
+        name: Lint Ruby files
