@@ -45,6 +45,7 @@ module Decidim
           self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
         end
 
+        # core
         config.to_prepare do
           # this has to be added because of a bug in decidim core, other 'valid_email2' gem will not be
           # available through the account form, which leads an error.
@@ -56,6 +57,9 @@ module Decidim
           )
           Decidim::ActivityCell.include(
             Decidim::Privacy::ActivityCellExtensions
+          )
+          Decidim::AuthorCell.include(
+            Decidim::Privacy::AuthorCellExtensions
           )
 
           # commands
@@ -79,9 +83,6 @@ module Decidim
           )
           Decidim::UserTimelineController.include(
             Decidim::Privacy::ProfilesControllerExtensions
-          )
-          Decidim::UserActivitiesController.include(
-            Decidim::Privacy::UserActivitiesControllerExtensions
           )
           Decidim::Messaging::ConversationsController.include(
             Decidim::Privacy::ConversationsControllerExtensions
@@ -137,6 +138,17 @@ module Decidim
 
           # presenters
           Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
+
+          # queries
+          Decidim::UserGroups::AcceptedMemberships.include(
+            Decidim::Privacy::AcceptedMembershipsExtensions
+          )
+          Decidim::UserGroups::MemberMemberships.include(
+            Decidim::Privacy::MemberMembershipsExtensions
+          )
+          Decidim::UserGroups::AdminMemberships.include(
+            Decidim::Privacy::AdminMembershipsExtensions
+          )
 
           # Initialize concerns for each installed Decidim-module
           if Decidim.const_defined?("Budgets")
