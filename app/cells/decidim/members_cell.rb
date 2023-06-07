@@ -28,7 +28,6 @@ module Decidim
                        else
                          Decidim::UserGroups::AcceptedMemberships.for(model).page(params[:page]).per(20)
                        end
-      @memberships.reject { |member| member.user.nil? }
     end
   end
 end

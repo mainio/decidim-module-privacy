@@ -45,6 +45,7 @@ module Decidim
           self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
         end
 
+        # core
         config.to_prepare do
           # cells
           Decidim::CollapsibleListCell.include(
@@ -52,6 +53,9 @@ module Decidim
           )
           Decidim::ActivityCell.include(
             Decidim::Privacy::ActivityCellExtensions
+          )
+          Decidim::AuthorCell.include(
+            Decidim::Privacy::AuthorCellExtensions
           )
 
           # commands
@@ -102,6 +106,17 @@ module Decidim
 
           # presenters
           Decidim::UserPresenter.include(Decidim::Privacy::UserPresenterExtensions)
+
+          # queries
+          Decidim::UserGroups::AcceptedMemberships.include(
+            Decidim::Privacy::AcceptedMembershipsExtensions
+          )
+          Decidim::UserGroups::MemberMemberships.include(
+            Decidim::Privacy::MemberMembershipsExtensions
+          )
+          Decidim::UserGroups::AdminMemberships.include(
+            Decidim::Privacy::AdminMembershipsExtensions
+          )
 
           # Initialize concerns for each installed Decidim-module
 

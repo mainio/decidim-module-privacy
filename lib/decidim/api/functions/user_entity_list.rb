@@ -20,6 +20,7 @@ module Decidim
         @query = Decidim::UserBaseEntity
                  .where(organization: ctx[:current_organization])
                  .where.not(published_at: nil)
+                 .where_not(verified_at: nil)
                  .confirmed
                  .not_blocked
                  .where(deleted_at: nil)
