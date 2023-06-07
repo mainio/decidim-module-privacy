@@ -83,9 +83,6 @@ module Decidim
           Decidim::UserTimelineController.include(
             Decidim::Privacy::ProfilesControllerExtensions
           )
-          Decidim::UserActivitiesController.include(
-            Decidim::Privacy::UserActivitiesControllerExtensions
-          )
           Decidim::Messaging::ConversationsController.include(
             Decidim::Privacy::ConversationsControllerExtensions
           )

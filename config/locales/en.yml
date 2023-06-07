@@ -37,11 +37,6 @@ en:
       privacy_block:
         title: Publication of account needed
         content: "<p class='text-center'>You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
-      private_account:
-        title: This account is private
-        content: To access this user's profile, they have to make it public.
-        back: Previous page
-        unnamed_user: Unnamed user
       partials:
         privacy_consent:
           make_profile_public: Make your profile public
