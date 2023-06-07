@@ -34,7 +34,7 @@ jobs:
           restore-keys: |
             npm-
       - name: Install JS dependencies
-        run: npm install
+        run: npm ci
       - run: bundle exec rubocop -P
         name: Lint Ruby files
       - run: npm run stylelint
