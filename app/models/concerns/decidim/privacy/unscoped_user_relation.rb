@@ -6,7 +6,12 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        belongs_to :user, -> { unscope(where: :published_at) }, foreign_key: "decidim_user_id", class_name: "Decidim::User"
+        options = reflect_on_association(:user).options
+        if options.keys.include?(:optional)
+          belongs_to :user, -> { entire_collection }, foreign_key: "decidim_user_id", class_name: "Decidim::User", optional: options[:optional]
+        else
+          belongs_to :user, -> { entire_collection }, foreign_key: "decidim_user_id", class_name: "Decidim::User"
+        end
       end
     end
   end
