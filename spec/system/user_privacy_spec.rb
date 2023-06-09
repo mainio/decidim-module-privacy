@@ -54,7 +54,7 @@ describe "User privacy", type: :system do
   context "when user public" do
     context "when accepting publishing of profile" do
       it "redirects you to the desired page" do
-        user.update(published_at: "2023-06-06 10:08:20.796179000 +0000")
+        user.update(published_at: Time.current)
 
         visit new_proposal_path(component)
 
@@ -66,7 +66,7 @@ describe "User privacy", type: :system do
 
     context "when opening user menu" do
       it "has 'My public profile' link" do
-        user.update(published_at: "2023-06-06 10:08:20.796179000 +0000")
+        user.update(published_at: Time.current)
 
         visit current_path
         click_link user.name
