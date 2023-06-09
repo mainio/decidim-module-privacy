@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Privacy", type: :system do
+describe "User privacy", type: :system do
   let(:organization) { create(:organization) }
   let(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
   let(:manifest_name) { "proposals" }

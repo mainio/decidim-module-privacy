@@ -403,7 +403,6 @@ GEM
       railties (>= 3.0.0)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
-<<<<<<< HEAD
     faraday (1.10.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -415,10 +414,6 @@ GEM
       faraday-patron (~> 1.0)
       faraday-rack (~> 1.0)
       faraday-retry (~> 1.0)
-=======
-    faraday (2.7.6)
-      faraday-net_http (>= 2.0, < 3.1)
->>>>>>> a3b7169d9a2bda86c1360daba00b4ee8e002085c
       ruby2_keywords (>= 0.0.4)
     faraday-em_http (1.0.0)
     faraday-em_synchrony (1.0.0)
@@ -619,8 +614,9 @@ GEM
     parallel (1.23.0)
     parallel_tests (3.13.0)
       parallel
-    parser (3.2.2.1)
+    parser (3.2.2.3)
       ast (~> 2.4.1)
+      racc
     pg (1.1.4)
     pg_search (2.3.6)
       activerecord (>= 5.2)
@@ -636,7 +632,7 @@ GEM
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
-    racc (1.6.2)
+    racc (1.7.0)
     rack (2.2.7)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
