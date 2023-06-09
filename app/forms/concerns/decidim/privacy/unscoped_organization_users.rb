@@ -2,12 +2,12 @@
 
 module Decidim
   module Privacy
-    module MeetingRegistrationInviteFormExtensions
+    module UnscopedOrganizationUsers
       extend ActiveSupport::Concern
 
       included do
         def user
-          @user ||= current_organization.users.unscoped.find_by(id: user_id)
+          @user ||= current_organization.users.entire_collection.find_by(id: user_id)
         end
       end
     end

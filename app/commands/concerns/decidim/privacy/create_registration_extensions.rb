@@ -8,10 +8,10 @@ module Decidim
       included do
         private
 
-        # We are forcing the unscoped User, otherwise it tries to find the
+        # We are forcing the entire collection of  User, otherwise it tries to find the
         # record inside the default_scope users, and fails.
         def create_user
-          @user = User.unscoped do
+          @user = User.entire_collection do
             User.create!(
               email: form.email,
               name: form.name,

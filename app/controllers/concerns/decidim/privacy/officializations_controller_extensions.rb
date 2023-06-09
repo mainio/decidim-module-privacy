@@ -8,7 +8,7 @@ module Decidim
         private
 
         def collection
-          @collection ||= current_organization.users.unscoped.not_deleted.left_outer_joins(:user_moderation)
+          @collection ||= current_organization.users.entire_collection.not_deleted.left_outer_joins(:user_moderation)
         end
       end
     end
