@@ -24,7 +24,6 @@ module Decidim
         Decidim::UserBaseEntity
           .confirmed
           .where.not(published_at: nil)
-          .where_not(verified_at: nil)
           .where(deleted_at: nil)
           .not_blocked
           .find_by(filters)

@@ -17,7 +17,7 @@ en:
     messaging:
       conversations:
         show:
-          private_account: You can't have a conversation with private accounts.
+          private_account: You can't have a conversation with an account that is private or has messaging disabled.
     privacy:
       message_block:
         title: Private messaging is not enabled

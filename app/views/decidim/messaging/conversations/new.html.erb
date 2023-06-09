@@ -1,0 +1,9 @@
+<%= render layout: "show", locals: { participants: @form.recipient.to_a } do %>
+  <div id="messages"></div>
+
+  <% if @form.recipient.to_a.count == 1 && @form.recipient.to_a.first.private_messaging_disabled? %>
+    <div class="callout warning margin-top-2"><%= t(".private_account") %></div>
+  <% else %>
+    <%= render "start", form: @form %>
+  <% end %>
+<% end %>

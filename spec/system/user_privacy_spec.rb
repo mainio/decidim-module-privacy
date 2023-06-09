@@ -68,7 +68,7 @@ describe "User privacy", type: :system do
       it "has 'My public profile' link" do
         user.update(published_at: Time.current)
 
-        visit current_path
+        refresh
         click_link user.name
         expect(page).to have_link("My public profile")
       end

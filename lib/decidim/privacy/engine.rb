@@ -70,6 +70,12 @@ module Decidim
           Decidim::CreateRegistration.include(
             Decidim::Privacy::CreateRegistrationExtensions
           )
+          Decidim::Messaging::ReplyToConversation.include(
+            Decidim::Privacy::ReplyToConversationExtensions
+          )
+          Decidim::Messaging::StartConversation.include(
+            Decidim::Privacy::StartConversationExtensions
+          )
 
           # controllers
           Decidim::ApplicationController.include(
@@ -89,9 +95,6 @@ module Decidim
           )
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
-          )
-          Decidim::Messaging::ReplyToConversation.include(
-            Decidim::Privacy::ReplyToConversationExtensions
           )
           Decidim::Admin::OrganizationController.include(
             Decidim::Privacy::AdminOrganizationControllerExtensions
