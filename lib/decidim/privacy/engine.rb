@@ -66,7 +66,6 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
-          # Decidim::CreateOmniauthRegistration.include(Decidim::Privacy::CreateOmniauthRegistrationExtensions)
           Decidim::CreateRegistration.include(
             Decidim::Privacy::CreateRegistrationExtensions
           )
@@ -76,6 +75,7 @@ module Decidim
           Decidim::Messaging::StartConversation.include(
             Decidim::Privacy::StartConversationExtensions
           )
+          # Decidim::CreateOmniauthRegistration.include(Decidim::Privacy::CreateOmniauthRegistrationExtensions)
 
           # controllers
           Decidim::ApplicationController.include(
@@ -93,9 +93,6 @@ module Decidim
           Decidim::Messaging::ConversationsController.include(
             Decidim::Privacy::ConversationsControllerExtensions
           )
-          Decidim::Messaging::ConversationHelper.include(
-            Decidim::Privacy::ConversationHelperExtensions
-          )
           Decidim::Admin::OrganizationController.include(
             Decidim::Privacy::AdminOrganizationControllerExtensions
           )
@@ -110,13 +107,14 @@ module Decidim
           Decidim::Report.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ShareToken.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::HasPrivateUsers.include(Decidim::Privacy::HasPrivateUsersExtensions)
-          # Decidim::AuthorizationTransfer.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserReport.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Follow.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserBlock.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Gamification::BadgeScore.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserModeration.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
+          Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
+          # Decidim::AuthorizationTransfer.include(Decidim::Privacy::UnscopedUserRelation)
 
           if Decidim::Privacy.apply_user_extensions?
             Decidim::User.include(Decidim::Privacy::UserExtensions)
@@ -127,11 +125,12 @@ module Decidim
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
           Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
 
-          Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
-
           # helpers
           Decidim::ActionAuthorizationHelper.include(
             Decidim::Privacy::ActionAuthorizationHelperExtensions
+          )
+          Decidim::Messaging::ConversationHelper.include(
+            Decidim::Privacy::ConversationHelperExtensions
           )
 
           # presenters
@@ -149,19 +148,20 @@ module Decidim
           )
 
           # Initialize concerns for each installed Decidim-module
-          if Decidim.const_defined?("Budgets")
+          if Decidim.module_installed? :budgets
             # models
             Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation)
           end
 
-          if Decidim.const_defined?("Elections")
+          if Decidim.module_installed? :elections
+            # models
             Decidim::Elections::Trustee.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Elections::Vote.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Votings::MonitoringCommitteeMember.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Votings::InPersonVote.include(Decidim::Privacy::UnscopedUserRelation)
           end
 
-          if Decidim.const_defined?("Proposals")
+          if Decidim.module_installed? :proposals
             # serializers
             Decidim::Proposals::ProposalSerializer.include(Decidim::Privacy::ProposalSerializerExtensions)
 
@@ -181,7 +181,7 @@ module Decidim
             Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
           end
 
-          if Decidim.const_defined?("Comments")
+          if Decidim.module_installed? :comments
             # controllers
             Decidim::Comments::CommentsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
@@ -191,27 +191,29 @@ module Decidim
             Decidim::Comments::Comment.include(Decidim::Privacy::ModelAuthorExtensions)
           end
 
-          if Decidim.const_defined?("Debates")
+          if Decidim.module_installed? :debates
             # controllers
             Decidim::Debates::DebatesController.include(
               Decidim::Privacy::PrivacyActionsExtensions
             )
           end
 
-          if Decidim.const_defined?("Meetings")
+          if Decidim.module_installed? :meetings
             # models
             Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
+
             # controllers
             Decidim::Meetings::MeetingsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
             )
+
             # forms
             Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
               Decidim::Privacy::UnscopedOrganizationUsers
             )
           end
 
-          if Decidim.const_defined?("Admin")
+          if Decidim.module_installed? :admin
             # controllers
             Decidim::Admin::OfficializationsController.include(
               Decidim::Privacy::OfficializationsControllerExtensions
@@ -227,28 +229,32 @@ module Decidim
             )
           end
 
-          if Decidim.const_defined?("Assemblies")
+          if Decidim.module_installed? :assemblies
             # controllers
             Decidim::Assemblies::AssemblyMembersController.include(
               Decidim::Privacy::AssemblyMembersControllerExtensions
             )
           end
 
-          if Decidim.const_defined?("Initiatives")
+          if Decidim.module_installed? :initiatives
             # models
             Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
           end
 
-          if Decidim.const_defined?("Conferences")
+          if Decidim.module_installed? :conferences
             # models
             Decidim::Conferences::ConferenceInvite.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Conferences::ConferenceRegistration.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::ConferenceSpeaker.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::ConferenceUserRole.include(Decidim::Privacy::UnscopedUserRelation)
+
+            # forms
             Decidim::Conferences::Admin::ConferenceRegistrationInviteForm.include(
               Decidim::Privacy::UnscopedOrganizationUsers
             )
-            Decidim::Conferences::ConferenceRegistration.include(Decidim::Privacy::UnscopedUserRelation)
-            Decidim::ConferenceSpeaker.include(Decidim::Privacy::UnscopedUserRelation)
-            Decidim::Conferences::Admin::ConferenceSpeakerForm.include(Decidim::Privacy::UnscopedOrganizationUsers)
-            Decidim::ConferenceUserRole.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Conferences::Admin::ConferenceSpeakerForm.include(
+              Decidim::Privacy::UnscopedOrganizationUsers
+            )
           end
         end
       end
