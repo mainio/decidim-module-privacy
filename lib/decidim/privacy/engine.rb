@@ -113,15 +113,16 @@ module Decidim
           Decidim::UserBlock.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Gamification::BadgeScore.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserModeration.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
+
+          if Decidim::Privacy.apply_user_extensions?
+            Decidim::User.include(Decidim::Privacy::UserExtensions)
+            Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+          end
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
           Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
-          if Decidim::Privacy.apply_user_extensions?
-            Decidim::User.include(Decidim::Privacy::UserExtensions)
-            Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
-            Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
-          end
 
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
 
