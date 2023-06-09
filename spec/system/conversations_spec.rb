@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "Conversations", type: :system do
   let(:organization) { create(:organization) }
-  let(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
+  let(:participatory_process) { (create :participatory_process, :with_steps, organization: organization) }
   let!(:user) { create(:user, :confirmed, organization: organization) }
 
   before do
@@ -17,5 +17,4 @@ describe "Conversations", type: :system do
       expect(page).to have_content("shee")
     end
   end
-
 end

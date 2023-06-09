@@ -110,12 +110,6 @@ module Decidim
           # Decidim::AuthorizationTransfer.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserReport.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Follow.include(Decidim::Privacy::UnscopedUserRelation)
-          if decidim.const_defined?("Elections")
-            Decidim::Elections::Trustee.include(Decidim::Privacy::UnscopedUserRelation)
-            Decidim::Elections::Vote.include(Decidim::Privacy::UnscopedUserRelation)
-            Decidim::Votings::MonitoringCommitteeMember.include(Decidim::Privacy::UnscopedUserRelation)
-            Decidim::Votings::InPersonVote.include(Decidim::Privacy::UnscopedUserRelation)
-          end
           Decidim::UserBlock.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Gamification::BadgeScore.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserModeration.include(Decidim::Privacy::UnscopedUserRelation)
@@ -154,6 +148,13 @@ module Decidim
           if Decidim.const_defined?("Budgets")
             # models
             Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation)
+          end
+
+          if Decidim.const_defined?("Elections")
+            Decidim::Elections::Trustee.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Elections::Vote.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Votings::MonitoringCommitteeMember.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Votings::InPersonVote.include(Decidim::Privacy::UnscopedUserRelation)
           end
 
           if Decidim.const_defined?("Proposals")

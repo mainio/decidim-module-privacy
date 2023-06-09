@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe "User privacy", type: :system do
   let(:organization) { create(:organization) }
-  let(:participatory_process) { create :participatory_process, :with_steps, organization: organization }
+  let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
   let(:manifest_name) { "proposals" }
   let(:manifest) { Decidim.find_component_manifest(manifest_name) }
   let!(:component) { create(:proposal_component, :with_creation_enabled, manifest: manifest, participatory_space: participatory_process) }
