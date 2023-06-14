@@ -15,9 +15,10 @@ describe "User privacy", type: :system do
   end
 
   context "when user private" do
-    it "doesn't show in search" do
+    it "doesn't show up in search" do
       fill_in "term", with: user.name
       find("button[name='commit']").click
+
       expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
     end
   end
@@ -28,8 +29,9 @@ describe "User privacy", type: :system do
 
       fill_in "term", with: user.name
       find("button[name='commit']").click
+
       expect(page).to have_content("1 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
-      expect(page).to have_css("a", text: user.name)
+      expect(page).to have_selector("a", text: user.name)
     end
   end
 
@@ -37,7 +39,20 @@ describe "User privacy", type: :system do
     it "doesn't show up in search" do
       fill_in "term", with: user_group.name
       find("button[name='commit']").click
+
       expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
+    end
+  end
+
+  context "when user group is verified" do
+    let!(:user_group) { create(:user_group, verified_at: Time.current, organization: organization) }
+
+    it "shows up in seach" do
+      fill_in "term", with: user_group.name
+      find("button[name='commit']").click
+
+      expect(page).to have_content("1 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
+      expect(page).to have_selector("a", text: user_group.name)
     end
   end
 
