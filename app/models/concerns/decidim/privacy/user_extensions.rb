@@ -45,7 +45,7 @@ module Decidim
         end
 
         def private_messaging_disabled?
-          !public? || allow_private_messaging == false
+          !public? || !allow_private_messaging
         end
 
         # this method was added to this model so it can be hidden from search
