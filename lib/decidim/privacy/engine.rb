@@ -62,7 +62,7 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
-          # Decidim::CreateOmniauthRegistration.include(Decidim::Privacy::CreateOmniauthRegistrationExtensions)
+          Decidim::CreateOmniauthRegistration.include(Decidim::Privacy::CreateOmniauthRegistrationExtensions)
           Decidim::CreateRegistration.include(
             Decidim::Privacy::CreateRegistrationExtensions
           )
