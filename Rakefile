@@ -41,6 +41,6 @@ task :development_app do
     )
   end
 
-  fix_babel_config("spec/decidim_dummy_app")
+  fix_babel_config("development_app")
   install_module("development_app")
 end
