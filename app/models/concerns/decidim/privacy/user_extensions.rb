@@ -45,6 +45,10 @@ module Decidim
         end
 
         def private_messaging_disabled?
+          public? && !allow_private_messaging
+        end
+
+        def private_or_no_messaging?
           !public? || !allow_private_messaging
         end
 

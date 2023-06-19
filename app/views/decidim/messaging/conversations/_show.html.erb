@@ -13,7 +13,7 @@
           <% if participants.count == 1 %>
             <% if participants.first.deleted? %>
               <%= image_tag present(participants.first).avatar_url, alt: t("decidim.author.avatar", name: t("decidim.profile.deleted")) %>
-            <% elsif participants.first.private_messaging_disabled? %>
+            <% elsif !participants.first.public? %>
               <%= image_tag present(participants.first).default_avatar_url, alt: t("decidim.author.avatar", name: t("decidim.profile.private")) %>
             <% else %>
               <%= link_to profile_path(participants.first.nickname) do %>
@@ -31,6 +31,10 @@
                 <%= t(".title", usernames: username_list(participants)).html_safe %>
               <% end %>
             </h1>
+            <% if participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? }.any?(&:private_messaging_disabled?) %>
+              <%= t(".private_messaging_disabled_users") %>
+              <%= participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? && participant.private_messaging_disabled?}.map(&:name).join(", ") %>
+            <% end %>
           </div>
         </div>
 

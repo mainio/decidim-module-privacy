@@ -4,8 +4,8 @@
       <div class="card__link text-center">
         <div class="user-header__avatar">
           <% if conversation.interlocutors(current_user).count == 1 %>
-            <% if conversation.interlocutors(current_user).first.private_messaging_disabled? %>
-              <%= image_tag present(conversation.interlocutors(current_user).first).default_avatar_url, alt: t("decidim.profile.private"), name: decidim_sanitize(t("decidim.profile.private")) %>
+            <% if !conversation.interlocutors(current_user).first.public? %>
+              <%= image_tag present(conversation.interlocutors(current_user).first).default_avatar_url, alt: t("decidim.profile.private"), name: t("decidim.profile.private") %>
             <% else %>
               <%= image_tag present(conversation.interlocutors(current_user).first).avatar_url, alt: t("decidim.author.avatar", name: decidim_sanitize(current_user.name)) %>
             <% end %>
@@ -45,6 +45,7 @@
           </strong>
         </span>
       </div>
+
       <% if conversation.unread_count(current_user) > 0 %>
         <span class="unread_message__counter">
           <span><%= conversation.unread_count(current_user) %></span>
