@@ -9,12 +9,12 @@ module Decidim
         def conversation_name_for(users)
           return content_tag(:span, t("decidim.profile.deleted"), class: "label label--small label--basic") if users.first.deleted?
 
-          if users.first.private_messaging_disabled?
-            content_tag = content_tag(:span, t("decidim.profile.private"), class: "label label--small label--basic")
-            nickname = content_tag(:span, t("decidim.profile.private_info").html_safe, class: "muted")
-          else
+          if users.first.public?
             content_tag = content_tag(:strong, users.first.name)
             nickname = content_tag(:span, "@#{users.first.nickname}", class: "muted")
+          else
+            content_tag = content_tag(:span, t("decidim.profile.private"), class: "label label--small label--basic")
+            nickname = content_tag(:span, t("decidim.profile.private_info").html_safe, class: "muted")
           end
 
           content_tag << tag.br
@@ -27,10 +27,10 @@ module Decidim
 
           chat_with_user = if participants.first.deleted?
                              t("decidim.profile.deleted")
-                           elsif participants.first.private_messaging_disabled?
-                             t("decidim.profile.private")
-                           else
+                           elsif participants.first.public?
                              "#{participants.first.name} (@#{participants.first.nickname})"
+                           else
+                             t("decidim.profile.private")
                            end
 
           "#{t("chat_with", scope: "decidim.messaging.conversations.show")} #{chat_with_user}"
@@ -45,10 +45,10 @@ module Decidim
             content_tags.push(
               if u.deleted?
                 deleted_user_tag
-              elsif u.private_messaging_disabled?
-                private_user_tag
-              else
+              elsif u.public?
                 content_tag(:strong, u.name)
+              else
+                private_user_tag
               end
             )
           end

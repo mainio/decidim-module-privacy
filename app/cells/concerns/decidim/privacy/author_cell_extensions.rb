@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def show
-          return if model.try(:public?) == false
+          return unless model.try(:public?)
 
           render
         end

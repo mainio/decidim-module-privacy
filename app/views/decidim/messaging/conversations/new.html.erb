@@ -1,8 +1,11 @@
 <%= render layout: "show", locals: { participants: @form.recipient.to_a } do %>
   <div id="messages"></div>
-
-  <% if @form.recipient.to_a.count == 1 && @form.recipient.to_a.first.private_messaging_disabled? %>
-    <div class="callout warning margin-top-2"><%= t(".private_account") %></div>
+  <% if @form.recipient.to_a.select { |recipient| recipient.instance_of?(Decidim::User) }.any?(&:private_messaging_disabled?) %>
+    <% if @form.recipient.count > 1 %>
+      <div class="callout warning margin-top-2"><%= t(".private_messaging_disabled_new_multiple") %></div>
+    <% else %>
+      <div class="callout warning margin-top-2"><%= t(".private_messaging_disabled_new") %></div>
+    <% end %>
   <% else %>
     <%= render "start", form: @form %>
   <% end %>

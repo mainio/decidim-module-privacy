@@ -17,7 +17,11 @@ en:
     messaging:
       conversations:
         show:
-          private_account: You can't have a conversation with an account that is private or has messaging disabled.
+          private_account: You can't have a conversation with an account that is private.
+          private_messaging_disabled: You can't have a conversation with an account that has private messaging disabled.
+          private_messaging_disabled_new: You can't start a conversation with an account that has private messaging disabled.
+          private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
+          private_messaging_disabled_users: "The following user(s) have disabled their private messaging:"
     privacy:
       message_block:
         title: Private messaging is not enabled
