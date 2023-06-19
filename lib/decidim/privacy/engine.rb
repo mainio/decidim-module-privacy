@@ -109,7 +109,7 @@ module Decidim
           # Decidim::AuthorizationTransfer.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserReport.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Follow.include(Decidim::Privacy::UnscopedUserRelation)
-          if decidim.const_defined?("Elections")
+          if Decidim.const_defined?("Elections")
             Decidim::Elections::Trustee.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Elections::Vote.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Votings::MonitoringCommitteeMember.include(Decidim::Privacy::UnscopedUserRelation)

@@ -3,7 +3,7 @@
 module Decidim
   module Privacy
     module ValuatableExtensions
-      include ActiveSupport::Concern
+      extend ActiveSupport::Concern
       included do
         def valuators
           valuator_role_ids = valuation_assignments.where(proposal: self).pluck(:valuator_role_id)
