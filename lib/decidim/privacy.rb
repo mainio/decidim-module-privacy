@@ -20,7 +20,7 @@ module Decidim
     # PRs:
     # https://github.com/decidim/decidim/pull/10934
     # https://github.com/decidim/decidim/pull/10939
-    def self.apply_user_extensions?
+    def self.apply_extensions?
       return true unless defined?(Rake)
       return true unless Rake.respond_to?(:application)
       return false if ["db:migrate", "db:seed"].any? { |task| Rake.application.top_level_tasks.include?(task) }

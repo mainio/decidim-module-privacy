@@ -40,6 +40,8 @@ module Decidim
       end
 
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
+        next unless Decidim::Privacy.apply_extensions?
+
         ActiveSupport.on_load(:active_record) do
           remove_const(:OrmAdapter) if const_defined?(:OrmAdapter)
           self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
@@ -119,12 +121,10 @@ module Decidim
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
           Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
-          if Decidim::Privacy.apply_user_extensions?
-            Decidim::User.include(Decidim::Privacy::UserExtensions)
-            Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
-            Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
-          end
 
+          Decidim::User.include(Decidim::Privacy::UserExtensions)
+          Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
+          Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
 
           # helpers
