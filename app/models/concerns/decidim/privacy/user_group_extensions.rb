@@ -6,6 +6,10 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
+        default_scope { visible }
+
+        scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS ?", nil) }
+
         def public?
           true
         end
