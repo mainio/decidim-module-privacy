@@ -6,36 +6,28 @@ describe Decidim::Privacy::UpdateAccountPublicity do
   subject { described_class.new(user, form) }
 
   let!(:user) { create(:user) }
-  let(:agree_public_profile) { "1" }
   let(:form) do
     double(
-      valid?: valid?,
-      agree_public_profile: agree_public_profile
+      valid?: valid?
     )
   end
 
   context "when form is invalid" do
     let(:valid?) { false }
 
-    it "broadcasts invlaide" do
-      expect(subject.call).to broadcast(:invalid)
-    end
+    it { is_expected.to broadcast(:invalid) }
   end
 
   context "when valid form" do
     let(:valid?) { true }
 
-    it "broadcasts invlaide" do
-      expect(subject.call).to broadcast(:ok)
-    end
+    it { is_expected.to broadcast(:ok) }
 
-    context "when accepts the publicity" do
-      it "changes user privacy to public" do
-        expect(user.published_at).to be_nil
-        subject.call
-        publicity = Decidim::User.last.published_at
-        expect(publicity).not_to be_nil
-      end
+    it "changes user privacy to public" do
+      expect(user.published_at).to be_nil
+      subject.call
+      publicity = Decidim::User.last.published_at
+      expect(publicity).not_to be_nil
     end
   end
 end
