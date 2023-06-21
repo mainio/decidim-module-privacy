@@ -1,11 +1,17 @@
 # Decidim::Privacy
 
-Enable privacy configuration to Decidim.
+In the regular decidim system, participants' accounts information such as their names, emails, nicknames, etc. and their activities, such as comments, votes, and more, are considered public. This means that anyone can search for users' profile information and their activities. However, this openness has recently raised concerns among some participants (see [here](https://www.hel.fi/en/news/personal-data-breach-at-omastadihelfi-corrective-measures-have-been-taken) for more information).
+
+To address these concerns, this module provides an additional layer of privacy to user accounts. By installing this module, users now have the option to switch their accounts to private. Furthermore, all information related to private users will be hidden from third parties, including Decidim API.
 
 ## Usage
 
-Privacy will be available as a Module for a Participatory
-Space.
+After installing this module, "Privacy settings" section will be added to the participant account settings as shown in the below image. Users will be able to make their profile public/ private. By default, accounts are private.
+![Privacy settings added to the participant's account settings](docs/privacy_settings.png)
+
+Later on, if a private user wants to participate in an activity which needs a public profile (such as leaving a comment, creating a profile, etc), user's permission will be asked prior to performing the action via a popup consent, as shown in below image.
+![Popup opened for a private user wanting to create a new proposal](docs/public_profile_popup.png)
+
 
 ## Installation
 
@@ -19,6 +25,8 @@ And then execute:
 
 ```bash
 bundle
+bundle exec rails decidim_privacy:install:migrations
+bundle exec rails db:migrate
 ```
 
 ## Console queries
