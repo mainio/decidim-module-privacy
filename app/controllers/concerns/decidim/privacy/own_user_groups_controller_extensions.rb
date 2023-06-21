@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def index
-          @user_groups = current_user.user_groups
+          @user_groups = current_user.user_groups.entire_collection
         end
       end
     end

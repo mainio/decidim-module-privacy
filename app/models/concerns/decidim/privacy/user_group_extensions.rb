@@ -5,10 +5,22 @@ module Decidim
     module UserGroupExtensions
       extend ActiveSupport::Concern
 
+      class_methods do
+        def unscope_verified_at
+          scope = all
+
+          remove_clause = unscoped.unscope(where: :type).where.not("extended_data->>'verified_at' IS ?", nil).where_clause
+          scope.where_clause -= remove_clause
+
+          scope
+        end
+      end
+
       included do
         default_scope { visible }
 
         scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS ?", nil) }
+        scope :entire_collection, -> { unscope_verified_at.unscope(where: :confirmed_at) }
 
         def public?
           true
