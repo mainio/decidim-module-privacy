@@ -11,6 +11,9 @@ module Decidim
         # case can be seen in the `decidim-privacy` module that adds privacy
         # controls for the users by applying a `default_scope`.
         scope :entire_collection, -> { self }
+
+        default_scope { profile_published }
+        scope :profile_published, -> { where(type: "Decidim::UserGroup").or(where.not(published_at: nil)) }
       end
     end
   end
