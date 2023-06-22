@@ -5,6 +5,8 @@ module Decidim
     module AssemblyMembersControllerExtensions
       extend ActiveSupport::Concern
       included do
+        private
+
         def members
           @members ||= begin
             collection = current_participatory_space.members.not_ceased
