@@ -4,9 +4,10 @@ require "spec_helper"
 
 module Decidim
   module Assemblies
-    describe AssemblyMembersController, type: :controller do
+    class AssemblyMembersController
       include ::Decidim::Privacy::AssemblyMembersControllerExtensions
-
+    end
+    describe AssemblyMembersController, type: :controller do
       routes { Decidim::Assemblies::Engine.routes }
 
       let(:organization) { create(:organization) }
