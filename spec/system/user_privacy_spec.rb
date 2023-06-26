@@ -3,13 +3,13 @@
 require "spec_helper"
 
 describe "User privacy", type: :system do
-  let(:organization) { create(:organization) }
-  let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
+  let!(:organization) { create(:organization) }
+  let!(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
   let!(:user) { create(:user, :confirmed, organization: organization) }
 
   before do
-    login_as user, scope: :user
     switch_to_host(organization.host)
+    login_as user, scope: :user
     visit decidim.root_path
   end
 
@@ -229,6 +229,9 @@ describe "User privacy", type: :system do
 
     it "gives you a popup for consent, which has to be accepted in order to proceed" do
       visit_component
+      click_link "Processes"
+      first(:link, participatory_process.title["en"]).click
+      click_link "Blog"
 
       click_link post.title["en"]
       fill_in "add-comment-Post-#{post.id}", with: "Hello there!"

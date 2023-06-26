@@ -10,10 +10,11 @@ module Decidim
         # modules want to apply a `default_scope` to the user record. An example use
         # case can be seen in the `decidim-privacy` module that adds privacy
         # controls for the users by applying a `default_scope`.
-        scope :entire_collection, -> { self }
 
         default_scope { profile_published }
+
         scope :profile_published, -> { where(type: "Decidim::UserGroup").or(where.not(published_at: nil)) }
+        scope :entire_collection, -> { unscope(where: [:published_at, :type]) }
       end
     end
   end

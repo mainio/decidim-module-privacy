@@ -8,7 +8,7 @@ describe "Conversations", type: :system do
   let!(:user) { create(:user, :confirmed, organization: organization) }
   let!(:receiver) { create(:user, :confirmed, organization: organization) }
   let!(:group_chat_participant) { create(:user, :confirmed, organization: organization) }
-  let!(:user_group) { create(:user_group, :verified, organization: organization) }
+  let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
 
   before do
     switch_to_host(organization.host)

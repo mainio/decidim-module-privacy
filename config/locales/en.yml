@@ -53,7 +53,7 @@ en:
         unauthorized: Only public account are allowed to perform this action.
     profile:
       private: Private user
-      private_info: <i>This user has decided to make their profile private or disabled the messaging feature. New messages to this conversation have been therefore disabled.</i>
+      private_info: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
 
 
 
