@@ -30,6 +30,43 @@ describe "Conversations", type: :system do
     end
   end
 
+  context "when searching for user groups in 'new conversation'" do
+    context "when user group is verified and confirmed" do
+      it "shows up in the search" do
+        visit decidim.conversations_path
+
+        click_button "New conversation"
+        fill_in "add_conversation_users", with: user_group.name
+
+        expect(page).to have_selector("#autoComplete_list_1")
+      end
+    end
+
+    context "when user group is not verified" do
+      it "doesn't show up in the search" do
+        user_group.update(extended_data: { verified_at: nil })
+        visit decidim.conversations_path
+
+        click_button "New conversation"
+        fill_in "add_conversation_users", with: user_group.name
+
+        expect(page).not_to have_selector("#autoComplete_list_1")
+      end
+    end
+
+    context "when user group is not confirmed" do
+      it "doesn't show up in the search" do
+        user_group.update(confirmed_at: nil)
+        visit decidim.conversations_path
+
+        click_button "New conversation"
+        fill_in "add_conversation_users", with: user_group.name
+
+        expect(page).not_to have_selector("#autoComplete_list_1")
+      end
+    end
+  end
+
   context "when own profile private" do
     it "doesn't have 'conversations' link in the user menu" do
       user.update(published_at: nil)
@@ -159,9 +196,6 @@ describe "Conversations", type: :system do
         expect(page).to have_content("Hello there receiver!")
       end
     end
-
-    # THIS DOESN*T WORK BEFORE THE SCOPE HAS BEEN FIXED, AT THE MOMENT YOU CANNOT FIND A USER GROUP FROM SEARCH IF ITS
-    # PRIVATE
 
     context "when trying to start a group conversation with at least one person with private messaging disabled" do
       it "doesn't allow to initiate the conversation" do
