@@ -64,7 +64,15 @@ module Decidim
           Decidim::UpdateNotificationsSettings.include(
             Decidim::Privacy::UpdateNotificationsSettingsExtensions
           )
-          Decidim::CreateOmniauthRegistration.include(Decidim::Privacy::CreateOmniauthRegistrationExtensions)
+          Decidim::CreateOmniauthRegistration.include(
+            Decidim::Privacy::CreateOmniauthRegistrationExtensions
+          )
+          Decidim::Messaging::ReplyToConversation.include(
+            Decidim::Privacy::ReplyToConversationExtensions
+          )
+          Decidim::Messaging::StartConversation.include(
+            Decidim::Privacy::StartConversationExtensions
+          )
 
           # controllers
           Decidim::ApplicationController.include(
@@ -111,14 +119,19 @@ module Decidim
           Decidim::UserBlock.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Gamification::BadgeScore.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::UserModeration.include(Decidim::Privacy::UnscopedUserRelation)
-          # forms
-          Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
-          Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
-
+          Decidim::Messaging::Conversation.include(Decidim::Privacy::ConversationExtensions)
+          Decidim::Messaging::Message.include(Decidim::Privacy::MessageExtensions)
           Decidim::User.include(Decidim::Privacy::UserExtensions)
           Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
+
+          # forms
+          Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
+          Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
+          Decidim::Messaging::ConversationForm.include(
+            Decidim::Privacy::ConversationFormExtensions
+          )
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(

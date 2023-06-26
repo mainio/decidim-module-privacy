@@ -82,7 +82,8 @@ module Decidim
 
         context "when 1 participant is private" do
           it "doesn't broadcast ok" do
-            participant.update(published_at: Time.current)
+            receiver.update(published_at: Time.current)
+            command.call
 
             expect do
               command.call

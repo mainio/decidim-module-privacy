@@ -45,9 +45,9 @@ describe "User privacy", type: :system do
   end
 
   context "when user group is verified" do
-    let!(:user_group) { create(:user_group, verified_at: Time.current, organization: organization) }
+    let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
 
-    it "shows up in seach" do
+    it "shows up in search" do
       fill_in "term", with: user_group.name
       find("button[name='commit']").click
 
