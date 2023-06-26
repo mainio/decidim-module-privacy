@@ -17,19 +17,18 @@ describe "Conversations", type: :system do
     visit decidim.root_path
   end
 
-  # context "when searching for users in 'new conversation'" do
-  #   context "when receiver profile is private" do
-  #     it "doesn't show up in the search" do
-  #       visit decidim.conversations_path
+  context "when searching for users in 'new conversation'" do
+    context "when receiver profile is private" do
+      it "doesn't show up in the search" do
+        visit decidim.conversations_path
 
-  #       click_button "New conversation"
-  #       fill_in "add_conversation_users", with: receiver.name
+        click_button "New conversation"
+        fill_in "add_conversation_users", with: receiver.name
 
-  #       expect(page).to have_content("This has to be fixed, the tests are too fast so it doesn't have time to even wait for the possible autocomplete list")
-  #       expect(page).not_to have_selector("#autoComplete_list_1")
-  #     end
-  #   end
-  # end
+        expect(page).not_to have_selector("#autoComplete_list_1")
+      end
+    end
+  end
 
   context "when own profile private" do
     it "doesn't have 'conversations' link in the user menu" do
@@ -138,18 +137,28 @@ describe "Conversations", type: :system do
   end
 
   context "when group conversation" do
-    # context "when starting a group conversation with a user group and the user group is private" do
-    #   it "is possible to start the group conversation" do
-    #     receiver.update(published_at: Time.current)
+    context "when starting a group conversation with a user group and the user group is private" do
+      it "is possible to start the group conversation" do
+        receiver.update(published_at: Time.current)
 
-    #     visit decidim.conversations_path
-    #     click_button "New conversation"
-    #     fill_in "add_conversation_users", with: receiver.name
-    #     find("#autoComplete_result_0").click
+        visit decidim.conversations_path
+        click_button "New conversation"
+        fill_in "add_conversation_users", with: receiver.name
+        find("#autoComplete_result_0").click
 
-    #     fill_in
-    #   end
-    # end
+        fill_in "add_conversation_users", with: user_group.name
+        find("#autoComplete_result_0").click
+        click_button "Next"
+
+        expect(page).to have_content("START A CONVERSATION")
+        fill_in "conversation_body", with: "Hello there receiver!"
+
+        click_button "Send"
+
+        expect(page).to have_selector(".p-s")
+        expect(page).to have_content("Hello there receiver!")
+      end
+    end
 
     # THIS DOESN*T WORK BEFORE THE SCOPE HAS BEEN FIXED, AT THE MOMENT YOU CANNOT FIND A USER GROUP FROM SEARCH IF ITS
     # PRIVATE
