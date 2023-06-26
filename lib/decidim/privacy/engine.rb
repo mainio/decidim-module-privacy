@@ -96,9 +96,6 @@ module Decidim
           Decidim::GroupsController.include(
             Decidim::Privacy::GroupsControllerExtensions
           )
-          Decidim::Admin::OrganizationController.include(
-            Decidim::Privacy::AdminOrganizationControllerExtensions
-          )
           Decidim::OwnUserGroupsController.include(
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
@@ -232,6 +229,17 @@ module Decidim
             )
             Decidim::Admin::ImpersonationsController.include(
               Decidim::Privacy::ImpersonationsControllerExtensions
+            )
+            Decidim::Admin::UserGroupsController.include(
+              Decidim::Privacy::UserGroupsControllerExtensions
+            )
+            Decidim::Admin::OrganizationController.include(
+              Decidim::Privacy::AdminOrganizationControllerExtensions
+            )
+
+            # commands
+            Decidim::Admin::VerifyUserGroup.include(
+              Decidim::Privacy::VerifyUserGroupExtensions
             )
           end
 
