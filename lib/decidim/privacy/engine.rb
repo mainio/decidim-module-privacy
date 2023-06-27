@@ -59,6 +59,9 @@ module Decidim
           Decidim::ActivityCell.include(
             Decidim::Privacy::ActivityCellExtensions
           )
+          Decidim::VersionAuthorCell.include(
+            Decidim::Privacy::VersionAuthorCellExtensions
+          )
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
