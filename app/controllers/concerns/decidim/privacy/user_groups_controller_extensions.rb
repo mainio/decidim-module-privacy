@@ -6,6 +6,8 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
+        private
+
         def collection
           UserGroup
             .entire_collection

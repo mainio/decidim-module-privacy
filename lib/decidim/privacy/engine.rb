@@ -233,6 +233,14 @@ module Decidim
             Decidim::Admin::OrganizationController.include(
               Decidim::Privacy::AdminOrganizationControllerExtensions
             )
+
+            # commands
+            Decidim::Admin::VerifyUserGroup.include(
+              Decidim::Privacy::VerifyUserGroupExtensions
+            )
+            Decidim::Admin::RejectUserGroup.include(
+              Decidim::Privacy::RejectUserGroupExtensions
+            )
           end
 
           if Decidim.module_installed? :assemblies
