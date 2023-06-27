@@ -27,6 +27,7 @@ module Decidim
       end
 
       it_behaves_like "permittable create actions"
+      it_behaves_like "permittable new actions"
 
       context "when updating" do
         let(:component) { create(:proposal_component, :with_creation_enabled, :with_attachments_allowed) }
@@ -45,6 +46,7 @@ module Decidim
         end
 
         it_behaves_like "permittable update actions"
+        it_behaves_like "permittable edit actions"
       end
     end
   end
