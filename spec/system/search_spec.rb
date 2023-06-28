@@ -7,6 +7,7 @@ describe "User privacy", type: :system do
   let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
   let!(:user) { create(:user, :confirmed, organization: organization) }
   let!(:user_group) { create(:user_group, organization: organization) }
+  let!(:admin) { create(:user, :confirmed, :admin, organization: organization) }
 
   before do
     login_as user, scope: :user
@@ -20,6 +21,18 @@ describe "User privacy", type: :system do
       find("button[name='commit']").click
 
       expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
+    end
+
+    it "shows up in the admin search" do
+      login_as admin, scope: :user
+      visit decidim.root_path
+
+      click_link "user-menu-control"
+      click_link "Admin dashboard"
+      click_link "Participants"
+
+      click_link "Participants"
+      expect(page).to have_content(user.name)
     end
   end
 
@@ -41,6 +54,20 @@ describe "User privacy", type: :system do
       find("button[name='commit']").click
 
       expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
+    end
+
+    it "shows up in the admin search" do
+      user_group.update(confirmed_at: Time.current, extended_data: { verified_at: Time.current })
+      user_group.reload
+      login_as admin, scope: :user
+      visit decidim.root_path
+
+      click_link "user-menu-control"
+      click_link "Admin dashboard"
+      click_link "Participants"
+      click_link "Groups"
+
+      expect(page).to have_content(user_group.name)
     end
   end
 
