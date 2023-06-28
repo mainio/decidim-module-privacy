@@ -2,7 +2,7 @@
 
 module Decidim
   module Privacy
-    class VersionAuthorCellExtensions
+    module VersionAuthorCellExtensions
       extend ActiveSupport::Concern
 
       included do
