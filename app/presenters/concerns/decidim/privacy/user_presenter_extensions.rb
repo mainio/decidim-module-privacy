@@ -21,6 +21,13 @@ module Decidim
           avatar.path(variant: variant)
         end
 
+        def profile_path
+          return "" unless public_user?
+          return "" if respond_to?(:deleted?) && deleted?
+
+          decidim.profile_path(__getobj__.nickname)
+        end
+
         def name
           return I18n.t("unnamed_user", scope: "decidim.privacy.private_account") unless public_user?
 
@@ -31,6 +38,7 @@ module Decidim
 
         def public_user?
           object = __getobj__
+          return false if object.nil?
           return true if object.is_a?(::Decidim::UserGroup)
 
           object.published_at.present?
