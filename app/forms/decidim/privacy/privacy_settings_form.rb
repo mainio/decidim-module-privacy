@@ -15,6 +15,8 @@ module Decidim
         self.allow_public_contact = user.direct_message_types == "all"
       end
 
+      private
+
       def direct_message_types
         allow_public_contact ? "all" : "followed-only"
       end
