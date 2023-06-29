@@ -46,7 +46,7 @@ module Decidim
     end
 
     context "when public user signed in" do
-      let!(:user) { create :user, :confirmed, organization: organization, published_at: Time.current }
+      let!(:user) { create :user, :confirmed, :published, organization: organization }
 
       before do
         sign_in user

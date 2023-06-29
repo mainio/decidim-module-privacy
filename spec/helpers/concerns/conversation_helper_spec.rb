@@ -18,7 +18,7 @@ module Decidim
         end
 
         context "when public user" do
-          let(:user) { create :user, :confirmed, published_at: Time.current }
+          let(:user) { create :user, :confirmed, :published }
 
           it "includes the user name" do
             expect(helper.conversation_label_for(participants)).to eq "Conversation with #{user.name} (@#{user.nickname})"
@@ -49,7 +49,7 @@ module Decidim
         end
 
         context "when public user" do
-          let(:user) { create :user, :confirmed, published_at: Time.current }
+          let(:user) { create :user, :confirmed, :published }
 
           it "includes the user name" do
             expect(helper.username_list(participants)).to eq "<strong>#{user.name}</strong>"
@@ -74,7 +74,7 @@ module Decidim
         end
 
         context "when user is public" do
-          let(:user) { create :user, :confirmed, published_at: Time.current }
+          let(:user) { create :user, :confirmed, :published }
 
           it "includes the user name" do
             expect(helper.conversation_name_for(participants)).to eq "<strong>#{user.name}</strong><br><span class=\"muted\">@#{user.nickname}</span>"

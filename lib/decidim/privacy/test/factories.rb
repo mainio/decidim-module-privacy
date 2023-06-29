@@ -9,5 +9,12 @@ FactoryBot.define do
     participatory_space { create(:participatory_process, :with_steps) }
   end
 
+  FactoryBot.modify do
+    factory :user do
+      trait :published do
+        published_at { Time.current }
+      end
+    end
+  end
   # Add engine factories here
 end
