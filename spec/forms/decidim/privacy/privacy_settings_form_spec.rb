@@ -27,7 +27,7 @@ module Decidim
           end
         end
 
-        context "with no public contact allowed" do
+        context "with no direct message allowed" do
           let!(:user) { create(:user, organization: organization, direct_message_types: "followed-only") }
 
           it "maps the model correctly" do
