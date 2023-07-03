@@ -15,12 +15,10 @@ module Decidim
             all[klass] << id
           end
 
-          authors = authors.filter { |author| author.is_a?(Decidim::User) && !author.published_at.nil? }
-          return if authors.nil?
-
-          @authors = authors.flat_map do |klass, ids|
+          authors = authors.flat_map do |klass, ids|
             klass.constantize.where(id: ids)
-          end.compact.uniq
+          end
+          @authors = authors.filter { |author| author.is_a?(Decidim::User) && !author.published_at.nil? }.compact.uniq
         end
       end
     end

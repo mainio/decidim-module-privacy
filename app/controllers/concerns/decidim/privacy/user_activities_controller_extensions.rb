@@ -7,18 +7,21 @@ module Decidim
 
       included do
         def index
-          if private_user?
-            render "decidim/privacy/private_account"
-          else
-            raise ActionController::RoutingError, "Missing user: #{params[:nickname]}" unless user
-            raise ActionController::RoutingError, "Blocked User" if user.blocked? && !current_user&.admin?
-          end
+          raise ActionController::RoutingError, "Missing user: #{params[:nickname]}" unless user
+          raise ActionController::RoutingError, "Missing user: #{params[:nickname]}" if private_user?
+          raise ActionController::RoutingError, "Blocked User" if user.blocked? && !current_user&.admin?
         end
 
+        private
+
         def private_user?
+          user.published_at.nil?
+        end
+
+        def user
           return unless params[:nickname]
 
-          Decidim::User.entire_collection.find_by(nickname: params[:nickname]).published_at.nil?
+          @user ||= current_organization.users.entire_collection.find_by("LOWER(nickname) = ?", params[:nickname].downcase)
         end
       end
     end

@@ -188,6 +188,7 @@ module Decidim
             Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
             Decidim::Proposals::Proposal.include(Decidim::Privacy::ValuatableExtensions)
             Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
+            Decidim::Proposals::CollaborativeDraft.include(CollaborativeDraftsExtensions)
           end
 
           if Decidim.module_installed? :comments
