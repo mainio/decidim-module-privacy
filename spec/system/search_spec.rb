@@ -6,7 +6,6 @@ describe "User privacy", type: :system do
   let(:organization) { create(:organization) }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
   let!(:user) { create(:user, :confirmed, organization: organization) }
-  let!(:user_group) { create(:user_group, organization: organization) }
   let!(:admin) { create(:user, :confirmed, :admin, organization: organization) }
 
   before do
@@ -49,6 +48,8 @@ describe "User privacy", type: :system do
   end
 
   context "when user group is not verified" do
+    let!(:user_group) { create(:user_group, :confirmed, organization: organization, users: [admin]) }
+
     it "doesn't show up in search" do
       fill_in "term", with: user_group.name
       find("button[name='commit']").click
@@ -57,8 +58,6 @@ describe "User privacy", type: :system do
     end
 
     it "shows up in the admin search" do
-      user_group.update(confirmed_at: Time.current, extended_data: { verified_at: Time.current })
-      user_group.reload
       login_as admin, scope: :user
       visit decidim.root_path
 

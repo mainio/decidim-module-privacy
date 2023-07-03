@@ -19,7 +19,7 @@ module Decidim
       included do
         default_scope { visible }
 
-        scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS ?", nil) }
+        scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS ?", nil).unscope(where: :published_at) }
         scope :entire_collection, -> { unscope_verified_at.unscope(where: :confirmed_at) }
 
         def public?

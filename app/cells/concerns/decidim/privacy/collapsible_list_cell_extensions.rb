@@ -6,10 +6,8 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        def hidden_elements_count
-          return 0 unless collapsible?
-
-          list.select { |user| user[:published_at].present? }.size - size
+        def list
+          model.reject { |user| user.is_a?(Decidim::NilPresenter) }
         end
       end
     end

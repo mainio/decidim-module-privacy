@@ -188,7 +188,6 @@ module Decidim
             Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
             Decidim::Proposals::Proposal.include(Decidim::Privacy::ValuatableExtensions)
             Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
-            Decidim::Proposals::CollaborativeDraft.include(CollaborativeDraftsExtensions)
           end
 
           if Decidim.module_installed? :comments
@@ -199,6 +198,14 @@ module Decidim
 
             # models
             Decidim::Comments::Comment.include(Decidim::Privacy::ModelAuthorExtensions)
+
+            # cells
+            Decidim::Comments::CommentCell.include(
+              Decidim::Privacy::CommentCellExtensions
+            )
+            Decidim::Comments::CommentThreadCell.include(
+              Decidim::Privacy::CommentThreadCellExtensions
+            )
           end
 
           if Decidim.module_installed? :debates
@@ -213,13 +220,20 @@ module Decidim
             Decidim::Meetings::Answer.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Meetings::Registration.include(Decidim::Privacy::UnscopedUserRelation)
+
             # controllers
             Decidim::Meetings::MeetingsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
             )
+
             # forms
             Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
               Decidim::Privacy::UnscopedOrganizationUsers
+            )
+
+            # cells
+            Decidim::Meetings::MeetingMCell.include(
+              Decidim::Privacy::MeetingMCellExtensions
             )
           end
 

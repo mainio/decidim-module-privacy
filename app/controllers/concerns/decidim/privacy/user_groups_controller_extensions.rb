@@ -13,7 +13,7 @@ module Decidim
             .entire_collection
             .left_outer_joins(:memberships)
             .select("decidim_users.*, COUNT(decidim_user_group_memberships.decidim_user_group_id) as users_count")
-            .where(decidim_user_group_memberships: { decidim_user_id: current_organization.users })
+            .where(decidim_user_group_memberships: { decidim_user_id: current_organization.users.entire_collection })
             .group(Arel.sql("decidim_users.id"))
         end
       end

@@ -14,6 +14,7 @@ module Decidim
             all[klass] ||= []
             all[klass] << id
           end
+
           authors = authors.filter { |author| author.is_a?(Decidim::User) && !author.published_at.nil? }
           return if authors.nil?
 
