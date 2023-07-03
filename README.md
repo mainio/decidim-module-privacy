@@ -49,6 +49,13 @@ Decidim::User.unscoped.all
 
 See [Decidim](https://github.com/decidim/decidim).
 
+### Localization
+
+If you would like to see this module in your own language, you can help with its
+translation at Crowdin:
+
+https://crowdin.com/project/decidim-privacy
+
 ## License
 
 This engine is distributed under the GNU AFFERO GENERAL PUBLIC LICENSE.
