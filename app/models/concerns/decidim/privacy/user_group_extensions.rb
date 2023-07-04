@@ -22,19 +22,24 @@ module Decidim
         scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS ?", nil).unscope(where: :published_at) }
         scope :entire_collection, -> { unscope_verified_at.unscope(where: :confirmed_at) }
 
-        def public?
-          true
-        end
-
         searchable_fields(
           {
             organization_id: :decidim_organization_id,
             A: :name,
             datetime: :created_at
           },
-          index_on_create: ->(user_group) { !user_group.deleted? && user_group.verified? },
-          index_on_update: ->(user_group) { !user_group.deleted? && user_group.verified? }
+          index_on_create: ->(user_group) { !user_group.deleted? && user_group.public? },
+          index_on_update: ->(user_group) { !user_group.deleted? && user_group.public? }
         )
+
+        def public?
+          !blocked? && confirmed? && verified?
+        end
+
+        # this method was added to this model so it can be hidden from search
+        def hidden?
+          !public?
+        end
 
         def possible_members
           memberships

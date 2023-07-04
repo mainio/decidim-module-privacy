@@ -18,6 +18,16 @@ module Decidim
         scope :profile_published, -> { where.not(published_at: nil) }
         scope :profile_private, -> { entire_collection.where(published_at: nil) }
 
+        searchable_fields({
+                            # scope_id: :decidim_scope_id,
+                            organization_id: :decidim_organization_id,
+                            A: :name,
+                            B: :nickname,
+                            datetime: :created_at
+                          },
+                          index_on_create: ->(user) { !user.deleted? && user.public? },
+                          index_on_update: ->(user) { !user.deleted? && user.public? })
+
         # we need to remove the default scope for the registeration, so as to check the uniqueness of
         # accounts through all of the accounts
         def self.find_for_authentication(warden_conditions)
@@ -28,19 +38,9 @@ module Decidim
           )
         end
 
-        searchable_fields({
-                            # scope_id: :decidim_scope_id,
-                            organization_id: :decidim_organization_id,
-                            A: :name,
-                            B: :nickname,
-                            datetime: :created_at
-                          },
-                          index_on_create: ->(user) { !(user.deleted? || user.blocked?) && user.public? },
-                          index_on_update: ->(user) { !(user.deleted? || user.blocked?) && user.public? })
-        before_save :ensure_encrypted_password
-        before_save :save_password_change
-
         def public?
+          return false if blocked?
+
           published_at.present?
         end
 
