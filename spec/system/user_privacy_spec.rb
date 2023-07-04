@@ -416,6 +416,31 @@ describe "User privacy", type: :system do
     end
   end
 
+  context "when creating a multiauthored posting" do
+    let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
+    let!(:proposal) { create(:proposal, component: component, users: [user, coauthor], skip_injection: true) }
+    let!(:coauthor) { create(:user, :confirmed, :published, organization: organization) }
+
+    it "shows collapsible list correctly if both users public" do
+      user.update(published_at: Time.current)
+      visit_component
+
+      within ".card--proposal" do
+        expect(page).to have_content(user.name)
+        expect(page).to have_content("and 1 more")
+      end
+    end
+
+    it "shows collapsible list correctly if one user private" do
+      visit_component
+
+      within ".card--proposal" do
+        expect(page).to have_content(coauthor.name)
+        expect(page).not_to have_content("and 1 more")
+      end
+    end
+  end
+
   def new_proposal_path(component)
     Decidim::EngineRouter.main_proxy(component).new_proposal_path(component.id)
   end
