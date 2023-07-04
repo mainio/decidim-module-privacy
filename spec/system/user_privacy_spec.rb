@@ -228,14 +228,7 @@ describe "User privacy", type: :system do
     let!(:post) { create(:post, component: component) }
 
     it "gives you a popup for consent, which has to be accepted in order to proceed" do
-      visit_component
-      click_link "Processes"
-      first(:link, participatory_process.title["en"]).click
-      click_link "Blog"
-
-      click_link post.title["en"]
-      fill_in "add-comment-Post-#{post.id}", with: "Hello there!"
-      click_button "Send"
+      comment_blog_post
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
@@ -247,6 +240,142 @@ describe "User privacy", type: :system do
       click_button "Make your profile public"
 
       expect(page).to have_content("Hello there!")
+    end
+
+    context "when comment left" do
+      it "shows author name if user public" do
+        user.update(published_at: Time.current)
+        comment_blog_post
+
+        within ".comment-thread" do
+          within ".author-data" do
+            expect(page).to have_content(user.name)
+            expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+          end
+        end
+      end
+
+      it "hide author name if user private" do
+        user.update(published_at: Time.current)
+        comment_blog_post
+
+        expect(page).to have_selector(".comment-thread")
+        user.update(published_at: nil)
+        user.reload
+
+        refresh
+        within ".comment-thread" do
+          expect(page).not_to have_selector(".author-data")
+        end
+      end
+    end
+
+    context "when comment replied to" do
+      it "shows the author name of replier if replier public" do
+        reply
+
+        within "#comment-#{Decidim::Comments::Comment.first.id}-replies" do
+          expect(page).to have_content(user.name)
+          expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+        end
+      end
+
+      it "hides the autor name of replier if replier private" do
+        reply
+
+        user.update(published_at: nil)
+        user.reload
+
+        refresh
+        within "#comment-#{Decidim::Comments::Comment.first.id}-replies" do
+          expect(page).not_to have_content(user.name)
+          expect(page).not_to have_selector("a[href='/profiles/#{user.nickname}']")
+        end
+      end
+    end
+  end
+
+  context "when user has created a proposal" do
+    let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
+    let!(:proposal) { create(:proposal, component: component, users: [user]) }
+
+    it "shows author name when user public" do
+      user.update(published_at: Time.current)
+      visit_component
+
+      within ".card--proposal", match: :first do
+        expect(page).to have_content(user.name)
+      end
+
+      within ".author-data" do
+        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+      end
+    end
+
+    it "hides author name when user private" do
+      visit_component
+
+      within ".card--proposal", match: :first do
+        expect(page).not_to have_content(user.name)
+      end
+
+      expect(page).not_to have_selector(".author-data")
+    end
+  end
+
+  context "when user has created a meeting" do
+    let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
+    let!(:meeting) { create(:meeting, :online, :not_official, :published, author: user, component: component) }
+
+    it "shows author name when user public" do
+      user.update(published_at: Time.current)
+      visit_component
+
+      within ".card--meeting", match: :first do
+        expect(page).to have_content(user.name)
+      end
+
+      within ".author-data" do
+        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+      end
+    end
+
+    it "hides author name when user private" do
+      visit_component
+
+      within ".card--meeting", match: :first do
+        expect(page).not_to have_content(user.name)
+      end
+
+      expect(page).not_to have_selector(".author-data")
+    end
+  end
+
+  context "when user has created a debate" do
+    let!(:component) { create(:debates_component, :with_creation_enabled, participatory_space: participatory_process) }
+    let!(:debate) { create(:debate, author: user, component: component) }
+
+    it "shows author name when user public" do
+      user.update(published_at: Time.current)
+      visit_component
+
+      within ".card--debate", match: :first do
+        expect(page).to have_content(user.name)
+      end
+
+      within ".author-data" do
+        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+      end
+    end
+
+    it "hides author name when user private" do
+      visit_component
+
+      within ".card--debate", match: :first do
+        expect(page).not_to have_content(user.name)
+      end
+
+      expect(page).not_to have_selector(".author-data")
     end
   end
 
@@ -264,5 +393,25 @@ describe "User privacy", type: :system do
 
   def visit_component
     page.visit main_component_path(component)
+  end
+
+  def comment_blog_post
+    visit_component
+    click_link post.title["en"]
+    fill_in "add-comment-Post-#{post.id}", with: "Hello there!"
+    click_button "Send"
+  end
+
+  def reply
+    user.update(published_at: Time.current)
+    comment_blog_post
+    expect(page).to have_selector(".comment-thread")
+
+    click_button "Reply"
+
+    fill_in "add-comment-Comment-#{Decidim::Comments::Comment.first.id}", with: "Well hello"
+    click_button "Send", match: :first
+
+    expect(page).to have_selector("#comment-#{Decidim::Comments::Comment.first.id}-replies")
   end
 end
