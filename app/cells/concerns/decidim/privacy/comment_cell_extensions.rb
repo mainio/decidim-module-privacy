@@ -9,7 +9,7 @@ module Decidim
         private
 
         def cache_hash
-          return @hash if defined?(@hash)
+          return @cache_hash if defined?(@cache_hash)
 
           hash = []
           hash.push(I18n.locale)
@@ -18,8 +18,7 @@ module Decidim
           hash.push(model.reported_by?(current_user) ? 1 : 0)
           hash.push(model.cache_key_with_version)
           hash.push(model.author.cache_key_with_version) unless model.author.nil?
-
-          @hash = hash.join(Decidim.cache_key_separator)
+          @cache_hash = hash.join(Decidim.cache_key_separator)
         end
 
         def author_presenter
