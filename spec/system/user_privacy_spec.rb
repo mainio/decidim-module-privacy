@@ -379,6 +379,43 @@ describe "User privacy", type: :system do
     end
   end
 
+  context "when user leaves an endorsement" do
+    let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
+    let!(:proposal) { create(:proposal, component: component, users: [user]) }
+
+    it "shows user's name in endorsements list if public" do
+      user.update(published_at: Time.current)
+      visit_component
+
+      click_link proposal.title["en"]
+      click_button "Endorse"
+      refresh
+
+      within "#list-of-endorsements" do
+        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+      end
+    end
+
+    it "hides user's name in endorsements list if private" do
+      user.update(published_at: Time.current)
+      visit_component
+
+      click_link proposal.title["en"]
+      click_button "Endorse"
+      refresh
+
+      expect(page).to have_selector("#list-of-endorsements")
+      user.update(published_at: nil)
+      user.reload
+
+      refresh
+
+      within "#list-of-endorsements" do
+        expect(page).not_to have_selector("a[href='/profiles/#{user.nickname}']")
+      end
+    end
+  end
+
   def new_proposal_path(component)
     Decidim::EngineRouter.main_proxy(component).new_proposal_path(component.id)
   end
