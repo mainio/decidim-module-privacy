@@ -2,7 +2,16 @@
 
 module Decidim
   module Privacy
-    class PrivateUser < Decidim::User
+    class PrivateUser < ApplicationRecord
+      self.table_name = "decidim_users"
+
+      def deleted?
+        false
+      end
+
+      def public?
+        false
+      end
     end
   end
 end

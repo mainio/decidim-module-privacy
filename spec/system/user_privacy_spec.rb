@@ -280,7 +280,7 @@ describe "User privacy", type: :system do
         end
       end
 
-      it "hides the autor name of replier if replier private" do
+      it "hides the author name of replier if replier private" do
         reply
 
         user.update(published_at: nil)

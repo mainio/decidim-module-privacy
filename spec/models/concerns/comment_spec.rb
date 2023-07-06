@@ -5,8 +5,7 @@ require "spec_helper"
 module Decidim
   module Comments
     describe Comment do
-      let(:component) { create(:component, manifest_name: "dummy") }
-      let!(:commentable) { create(:dummy_resource, component: component) }
+      let!(:commentable) { create(:dummy_resource) }
       let!(:author) { create(:user, :published, organization: commentable.organization) }
       let!(:comment) { create(:comment, commentable: commentable, author: author) }
 

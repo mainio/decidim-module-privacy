@@ -7,8 +7,11 @@ module Decidim
 
       included do
         def author
-          if super.respond_to?(:published_at) && super.published_at.nil?
-            Decidim::Privacy::PrivateUser.new
+          if super.try(:published_at).nil?
+            Decidim::Privacy::PrivateUser.new(
+              id: 0,
+              name: "Anonymous"
+            )
           else
             super
           end
