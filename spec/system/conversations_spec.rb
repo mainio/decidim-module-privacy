@@ -311,7 +311,7 @@ describe "Conversations", type: :system do
     expect(page).to have_content("Hello there user!")
 
     login_as user, scope: :user
-
+    expect(page).to have_content(user.name)
     visit decidim.conversations_path
 
     find("#conversation-#{Decidim::Messaging::Conversation.first.id}").click
