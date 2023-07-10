@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def call
-          return if conversation.interlocutors(sender).count == 1 && conversation.interlocutors(sender).first.private_or_no_messaging?
+          return broadcast(:invalid) if conversation.interlocutors(sender).count == 1 && conversation.interlocutors(sender).first.private_or_no_messaging?
 
           if form.invalid?
             message.valid?

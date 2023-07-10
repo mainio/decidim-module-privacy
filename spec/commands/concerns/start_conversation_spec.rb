@@ -42,20 +42,20 @@ module Decidim
       end
 
       context "when a private user" do
-        it "doesn't broadcast ok" do
+        it "broadcasts invalid" do
           expect do
             command.call
-          end.not_to broadcast(:ok)
+          end.to broadcast(:invalid)
         end
       end
 
       context "when public user with messages disabled" do
-        it "doesn't broadcast ok" do
+        it "broadcasts invalid" do
           receiver.update(published_at: Time.current, allow_private_messaging: false)
 
           expect do
             command.call
-          end.not_to broadcast(:ok)
+          end.to broadcast(:invalid)
         end
       end
 
@@ -70,24 +70,24 @@ module Decidim
         end
 
         context "when 1 participant has private messaging disabled" do
-          it "doesn't broadcast ok" do
+          it "broadcasts invalid" do
             receiver.update(published_at: Time.current, allow_private_messaging: false)
             participant.update(published_at: Time.current)
 
             expect do
               command.call
-            end.not_to broadcast(:ok)
+            end.to broadcast(:invalid)
           end
         end
 
         context "when 1 participant is private" do
-          it "doesn't broadcast ok" do
+          it "broadcasts invalid" do
             receiver.update(published_at: Time.current)
             command.call
 
             expect do
               command.call
-            end.not_to broadcast(:ok)
+            end.to broadcast(:invalid)
           end
         end
       end

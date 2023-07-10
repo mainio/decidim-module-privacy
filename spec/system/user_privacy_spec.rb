@@ -414,6 +414,13 @@ describe "User privacy", type: :system do
         expect(page).not_to have_selector("a[href='/profiles/#{user.nickname}']")
       end
     end
+
+    it "hides endorsement if user private" do
+      visit_component
+
+      click_link proposal.title["en"]
+      expect(page).not_to have_button("Endorse")
+    end
   end
 
   context "when creating a multiauthored posting" do
@@ -441,6 +448,100 @@ describe "User privacy", type: :system do
     end
   end
 
+  context "when listing assembly members" do
+    let!(:component) { create(:assembly, organization: organization) }
+
+    context "when assembly has no members" do
+      let!(:user) { create(:user, :confirmed, organization: organization) }
+
+      it "has no 'members' tab" do
+        visit_assembly
+
+        expect(page).not_to have_link("Members")
+      end
+    end
+
+    context "when member private" do
+      let(:user) { create(:user, :confirmed, organization: organization) }
+      let!(:assembly_member) { create(:assembly_member, assembly: component, user: user) }
+
+      it "shows empty list" do
+        visit_assembly
+        click_link "Members"
+
+        expect(page).to have_content("MEMBERS (0)")
+      end
+    end
+
+    context "when member public" do
+      let(:user) { create(:user, :confirmed, :published, organization: organization) }
+      let!(:assembly_member) { create(:assembly_member, assembly: component, user: user) }
+
+      it "shows list with one user" do
+        visit_assembly
+        click_link "Members"
+
+        expect(page).to have_content("MEMBERS (1)")
+        expect(page).to have_content(user.name)
+      end
+    end
+
+    context "when one member public and one member private" do
+      let(:public_member) { create(:user, :confirmed, :published, organization: organization) }
+      let(:private_member) { create(:user, :confirmed, organization: organization) }
+      let!(:public_assembly_member) { create(:assembly_member, assembly: component, user: public_member) }
+      let!(:private_assembly_member) { create(:assembly_member, assembly: component, user: private_member) }
+
+      it "shows list with one user" do
+        visit_assembly
+        click_link "Members"
+
+        expect(page).to have_content("MEMBERS (1)")
+        expect(page).to have_content(public_member.name)
+        expect(page).not_to have_content(private_member.name)
+      end
+    end
+
+    context "when listing user group members" do
+      context "when user group has no members" do
+        let(:user_group) { create(:user_group, :confirmed, :verified, published_at: Time.current, organization: organization) }
+
+        it "shows no members" do
+          visit decidim.profile_path(user_group.nickname)
+
+          expect(page).to have_content("This group doesn't have any members.")
+        end
+      end
+
+      context "when user group has private members" do
+        let!(:user) { create(:user, :confirmed, organization: organization) }
+        let(:user_group) { create(:user_group, :confirmed, :verified, users: [user], published_at: Time.current, organization: organization) }
+
+        it "shows no members" do
+          visit decidim.profile_path(user_group.nickname)
+
+          within "#content" do
+            expect(page).to have_content("This group doesn't have any public members.")
+            expect(page).not_to have_content(user.name)
+          end
+        end
+      end
+
+      context "when user group has public members" do
+        let(:user_group) { create(:user_group, :confirmed, :verified, users: [user], published_at: Time.current, organization: organization) }
+        let!(:user) { create(:user, :confirmed, :published, organization: organization) }
+
+        it "shows public members" do
+          visit decidim.profile_path(user_group.nickname)
+
+          within "#content" do
+            expect(page).to have_content(user.name)
+          end
+        end
+      end
+    end
+  end
+
   def new_proposal_path(component)
     Decidim::EngineRouter.main_proxy(component).new_proposal_path(component.id)
   end
@@ -455,6 +556,10 @@ describe "User privacy", type: :system do
 
   def visit_component
     page.visit main_component_path(component)
+  end
+
+  def visit_assembly
+    visit decidim_assemblies.assembly_path(component)
   end
 
   def comment_blog_post

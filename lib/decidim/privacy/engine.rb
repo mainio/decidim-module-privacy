@@ -82,6 +82,9 @@ module Decidim
           Decidim::Messaging::StartConversation.include(
             Decidim::Privacy::StartConversationExtensions
           )
+          Decidim::EndorseResource.include(
+            Decidim::Privacy::EndorseResourceExtensions
+          )
 
           # controllers
           Decidim::ApplicationController.include(
@@ -145,6 +148,9 @@ module Decidim
           )
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
+          )
+          Decidim::EndorsableHelper.include(
+            Decidim::Privacy::EndorsableHelperExtensions
           )
 
           # presenters

@@ -13,7 +13,8 @@ en:
       privacy:
         name: Privacy settings
     members:
-      no_members: This group doesn't have any public members.
+      no_members: This group doesn't have any members.
+      no_public_members: This group doesn't have any public members.
     messaging:
       conversations:
         show:

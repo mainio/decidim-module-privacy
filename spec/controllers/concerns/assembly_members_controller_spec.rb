@@ -26,9 +26,10 @@ module Decidim
 
       describe "GET index" do
         context "when assembly has no members" do
-          it "redirects to 404" do
-            expect { get :index, params: { assembly_slug: assembly.slug } }
-              .to raise_error(ActionController::RoutingError)
+          it "displays an empty array of members" do
+            get :index, params: { assembly_slug: assembly.slug }
+
+            expect(controller.helpers.collection).to match_array([])
           end
         end
 
@@ -38,9 +39,10 @@ module Decidim
           let!(:non_member) { create(:assembly_member) }
 
           context "when assembly has no public members" do
-            it "redirects to 404" do
-              expect { get :index, params: { assembly_slug: assembly.slug } }
-                .to raise_error(ActionController::RoutingError)
+            it "displays an empty array of members" do
+              get :index, params: { assembly_slug: assembly.slug }
+
+              expect(controller.helpers.collection).to match_array([])
             end
           end
 
