@@ -18,9 +18,9 @@ fi:
     messaging:
       conversations:
         show:
-          private_account: Et voi keskustella yksityisen tilin kanssa.
-          private_messaging_disabled: Et voi keskustella sellaisen tilin kanssa, jonka yksityisviestit on estetty.
-          private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen tilin kanssa, jonka yksityisviestit on estetty.
+          private_account: Et voi keskustella yksityisten osallistujien kanssa.
+          private_messaging_disabled: Et voi keskustella sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
+          private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
           private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.
           private_messaging_disabled_users:
             one: "Seuraavalla käyttäjällä on yksityisviestit estetty:"
@@ -43,7 +43,7 @@ fi:
           success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
-        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen käyttäjätilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
         button: "Julkaise profiilisi"
       partials:
         privacy_consent:
@@ -53,7 +53,7 @@ fi:
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
       publish_account:
-        unauthorized: Vain julkiset tilit voivat suorittaa tämän toiminnon.
+        unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
     profile:
       private: Yksityinen käyttäjä
       private_info_html: <i>Tämä käyttäjä on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
