@@ -633,8 +633,8 @@ describe "User privacy", type: :system do
 
     context "when private user" do
       it "hides the button to request access" do
-        expect(page).to have_content("<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}")
-        click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+        expect(page).to have_content(collaborative_draft.title)
+        click_link collaborative_draft.title
         within ".view-side" do
           expect(page).to have_content("Version number")
           expect(page).not_to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
@@ -645,8 +645,8 @@ describe "User privacy", type: :system do
     context "when public user" do
       it "renders a button to request access" do
         user.update(published_at: Time.current)
-        expect(page).to have_content("<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}")
-        click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+        expect(page).to have_content(collaborative_draft.title)
+        click_link collaborative_draft.title
         within ".view-side" do
           expect(page).to have_content("Version number")
           expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
