@@ -3,57 +3,58 @@ sv:
   layouts:
     decidim:
       user_profile:
-        privacy_settings: Privacy settings
+        privacy_settings: Integritetsinställningar
       wrapper:
-        public: Your profile is public
-        profile: My public profile
-        message: "Your profile is set as public on this platform and other people can see details about you, such as your name, nickname, profile picture and your public activity on this platform. You can change the visibility of your profile through the privacy settings page. Your profile is available at:"
+        public: Din profil är offentlig
+        profile: Min offentliga profil
+        message: "Din profil är offentlig på denna plattform och andra personer kan se detaljer om dig, såsom ditt namn, smeknamn, profilbild och din offentliga aktivitet på denna plattform. Du kan ändra synligheten av din profil via sidan för integritetsinställningar. Din profil är tillgänglig på:"
   decidim:
     components:
       privacy:
-        name: Privacy settings
+        name: Integritetsinställningar
     members:
-      no_members: This group doesn't have any public members.
+      no_members: This group doesn't have any members.
+      no_public_members: This group doesn't have any public members.
     messaging:
       conversations:
         show:
-          private_account: You can't have a conversation with an account that is private.
-          private_messaging_disabled: You can't have a conversation with an account that has private messaging disabled.
-          private_messaging_disabled_new: You can't start a conversation with an account that has private messaging disabled.
-          private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
-          private_messaging_disabled_users: "The following user(s) have disabled their private messaging:"
+          private_account: Du kan inte ha en konversation med ett konto som är privat.
+          private_messaging_disabled: Du kan inte ha en konversation med ett konto som har direktmeddelanden inaktiverade.
+          private_messaging_disabled_new: Du kan inte ha en konversation med ett konto som har direktmeddelanden inaktiverade.
+          private_messaging_disabled_new_multiple: En eller flera av användarna i denna konversation har inaktiverat direktmeddelanden, vilket är anledningen till att konversationen inte kan startas.
+          private_messaging_disabled_users: "Följande användare har inaktiverat sina direktmeddelanden:"
     privacy:
       message_block:
-        title: Private messaging is not enabled
-        content: To access this page you have to enable private messaging from your "Account settings" - "Privacy Settings"
-        back: Previous page
+        title: Direktmeddelanden är inte aktiverat
+        content: För att komma åt den här sidan måste du aktivera direktmeddelanden från "Kontoinställningar" - "Integritetsinställningar"
+        back: Föregående sida
       privacy_settings:
         show:
-          profile_publicity: "<p>These privacy settings allow you to control how you appear on this platform publicly. You can decide to remain completely anonymous but it will limit what you can do on this platform.</p><p><strong>Profile publicity</strong></p><p>Making your profile public allows you to perform public activities on this platform, such as sending comments, participating in discussions, creating proposals, etc.</p><p>When you make your profile public, other participants can see your name publicly on this platform and also see public information about you, such as your name, nickname and avatar image, your public activity on this platform, your followers and who you follow.</p>"
-          private_messaging: <p><strong>Private messaging</strong></p><p>These settings allow you to communicate with other participants on this platform. Other participants can send you private messages and you can send them to others as well. Your profile needs to be public in order to enable this feature because other people need to find you from this platform in order to have a conversation with you.</p>
-          enable_public_profile: Enable public profile
-          enable_private_messaging: Enable private messaging
-          save_privacy_settings: Save privacy settings
-          allow_public_contact: Allow anyone to send me a direct message, even if I don't follow them.
+          profile_publicity: "<p>Dessa integritetsinställningar låter dig kontrollera hur du visas på denna plattform offentligt. Du kan välja att förbli helt anonym men det kommer att begränsa vad du kan göra på denna plattform.</p><p><strong>Profilpublicitet</strong></p><p>Att göra din profil offentlig låter dig utföra offentliga aktiviteter på denna plattform, såsom att skicka kommentarer, delta i diskussioner, skapa förslag etc.</p><p>När du offentliggör din profil andra deltagare kan se ditt namn offentligt på denna plattform och även se offentlig information om dig, såsom ditt smeknamn och avatar bild, din offentliga verksamhet på denna plattform, dina följare och vem du följer.</p>"
+          private_messaging: <p><strong>Direktmeddelanden</strong></p><p>Dessa inställningar låter dig kommunicera med andra deltagare på denna plattform. Andra deltagare kan skicka direktmeddelanden och du kan även skicka dem till andra. Din profil måste vara offentlig för att aktivera den här funktionen eftersom andra människor behöver hitta dig från denna plattform för att kunna ha en konversation med dig.</p>
+          enable_public_profile: Aktivera offentlig profil
+          enable_private_messaging: Aktivera direktmeddelanden
+          save_privacy_settings: Spara integritetsinställningar
+          allow_public_contact: Tillåt alla att skicka direktmeddelanden till mig, även de som jag inte följer.
         update:
-          error: There was a problem updating your privacy settings.
-          success: Your privacy settings were successfully updated.
+          error: Det gick inte att uppdatera dina integritetsinställningar.
+          success: Dina integritetsinställningar har uppdaterats.
       privacy_block:
-        title: Publication of account needed
-        content: "<p class='text-center'>You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
-        button: "Publish your profile"
+        title: Publicering av konto krävs
+        content: "<p class='text-center'>Du försöker komma åt en sida som kräver att ditt konto är offentligt. Att göra din profil offentlig tillåter andra användare att se information om dig.</p><p class='text-center'><strong>Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.</strong></p>"
+        button: "Publicera din profil"
       partials:
         privacy_consent:
-          make_profile_public: Make your profile public
-          content: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>Your name</li><li>Your nickname</li><li>Your avatar image</li><li>Your public activity on this platform, such as your comments, proposals, etc.</li><li>Your followers and who you follow on this platform</li></ul>"
-          close_modal: Close
-          agree_to_public_profile: I agree that a public profile is created about me
-          do_not_agree: No, I do not want to make my profile public
+          make_profile_public: Gör din profil offentlig
+          content: "<p>För att kunna utföra offentliga åtgärder på denna plattform måste du göra din profil offentlig. Detta innebär att en offentlig profil om dig kommer att finnas på denna plattform där andra personer kan se följande information om dig:</p><ul><li>Ditt namn</li><li>Ditt smeknamn</li><li>Din avatar bild</li><li>Din offentliga aktivitet på denna plattform, såsom dina kommentarer, förslag, etc.</li><li>Dina följare och vem du följer på denna plattform</li></ul>"
+          close_modal: Stäng
+          agree_to_public_profile: Jag godkänner att en offentlig profil skapas om mig
+          do_not_agree: Nej, jag vill inte göra min profil offentlig
       publish_account:
-        unauthorized: Only public account are allowed to perform this action.
+        unauthorized: Endast offentligt konto är tillåtet att utföra denna åtgärd.
     profile:
-      private: Private user
-      private_info: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private: Privat användare
+      private_info: <i>Denna användare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
 
 
 
