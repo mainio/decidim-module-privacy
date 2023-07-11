@@ -32,8 +32,9 @@
               <% end %>
             </h1>
             <% if participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? }.any?(&:private_messaging_disabled?) %>
-              <%= t(".private_messaging_disabled_users") %>
-              <%= participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? && participant.private_messaging_disabled?}.map(&:name).join(", ") %>
+              <% public_participants = participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? && participant.private_messaging_disabled?} %>
+              <%= t(".private_messaging_disabled_users", count: public_participants.count) %>
+              <%= public_participants.map(&:name).join(", ") %>
             <% end %>
           </div>
         </div>

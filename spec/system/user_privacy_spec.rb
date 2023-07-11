@@ -43,7 +43,7 @@ describe "User privacy", type: :system do
         expect(page.find("#user_published_at", visible: :hidden)).not_to be_checked
         expect(page).not_to have_content("Private messaging")
         expect(page).not_to have_content("Enable private messaging")
-        expect(page).not_to have_content("Allow anyone to send me a direct message, even if I don't follow them.")
+        expect(page).not_to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
       end
     end
 
@@ -56,7 +56,7 @@ describe "User privacy", type: :system do
         find("label[for='user_published_at']").click
         expect(page).to have_content("Private messaging")
         expect(page).to have_content("Enable private messaging")
-        expect(page).to have_content("Allow anyone to send me a direct message, even if I don't follow them.")
+        expect(page).to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
       end
     end
 
@@ -118,7 +118,7 @@ describe "User privacy", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_proposal_path(component)
 
-        expect(page).to have_content("Publication of account needed")
+        expect(page).to have_content("Public profile is required for this action")
         expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -162,7 +162,7 @@ describe "User privacy", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_meeting_path(component)
 
-        expect(page).to have_content("Publication of account needed")
+        expect(page).to have_content("Public profile is required for this action")
         expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -206,7 +206,7 @@ describe "User privacy", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_debate_path(component)
 
-        expect(page).to have_content("Publication of account needed")
+        expect(page).to have_content("Public profile is required for this action")
         expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -573,7 +573,7 @@ describe "User privacy", type: :system do
         it "shows no members" do
           visit decidim.profile_path(user_group.nickname)
 
-          expect(page).to have_content("This group doesn't have any members.")
+          expect(page).to have_content("This group does not have any members.")
         end
       end
 
@@ -585,7 +585,7 @@ describe "User privacy", type: :system do
           visit decidim.profile_path(user_group.nickname)
 
           within "#content" do
-            expect(page).to have_content("This group doesn't have any public members.")
+            expect(page).to have_content("This group does not have any public members.")
             expect(page).not_to have_content(user.name)
           end
         end
