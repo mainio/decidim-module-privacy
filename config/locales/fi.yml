@@ -1,0 +1,61 @@
+---
+fi:
+  layouts:
+    decidim:
+      user_profile:
+        privacy_settings: Yksityisyysasetukset
+      wrapper:
+        public: Profiilisi on julkinen
+        profile: Oma julkinen profiili
+        message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
+  decidim:
+    components:
+      privacy:
+        name: Yksityisyysasetukset
+    members:
+      no_members: This group doesn't have any members.
+      no_public_members: This group doesn't have any public members.
+    messaging:
+      conversations:
+        show:
+          private_account: Et voi keskustella yksityisen tilin kanssa.
+          private_messaging_disabled: Et voi keskustella sellaisen tilin kanssa, jonka yksityisviestit on estetty.
+          private_messaging_disabled_new: Et voi keskustella sellaisen tilin kanssa, jonka yksityisviestit on estetty.
+          private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.
+          private_messaging_disabled_users: "Seuraavilla käyttäjillä on yksityisviestit estetty:"
+    privacy:
+      message_block:
+        title: Yksityisviestit eivät ole käytössä
+        content: Käyttääksesi tätä toimintoa, sinun täytyy ottaa yksityisviestit käyttöön tilisi asetusten alta löytyvien yksityisyysasetusten kautta
+        back: Edellinen sivu
+      privacy_settings:
+        show:
+          profile_publicity: "<p>Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina, mutta se rajoittaa, mitä voit tehdä tällä alustalla.</p><p><strong>Profiilin julkisuus</strong></p><p>Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.</p><p>Tekemällä profiilistasi julkisen, muut käyttäjät voivat nähdä nimesi julkisesti tällä alustalla ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla, seuraajasi ja keitä sinä seuraat.</p>"
+          private_messaging: <p><strong>Yksityisviestit</strong></p><p>Näiden asetusten avulla voit keskustella muiden käyttäjien kanssa tällä alustalla. Muut osallistujat voivat lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille käyttäjille. Profiilisi on oltava julkinen tämän asetuksen käyttöönottoa varten, koska muiden käyttäjien on löydettävä sinut tältä alustalta keskustellakseen kanssasi.</p>
+          enable_public_profile: Ota julkinen profiili käyttöön
+          enable_private_messaging: Ota yksityisviestit käyttöön
+          save_privacy_settings: Tallenna yksityisyysasetukset
+          allow_public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
+        update:
+          error: Yksityisyysasetusten päivittäminen epäonnistui.
+          success: Yksityisyysasetusten päivitys onnistui.
+      privacy_block:
+        title: Tilin julkaiseminen vaaditaan
+        content: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen käyttäjätilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        button: "Julkaise profiilisi"
+      partials:
+        privacy_consent:
+          make_profile_public: Tee profiilistasi julkinen
+          content: "<p>Suorittaaksesi julkisia toimintoja tällä alustalla, sinun täytyy tehdä profiilistasi julkinen. Tämä tarkoittaa, että sinulle luodaan julkinen profiili tälle alustalle, jonka kautta muut ihmiset voivat nähdä seuraavia tietoja sinusta:</p><ul><li>nimesi</li><li>nimimerkkisi</li><li>profiilikuvasi</li><li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li><li>seuraajasi ja ketä sinä seuraat tällä alustalla</li></ul>"
+          close_modal: Sulje
+          agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
+          do_not_agree: Ei, en halua tehdä profiilistani julkista
+      publish_account:
+        unauthorized: Vain julkiset tilit voivat suorittaa tämän toiminnon.
+    profile:
+      private: Yksityinen käyttäjä
+      private_info: <i>Tämä käyttäjä on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
+
+
+
+
