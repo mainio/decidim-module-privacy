@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def list
-          model.reject { |user| user.is_a?(Decidim::NilPresenter) }
+          model.reject { |user| user.is_a?(Decidim::NilPresenter) || !user.try(:public?) }
         end
       end
     end

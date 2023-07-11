@@ -9,6 +9,10 @@ module Decidim
         def endorsements_enabled?
           current_settings.endorsements_enabled && current_user&.public?
         end
+
+        def show_endorsements_card?
+          current_user.present?
+        end
       end
     end
   end

@@ -195,6 +195,11 @@ module Decidim
             Decidim::Proposals::Proposal.include(Decidim::Privacy::ValuatableExtensions)
             Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
             Decidim::Proposals::CollaborativeDraft.include(CollaborativeDraftsExtensions)
+
+            # permissions
+            Decidim::Proposals::Permissions.include(
+              Decidim::Privacy::PermissionsExtensions
+            )
           end
 
           if Decidim.module_installed? :comments
@@ -241,6 +246,9 @@ module Decidim
             # cells
             Decidim::Meetings::MeetingMCell.include(
               Decidim::Privacy::MeetingMCellExtensions
+            )
+            Decidim::Meetings::MeetingSCell.include(
+              Decidim::Privacy::MeetingSCellExtensions
             )
           end
 

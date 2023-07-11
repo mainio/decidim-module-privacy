@@ -295,6 +295,49 @@ describe "User privacy", type: :system do
     end
   end
 
+  context "when visiting a blog post" do
+    let!(:component) { create(:post_component, participatory_space: participatory_process) }
+    let!(:post) { create(:post, component: component) }
+
+    context "when user public" do
+      let!(:user) { create(:user, :confirmed, :published, organization: organization) }
+
+      it "shows endorse, follow and comments -buttons" do
+        user.update(published_at: Time.current)
+        visit_blog_post
+
+        within ".view-side" do
+          expect(page).to have_button("Endorse")
+          expect(page).to have_selector('[href="#comments"]')
+          expect(page).to have_selector(".follow-button")
+        end
+      end
+    end
+
+    context "when user private" do
+      it "hides endorse button" do
+        visit_blog_post
+
+        within ".view-side" do
+          expect(page).to have_selector('[href="#comments"]')
+          expect(page).to have_selector(".follow-button")
+        end
+      end
+    end
+
+    context "when no signed in user" do
+      it "hides endorse button" do
+        visit_blog_post
+
+        within_user_menu do
+          find(".sign-out-link").click
+        end
+
+        expect(page).not_to have_selector(".view-side")
+      end
+    end
+  end
+
   context "when user has created a proposal" do
     let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
     let!(:proposal) { create(:proposal, component: component, users: [user]) }
@@ -325,7 +368,7 @@ describe "User privacy", type: :system do
 
   context "when user has created a meeting" do
     let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
-    let!(:meeting) { create(:meeting, :online, :not_official, :published, author: user, component: component) }
+    let!(:meeting) { create(:meeting, :online, :not_official, :published, registrations_enabled: true, author: user, component: component) }
 
     it "shows author name when user public" do
       user.update(published_at: Time.current)
@@ -348,6 +391,27 @@ describe "User privacy", type: :system do
       end
 
       expect(page).not_to have_selector(".author-data")
+    end
+
+    context "when user joins meeting as private and allows attendance publicly" do
+      it "doesn't show user's name under 'attending participants'" do
+        join_meeting
+
+        within ".collapsible-list" do
+          expect(page).not_to have_content(user.name)
+        end
+      end
+    end
+
+    context "when user joins meeting as public and allows attendance publicly" do
+      it "shows user's name under 'attending participants'" do
+        user.update(published_at: Time.current)
+        join_meeting
+
+        within ".collapsible-list" do
+          expect(page).to have_content(user.name)
+        end
+      end
     end
   end
 
@@ -542,6 +606,55 @@ describe "User privacy", type: :system do
     end
   end
 
+  context "when requesting access to collaborative draft" do
+    let!(:scope) { create :scope, organization: organization }
+    let!(:author) { create :user, :confirmed, organization: organization }
+    let!(:user) { create :user, :confirmed, organization: organization }
+    let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
+    let!(:component) do
+      create(:proposal_component,
+             :with_creation_enabled,
+             participatory_space: participatory_process,
+             organization: organization,
+             settings: {
+               collaborative_drafts_enabled: true,
+               scopes_enabled: true,
+               scope_id: participatory_process.scope&.id
+             })
+    end
+
+    let!(:collaborative_draft) { create(:collaborative_draft, :open, component: component, scope: scope, users: [author]) }
+
+    before do
+      sign_in user, scope: :user
+      visit main_component_path(component)
+      click_link "Access collaborative drafts"
+    end
+
+    context "when private user" do
+      it "hides the button to request access" do
+        expect(page).to have_content("<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}")
+        click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+        within ".view-side" do
+          expect(page).to have_content("Version number")
+          expect(page).not_to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+        end
+      end
+    end
+
+    context "when public user" do
+      it "renders a button to request access" do
+        user.update(published_at: Time.current)
+        expect(page).to have_content("<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}")
+        click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+        within ".view-side" do
+          expect(page).to have_content("Version number")
+          expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+        end
+      end
+    end
+  end
+
   def new_proposal_path(component)
     Decidim::EngineRouter.main_proxy(component).new_proposal_path(component.id)
   end
@@ -562,11 +675,32 @@ describe "User privacy", type: :system do
     visit decidim_assemblies.assembly_path(component)
   end
 
+  def visit_meeting
+    visit resource_locator(meeting).path
+  end
+
+  def join_meeting
+    visit_meeting
+    expect(page).to have_link("Join meeting")
+    click_link "Join meeting"
+    check "public_participation"
+    check "questionnaire_tos_agreement"
+    click_button "Submit"
+    within ".confirm-modal-footer" do
+      find("[data-confirm-ok]").click
+    end
+  end
+
   def comment_blog_post
     visit_component
     click_link post.title["en"]
     fill_in "add-comment-Post-#{post.id}", with: "Hello there!"
     click_button "Send"
+  end
+
+  def visit_blog_post
+    visit_component
+    click_link post.title["en"]
   end
 
   def reply
