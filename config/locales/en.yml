@@ -18,9 +18,9 @@ en:
     messaging:
       conversations:
         show:
-          private_account: You cannot have a conversation with an account that is private.
-          private_messaging_disabled: You cannot have a conversation with an account that has private messaging disabled.
-          private_messaging_disabled_new: You cannot start a conversation with an account that has private messaging disabled.
+          private_account: You cannot have a conversation with a private participant.
+          private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
+          private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
           private_messaging_disabled_users:
             one: "The following user has disabled their private messaging:"
@@ -28,7 +28,7 @@ en:
     privacy:
       message_block:
         title: Private messaging is not enabled
-        content_html: To access this page you have to enable private messaging from the "Privacy settings" under your account settings.
+        content_html: To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
         back: Previous page
       privacy_settings:
         show:
@@ -43,7 +43,7 @@ en:
           success: Your privacy settings were successfully updated.
       privacy_block:
         title: Public profile is required for this action
-        content_html: "<p class='text-center'>You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
+        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
         button: "Publish your profile"
       partials:
         privacy_consent:
@@ -53,7 +53,7 @@ en:
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
       publish_account:
-        unauthorized: Only public account are allowed to perform this action.
+        unauthorized: Only participants with public profiles are allowed to perform this action.
     profile:
       private: Private user
       private_info_html: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
