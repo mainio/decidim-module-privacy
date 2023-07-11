@@ -18,9 +18,9 @@ sv:
     messaging:
       conversations:
         show:
-          private_account: Du kan inte ha en konversation med ett konto som är privat.
-          private_messaging_disabled: Du kan inte ha en konversation med ett konto som har privata meddelanden inaktiverade.
-          private_messaging_disabled_new: Du kan inte starta en konversation med ett konto som har privata meddelanden inaktiverade.
+          private_account: You cannot have a conversation with a private participant.
+          private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
+          private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new_multiple: En eller flera av användarna i denna konversation har inaktiverat direktmeddelanden, vilket är anledningen till att konversationen inte kan startas.
           private_messaging_disabled_users:
             one: "Följande användare har inaktiverat sina privata meddelanden:"
@@ -28,7 +28,7 @@ sv:
     privacy:
       message_block:
         title: Direktmeddelanden är inte aktiverat
-        content_html: För att komma åt den här sidan måste du aktivera privata meddelanden från "Integritetsinställningar" under dina kontoinställningar.
+        content_html: To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
         back: Föregående sida
       privacy_settings:
         show:
@@ -43,7 +43,7 @@ sv:
           success: Dina integritetsinställningar har uppdaterats.
       privacy_block:
         title: Offentlig profil krävs för denna åtgärd
-        content_html: "<p class='text-center'>Du försöker komma åt en sida som kräver att ditt konto är offentligt. Att göra din profil offentlig tillåter andra användare att se information om dig.</p><p class='text-center'><strong>Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.</strong></p>"
+        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
         button: "Publicera din profil"
       partials:
         privacy_consent:
@@ -53,7 +53,7 @@ sv:
           agree_to_public_profile: Jag godkänner att en offentlig profil skapas om mig
           do_not_agree: Nej, jag vill inte göra min profil offentlig
       publish_account:
-        unauthorized: Endast offentligt konto är tillåtet att utföra denna åtgärd.
+        unauthorized: Only participants with public profiles are allowed to perform this action.
     profile:
       private: Privat användare
       private_info_html: <i>Denna användare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
