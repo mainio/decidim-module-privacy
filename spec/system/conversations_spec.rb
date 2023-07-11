@@ -94,11 +94,8 @@ describe "Conversations", type: :system do
   end
 
   context "when receiver profile is private" do
-    it "doesn't allow user to visit the profile page" do
-      expect do
-        visit decidim.profile_path(nickname: receiver.nickname)
-        expect(page).to have_content(receiver.name)
-      end.to raise_error(ActionController::RoutingError)
+    it_behaves_like "a 404 page" do
+      let(:target_path) { decidim.profile_path(nickname: receiver.nickname) }
     end
   end
 
