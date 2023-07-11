@@ -15,7 +15,7 @@ describe "User privacy", type: :system do
 
   context "when user private" do
     context "when opening user menu" do
-      it "doesn't have 'my public profile' link" do
+      it "does not have 'my public profile' link" do
         click_link user.name
         expect(page).not_to have_link("My public profile")
       end
@@ -36,7 +36,7 @@ describe "User privacy", type: :system do
 
   context "when visiting 'privacy settings' page" do
     context "when private account" do
-      it "doesn't show 'private messaging' settings" do
+      it "does not show 'private messaging' settings" do
         visit "/privacy_settings"
 
         expect(page).to have_content("Enable public profile")
@@ -394,7 +394,7 @@ describe "User privacy", type: :system do
     end
 
     context "when user joins meeting as private and allows attendance publicly" do
-      it "doesn't show user's name under 'attending participants'" do
+      it "does not show user's name under 'attending participants'" do
         join_meeting
 
         within ".collapsible-list" do

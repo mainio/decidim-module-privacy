@@ -17,7 +17,7 @@ module Decidim
         end
 
         context "when user is private" do
-          it "doesn't allow endorsing" do
+          it "does not allow endorsing" do
             expect(subject).to be(false)
           end
         end

@@ -59,7 +59,7 @@ module Decidim
           context "when user is blocked" do
             let(:user) { create(:user, :blocked, :confirmed, organization: current_organization) }
 
-            it "doesn't returns all the types" do
+            it "does not returns all the types" do
               users = response["users"]
               expect(users).to eq([])
             end
@@ -98,7 +98,7 @@ module Decidim
           context "when user is blocked" do
             let!(:user1) { create(:user, :blocked, :published, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
-            it "doesn't returns matching users" do
+            it "does not returns matching users" do
               expect(response["users"]).not_to include("name" => user1.name)
             end
           end
@@ -106,7 +106,7 @@ module Decidim
           context "when user is deleted" do
             let!(:user1) { create(:user, :deleted, :confirmed, :published, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
-            it "doesn't returns matching users" do
+            it "does not returns matching users" do
               expect(response["users"]).not_to include("name" => user1.name)
             end
           end
@@ -114,7 +114,7 @@ module Decidim
           context "when user is private" do
             let!(:user1) { create(:user, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
-            it "doesn't returns matching users" do
+            it "does not returns matching users" do
               expect(response["users"]).not_to include("name" => user1.name)
             end
           end
@@ -135,7 +135,7 @@ module Decidim
             context "when user is blocked" do
               let!(:user1) { create(:user, :blocked, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
-              it "doesn't returns matching users" do
+              it "does not returns matching users" do
                 expect(response["users"]).not_to include("name" => user1.name)
               end
             end
@@ -143,7 +143,7 @@ module Decidim
             context "when user is private" do
               let!(:user1) { create(:user, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
-              it "doesn't returns matching users" do
+              it "does not returns matching users" do
                 expect(response["users"]).not_to include("name" => user1.name)
               end
             end
