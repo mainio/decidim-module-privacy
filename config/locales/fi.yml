@@ -3,57 +3,58 @@ fi:
   layouts:
     decidim:
       user_profile:
-        privacy_settings: Privacy settings
+        privacy_settings: Yksityisyysasetukset
       wrapper:
-        public: Your profile is public
-        profile: My public profile
-        message: "Your profile is set as public on this platform and other people can see details about you, such as your name, nickname, profile picture and your public activity on this platform. You can change the visibility of your profile through the privacy settings page. Your profile is available at:"
+        public: Profiilisi on julkinen
+        profile: Oma julkinen profiili
+        message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
   decidim:
     components:
       privacy:
-        name: Privacy settings
+        name: Yksityisyysasetukset
     members:
-      no_members: This group doesn't have any public members.
+      no_members: This group doesn't have any members.
+      no_public_members: This group doesn't have any public members.
     messaging:
       conversations:
         show:
-          private_account: You can't have a conversation with an account that is private.
-          private_messaging_disabled: You can't have a conversation with an account that has private messaging disabled.
-          private_messaging_disabled_new: You can't start a conversation with an account that has private messaging disabled.
-          private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
-          private_messaging_disabled_users: "The following user(s) have disabled their private messaging:"
+          private_account: Et voi keskustella yksityisen tilin kanssa.
+          private_messaging_disabled: Et voi keskustella sellaisen tilin kanssa, jonka yksityisviestit on estetty.
+          private_messaging_disabled_new: Et voi keskustella sellaisen tilin kanssa, jonka yksityisviestit on estetty.
+          private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.
+          private_messaging_disabled_users: "Seuraavilla käyttäjillä on yksityisviestit estetty:"
     privacy:
       message_block:
-        title: Private messaging is not enabled
-        content: To access this page you have to enable private messaging from your "Account settings" - "Privacy Settings"
-        back: Previous page
+        title: Yksityisviestit eivät ole käytössä
+        content: Käyttääksesi tätä toimintoa, sinun täytyy ottaa yksityisviestit käyttöön tilisi asetusten alta löytyvien yksityisyysasetusten kautta
+        back: Edellinen sivu
       privacy_settings:
         show:
-          profile_publicity: "<p>These privacy settings allow you to control how you appear on this platform publicly. You can decide to remain completely anonymous but it will limit what you can do on this platform.</p><p><strong>Profile publicity</strong></p><p>Making your profile public allows you to perform public activities on this platform, such as sending comments, participating in discussions, creating proposals, etc.</p><p>When you make your profile public, other participants can see your name publicly on this platform and also see public information about you, such as your name, nickname and avatar image, your public activity on this platform, your followers and who you follow.</p>"
-          private_messaging: <p><strong>Private messaging</strong></p><p>These settings allow you to communicate with other participants on this platform. Other participants can send you private messages and you can send them to others as well. Your profile needs to be public in order to enable this feature because other people need to find you from this platform in order to have a conversation with you.</p>
-          enable_public_profile: Enable public profile
-          enable_private_messaging: Enable private messaging
-          save_privacy_settings: Save privacy settings
-          allow_public_contact: Allow anyone to send me a direct message, even if I don't follow them.
+          profile_publicity: "<p>Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina, mutta se rajoittaa, mitä voit tehdä tällä alustalla.</p><p><strong>Profiilin julkisuus</strong></p><p>Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.</p><p>Tekemällä profiilistasi julkisen, muut käyttäjät voivat nähdä nimesi julkisesti tällä alustalla ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla, seuraajasi ja keitä sinä seuraat.</p>"
+          private_messaging: <p><strong>Yksityisviestit</strong></p><p>Näiden asetusten avulla voit keskustella muiden käyttäjien kanssa tällä alustalla. Muut osallistujat voivat lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille käyttäjille. Profiilisi on oltava julkinen tämän asetuksen käyttöönottoa varten, koska muiden käyttäjien on löydettävä sinut tältä alustalta keskustellakseen kanssasi.</p>
+          enable_public_profile: Ota julkinen profiili käyttöön
+          enable_private_messaging: Ota yksityisviestit käyttöön
+          save_privacy_settings: Tallenna yksityisyysasetukset
+          allow_public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
         update:
-          error: There was a problem updating your privacy settings.
-          success: Your privacy settings were successfully updated.
+          error: Yksityisyysasetusten päivittäminen epäonnistui.
+          success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
-        title: Publication of account needed
-        content: "<p class='text-center'>You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
-        button: "Publish your profile"
+        title: Tilin julkaiseminen vaaditaan
+        content: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen käyttäjätilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        button: "Julkaise profiilisi"
       partials:
         privacy_consent:
-          make_profile_public: Make your profile public
-          content: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>Your name</li><li>Your nickname</li><li>Your avatar image</li><li>Your public activity on this platform, such as your comments, proposals, etc.</li><li>Your followers and who you follow on this platform</li></ul>"
-          close_modal: Close
-          agree_to_public_profile: I agree that a public profile is created about me
-          do_not_agree: No, I do not want to make my profile public
+          make_profile_public: Tee profiilistasi julkinen
+          content: "<p>Suorittaaksesi julkisia toimintoja tällä alustalla, sinun täytyy tehdä profiilistasi julkinen. Tämä tarkoittaa, että sinulle luodaan julkinen profiili tälle alustalle, jonka kautta muut ihmiset voivat nähdä seuraavia tietoja sinusta:</p><ul><li>nimesi</li><li>nimimerkkisi</li><li>profiilikuvasi</li><li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li><li>seuraajasi ja ketä sinä seuraat tällä alustalla</li></ul>"
+          close_modal: Sulje
+          agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
+          do_not_agree: Ei, en halua tehdä profiilistani julkista
       publish_account:
-        unauthorized: Only public account are allowed to perform this action.
+        unauthorized: Vain julkiset tilit voivat suorittaa tämän toiminnon.
     profile:
-      private: Private user
-      private_info: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private: Yksityinen käyttäjä
+      private_info: <i>Tämä käyttäjä on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
 
 
 
