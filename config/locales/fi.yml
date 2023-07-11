@@ -18,9 +18,9 @@ fi:
     messaging:
       conversations:
         show:
-          private_account: Et voi keskustella yksityisen tilin kanssa.
-          private_messaging_disabled: Et voi keskustella sellaisen tilin kanssa, jonka yksityisviestit on estetty.
-          private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen tilin kanssa, jonka yksityisviestit on estetty.
+          private_account: You cannot have a conversation with a private participant.
+          private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
+          private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.
           private_messaging_disabled_users:
             one: "Seuraavalla käyttäjällä on yksityisviestit estetty:"
@@ -28,7 +28,7 @@ fi:
     privacy:
       message_block:
         title: Yksityisviestit eivät ole käytössä
-        content_html: Käyttääksesi tätä toimintoa, sinun täytyy ottaa yksityisviestit käyttöön tilisi asetusten alta löytyvien "yksityisyysasetusten" kautta.
+        content_html: To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
         back: Edellinen sivu
       privacy_settings:
         show:
@@ -43,7 +43,7 @@ fi:
           success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
-        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen käyttäjätilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
         button: "Julkaise profiilisi"
       partials:
         privacy_consent:
@@ -53,7 +53,7 @@ fi:
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
       publish_account:
-        unauthorized: Vain julkiset tilit voivat suorittaa tämän toiminnon.
+        unauthorized: Only participants with public profiles are allowed to perform this action.
     profile:
       private: Yksityinen käyttäjä
       private_info_html: <i>Tämä käyttäjä on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
