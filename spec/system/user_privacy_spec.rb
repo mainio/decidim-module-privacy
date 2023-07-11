@@ -119,7 +119,7 @@ describe "User privacy", type: :system do
         visit new_proposal_path(component)
 
         expect(page).to have_content("Public profile is required for this action")
-        expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
         click_button "Publish your profile"
@@ -163,7 +163,7 @@ describe "User privacy", type: :system do
         visit new_meeting_path(component)
 
         expect(page).to have_content("Public profile is required for this action")
-        expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
         click_button "Publish your profile"
@@ -207,7 +207,7 @@ describe "User privacy", type: :system do
         visit new_debate_path(component)
 
         expect(page).to have_content("Public profile is required for this action")
-        expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
         click_button "Publish your profile"

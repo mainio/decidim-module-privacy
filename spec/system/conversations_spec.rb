@@ -126,7 +126,7 @@ describe "Conversations", type: :system do
           find(".user-contact_link").click
 
           expect(page).to have_content(receiver.name)
-          expect(page).to have_content("You cannot start a conversation with an account that has private messaging disabled.")
+          expect(page).to have_content("You cannot start a conversation with a participant that has private messaging disabled.")
         end
       end
     end
@@ -145,7 +145,7 @@ describe "Conversations", type: :system do
           expect(page).to have_content(receiver.name)
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
-          expect(page).to have_content("You cannot have a conversation with an account that has private messaging disabled.")
+          expect(page).to have_content("You cannot have a conversation with a participant that has private messaging disabled.")
           expect(page).to have_selector("a[href='/profiles/#{receiver.nickname}']")
         end
       end
@@ -163,7 +163,7 @@ describe "Conversations", type: :system do
           expect(page).to have_content("Private user")
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
-          expect(page).to have_content("You cannot have a conversation with an account that is private.")
+          expect(page).to have_content("You cannot have a conversation with a private participant.")
           expect(page).not_to have_selector("a[href='/profiles/#{receiver.nickname}']")
         end
       end
