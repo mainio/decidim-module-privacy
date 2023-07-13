@@ -19,7 +19,7 @@ describe "Conversations", type: :system do
 
   context "when searching for users in 'new conversation'" do
     context "when receiver profile is private" do
-      it "doesn't show up in the search" do
+      it "does not show up in the search" do
         visit decidim.conversations_path
 
         click_button "New conversation"
@@ -43,7 +43,7 @@ describe "Conversations", type: :system do
     end
 
     context "when user group is not verified" do
-      it "doesn't show up in the search" do
+      it "does not show up in the search" do
         user_group.update(extended_data: { verified_at: nil })
         visit decidim.conversations_path
 
@@ -55,7 +55,7 @@ describe "Conversations", type: :system do
     end
 
     context "when user group is not confirmed" do
-      it "doesn't show up in the search" do
+      it "does not show up in the search" do
         user_group.update(confirmed_at: nil)
         visit decidim.conversations_path
 
@@ -68,7 +68,7 @@ describe "Conversations", type: :system do
   end
 
   context "when own profile private" do
-    it "doesn't have 'conversations' link in the user menu" do
+    it "does not have 'conversations' link in the user menu" do
       user.update(published_at: nil)
       refresh
 
@@ -86,7 +86,7 @@ describe "Conversations", type: :system do
       expect(page).to have_content("Private messaging is not enabled")
     end
 
-    it "doesn't show 'conversations' link in the navbar" do
+    it "does not show 'conversations' link in the navbar" do
       user.update(published_at: nil)
       refresh
       expect(page).not_to have_selector(".icon--envelope-closed")
@@ -94,11 +94,8 @@ describe "Conversations", type: :system do
   end
 
   context "when receiver profile is private" do
-    it "doesn't allow user to visit the profile page" do
-      expect do
-        visit decidim.profile_path(nickname: receiver.nickname)
-        expect(page).to have_content(receiver.name)
-      end.to raise_error(ActionController::RoutingError)
+    it_behaves_like "a 404 page" do
+      let(:target_path) { decidim.profile_path(nickname: receiver.nickname) }
     end
   end
 
@@ -129,7 +126,7 @@ describe "Conversations", type: :system do
           find(".user-contact_link").click
 
           expect(page).to have_content(receiver.name)
-          expect(page).to have_content("You can't start a conversation with an account that has private messaging disabled.")
+          expect(page).to have_content("You cannot start a conversation with a participant that has private messaging disabled.")
         end
       end
     end
@@ -148,7 +145,7 @@ describe "Conversations", type: :system do
           expect(page).to have_content(receiver.name)
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
-          expect(page).to have_content("You can't have a conversation with an account that has private messaging disabled.")
+          expect(page).to have_content("You cannot have a conversation with a participant that has private messaging disabled.")
           expect(page).to have_selector("a[href='/profiles/#{receiver.nickname}']")
         end
       end
@@ -166,7 +163,7 @@ describe "Conversations", type: :system do
           expect(page).to have_content("Private user")
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
-          expect(page).to have_content("You can't have a conversation with an account that is private.")
+          expect(page).to have_content("You cannot have a conversation with a private participant.")
           expect(page).not_to have_selector("a[href='/profiles/#{receiver.nickname}']")
         end
       end
@@ -198,7 +195,7 @@ describe "Conversations", type: :system do
     end
 
     context "when trying to start a group conversation with at least one person with private messaging disabled" do
-      it "doesn't allow to initiate the conversation" do
+      it "does not allow to initiate the conversation" do
         receiver.update(published_at: Time.current, allow_private_messaging: false)
         group_chat_participant.update(published_at: Time.current)
 
@@ -215,7 +212,7 @@ describe "Conversations", type: :system do
 
         expect(page).to have_content(receiver.name)
         expect(page).to have_content(group_chat_participant.name)
-        expect(page).to have_content("The following user(s) have disabled their private messaging: #{receiver.name}")
+        expect(page).to have_content("The following user has disabled their private messaging: #{receiver.name}")
         expect(page).to have_content("One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.")
       end
     end
@@ -287,7 +284,7 @@ describe "Conversations", type: :system do
         expect(page).to have_content("Conversation with")
         expect(page).to have_content(receiver.name)
         expect(page).to have_content(group_chat_participant.name)
-        expect(page).to have_content("The following user(s) have disabled their private messaging: #{receiver.name}")
+        expect(page).to have_content("The following user has disabled their private messaging: #{receiver.name}")
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")
       end

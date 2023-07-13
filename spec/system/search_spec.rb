@@ -16,7 +16,7 @@ describe "User privacy", type: :system do
 
   context "when listing users" do
     context "when user private" do
-      it "doesn't show up in search" do
+      it "does not show up in search" do
         fill_in "term", with: user.name
         find("button[name='commit']").click
 
@@ -53,7 +53,7 @@ describe "User privacy", type: :system do
     context "when user group is not verified but is confirmed" do
       let!(:user_group) { create(:user_group, :confirmed, organization: organization, users: [admin]) }
 
-      it "doesn't show up in search" do
+      it "does not show up in search" do
         fill_in "term", with: user_group.name
         find("button[name='commit']").click
 
@@ -88,7 +88,7 @@ describe "User privacy", type: :system do
     context "when user group is not confirmed" do
       let!(:user_group) { create(:user_group, organization: organization, users: [admin]) }
 
-      it "doesn't show up in search" do
+      it "does not show up in search" do
         fill_in "term", with: user_group.name
         find("button[name='commit']").click
 

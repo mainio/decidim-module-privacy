@@ -13,48 +13,50 @@ en:
       privacy:
         name: Privacy settings
     members:
-      no_members: This group doesn't have any members.
-      no_public_members: This group doesn't have any public members.
+      no_members: This group does not have any members.
+      no_public_members: This group does not have any public members.
     messaging:
       conversations:
         show:
-          private_account: You can't have a conversation with an account that is private.
-          private_messaging_disabled: You can't have a conversation with an account that has private messaging disabled.
-          private_messaging_disabled_new: You can't start a conversation with an account that has private messaging disabled.
+          private_account: You cannot have a conversation with a private participant.
+          private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
+          private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
-          private_messaging_disabled_users: "The following user(s) have disabled their private messaging:"
+          private_messaging_disabled_users:
+            one: "The following user has disabled their private messaging:"
+            other: "The following users have disabled their private messaging:"
     privacy:
       message_block:
         title: Private messaging is not enabled
-        content: To access this page you have to enable private messaging from your "Account settings" - "Privacy Settings"
+        content_html: To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
         back: Previous page
       privacy_settings:
         show:
-          profile_publicity: "<p>These privacy settings allow you to control how you appear on this platform publicly. You can decide to remain completely anonymous but it will limit what you can do on this platform.</p><p><strong>Profile publicity</strong></p><p>Making your profile public allows you to perform public activities on this platform, such as sending comments, participating in discussions, creating proposals, etc.</p><p>When you make your profile public, other participants can see your name publicly on this platform and also see public information about you, such as your name, nickname and avatar image, your public activity on this platform, your followers and who you follow.</p>"
-          private_messaging: <p><strong>Private messaging</strong></p><p>These settings allow you to communicate with other participants on this platform. Other participants can send you private messages and you can send them to others as well. Your profile needs to be public in order to enable this feature because other people need to find you from this platform in order to have a conversation with you.</p>
+          profile_publicity_html: "<p>These privacy settings allow you to control how you appear on this platform publicly. You can decide to remain completely anonymous but it will limit what you can do on this platform.</p><p><strong>Profile publicity</strong></p><p>Making your profile public allows you to perform public activities on this platform, such as sending comments, participating in discussions, creating proposals, etc.</p><p>When you make your profile public, other participants can see your name publicly on this platform and also see other public information about you, such as your nickname and avatar image, your public activity on this platform, your followers and who you follow.</p>"
+          private_messaging_html: <p><strong>Private messaging</strong></p><p>These settings allow you to communicate with other participants on this platform. Other participants can send you private messages and you can send them to others as well. Your profile needs to be public in order to enable this feature because other people need to find you from this platform in order to have a conversation with you.</p>
           enable_public_profile: Enable public profile
           enable_private_messaging: Enable private messaging
           save_privacy_settings: Save privacy settings
-          allow_public_contact: Allow anyone to send me a direct message, even if I don't follow them.
+          allow_public_contact: Allow anyone to send me a direct message, even if I do not follow them.
         update:
           error: There was a problem updating your privacy settings.
           success: Your privacy settings were successfully updated.
       privacy_block:
-        title: Publication of account needed
-        content: "<p class='text-center'>You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
+        title: Public profile is required for this action
+        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
         button: "Publish your profile"
       partials:
         privacy_consent:
           make_profile_public: Make your profile public
-          content: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>Your name</li><li>Your nickname</li><li>Your avatar image</li><li>Your public activity on this platform, such as your comments, proposals, etc.</li><li>Your followers and who you follow on this platform</li></ul>"
+          content_html: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>your name</li><li>your nickname</li><li>your avatar image</li><li>your public activity on this platform, such as your comments, proposals, etc.</li><li>your followers and who you follow on this platform</li></ul>"
           close_modal: Close
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
       publish_account:
-        unauthorized: Only public account are allowed to perform this action.
+        unauthorized: Only participants with public profiles are allowed to perform this action.
     profile:
       private: Private user
-      private_info: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private_info_html: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
 
 
 

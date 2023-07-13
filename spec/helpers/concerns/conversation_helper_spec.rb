@@ -28,7 +28,7 @@ module Decidim
         context "when user is deleted" do
           let(:user) { create :user, :deleted }
 
-          it "doesn't include the user name" do
+          it "does not include the user name" do
             expect(helper.conversation_label_for(participants)).to eq "Conversation with Participant deleted"
           end
         end
@@ -59,7 +59,7 @@ module Decidim
         context "when user is deleted" do
           let(:user) { create :user, :deleted }
 
-          it "doesn't include the user name" do
+          it "does not include the user name" do
             expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Participant deleted</span>"
           end
         end
@@ -90,7 +90,7 @@ module Decidim
         context "when user is deleted" do
           let(:user) { create :user, :deleted }
 
-          it "doesn't include the user name" do
+          it "does not include the user name" do
             expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Participant deleted</span>"
           end
         end

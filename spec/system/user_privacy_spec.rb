@@ -15,7 +15,7 @@ describe "User privacy", type: :system do
 
   context "when user private" do
     context "when opening user menu" do
-      it "doesn't have 'my public profile' link" do
+      it "does not have 'my public profile' link" do
         click_link user.name
         expect(page).not_to have_link("My public profile")
       end
@@ -36,14 +36,14 @@ describe "User privacy", type: :system do
 
   context "when visiting 'privacy settings' page" do
     context "when private account" do
-      it "doesn't show 'private messaging' settings" do
+      it "does not show 'private messaging' settings" do
         visit "/privacy_settings"
 
         expect(page).to have_content("Enable public profile")
         expect(page.find("#user_published_at", visible: :hidden)).not_to be_checked
         expect(page).not_to have_content("Private messaging")
         expect(page).not_to have_content("Enable private messaging")
-        expect(page).not_to have_content("Allow anyone to send me a direct message, even if I don't follow them.")
+        expect(page).not_to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
       end
     end
 
@@ -56,7 +56,7 @@ describe "User privacy", type: :system do
         find("label[for='user_published_at']").click
         expect(page).to have_content("Private messaging")
         expect(page).to have_content("Enable private messaging")
-        expect(page).to have_content("Allow anyone to send me a direct message, even if I don't follow them.")
+        expect(page).to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
       end
     end
 
@@ -118,8 +118,8 @@ describe "User privacy", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_proposal_path(component)
 
-        expect(page).to have_content("Publication of account needed")
-        expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
+        expect(page).to have_content("Public profile is required for this action")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
         click_button "Publish your profile"
@@ -233,8 +233,8 @@ describe "User privacy", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_meeting_path(component)
 
-        expect(page).to have_content("Publication of account needed")
-        expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
+        expect(page).to have_content("Public profile is required for this action")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
         click_button "Publish your profile"
@@ -277,8 +277,8 @@ describe "User privacy", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_debate_path(component)
 
-        expect(page).to have_content("Publication of account needed")
-        expect(page).to have_content("You are trying to access a page which requires your account to be public. Making your profile public allows other users to see information about you.")
+        expect(page).to have_content("Public profile is required for this action")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
         click_button "Publish your profile"
@@ -487,7 +487,7 @@ describe "User privacy", type: :system do
     end
 
     context "when user joins meeting as private and allows attendance publicly" do
-      it "doesn't show user's name under 'attending participants'" do
+      it "does not show user's name under 'attending participants'" do
         join_meeting
 
         within ".collapsible-list" do
@@ -677,7 +677,7 @@ describe "User privacy", type: :system do
         it "shows no members" do
           visit decidim.profile_path(user_group.nickname)
 
-          expect(page).to have_content("This group doesn't have any members.")
+          expect(page).to have_content("This group does not have any members.")
         end
       end
 
@@ -689,7 +689,7 @@ describe "User privacy", type: :system do
           visit decidim.profile_path(user_group.nickname)
 
           within "#content" do
-            expect(page).to have_content("This group doesn't have any public members.")
+            expect(page).to have_content("This group does not have any public members.")
             expect(page).not_to have_content(user.name)
           end
         end
@@ -737,8 +737,8 @@ describe "User privacy", type: :system do
 
     context "when private user" do
       it "hides the button to request access" do
-        expect(page).to have_content("<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}")
-        click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+        expect(page).to have_content(collaborative_draft.title)
+        click_link collaborative_draft.title
         within ".view-side" do
           expect(page).to have_content("Version number")
           expect(page).not_to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
@@ -749,8 +749,8 @@ describe "User privacy", type: :system do
     context "when public user" do
       it "renders a button to request access" do
         user.update(published_at: Time.current)
-        expect(page).to have_content("<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}")
-        click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+        expect(page).to have_content(collaborative_draft.title)
+        click_link collaborative_draft.title
         within ".view-side" do
           expect(page).to have_content("Version number")
           expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")

@@ -19,7 +19,7 @@ module Decidim
         private
 
         def add_nofollow_meta_tag
-          snippets.add(:head, "<meta name=\"robots\" content=\"noindex, nofollow\">")
+          snippets.add(:head, %(<meta name="robots" content="noindex, nofollow">))
         end
       end
     end

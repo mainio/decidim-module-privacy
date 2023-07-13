@@ -1,0 +1,63 @@
+---
+sv:
+  layouts:
+    decidim:
+      user_profile:
+        privacy_settings: Integritetsinställningar
+      wrapper:
+        public: Din profil är offentlig
+        profile: Min offentliga profil
+        message: "Din profil är offentlig på denna plattform och andra personer kan se detaljer om dig, såsom ditt namn, smeknamn, profilbild och din offentliga aktivitet på denna plattform. Du kan ändra synligheten av din profil via sidan för integritetsinställningar. Din profil är tillgänglig på:"
+  decidim:
+    components:
+      privacy:
+        name: Integritetsinställningar
+    members:
+      no_members: Denna grupp har inga medlemmar.
+      no_public_members: Denna grupp har inga offentliga medlemmar.
+    messaging:
+      conversations:
+        show:
+          private_account: Du kan inte ha en konversation med en privat deltagare.
+          private_messaging_disabled: Du kan inte ha en konversation med en deltagare som har privata meddelanden inaktiverade.
+          private_messaging_disabled_new: Du kan inte starta en konversation med en deltagare som har privata meddelanden inaktiverade.
+          private_messaging_disabled_new_multiple: En eller flera av användarna i denna konversation har inaktiverat direktmeddelanden, vilket är anledningen till att konversationen inte kan startas.
+          private_messaging_disabled_users:
+            one: "Följande användare har inaktiverat sina privata meddelanden:"
+            other: "Följande användare har inaktiverat sina privata meddelanden:"
+    privacy:
+      message_block:
+        title: Direktmeddelanden är inte aktiverat
+        content_html: För att komma åt den här sidan måste du aktivera privata meddelanden från "Integritetsinställningar" under dina profilinställningar.
+        back: Föregående sida
+      privacy_settings:
+        show:
+          profile_publicity_html: "<p>Dessa integritetsinställningar låter dig kontrollera hur du visas på denna plattform offentligt. Du kan välja att förbli helt anonym men det kommer att begränsa vad du kan göra på denna plattform.</p><p><strong>Profilpublicitet</strong></p><p>Att göra din profil offentlig låter dig utföra offentliga aktiviteter på denna plattform, såsom att skicka kommentarer, delta i diskussioner, skapa förslag etc.</p><p>När du offentliggör din profil andra deltagare kan se ditt namn offentligt på denna plattform och även se offentlig information om dig, såsom ditt smeknamn och avatar bild, din offentliga verksamhet på denna plattform, dina följare och vem du följer.</p>"
+          private_messaging_html: <p><strong>Direktmeddelanden</strong></p><p>Dessa inställningar låter dig kommunicera med andra deltagare på denna plattform. Andra deltagare kan skicka direktmeddelanden och du kan även skicka dem till andra. Din profil måste vara offentlig för att aktivera den här funktionen eftersom andra människor behöver hitta dig från denna plattform för att kunna ha en konversation med dig.</p>
+          enable_public_profile: Aktivera offentlig profil
+          enable_private_messaging: Aktivera direktmeddelanden
+          save_privacy_settings: Spara integritetsinställningar
+          allow_public_contact: Tillåt alla att skicka direktmeddelanden till mig, även de som jag inte följer.
+        update:
+          error: Det gick inte att uppdatera dina integritetsinställningar.
+          success: Dina integritetsinställningar har uppdaterats.
+      privacy_block:
+        title: Offentlig profil krävs för denna åtgärd
+        content_html: "<p class='text-center'>Du försöker komma åt en sida som kräver att din profil är offentlig. Att göra din profil offentlig tillåter andra användare att se information om dig.</p><p class='text-center'><strong>Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.</strong></p>"
+        button: "Publicera din profil"
+      partials:
+        privacy_consent:
+          make_profile_public: Gör din profil offentlig
+          content_html: "<p>För att kunna utföra offentliga åtgärder på denna plattform måste du göra din profil offentlig. Detta innebär att en offentlig profil om dig kommer att finnas på denna plattform där andra personer kan se följande information om dig:</p><ul><li>ditt namn</li><li>ditt smeknamn</li><li>din avatar bild</li><li>din offentliga aktivitet på denna plattform, såsom dina kommentarer, förslag, etc.</li><li>dina följare och vem du följer på denna plattform</li></ul>"
+          close_modal: Stäng
+          agree_to_public_profile: Jag godkänner att en offentlig profil skapas om mig
+          do_not_agree: Nej, jag vill inte göra min profil offentlig
+      publish_account:
+        unauthorized: Endast deltagare med offentliga profiler tillåts utföra denna åtgärd.
+    profile:
+      private: Privat användare
+      private_info_html: <i>Denna användare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
+
+
+
+

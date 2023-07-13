@@ -14,7 +14,7 @@ module Decidim
             nickname = content_tag(:span, "@#{users.first.nickname}", class: "muted")
           else
             content_tag = content_tag(:span, t("decidim.profile.private"), class: "label label--small label--basic")
-            nickname = content_tag(:span, t("decidim.profile.private_info").html_safe, class: "muted")
+            nickname = content_tag(:span, t("decidim.profile.private_info_html"), class: "muted")
           end
 
           content_tag << tag.br
