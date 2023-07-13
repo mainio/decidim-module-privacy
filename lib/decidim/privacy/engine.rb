@@ -34,6 +34,12 @@ module Decidim
         end
       end
 
+      initializer "decidim_privacy.prepend_view_path" do
+        config.after_initialize do
+          ActionController::Base.prepend_view_path("#{Decidim::Privacy::Engine.root}/app/views")
+        end
+      end
+
       initializer "decidim_privacy.add_cells_view_paths", before: "decidim_comments.add_cells_view_paths" do
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/cells")
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
@@ -289,6 +295,14 @@ module Decidim
           if Decidim.module_installed? :initiatives
             # models
             Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
+
+            # controllers
+            Decidim::Initiatives::InitiativesController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+            Decidim::Initiatives::CreateInitiativeController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
           end
 
           if Decidim.module_installed? :conferences

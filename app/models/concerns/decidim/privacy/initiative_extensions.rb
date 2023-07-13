@@ -26,6 +26,16 @@ module Decidim
 
           authors
         end
+
+        def has_authorship?(user)
+          return true if decidim_author_id == user.id
+
+          committee_members.approved.where(decidim_users_id: user.id).any?
+        end
+
+        def author_name
+          user_group&.name || author&.name
+        end
       end
     end
   end
