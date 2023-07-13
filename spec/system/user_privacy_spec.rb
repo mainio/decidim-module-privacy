@@ -145,7 +145,7 @@ describe "User privacy", type: :system do
       it "renders a site that tells user to publish your account" do
         visit decidim_initiatives.initiatives_path
         click_link "New initiative"
-        expect(page).to have_content("You are trying to access a page which requires your account to be public.")
+        expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
       end
     end
 
@@ -171,7 +171,7 @@ describe "User privacy", type: :system do
           click_link initiative.title["en"]
           click_link "Edit"
 
-          expect(page).to have_content("You are trying to access a page which requires your account to be public.")
+          expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
         end
       end
 
