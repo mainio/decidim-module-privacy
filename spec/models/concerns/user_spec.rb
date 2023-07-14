@@ -26,7 +26,7 @@ module Decidim
     end
 
     describe "#profile_private" do
-      it "rerutns private when scoped" do
+      it "returns private when scoped" do
         result = subject.profile_private.all
         expect(result).not_to include(published_user)
         expect(result).to include(private_user)
@@ -55,6 +55,16 @@ module Decidim
         expect do
           published_user.update(allow_private_messaging: false)
         end.to change(published_user, :private_or_no_messaging?).from(false).to(true)
+      end
+    end
+
+    describe "#accepts_conversation?" do
+      let!(:user) { create(:user, :published, :confirmed, organization: organization) }
+
+      it "returns false if private messaging is turned off" do
+        published_user.update(allow_private_messaging: false)
+
+        expect(published_user.accepts_conversation?(user)).to be(false)
       end
     end
   end
