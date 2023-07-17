@@ -18,10 +18,10 @@ cs:
     messaging:
       conversations:
         show:
-          private_account: You cannot have a conversation with a private participant.
-          private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
-          private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
-          private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
+          private_account: Nemůžete mít konverzaci se soukromým účastníkem.
+          private_messaging_disabled: Nemůžete mít konverzaci s účastníkem, který má vypnuté soukromé zprávy.
+          private_messaging_disabled_new: Nelze zahájit konverzaci s účastníkem, který má vypnuté soukromé zprávy.
+          private_messaging_disabled_new_multiple: Jeden nebo více uživatelů v této konverzaci má vypnuté soukromé zprávy, což je důvod, proč konverzaci nelze spustit.
           private_messaging_disabled_users:
             one: "The following user has disabled their private messaging:"
             few: "The following users have disabled their private messaging:"
@@ -46,10 +46,10 @@ cs:
       privacy_block:
         title: Public profile is required for this action
         content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
-        button: "Publish your profile"
+        button: "Publikovat svůj profil"
       partials:
         privacy_consent:
-          make_profile_public: Make your profile public
+          make_profile_public: Zveřejnit svůj profil
           content_html: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>your name</li><li>your nickname</li><li>your avatar image</li><li>your public activity on this platform, such as your comments, proposals, etc.</li><li>your followers and who you follow on this platform</li></ul>"
           close_modal: Close
           agree_to_public_profile: I agree that a public profile is created about me
