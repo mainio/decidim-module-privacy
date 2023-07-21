@@ -51,8 +51,8 @@ cs:
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
           content_html: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>your name</li><li>your nickname</li><li>your avatar image</li><li>your public activity on this platform, such as your comments, proposals, etc.</li><li>your followers and who you follow on this platform</li></ul>"
-          close_modal: Close
-          agree_to_public_profile: I agree that a public profile is created about me
+          close_modal: Zavřít
+          agree_to_public_profile: Souhlasím s tím, aby o mně byl vytvořen veřejný profil
           do_not_agree: No, I do not want to make my profile public
       publish_account:
         unauthorized: Only participants with public profiles are allowed to perform this action.
