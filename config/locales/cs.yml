@@ -37,12 +37,12 @@ cs:
           profile_publicity_html: "<p>Tato nastavení soukromí umožňují kontrolovat, jak se zobrazujete na této platformě veřejně. Můžete se rozhodnout, že zůstanete zcela anonymní, ale omezí to, co můžete udělat na této platformě.</p><p><strong>Profil publicity</strong></p><p>Zveřejnění profilu vám umožní provádět veřejné aktivity na této platformě, jako je zasílání komentářů, účast na diskusích, vytváření návrhů atd.</p><p>Když svůj profil zveřejníte, ostatní účastníci mohou vidět vaše jméno veřejně na této platformě a také další veřejné informace o vás, jako je vaše přezdívka a avatar obrázek, vaše veřejná aktivita na této platformě, vaši následovníci a kdo sledujete.</p>"
           private_messaging_html: <p><strong>Soukromé zprávy</strong></p><p>Toto nastavení umožňuje komunikovat s ostatními účastníky na této platformě. Ostatní účastníci vám mohou poslat soukromé zprávy a můžete je poslat i jiným. Váš profil musí být veřejný, aby tato funkce mohla fungovat, protože vás ostatní lidé potřebují najít z této platformy, aby mohli mít s vámi konverzaci.</p>
           enable_public_profile: Povolit veřejný profil
-          enable_private_messaging: Enable private messaging
-          save_privacy_settings: Save privacy settings
+          enable_private_messaging: Povolit soukromé zprávy
+          save_privacy_settings: Uložit nastavení soukromí
           allow_public_contact: Allow anyone to send me a direct message, even if I do not follow them.
         update:
           error: There was a problem updating your privacy settings.
-          success: Your privacy settings were successfully updated.
+          success: Nastavení ochrany soukromí bylo úspěšně aktualizováno.
       privacy_block:
         title: Public profile is required for this action
         content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
@@ -50,15 +50,15 @@ cs:
       partials:
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
-          content_html: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>your name</li><li>your nickname</li><li>your avatar image</li><li>your public activity on this platform, such as your comments, proposals, etc.</li><li>your followers and who you follow on this platform</li></ul>"
+          content_html: "<p>Chcete-li provádět jakékoliv veřejné akce na této platformě, musíte svůj profil zveřejnit. To znamená, že veřejný profil o vás bude poskytnut na této platformě, kde ostatní lidé mohou vidět následující informace o vás:</p><ul><li>Vaše jméno</li><li>vaše přezdívka</li><li>váš obrázek avataru</li><li>vaše veřejná aktivita na této platformě, např. vaše komentáře, návrhy atd.</li><li>vaši následovníci a kdo sledujete na této platformě</li></ul>"
           close_modal: Zavřít
           agree_to_public_profile: Souhlasím s tím, aby o mně byl vytvořen veřejný profil
-          do_not_agree: No, I do not want to make my profile public
+          do_not_agree: Ne, nechci zveřejnit svůj profil
       publish_account:
-        unauthorized: Only participants with public profiles are allowed to perform this action.
+        unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
     profile:
-      private: Private user
-      private_info_html: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private: Soukromý uživatel
+      private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
 
 
 
