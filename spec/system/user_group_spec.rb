@@ -48,4 +48,24 @@ describe "User group", type: :system do
       expect(page).to have_link("Request to join group")
     end
   end
+
+  context "when managing members" do
+    let!(:private_pending_request) { create(:user_group_membership, user: private_requester, user_group: user_group, role: "requested") }
+    let!(:public_pending_request) { create(:user_group_membership, user: public_requester, user_group: user_group, role: "requested") }
+    let(:private_requester) { create(:user, :confirmed, organization: organization) }
+    let(:public_requester) { create(:user, :confirmed, :published, organization: organization) }
+
+    before do
+      expect(page).to have_content(user_group.name)
+      visit decidim.group_manage_users_path(user_group.nickname)
+    end
+
+    it "displays the requests only for public users" do
+      within ".list-request" do
+        expect(page).to have_link("Accept", count: 1)
+        expect(page).to have_content(public_requester.name)
+        expect(page).not_to have_content(private_requester.name)
+      end
+    end
+  end
 end

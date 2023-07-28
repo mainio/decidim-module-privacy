@@ -77,6 +77,9 @@ module Decidim
           Decidim::ProfileSidebarCell.include(
             Decidim::Privacy::ProfileSidebarCellExtensions
           )
+          Decidim::UserGroupPendingRequestsListCell.include(
+            Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
+          )
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
