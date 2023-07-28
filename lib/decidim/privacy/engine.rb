@@ -74,6 +74,9 @@ module Decidim
           Decidim::AuthorCell.include(
             Decidim::Privacy::AuthorCellExtensions
           )
+          Decidim::ProfileSidebarCell.include(
+            Decidim::Privacy::ProfileSidebarCellExtensions
+          )
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
