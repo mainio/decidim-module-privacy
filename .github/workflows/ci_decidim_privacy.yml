@@ -36,4 +36,4 @@ jobs:
       DATABASE_PASSWORD: postgres
       DATABASE_HOST: localhost
     steps:
-      uses: mainio/gha-decidim-module/actions/ci_rspec.yml@main
+      - uses: mainio/gha-decidim-module/actions/ci_rspec.yml@main
