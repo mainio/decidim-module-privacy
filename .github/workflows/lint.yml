@@ -22,29 +22,6 @@ jobs:
     if: "!startsWith(github.head_ref, 'chore/l10n')"
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 1
-      - uses: ruby/setup-ruby@v1
-        with:
-          bundler-cache: true
-      - uses: actions/setup-node@v3
-        with:
-          node-version-file: .node-version
-      - name: Get npm cache directory path
-        id: npm-cache-dir-path
-        run: echo "::set-output name=dir::$(npm get cache)-lint"
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir-path.outputs.dir }}
-          key: npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            npm-
-      - name: Install JS dependencies
-        run: npm ci
-      - run: bundle exec rubocop -P
-        name: Lint Ruby files
-      - run: npm run stylelint
-        name: Lint SCSS files
-
+      uses: mainio/gha-decidim-module/actions/lint.yml@main
+      with:
+        stylelint: true
