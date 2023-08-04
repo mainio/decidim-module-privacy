@@ -27,7 +27,7 @@ module Decidim
       it "does does not add publish_account_modal to snippets" do
         get :show
 
-        expect(snippets_instance).to include("<script src=\"/packs-test/js/decidim_account_publish_handler.js\" defer=\"defer\"></script>")
+        expect(snippets_instance).to include(%(<script src="#{asset_path("decidim_account_publish_handler.js")}" defer="defer"></script>))
         expect(snippets_instance).not_to include(an_instance_of(Decidim::Privacy::PublishAccountModalCell))
       end
     end
@@ -40,7 +40,7 @@ module Decidim
       it "addes publish_account_modal to snippets to the snippets" do
         get :show
 
-        expect(snippets_instance).to include("<script src=\"/packs-test/js/decidim_account_publish_handler.js\" defer=\"defer\"></script>")
+        expect(snippets_instance).to include(%(<script src="#{asset_path("decidim_account_publish_handler.js")}" defer="defer"></script>))
         expect(snippets_instance).to include(an_instance_of(Decidim::Privacy::PublishAccountModalCell))
       end
     end
@@ -60,6 +60,10 @@ module Decidim
     end
 
     private
+
+    def asset_path(asset)
+      ::Webpacker.instance.manifest.lookup!(asset)
+    end
 
     def snippets_instance
       assigns(:snippets).instance_variable_get(:@snippets)[:foot]
