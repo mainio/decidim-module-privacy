@@ -13,7 +13,7 @@ $(() => {
     }
 
     let redirectUrl = ev.target.getAttribute("data-redirect-url")
-    let dataPrivacy = ev.target.getAttribute("data-privacy")
+    let dataPrivacy = ev.target.getAttribute("data-privacy") || "{}"
     if (dataPrivacy && dataPrivacy !== "{}") {
       $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id)
     } else {
@@ -89,6 +89,10 @@ $(() => {
     document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
       item.removeEventListener("click", setFormValues)
       let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+      if (!dataPrivacy) {
+        return;
+      }
+
       if (dataPrivacy.open && dataPrivacy.openUrl) {
         item.setAttribute("data-open", dataPrivacy.open);
         $(item).data("open", dataPrivacy.open);
