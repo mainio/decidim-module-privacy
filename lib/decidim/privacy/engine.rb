@@ -34,9 +34,21 @@ module Decidim
         end
       end
 
-      initializer "decidim_privacy.prepend_view_path" do
+      initializer "decidim_privacy.prepend_view_path" do |app|
         config.after_initialize do
-          ActionController::Base.prepend_view_path("#{Decidim::Privacy::Engine.root}/app/views")
+          root = app.root.to_s
+
+          # Append the engine view path **AFTER** the application view path
+          # because otherwise this would disable view overrides from the
+          # application itself. We don't want to do that.
+          paths = []
+          ActionController::Base.view_paths.paths.each do |resolver|
+            paths << resolver
+            next unless resolver.path.start_with?(root)
+
+            paths << "#{Decidim::Privacy::Engine.root}/app/views"
+          end
+          ActionController::Base.view_paths = paths
         end
       end
 
