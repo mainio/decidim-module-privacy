@@ -21,10 +21,10 @@ sv:
           private_account: Du kan inte ha en konversation med en privat deltagare.
           private_messaging_disabled: Du kan inte ha en konversation med en deltagare som har privata meddelanden inaktiverade.
           private_messaging_disabled_new: Du kan inte starta en konversation med en deltagare som har privata meddelanden inaktiverade.
-          private_messaging_disabled_new_multiple: En eller flera av användarna i denna konversation har inaktiverat direktmeddelanden, vilket är anledningen till att konversationen inte kan startas.
+          private_messaging_disabled_new_multiple: En eller flera av deltagarna i denna konversation har inaktiverat direktmeddelanden, vilket är anledningen till att konversationen inte kan startas.
           private_messaging_disabled_users:
-            one: "Följande användare har inaktiverat sina privata meddelanden:"
-            other: "Följande användare har inaktiverat sina privata meddelanden:"
+            one: "Följande deltagare har inaktiverat sina privata meddelanden:"
+            other: "Följande deltagare har inaktiverat sina privata meddelanden:"
     privacy:
       message_block:
         title: Direktmeddelanden är inte aktiverat
@@ -43,7 +43,7 @@ sv:
           success: Dina integritetsinställningar har uppdaterats.
       privacy_block:
         title: Offentlig profil krävs för denna åtgärd
-        content_html: "<p class='text-center'>Du försöker komma åt en sida som kräver att din profil är offentlig. Att göra din profil offentlig tillåter andra användare att se information om dig.</p><p class='text-center'><strong>Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.</strong></p>"
+        content_html: "<p class='text-center'>Du försöker komma åt en sida som kräver att din profil är offentlig. Att göra din profil offentlig tillåter andra deltagare att se information om dig.</p><p class='text-center'><strong>Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.</strong></p>"
         button: "Publicera din profil"
       partials:
         privacy_consent:
@@ -55,8 +55,8 @@ sv:
       publish_account:
         unauthorized: Endast deltagare med offentliga profiler tillåts utföra denna åtgärd.
     profile:
-      private: Privat användare
-      private_info_html: <i>Denna användare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
+      private: Privat deltagare
+      private_info_html: <i>Denna deltagare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
 
 
 

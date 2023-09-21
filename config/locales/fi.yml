@@ -23,8 +23,8 @@ fi:
           private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
           private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.
           private_messaging_disabled_users:
-            one: "Seuraavalla käyttäjällä on yksityisviestit estetty:"
-            other: "Seuraavilla käyttäjillä on yksityisviestit estetty:"
+            one: "Seuraavalla osallistujalla on yksityisviestit estetty:"
+            other: "Seuraavilla osallistujilla on yksityisviestit estetty:"
     privacy:
       message_block:
         title: Yksityisviestit eivät ole käytössä
@@ -32,8 +32,8 @@ fi:
         back: Edellinen sivu
       privacy_settings:
         show:
-          profile_publicity_html: "<p>Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina, mutta se rajoittaa, mitä voit tehdä tällä alustalla.</p><p><strong>Profiilin julkisuus</strong></p><p>Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.</p><p>Tekemällä profiilistasi julkisen, muut käyttäjät voivat nähdä nimesi julkisesti tällä alustalla ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla, seuraajasi ja keitä sinä seuraat.</p>"
-          private_messaging_html: <p><strong>Yksityisviestit</strong></p><p>Näiden asetusten avulla voit keskustella muiden käyttäjien kanssa tällä alustalla. Muut osallistujat voivat lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille käyttäjille. Profiilisi on oltava julkinen tämän asetuksen käyttöönottoa varten, koska muiden käyttäjien on löydettävä sinut tältä alustalta keskustellakseen kanssasi.</p>
+          profile_publicity_html: "<p>Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina, mutta se rajoittaa, mitä voit tehdä tällä alustalla.</p><p><strong>Profiilin julkisuus</strong></p><p>Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.</p><p>Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla, seuraajasi ja keitä sinä seuraat.</p>"
+          private_messaging_html: <p><strong>Yksityisviestit</strong></p><p>Näiden asetusten avulla voit keskustella muiden osallistujien kanssa tällä alustalla. Muut osallistujat voivat lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille osallistujille. Profiilisi on oltava julkinen tämän asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta keskustellakseen kanssasi.</p>
           enable_public_profile: Ota julkinen profiili käyttöön
           enable_private_messaging: Ota yksityisviestit käyttöön
           save_privacy_settings: Tallenna yksityisyysasetukset
@@ -43,7 +43,7 @@ fi:
           success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
-        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii muiden osallistujien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
         button: "Julkaise profiilisi"
       partials:
         privacy_consent:
@@ -55,8 +55,8 @@ fi:
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
     profile:
-      private: Yksityinen käyttäjä
-      private_info_html: <i>Tämä käyttäjä on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
+      private: Yksityinen osallistuja
+      private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
 
 
 
