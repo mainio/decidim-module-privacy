@@ -224,6 +224,9 @@ module Decidim
             Decidim::Proposals::Permissions.include(
               Decidim::Privacy::PermissionsExtensions
             )
+
+            # presenters
+            Decidim::Proposals::ProposalPresenter.include(Decidim::Privacy::ProposalPresenterExtensions)
           end
 
           if Decidim.module_installed? :comments
