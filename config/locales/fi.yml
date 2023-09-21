@@ -23,8 +23,8 @@ fi:
           private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
           private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.
           private_messaging_disabled_users:
-            one: "Seuraavalla käyttäjällä on yksityisviestit estetty:"
-            other: "Seuraavilla käyttäjillä on yksityisviestit estetty:"
+            one: "Seuraavalla osallistujalla on yksityisviestit estetty:"
+            other: "Seuraavilla osallistujilla on yksityisviestit estetty:"
     privacy:
       message_block:
         title: Yksityisviestit eivät ole käytössä
@@ -43,8 +43,10 @@ fi:
           success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
-        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii muiden käyttäjien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii muiden osallistujien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
         button: "Julkaise profiilisi"
+      private_account:
+        unnamed_user: Nimetön osallistuja
       partials:
         privacy_consent:
           make_profile_public: Tee profiilistasi julkinen
@@ -55,9 +57,5 @@ fi:
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
     profile:
-      private: Yksityinen käyttäjä
-      private_info_html: <i>Tämä käyttäjä on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
-
-
-
-
+      private: Yksityinen osallistuja
+      private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
