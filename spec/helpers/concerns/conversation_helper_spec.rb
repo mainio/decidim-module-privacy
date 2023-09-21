@@ -14,7 +14,7 @@ module Decidim
         end
 
         it "does not includes the user name for private users" do
-          expect(helper.conversation_label_for(participants)).to eq "Conversation with Private user"
+          expect(helper.conversation_label_for(participants)).to eq "Conversation with Private participant"
         end
 
         context "when public user" do
@@ -44,7 +44,7 @@ module Decidim
 
         context "when private user" do
           it "includes the user name" do
-            expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Private user</span>"
+            expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span>"
           end
         end
 
@@ -83,7 +83,7 @@ module Decidim
 
         context "when private user" do
           it "includes the user name" do
-            expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private user</span><br><span class=\"muted\"><i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i></span>"
+            expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\"><i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i></span>"
           end
         end
 

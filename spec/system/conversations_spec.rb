@@ -173,7 +173,7 @@ describe "Conversations", type: :system do
           refresh
 
           expect(page).to have_content("Conversation with")
-          expect(page).to have_content("Private user")
+          expect(page).to have_content("Private participant")
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
           expect(page).to have_content("You cannot have a conversation with a private participant.")
@@ -236,7 +236,7 @@ describe "Conversations", type: :system do
         refresh
 
         expect(page).to have_content("Conversation with")
-        expect(page).to have_content("Private user")
+        expect(page).to have_content("Private participant")
         expect(page).to have_content(group_chat_participant.name)
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")
@@ -274,7 +274,7 @@ describe "Conversations", type: :system do
         expect(page).to have_content("Conversation with")
         expect(page).to have_content(receiver.name)
         expect(page).to have_content(group_chat_participant.name)
-        expect(page).to have_content("The following user has disabled their private messaging: #{receiver.name}")
+        expect(page).to have_content("The following participant has disabled their private messaging: #{receiver.name}")
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")
       end
