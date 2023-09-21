@@ -45,6 +45,8 @@ en:
         title: Public profile is required for this action
         content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
         button: "Publish your profile"
+      private_account:
+        unnamed_user: Unnamed participant
       partials:
         privacy_consent:
           make_profile_public: Make your profile public
@@ -57,7 +59,3 @@ en:
     profile:
       private: Private participant
       private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
-
-
-
-
