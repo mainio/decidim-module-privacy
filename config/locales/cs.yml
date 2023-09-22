@@ -21,12 +21,12 @@ cs:
           private_account: Nemůžete mít konverzaci se soukromým účastníkem.
           private_messaging_disabled: Nemůžete mít konverzaci s účastníkem, který má vypnuté soukromé zprávy.
           private_messaging_disabled_new: Nelze zahájit konverzaci s účastníkem, který má vypnuté soukromé zprávy.
-          private_messaging_disabled_new_multiple: One or more of the participants in this conversation have private messaging disabled, which is why the conversation cannot be started.
+          private_messaging_disabled_new_multiple: Jeden nebo více účastníků této konverzace má vypnuté soukromé zprávy, což je důvod, proč konverzaci nelze spustit.
           private_messaging_disabled_users:
-            one: "The following participant has disabled their private messaging:"
-            few: "The following participants have disabled their private messaging:"
-            many: "The following participants have disabled their private messaging:"
-            other: "The following participants have disabled their private messaging:"
+            one: "Následující uživatel zakázal své soukromé zprávy:"
+            few: "Následující uživatelé zakázali své soukromé zprávy:"
+            many: "Následující uživatelé zakázali své soukromé zprávy:"
+            other: "Následující uživatelé zakázali své soukromé zprávy:"
     privacy:
       message_block:
         title: Soukromé zprávy nejsou povoleny
@@ -45,10 +45,10 @@ cs:
           success: Nastavení ochrany soukromí bylo úspěšně aktualizováno.
       privacy_block:
         title: Pro tuto akci je vyžadován veřejný profil
-        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
+        content_html: "<p class='text-center'>Pokoušíte se získat přístup na stránku, která vyžaduje, aby váš profil byl veřejný. Zveřejnění profilu umožňuje ostatním účastníkům vidět informace o vás.</p><p class='text-center'><strong>Další informace o zveřejnění profilu budou prezentovány po kliknutí na tlačítko níže.</strong></p>"
         button: "Publikovat svůj profil"
       private_account:
-        unnamed_user: Unnamed participant
+        unnamed_user: Nepojmenovaný uživatel
       partials:
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
@@ -59,5 +59,5 @@ cs:
       publish_account:
         unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
     profile:
-      private: Private participant
-      private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private: Soukromý účastník
+      private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
