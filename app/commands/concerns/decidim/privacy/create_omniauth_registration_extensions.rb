@@ -24,7 +24,7 @@ module Decidim
 
             transaction do
               create_or_find_user
-              ananymize_user_nickname
+              anonymize_user_nickname
               @identity = create_identity
             end
             trigger_omniauth_registration
@@ -45,8 +45,41 @@ module Decidim
 
         private
 
-        def ananymize_user_nickname
+        def anonymize_user_nickname
           @user.update!(nickname: "u_#{@user.id}")
+        end
+
+        def create_or_find_user
+          @user = User.entire_collection.find_or_initialize_by(
+            email: verified_email,
+            organization: organization
+          )
+
+          if @user.persisted?
+            # If user has left the account unconfirmed and later on decides to sign
+            # in with omniauth with an already verified account, the account needs
+            # to be marked confirmed.
+            @user.skip_confirmation! if !@user.confirmed? && @user.email == verified_email
+          else
+            generated_password = SecureRandom.hex
+
+            @user.email = (verified_email || form.email)
+            @user.name = form.name
+            @user.nickname = form.normalized_nickname
+            @user.newsletter_notifications_at = nil
+            @user.password = generated_password
+            @user.password_confirmation = generated_password
+            if form.avatar_url.present?
+              url = URI.parse(form.avatar_url)
+              filename = File.basename(url.path)
+              file = url.open
+              @user.avatar.attach(io: file, filename: filename)
+            end
+            @user.skip_confirmation! if verified_email
+          end
+
+          @user.tos_agreement = "1"
+          @user.save!
         end
       end
     end

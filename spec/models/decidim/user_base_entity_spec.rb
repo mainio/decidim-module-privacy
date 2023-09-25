@@ -25,4 +25,17 @@ describe Decidim::UserBaseEntity do
       expect(subject.entire_collection.all).to include(user_group)
     end
   end
+
+  describe ".nicknamize" do
+    context "when private users occupy potential nickname" do
+      let!(:user1) { create(:user, :confirmed, nickname: "john_doe") }
+      let!(:user2) { create(:user, :confirmed, nickname: "john_doe_1") }
+      let!(:user3) { create(:user, :confirmed, nickname: "john_doe_2") }
+      let!(:user4) { create(:user, :confirmed, nickname: "john_doe_3") }
+
+      it "returns a unique nickname when a private user has already taken the given nickname" do
+        expect(described_class.nicknamize("John Doe")).to eq("john_doe_4")
+      end
+    end
+  end
 end
