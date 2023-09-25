@@ -14,6 +14,16 @@ module Decidim
       let(:user_group) { nil }
 
       include_examples "coauthorable interface"
+
+      context "with a private author" do
+        let(:creator) { create(:user, :confirmed, organization: component.organization) }
+
+        let(:query) { "{ author { name } }" }
+
+        it "returns the user's name as the author name" do
+          expect(response["author"]).to be_nil
+        end
+      end
     end
   end
 end
