@@ -12,7 +12,7 @@ module Decidim
             Decidim::Privacy::PrivateUser.new(
               id: 0,
               name: "Anonymous",
-              organization: original_record.organization
+              organization: original_record&.organization || Decidim::Organization.new(id: 0, name: "")
             )
           else
             original_record
