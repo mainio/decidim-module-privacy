@@ -49,6 +49,34 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
       end
     end
 
+    context "when someone else has reserved the automatically generated nickname" do
+      let!(:another_user) { create(:user, :confirmed, organization: organization) }
+      let(:next_user_id) { another_user.id + 1 }
+
+      before do
+        another_user.update!(nickname: "u_#{next_user_id}")
+
+        post :create
+      end
+
+      it "logs in" do
+        expect(controller).to be_user_signed_in
+      end
+
+      it "redirects to the authorizations path" do
+        expect(subject).to redirect_to("/authorizations")
+      end
+
+      it "creates a new user" do
+        expect(Decidim::User.entire_collection.count).to eq(2)
+      end
+
+      it "anonymizes the user's nickname" do
+        user = Decidim::User.entire_collection.order(:id).last
+        expect(user.nickname).to eq("u_#{user.id}_2")
+      end
+    end
+
     context "when nickname is not forwarded and a user with matching nickname already exists" do
       let(:oauth_info) { { name: "Facebook User", email: email } }
       let!(:another_user) { create(:user, organization: organization, nickname: "facebook_user") }

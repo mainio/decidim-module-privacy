@@ -46,7 +46,9 @@ module Decidim
         private
 
         def anonymize_user_nickname
-          @user.update!(nickname: "u_#{@user.id}")
+          @user.update!(
+            nickname: UserBaseEntity.nicknamize("u_#{@user.id}", organization: organization)
+          )
         end
 
         def create_or_find_user
