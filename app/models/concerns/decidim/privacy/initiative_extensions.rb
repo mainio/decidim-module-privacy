@@ -12,13 +12,15 @@ module Decidim
           authors = []
 
           [author].each do |author|
+            organization ||= author.organization
             if !author.nil? && author.published_at.present?
               authors.push(author)
             else
               authors.push(
                 Decidim::Privacy::PrivateUser.new(
                   id: 0,
-                  name: "Anonymous"
+                  name: "Anonymous",
+                  organization: organization
                 )
               )
             end
