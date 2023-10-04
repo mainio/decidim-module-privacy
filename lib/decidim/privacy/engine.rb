@@ -109,6 +109,7 @@ module Decidim
           Decidim::EndorseResource.include(
             Decidim::Privacy::EndorseResourceExtensions
           )
+          Decidim::InviteUser.include(Decidim::Privacy::InviteUserExtensions)
 
           # controllers
           Decidim::ApplicationController.include(
@@ -137,7 +138,7 @@ module Decidim
           )
 
           # models
-          Decidim::ActionLog.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
           Decidim::Authorization.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ImpersonationLog.include(Decidim::Privacy::UnscopedUserRelation)
