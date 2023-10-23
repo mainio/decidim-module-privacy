@@ -8,6 +8,7 @@ describe Decidim::AccountForm do
       name: name,
       email: email,
       nickname: nickname,
+      old_password: old_password,
       password: password,
       password_confirmation: password_confirmation,
       avatar: avatar,
@@ -21,7 +22,9 @@ describe Decidim::AccountForm do
     )
   end
 
-  let(:user) { create(:user) }
+  let(:user) { create(:user, password: user_password) }
+  let(:user_password) { "decidim1234567890" }
+  let(:old_password) { user_password }
   let(:organization) { user.organization }
 
   let(:name) { "Lord of the Foo" }
@@ -100,6 +103,41 @@ describe Decidim::AccountForm do
         it "is invalid" do
           expect(subject).not_to be_valid
         end
+      end
+    end
+  end
+
+  describe "validate_old_password" do
+    context "when email changed" do
+      let(:password) { "" }
+      let(:email) { "foo@example.org" }
+
+      context "with correct old_password" do
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "with incorrect old_password" do
+        let(:old_password) { "foobar1234567890" }
+
+        it { is_expected.to be_invalid }
+      end
+    end
+
+    context "when password present" do
+      let(:email) { user.email }
+
+      context "with correct old_password" do
+        it "is valid" do
+          expect(subject).to be_valid
+        end
+      end
+
+      context "with incorrect old_password" do
+        let(:old_password) { "foobar1234567890" }
+
+        it { is_expected.to be_invalid }
       end
     end
   end
