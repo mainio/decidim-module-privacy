@@ -29,7 +29,7 @@ module Decidim
         required: true,
         label: false,
         help_text: help_text,
-        value: @account&.password,
+        value: @account&.password, # rubocop:disable Rails/HelperInstanceVariable
         minlength: min_length,
         maxlength: ::PasswordValidator::MAX_LENGTH,
         placeholder: "••••••"
@@ -40,7 +40,6 @@ module Decidim
       help_text = t("devise.passwords.edit.old_password_help")
 
       {
-        autocomplete: "current-password",
         required: true,
         label: false,
         help_text: help_text,
