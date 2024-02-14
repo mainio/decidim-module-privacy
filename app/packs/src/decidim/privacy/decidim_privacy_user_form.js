@@ -9,9 +9,8 @@
  * @returns {void}
  */
 const initializeAccountForm = () => {
-
   const editUserForm = document.querySelector("form.edit_user");
-  if (!editUserForm ) {
+  if (!editUserForm) {
     return
   }
   const passwordChange = editUserForm.querySelector("#passwordChange");
@@ -23,12 +22,26 @@ const initializeAccountForm = () => {
   }
 
   const originalEmail = emailField.dataset.original;
-  let emailChanged = originalEmail !== emailField.value;
   let newPwVisible = false;
   let oldPasswordVisible = false;
 
   // Foundation uses jQuery so these have to be bound using jQuery and the
   // attribute value needs to be set through jQuery.
+  const toggleOldPassword = () => {
+    let oldPasswordInput = oldPasswordField.querySelector("input[type='password']");
+    if (newPwVisible && oldPasswordVisible) {
+      return
+    }
+
+    if ($(oldPasswordField).hasClass("hide")) {
+      $(oldPasswordField).removeClass("hide")
+    } else {
+      $(oldPasswordField).addClass("hide")
+    }
+    $(oldPasswordInput).attr("require", oldPasswordVisible);
+    oldPasswordVisible = !oldPasswordVisible;
+  }
+
   const togglePasswordFieldValidators = () => {
     $(passwordFields).attr("required", !newPwVisible);
 
@@ -36,37 +49,21 @@ const initializeAccountForm = () => {
       passwordFields.forEach((field) => (field.value = ""));
     }
     newPwVisible = !newPwVisible;
-    toggleOldPassword();
+    if (emailField.value === originalEmail) {
+      toggleOldPassword();
+    }
   }
 
   $(passwordChange).on("on.zf.toggler", () => {
     togglePasswordFieldValidators();
   });
 
-  const toggleOldPassword = () => {
-    console.log("toggling old password");
-    let oldPasswordInput = oldPasswordField.querySelector("input[type='password']");
-    if (newPwVisible && oldPasswordVisible) {
-      console.log("not toggling old password")
-      return
-    }
-
-    if ($(oldPasswordField).hasClass("hide")){
-      $(oldPasswordField).removeClass("hide")
-    } else {
-      $(oldPasswordField).addClass("hide")
-    }
-    $(oldPasswordInput).attr("require", oldPasswordVisible);
-    oldPasswordVisible = !oldPasswordVisible;
-    console.log("old password visible: ", oldPasswordVisible)
-  }
 
   $(passwordChange).on("off.zf.toggler", () => {
     togglePasswordFieldValidators();
   });
 
   emailField.addEventListener("change", () => {
-    emailChanged = emailField.value !== originalEmail;
     toggleOldPassword();
   });
 };

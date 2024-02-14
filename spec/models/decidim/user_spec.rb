@@ -9,27 +9,58 @@ describe Decidim::User do
   let!(:published_user) { create(:user, :confirmed, :published, organization: organization) }
   let!(:private_user) { create(:user, :confirmed, organization: organization) }
 
-  describe "#default_scope" do
-    it "returns published users by default" do
-      result = subject.all
-      expect(result).to include(published_user)
-      expect(result).not_to include(private_user)
+  describe ".default_scope" do
+    subject { described_class.all }
+
+    it "returns only published users by default" do
+      expect(subject).to include(published_user)
+      expect(subject).not_to include(private_user)
     end
   end
 
-  describe "#entire_collection" do
+  describe ".entire_collection" do
+    subject { described_class.entire_collection }
+
     it "rerutns entire_collection when scoped" do
-      result = subject.entire_collection.all
-      expect(result).to include(published_user)
-      expect(result).to include(private_user)
+      expect(subject).to include(published_user)
+      expect(subject).to include(private_user)
     end
   end
 
-  describe "#profile_private" do
+  describe ".profile_published" do
+    subject { described_class.profile_published }
+
+    it "returns the published users only" do
+      expect(subject).to include(published_user)
+      expect(subject).not_to include(private_user)
+    end
+  end
+
+  describe ".profile_private" do
+    subject { described_class.profile_private }
+
     it "returns private when scoped" do
-      result = subject.profile_private.all
-      expect(result).not_to include(published_user)
-      expect(result).to include(private_user)
+      expect(subject).not_to include(published_user)
+      expect(subject).to include(private_user)
+    end
+  end
+
+  describe ".find_for_authentication" do
+    subject { described_class.find_for_authentication(conditions) }
+
+    let(:conditions) { { email: private_user.email, env: { "decidim.current_organization" => organization } } }
+
+    it "finds the private user for authentication" do
+      expect(subject).to eq(private_user)
+    end
+  end
+
+  describe ".user_collection" do
+    subject { described_class.user_collection(private_user) }
+
+    it "finds the private user for export" do
+      expect(subject.count).to eq(1)
+      expect(subject).to include(private_user)
     end
   end
 

@@ -4,6 +4,7 @@ module Decidim
   module Privacy
     module UserExtensions
       extend ActiveSupport::Concern
+
       included do
         before_update :update_followers_count
 
@@ -28,14 +29,20 @@ module Decidim
                           index_on_create: ->(user) { !user.deleted? && user.public? },
                           index_on_update: ->(user) { !user.deleted? && user.public? })
 
-        # we need to remove the default scope for the registeration, so as to check the uniqueness of
+        # We need to remove the default scope for the registeration, so as to check the uniqueness of
         # accounts through all of the accounts
         def self.find_for_authentication(warden_conditions)
           organization = warden_conditions.dig(:env, "decidim.current_organization")
-          unscoped.find_by(
+          entire_collection.find_by(
             email: warden_conditions[:email].to_s.downcase,
             decidim_organization_id: organization.id
           )
+        end
+
+        # This method is used to export the user record so it also needs to
+        # search through the entire collection.
+        def self.user_collection(user)
+          entire_collection.where(id: user.id)
         end
 
         def public?

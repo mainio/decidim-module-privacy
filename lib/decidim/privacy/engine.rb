@@ -189,6 +189,20 @@ module Decidim
             Decidim::Privacy::UserPresenterExtensions
           )
 
+          # Queries
+          Decidim::UserGroups::AcceptedMemberships.include(
+            Decidim::Privacy::AcceptedMembershipsExtensions
+          )
+          Decidim::UserGroups::MemberMemberships.include(
+            Decidim::Privacy::MemberMembershipsExtensions
+          )
+          Decidim::UserGroups::AdminMemberships.include(
+            Decidim::Privacy::AdminMembershipsExtensions
+          )
+          Decidim::StatsUsersCount.include(
+            Decidim::Privacy::StatsUsersCountExtensions
+          )
+
           # Initialize concerns for each installed Decidim-module
           if Decidim.module_installed? :budgets
             # models
