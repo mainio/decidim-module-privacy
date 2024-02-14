@@ -3,7 +3,7 @@ sv:
   activemodel:
     attributes:
       user:
-        old_password: Current password
+        old_password: Nuvarande lösenord
   layouts:
     decidim:
       user_profile:
@@ -66,4 +66,4 @@ sv:
   devise:
     passwords:
       edit:
-        old_password_help: In order to confirm the changes to your account, please provide your current password.
+        old_password_help: För att bekräfta ändringarna av ditt konto, vänligen ange ditt nuvarande lösenord.
