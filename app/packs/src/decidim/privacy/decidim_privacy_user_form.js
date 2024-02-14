@@ -9,7 +9,6 @@
  * @returns {void}
  */
 const initializeAccountForm = () => {
-
   const editUserForm = document.querySelector("form.edit_user");
   if (!editUserForm) {
     return
