@@ -13,6 +13,11 @@ describe "User privacy", type: :system do
     switch_to_host(organization.host)
     visit decidim.root_path
     expect(page).to have_content(organization.name)
+    expect(page).to have_content(user.name)
+
+    # Ensure there is no "on_next_request" block stored at Warden before running
+    # the test in case we want to login some other user.
+    Warden.test_reset!
   end
 
   context "when listing users" do
@@ -26,7 +31,9 @@ describe "User privacy", type: :system do
 
       it "shows up in the admin search" do
         login_as admin, scope: :user
-        visit decidim.root_path
+        visit decidim.pages_path
+        expect(page).to have_content("Help")
+        expect(page).to have_content(admin.name)
 
         click_link "user-menu-control"
         click_link "Admin dashboard"
@@ -63,7 +70,9 @@ describe "User privacy", type: :system do
 
       it "shows up in the admin search" do
         login_as admin, scope: :user
-        visit decidim.root_path
+        visit decidim.pages_path
+        expect(page).to have_content("Help")
+        expect(page).to have_content(admin.name)
 
         click_link "user-menu-control"
         click_link "Admin dashboard"
@@ -98,7 +107,9 @@ describe "User privacy", type: :system do
 
       it "shows up in the admin search" do
         login_as admin, scope: :user
-        visit decidim.root_path
+        visit decidim.pages_path
+        expect(page).to have_content("Help")
+        expect(page).to have_content(admin.name)
 
         click_link "user-menu-control"
         click_link "Admin dashboard"
