@@ -3,7 +3,7 @@ fi:
   activemodel:
     attributes:
       user:
-        old_password: Current password
+        old_password: Nykyinen salasana
   layouts:
     decidim:
       user_profile:
@@ -66,4 +66,4 @@ fi:
   devise:
     passwords:
       edit:
-        old_password_help: In order to confirm the changes to your account, please provide your current password.
+        old_password_help: Vahvistaaksesi muutokset käyttäjätiliisi, anna nykyinen salasanasi.
