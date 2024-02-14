@@ -147,7 +147,7 @@ module Decidim
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
           Decidim::Authorization.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
-          Decidim::ImpersonationLog.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::ImpersonationLog.include(Decidim::Privacy::ImpersonationLogExtensions)
           Decidim::Notification.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Reminder.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Report.include(Decidim::Privacy::UnscopedUserRelation)
