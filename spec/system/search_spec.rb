@@ -12,6 +12,7 @@ describe "User privacy", type: :system do
     login_as user, scope: :user
     switch_to_host(organization.host)
     visit decidim.root_path
+    expect(page).to have_content(organization.name)
   end
 
   context "when listing users" do
