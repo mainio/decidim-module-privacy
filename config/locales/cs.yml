@@ -1,5 +1,9 @@
 ---
 cs:
+  activemodel:
+    attributes:
+      user:
+        old_password: Current password
   layouts:
     decidim:
       user_profile:
@@ -61,3 +65,7 @@ cs:
     profile:
       private: Soukromý účastník
       private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
+  devise:
+    passwords:
+      edit:
+        old_password_help: In order to confirm the changes to your account, please provide your current password.
