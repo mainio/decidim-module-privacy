@@ -1,5 +1,9 @@
 ---
 cs:
+  activemodel:
+    attributes:
+      user:
+        old_password: Current password
   layouts:
     decidim:
       user_profile:
@@ -21,7 +25,7 @@ cs:
           private_account: Nemůžete mít konverzaci se soukromým účastníkem.
           private_messaging_disabled: Nemůžete mít konverzaci s účastníkem, který má vypnuté soukromé zprávy.
           private_messaging_disabled_new: Nelze zahájit konverzaci s účastníkem, který má vypnuté soukromé zprávy.
-          private_messaging_disabled_new_multiple: Jeden nebo více uživatelů v této konverzaci má vypnuté soukromé zprávy, což je důvod, proč konverzaci nelze spustit.
+          private_messaging_disabled_new_multiple: Jeden nebo více účastníků této konverzace má vypnuté soukromé zprávy, což je důvod, proč konverzaci nelze spustit.
           private_messaging_disabled_users:
             one: "Následující uživatel zakázal své soukromé zprávy:"
             few: "Následující uživatelé zakázali své soukromé zprávy:"
@@ -45,7 +49,7 @@ cs:
           success: Nastavení ochrany soukromí bylo úspěšně aktualizováno.
       privacy_block:
         title: Pro tuto akci je vyžadován veřejný profil
-        content_html: "<p class='text-center'>Pokoušíte se získat přístup na stránku, která vyžaduje, aby váš profil byl veřejný. Zveřejnění profilu umožňuje ostatním uživatelům vidět informace o vás.</p><p class='text-center'><strong>Další informace o zveřejnění profilu budou prezentovány po kliknutí na tlačítko níže.</strong></p>"
+        content_html: "<p class='text-center'>Pokoušíte se získat přístup na stránku, která vyžaduje, aby váš profil byl veřejný. Zveřejnění profilu umožňuje ostatním účastníkům vidět informace o vás.</p><p class='text-center'><strong>Další informace o zveřejnění profilu budou prezentovány po kliknutí na tlačítko níže.</strong></p>"
         button: "Publikovat svůj profil"
       private_account:
         unnamed_user: Nepojmenovaný uživatel
@@ -59,5 +63,9 @@ cs:
       publish_account:
         unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
     profile:
-      private: Soukromý uživatel
+      private: Soukromý účastník
       private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
+  devise:
+    passwords:
+      edit:
+        old_password_help: In order to confirm the changes to your account, please provide your current password.
