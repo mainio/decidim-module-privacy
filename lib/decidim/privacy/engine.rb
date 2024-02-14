@@ -311,6 +311,9 @@ module Decidim
             Decidim::Admin::ImpersonationsController.include(
               Decidim::Privacy::ImpersonationsControllerExtensions
             )
+            Decidim::Admin::ManagedUsers::ImpersonationLogsController.include(
+              Decidim::Privacy::ImpersonationLogsControllerExtensions
+            )
             Decidim::Admin::UserGroupsController.include(
               Decidim::Privacy::UserGroupsControllerExtensions
             )
