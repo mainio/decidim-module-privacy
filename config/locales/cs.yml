@@ -47,6 +47,8 @@ cs:
         title: Pro tuto akci je vyžadován veřejný profil
         content_html: "<p class='text-center'>Pokoušíte se získat přístup na stránku, která vyžaduje, aby váš profil byl veřejný. Zveřejnění profilu umožňuje ostatním uživatelům vidět informace o vás.</p><p class='text-center'><strong>Další informace o zveřejnění profilu budou prezentovány po kliknutí na tlačítko níže.</strong></p>"
         button: "Publikovat svůj profil"
+      private_account:
+        unnamed_user: Nepojmenovaný uživatel
       partials:
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
@@ -59,7 +61,3 @@ cs:
     profile:
       private: Soukromý uživatel
       private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
-
-
-
-

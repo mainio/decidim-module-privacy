@@ -7,13 +7,15 @@ module Decidim
 
       included do
         def author
-          if super.try(:published_at).nil?
+          original_record = super
+          if original_record.try(:published_at).nil?
             Decidim::Privacy::PrivateUser.new(
               id: 0,
-              name: "Anonymous"
+              name: "Anonymous",
+              organization: original_record&.organization || Decidim::Organization.new(id: 0, name: "")
             )
           else
-            super
+            original_record
           end
         end
       end

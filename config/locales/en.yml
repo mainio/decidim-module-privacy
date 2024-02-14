@@ -1,5 +1,9 @@
 ---
 en:
+  activemodel:
+    attributes:
+      user:
+        old_password: Current password
   layouts:
     decidim:
       user_profile:
@@ -21,10 +25,10 @@ en:
           private_account: You cannot have a conversation with a private participant.
           private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
-          private_messaging_disabled_new_multiple: One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.
+          private_messaging_disabled_new_multiple: One or more of the participants in this conversation have private messaging disabled, which is why the conversation cannot be started.
           private_messaging_disabled_users:
-            one: "The following user has disabled their private messaging:"
-            other: "The following users have disabled their private messaging:"
+            one: "The following participant has disabled their private messaging:"
+            other: "The following participants have disabled their private messaging:"
     privacy:
       message_block:
         title: Private messaging is not enabled
@@ -43,8 +47,10 @@ en:
           success: Your privacy settings were successfully updated.
       privacy_block:
         title: Public profile is required for this action
-        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other users to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
+        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
         button: "Publish your profile"
+      private_account:
+        unnamed_user: Unnamed participant
       partials:
         privacy_consent:
           make_profile_public: Make your profile public
@@ -55,9 +61,9 @@ en:
       publish_account:
         unauthorized: Only participants with public profiles are allowed to perform this action.
     profile:
-      private: Private user
-      private_info_html: <i>This user has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
-
-
-
-
+      private: Private participant
+      private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+  devise:
+    passwords:
+      edit:
+        old_password_help: In order to confirm the changes to your account, please provide your current password.

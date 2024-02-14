@@ -57,6 +57,13 @@ module Decidim
           !public?
         end
 
+        def accepts_conversation?(user)
+          return follows?(user) if direct_message_types == "followed-only"
+          return false unless allow_private_messaging
+
+          true
+        end
+
         private
 
         def update_followers_count

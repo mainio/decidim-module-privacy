@@ -34,6 +34,24 @@ module Decidim
         end
       end
 
+      initializer "decidim_privacy.prepend_view_path" do |app|
+        config.after_initialize do
+          root = app.root.to_s
+
+          # Append the engine view path **AFTER** the application view path
+          # because otherwise this would disable view overrides from the
+          # application itself. We don't want to do that.
+          paths = []
+          ActionController::Base.view_paths.paths.each do |resolver|
+            paths << resolver
+            next unless resolver.path.start_with?(root)
+
+            paths << "#{Decidim::Privacy::Engine.root}/app/views"
+          end
+          ActionController::Base.view_paths = paths
+        end
+      end
+
       initializer "decidim_privacy.add_cells_view_paths", before: "decidim_comments.add_cells_view_paths" do
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/cells")
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
@@ -68,6 +86,12 @@ module Decidim
           Decidim::AuthorCell.include(
             Decidim::Privacy::AuthorCellExtensions
           )
+          Decidim::ProfileSidebarCell.include(
+            Decidim::Privacy::ProfileSidebarCellExtensions
+          )
+          Decidim::UserGroupPendingRequestsListCell.include(
+            Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
+          )
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
@@ -85,6 +109,10 @@ module Decidim
           Decidim::EndorseResource.include(
             Decidim::Privacy::EndorseResourceExtensions
           )
+          Decidim::InviteUser.include(Decidim::Privacy::InviteUserExtensions)
+          # The following changes are related to "Ask old password for changing email/password(PR #11737)"
+          # These changes should be removed once it has been backported to v.27
+          Decidim::UpdateAccount.include(Decidim::Privacy::UpdateAccountExtensions)
 
           # controllers
           Decidim::ApplicationController.include(
@@ -111,9 +139,12 @@ module Decidim
           Decidim::OwnUserGroupsController.include(
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
+          # The following changes are related to "Ask old password for changing email/password(PR #11737)"
+          # These changes should be removed once it has been backported to v.27
+          Decidim::AccountController.include(Decidim::Privacy::AccountControllerExtensions)
 
           # models
-          Decidim::ActionLog.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
           Decidim::Authorization.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ImpersonationLog.include(Decidim::Privacy::UnscopedUserRelation)
@@ -200,6 +231,9 @@ module Decidim
             Decidim::Proposals::Permissions.include(
               Decidim::Privacy::PermissionsExtensions
             )
+
+            # presenters
+            Decidim::Proposals::ProposalPresenter.include(Decidim::Privacy::ProposalPresenterExtensions)
           end
 
           if Decidim.module_installed? :comments
@@ -289,6 +323,14 @@ module Decidim
           if Decidim.module_installed? :initiatives
             # models
             Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
+
+            # controllers
+            Decidim::Initiatives::InitiativesController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
+            Decidim::Initiatives::CreateInitiativeController.include(
+              Decidim::Privacy::PrivacyActionsExtensions
+            )
           end
 
           if Decidim.module_installed? :conferences

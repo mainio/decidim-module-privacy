@@ -28,6 +28,22 @@ describe "Conversations", type: :system do
         expect(page).not_to have_selector("#autoComplete_list_1")
       end
     end
+
+    context "when receiver has private messaging disabled" do
+      it "does not allow to initiate the conversation" do
+        receiver.update(published_at: Time.current, allow_private_messaging: false)
+        group_chat_participant.update(published_at: Time.current)
+
+        visit decidim.conversations_path
+        click_button "New conversation"
+
+        fill_in "add_conversation_users", with: receiver.name
+
+        within "#autoComplete_result_0" do
+          expect(page).to have_content("This participant has disabled message reception")
+        end
+      end
+    end
   end
 
   context "when searching for user groups in 'new conversation'" do
@@ -123,10 +139,7 @@ describe "Conversations", type: :system do
           receiver.update(published_at: Time.current, allow_private_messaging: false)
           visit decidim.profile_path(nickname: receiver.nickname)
 
-          find(".user-contact_link").click
-
-          expect(page).to have_content(receiver.name)
-          expect(page).to have_content("You cannot start a conversation with a participant that has private messaging disabled.")
+          expect(page).to have_selector(".icon--envelope-closed.icon.icon--small.muted")
         end
       end
     end
@@ -160,7 +173,7 @@ describe "Conversations", type: :system do
           refresh
 
           expect(page).to have_content("Conversation with")
-          expect(page).to have_content("Private user")
+          expect(page).to have_content("Private participant")
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
           expect(page).to have_content("You cannot have a conversation with a private participant.")
@@ -194,29 +207,6 @@ describe "Conversations", type: :system do
       end
     end
 
-    context "when trying to start a group conversation with at least one person with private messaging disabled" do
-      it "does not allow to initiate the conversation" do
-        receiver.update(published_at: Time.current, allow_private_messaging: false)
-        group_chat_participant.update(published_at: Time.current)
-
-        visit decidim.conversations_path
-        click_button "New conversation"
-
-        fill_in "add_conversation_users", with: receiver.name
-        find("#autoComplete_result_0").click
-
-        fill_in "add_conversation_users", with: group_chat_participant.name
-        find("#autoComplete_result_0").click
-
-        click_button "Next"
-
-        expect(page).to have_content(receiver.name)
-        expect(page).to have_content(group_chat_participant.name)
-        expect(page).to have_content("The following user has disabled their private messaging: #{receiver.name}")
-        expect(page).to have_content("One or more of the users in this conversation have private messaging disabled, which is why the conversation cannot be started.")
-      end
-    end
-
     context "when a group conversation established and one user goes private" do
       it "shows the user as private but shows all messages" do
         receiver.update(published_at: Time.current)
@@ -246,7 +236,7 @@ describe "Conversations", type: :system do
         refresh
 
         expect(page).to have_content("Conversation with")
-        expect(page).to have_content("Private user")
+        expect(page).to have_content("Private participant")
         expect(page).to have_content(group_chat_participant.name)
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")
@@ -284,7 +274,7 @@ describe "Conversations", type: :system do
         expect(page).to have_content("Conversation with")
         expect(page).to have_content(receiver.name)
         expect(page).to have_content(group_chat_participant.name)
-        expect(page).to have_content("The following user has disabled their private messaging: #{receiver.name}")
+        expect(page).to have_content("The following participant has disabled their private messaging: #{receiver.name}")
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")
       end
