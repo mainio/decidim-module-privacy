@@ -205,6 +205,9 @@ module Decidim
 
           # Initialize concerns for each installed Decidim-module
           if Decidim.module_installed? :budgets
+            # services
+            Decidim::Budgets::OrderReminderGenerator.include(Decidim::Privacy::OrderReminderGeneratorExtensions)
+
             # models
             Decidim::Budgets::Order.include(Decidim::Privacy::UnscopedUserRelation)
           end
