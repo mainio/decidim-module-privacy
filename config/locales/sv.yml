@@ -38,26 +38,26 @@ sv:
         show:
           profile_publicity_html: |
             <p>
-              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
-              remain completely anonymous but it will limit what you can do on this platform.
+              Dessa integritetsinställningar låter dig kontrollera hur du visas på denna plattform offentligt. Du kan välja att
+              förbli helt anonym men det kommer att begränsa vad du kan göra på denna plattform.
             </p>
-            <h2 class="heading5 h5">Profile publicity</h2>
+            <h2 class="heading5 h5">Profilpublicitet</h2>
             <p>
-              Making your profile public allows you to perform public activities on this platform, such as sending
-              comments, participating in discussions, creating proposals, etc.
+              Att göra din profil offentlig låter dig utföra offentliga aktiviteter på denna plattform, såsom att skicka
+              kommentarer, delta i diskussioner, skapa förslag etc.
             </p>
             <p>
-              When you make your profile public, other participants can see your name publicly on this platform and also
-              see other public information about you, such as your nickname and profile photo (avatar), your public
-              activity on this platform, your followers and who you follow.
+              När du offentliggör din profil andra deltagare kan se ditt namn offentligt på denna plattform och även
+              se offentlig information om dig, såsom ditt smeknamn och profilbild, din offentliga
+              verksamhet på denna plattform, dina följare och vem du följer.
             </p>
           private_messaging_html: |
-            <h2 class="heading5 h5">Private messaging</h2>
+            <h2 class="heading5 h5">Direktmeddelanden</h2>
             <p>
-              These settings allow you to communicate with other participants on this platform. Other participants can
-              send you private messages and you can send them to others as well. Your profile needs to be public in
-              order to enable this feature because other people need to find you on this platform in order to have a
-              conversation with you.
+              Dessa inställningar låter dig kommunicera med andra deltagare på denna plattform. Andra deltagare kan
+              skicka direktmeddelanden och du kan även skicka dem till andra. Din profil måste vara offentlig för att
+              aktivera den här funktionen eftersom andra människor behöver hitta dig från denna plattform för att
+              kunna ha en konversation med dig.
             </p>
           enable_public_profile: Aktivera offentlig profil
           enable_private_messaging: Aktivera direktmeddelanden
@@ -70,12 +70,12 @@ sv:
         title: Offentlig profil krävs för denna åtgärd
         content_html: |
           <p class="text-center">
-            You are trying to access a page which requires your profile to be public. Making your profile public allows
-            other participants to see information about you.
+            Du försöker komma åt en sida som kräver att din profil är offentlig. Att göra din profil offentlig tillåter
+            andra deltagare att se information om dig.
           </p>
           <p class="text-center">
             <strong>
-              Additional information about making your profile public will be presented after clicking the button below.
+              Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.
             </strong>
           </p>
         button: "Publicera din profil"
@@ -86,25 +86,25 @@ sv:
           make_profile_public: Gör din profil offentlig
           content_html: |
             <p>
-              If you want to perform public activities on this platform, you must create a public profile. This means
-              that other participants will see your name and nickname alongside your public activity on this platform,
-              such as the proposals or comments you have submitted. The public profile displays the following
-              information about you:
+              Om du vill utföra publika aktiviteter på denna plattform, måste du skapa en offentlig profil. Detta innebär
+              att andra deltagare kommer att se ditt namn och smeknamn vid sidan av din offentliga aktivitet på denna plattform,
+              såsom de förslag eller kommentarer som du har lämnat in. Den publika profilen visar följande
+              information om dig:
             </p>
             <ul>
-              <li>your name</li>
-              <li>your nickname</li>
-              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
-              <li>who you follow and who follows you on this platform</li>
+              <li>ditt namn</li>
+              <li>ditt smeknamn</li>
+              <li>din offentliga aktivitet på denna plattform, t. ex. förslag och kommentarer som du har lämnat in till</li>
+              <li>vem du följer och vilka som följer dig på denna plattform</li>
             </ul>
-            <p>If you wish, you can also add the following information to your public profile:</p>
+            <p>Om du vill, du kan också lägga till följande information till din publika profil:</p>
             <ul>
-              <li>a profile photo (avatar)</li>
-              <li>a profile description</li>
+              <li>en profilbild (avatar)</li>
+              <li>en beskrivning av profilen</li>
             </ul>
             <p>
-              If you change your mind later, you can always change your profile back to private through your account's
-              privacy settings.
+              Om du ändrar dig senare, du kan alltid ändra din profil tillbaka till privat genom ditt kontos
+              sekretessinställningar.
             </p>
           close_modal: Stäng
           agree_to_public_profile: Jag godkänner att en offentlig profil skapas om mig
