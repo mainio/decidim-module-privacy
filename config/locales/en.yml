@@ -51,7 +51,7 @@ en:
               see other public information about you, such as your nickname and profile photo (avatar), your public
               activity on this platform, your followers and who you follow.
             </p>
-          private_messaging_html:
+          private_messaging_html: |
             <h2 class="heading5 h5">Private messaging</h2>
             <p>
               These settings allow you to communicate with other participants on this platform. Other participants can
