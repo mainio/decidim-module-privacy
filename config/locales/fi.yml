@@ -36,8 +36,29 @@ fi:
         back: Edellinen sivu
       privacy_settings:
         show:
-          profile_publicity_html: "<p>Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina, mutta se rajoittaa, mitä voit tehdä tällä alustalla.</p><p><strong>Profiilin julkisuus</strong></p><p>Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.</p><p>Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla, seuraajasi ja keitä sinä seuraat.</p>"
-          private_messaging_html: <p><strong>Yksityisviestit</strong></p><p>Näiden asetusten avulla voit keskustella muiden osallistujien kanssa tällä alustalla. Muut osallistujat voivat lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille. Profiilisi on oltava julkinen tämän asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta keskustellakseen kanssasi.</p>
+          profile_publicity_html: |
+            <p>
+              Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina,
+              mutta se rajoittaa, mitä voit tehdä tällä alustalla.
+            </p>
+            <h2 class="heading5 h5">Profiilin julkisuus</h2>
+            <p>
+              Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
+              kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
+            </p>
+            <p>
+              Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla
+              ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla,
+              seuraajasi ja keitä sinä seuraat.
+            </p>
+          private_messaging_html: |
+            <h2 class="heading5 h5">Yksityisviestit</h2>
+            <p>
+              Näiden asetusten avulla voit keskustella muiden osallistujien kanssa tällä alustalla. Muut osallistujat voivat
+              lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille. Profiilisi on oltava julkinen tämän
+              asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta
+              keskustellakseen kanssasi.
+            </p>
           enable_public_profile: Ota julkinen profiili käyttöön
           enable_private_messaging: Ota yksityisviestit käyttöön
           save_privacy_settings: Tallenna yksityisyysasetukset
@@ -47,14 +68,44 @@ fi:
           success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
-        content_html: "<p class='text-center'>Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii muiden osallistujien nähdä sinua koskevia tietoja.</p><p class='text-center'><strong>Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.</strong></p>"
+        content_html: |
+          <p class="text-center">
+            Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii
+            muiden osallistujien nähdä sinua koskevia tietoja.
+          </p>
+          <p class="text-center">
+            <strong>
+              Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
+            </strong>
+          </p>
         button: "Julkaise profiilisi"
       private_account:
         unnamed_user: Nimetön osallistuja
       partials:
         privacy_consent:
           make_profile_public: Tee profiilistasi julkinen
-          content_html: "<p>Suorittaaksesi julkisia toimintoja tällä alustalla, sinun täytyy tehdä profiilistasi julkinen. Tämä tarkoittaa, että sinulle luodaan julkinen profiili tälle alustalle, jonka kautta muut ihmiset voivat nähdä seuraavia tietoja sinusta:</p><ul><li>nimesi</li><li>nimimerkkisi</li><li>profiilikuvasi</li><li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li><li>seuraajasi ja ketä sinä seuraat tällä alustalla</li></ul>"
+          content_html: |
+            <p>
+              Suorittaaksesi julkisia toimintoja tällä alustalla, sinun täytyy luoda julkinen profiili. Tämä tarkoittaa
+              että muut osallistujat näkevät nimesi ja nimimerkkisi julkisen toimintasi yhteydessä tällä alustalla,
+              kuten lähettämäsi ehdotukset tai kommentit. Julkisessa profiilissa näkyy seuraavat
+              tiedot sinusta:
+            </p>
+            <ul>
+              <li>nimesi</li>
+              <li>nimimerkkisi</li>
+              <li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li>
+              <li>ketä sinä seuraat ja ketkä seuraavat sinua tällä alustalla</li>
+            </ul>
+            <p>Halutessasi voit myös lisätä seuraavat tiedot julkiseen profiiliin:</p>
+            <ul>
+              <li>profiilikuva</li>
+              <li>profiilin kuvaus</li>
+            </ul>
+            <p>
+              Jos muutat mieltäsi myöhemmin, voit aina muuttaa profiilisi takaisin yksityiseksi tilisi
+              yksityisyysasetusten kautta.
+            </p>
           close_modal: Sulje
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
