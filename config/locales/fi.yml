@@ -52,12 +52,12 @@ fi:
               seuraajasi ja keitä sinä seuraat.
             </p>
           private_messaging_html: |
-            <h2 class="heading5 h5">Private messaging</h2>
+            <h2 class="heading5 h5">Yksityisviestit</h2>
             <p>
-              These settings allow you to communicate with other participants on this platform. Other participants can
-              send you private messages and you can send them to others as well. Your profile needs to be public in
-              order to enable this feature because other people need to find you on this platform in order to have a
-              conversation with you.
+              Näiden asetusten avulla voit keskustella muiden osallistujien kanssa tällä alustalla. Muut osallistujat voivat
+              lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille. Profiilisi on oltava julkinen tämän
+              asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta
+              keskustellakseen kanssasi.
             </p>
           enable_public_profile: Ota julkinen profiili käyttöön
           enable_private_messaging: Ota yksityisviestit käyttöön
@@ -70,12 +70,12 @@ fi:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
         content_html: |
           <p class="text-center">
-            You are trying to access a page which requires your profile to be public. Making your profile public allows
-            other participants to see information about you.
+            Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii
+            muiden osallistujien nähdä sinua koskevia tietoja.
           </p>
           <p class="text-center">
             <strong>
-              Additional information about making your profile public will be presented after clicking the button below.
+              Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
             </strong>
           </p>
         button: "Julkaise profiilisi"
@@ -86,25 +86,25 @@ fi:
           make_profile_public: Tee profiilistasi julkinen
           content_html: |
             <p>
-              If you want to perform public activities on this platform, you must create a public profile. This means
-              that other participants will see your name and nickname alongside your public activity on this platform,
-              such as the proposals or comments you have submitted. The public profile displays the following
-              information about you:
+              Suorittaaksesi julkisia toimintoja tällä alustalla, sinun täytyy luoda julkinen profiili. Tämä tarkoittaa
+              että muut osallistujat näkevät nimesi ja nimimerkkisi julkisen toimintasi yhteydessä tällä alustalla,
+              kuten lähettämäsi ehdotukset tai kommentit. Julkisessa profiilissa näkyy seuraavat
+              tiedot sinusta:
             </p>
             <ul>
-              <li>your name</li>
-              <li>your nickname</li>
-              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
-              <li>who you follow and who follows you on this platform</li>
+              <li>nimesi</li>
+              <li>nimimerkkisi</li>
+              <li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li>
+              <li>ketä sinä seuraat ja ketkä seuraavat sinua tällä alustalla</li>
             </ul>
-            <p>If you wish, you can also add the following information to your public profile:</p>
+            <p>Halutessasi voit myös lisätä seuraavat tiedot julkiseen profiiliin:</p>
             <ul>
-              <li>a profile photo (avatar)</li>
-              <li>a profile description</li>
+              <li>profiilikuva</li>
+              <li>profiilin kuvaus</li>
             </ul>
             <p>
-              If you change your mind later, you can always change your profile back to private through your account's
-              privacy settings.
+              Jos muutat mieltäsi myöhemmin, voit aina muuttaa profiilisi takaisin yksityiseksi tilisi
+              yksityisyysasetusten kautta.
             </p>
           close_modal: Sulje
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
