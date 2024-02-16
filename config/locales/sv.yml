@@ -51,14 +51,14 @@ sv:
               see other public information about you, such as your nickname and profile photo (avatar), your public
               activity on this platform, your followers and who you follow.
             </p>
-          private_messaging_html:
-            - <h2 class="heading5 h5">Private messaging</h2>
-            - 
-              - These settings allow you to communicate with other participants on this platform. Other participants can
-              - send you private messages and you can send them to others as well. Your profile needs to be public in
-              - order to enable this feature because other people need to find you on this platform in order to have a
-              - conversation with you.
-            - </p>
+          private_messaging_html: |
+            <h2 class="heading5 h5">Private messaging</h2>
+            <p>
+              These settings allow you to communicate with other participants on this platform. Other participants can
+              send you private messages and you can send them to others as well. Your profile needs to be public in
+              order to enable this feature because other people need to find you on this platform in order to have a
+              conversation with you.
+            </p>
           enable_public_profile: Aktivera offentlig profil
           enable_private_messaging: Aktivera direktmeddelanden
           save_privacy_settings: Spara integritetsinställningar
