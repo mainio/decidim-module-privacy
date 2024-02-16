@@ -102,7 +102,7 @@ describe "User privacy", type: :system do
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
-        "In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:"
+        "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
       )
 
       find("#publish_account_agree_public_profile").check
@@ -217,7 +217,7 @@ describe "User privacy", type: :system do
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
-        "In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:"
+        "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
       )
 
       find("#publish_account_agree_public_profile").check
@@ -261,7 +261,7 @@ describe "User privacy", type: :system do
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
-        "In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:"
+        "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
       )
 
       find("#publish_account_agree_public_profile").check
@@ -303,7 +303,7 @@ describe "User privacy", type: :system do
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
-        "In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:"
+        "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
       )
 
       find("#publish_account_agree_public_profile").check
@@ -749,8 +749,8 @@ describe "User privacy", type: :system do
     context "when public user" do
       it "renders a button to request access" do
         user.update(published_at: Time.current)
-        expect(page).to have_content(collaborative_draft.title)
-        click_link collaborative_draft.title
+        expect(page).to have_content(translated(collaborative_draft.title))
+        click_link translated(collaborative_draft.title)
         within ".view-side" do
           expect(page).to have_content("Version number")
           expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
@@ -763,7 +763,7 @@ describe "User privacy", type: :system do
         it "doesn't render the edit button" do
           author.update(published_at: nil)
           sign_in author, scope: :user
-          click_link "<script>alert(\"TITLE\");</script> #{collaborative_draft.title["en"]}"
+          click_link translated(collaborative_draft.title)
 
           expect(page).not_to have_link("Edit collaborative draft")
         end
