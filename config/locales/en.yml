@@ -36,8 +36,29 @@ en:
         back: Previous page
       privacy_settings:
         show:
-          profile_publicity_html: "<p>These privacy settings allow you to control how you appear on this platform publicly. You can decide to remain completely anonymous but it will limit what you can do on this platform.</p><p><strong>Profile publicity</strong></p><p>Making your profile public allows you to perform public activities on this platform, such as sending comments, participating in discussions, creating proposals, etc.</p><p>When you make your profile public, other participants can see your name publicly on this platform and also see other public information about you, such as your nickname and avatar image, your public activity on this platform, your followers and who you follow.</p>"
-          private_messaging_html: <p><strong>Private messaging</strong></p><p>These settings allow you to communicate with other participants on this platform. Other participants can send you private messages and you can send them to others as well. Your profile needs to be public in order to enable this feature because other people need to find you from this platform in order to have a conversation with you.</p>
+          profile_publicity_html: |
+            <p>
+              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
+              remain completely anonymous but it will limit what you can do on this platform.
+            </p>
+            <h2 class="heading5 h5">Profile publicity</h2>
+            <p>
+              Making your profile public allows you to perform public activities on this platform, such as sending
+              comments, participating in discussions, creating proposals, etc.
+            </p>
+            <p>
+              When you make your profile public, other participants can see your name publicly on this platform and also
+              see other public information about you, such as your nickname and profile photo (avatar), your public
+              activity on this platform, your followers and who you follow.
+            </p>
+          private_messaging_html:
+            <h2 class="heading5 h5">Private messaging</h2>
+            <p>
+              These settings allow you to communicate with other participants on this platform. Other participants can
+              send you private messages and you can send them to others as well. Your profile needs to be public in
+              order to enable this feature because other people need to find you on this platform in order to have a
+              conversation with you.
+            </p>
           enable_public_profile: Enable public profile
           enable_private_messaging: Enable private messaging
           save_privacy_settings: Save privacy settings
@@ -47,14 +68,44 @@ en:
           success: Your privacy settings were successfully updated.
       privacy_block:
         title: Public profile is required for this action
-        content_html: "<p class='text-center'>You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.</p><p class='text-center'><strong>Additional information about making your profile public will be presented after clicking the button below.</strong></p>"
+        content_html: |
+          <p class="text-center">
+            You are trying to access a page which requires your profile to be public. Making your profile public allows
+            other participants to see information about you.
+          </p>
+          <p class="text-center">
+            <strong>
+              Additional information about making your profile public will be presented after clicking the button below.
+            </strong>
+          </p>
         button: "Publish your profile"
       private_account:
         unnamed_user: Unnamed participant
       partials:
         privacy_consent:
           make_profile_public: Make your profile public
-          content_html: "<p>In order to perform any public actions on this platform, you need to make your profile public. This means that a public profile about you will be provided on this platform where other people can see the following information about you:</p><ul><li>your name</li><li>your nickname</li><li>your avatar image</li><li>your public activity on this platform, such as your comments, proposals, etc.</li><li>your followers and who you follow on this platform</li></ul>"
+          content_html: |
+            <p>
+              If you want to perform public activities on this platform, you must create a public profile. This means
+              that other participants will see your name and nickname alongside your public activity on this platform,
+              such as the proposals or comments you have submitted. The public profile displays the following
+              information about you:
+            </p>
+            <ul>
+              <li>your name</li>
+              <li>your nickname</li>
+              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
+              <li>who you follow and who follows you on this platform</li>
+            </ul>
+            <p>If you wish, you can also add the following information to your public profile:</p>
+            <ul>
+              <li>a profile photo (avatar)</li>
+              <li>a profile description</li>
+            </ul>
+            <p>
+              If you change your mind later, you can always change your profile back to private through your account's
+              privacy settings.
+            </p>
           close_modal: Close
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
