@@ -12,6 +12,31 @@ describe "Account", type: :system do
     login_as user, scope: :user
   end
 
+  describe "account links" do
+    before { visit decidim.root_path }
+
+    context "when user private" do
+      context "when opening user menu" do
+        it "does not have 'my public profile' link" do
+          click_link user.name
+          expect(page).not_to have_link("My public profile")
+        end
+      end
+    end
+
+    context "when user public" do
+      context "when opening user menu" do
+        it "has 'my public profile' link" do
+          user.update(published_at: Time.current)
+
+          refresh
+          click_link user.name
+          expect(page).to have_link("My public profile")
+        end
+      end
+    end
+  end
+
   describe "navigation" do
     before do
       visit decidim.root_path
@@ -65,6 +90,63 @@ describe "Account", type: :system do
       end
 
       expect(page).to have_css("h1", text: "Participant settings - Delete my account")
+    end
+  end
+
+  context "when visiting 'privacy settings' page" do
+    context "when private account" do
+      it "does not show 'private messaging' settings" do
+        visit "/privacy_settings"
+
+        expect(page).to have_content("Enable public profile")
+        expect(page.find("#user_published_at", visible: :hidden)).not_to be_checked
+        expect(page).not_to have_content("Private messaging")
+        expect(page).not_to have_content("Enable private messaging")
+        expect(page).not_to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
+      end
+    end
+
+    context "when publishing your account" do
+      it "shows 'private messaging' settings" do
+        visit "/privacy_settings"
+
+        expect(page).to have_content("Enable public profile")
+        expect(page.find("#user_published_at", visible: :hidden)).not_to be_checked
+        find("label[for='user_published_at']").click
+        expect(page).to have_content("Private messaging")
+        expect(page).to have_content("Enable private messaging")
+        expect(page).to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
+      end
+    end
+
+    context "when changing settings to opposite of default values" do
+      it "saves the settings for the user" do
+        visit "/privacy_settings"
+
+        expect(user.published_at).to be_nil
+        expect(user.allow_private_messaging).to be(true)
+        expect(user.direct_message_types).to eq("all")
+
+        expect(page.find("#user_published_at", visible: :hidden)).not_to be_checked
+
+        find("label[for='user_published_at']").click
+        expect(page.find("#user_published_at", visible: :hidden)).to be_checked
+
+        expect(page.find("#user_allow_private_messaging", visible: :hidden)).to be_checked
+        expect(page.find("#user_allow_public_contact", visible: :hidden)).to be_checked
+
+        find("label[for='user_allow_private_messaging']").click
+        expect(page.find("#user_allow_private_messaging", visible: :hidden)).not_to be_checked
+        find(".allow_public_contact").click
+        expect(page.find("#user_allow_public_contact", visible: :hidden)).not_to be_checked
+        click_button "Save privacy settings"
+        expect(page).to have_content("Your privacy settings were successfully updated.")
+
+        user.reload
+        expect(user.published_at).to be_present
+        expect(user.allow_private_messaging).to be(false)
+        expect(user.direct_message_types).to eq("followed-only")
+      end
     end
   end
 
