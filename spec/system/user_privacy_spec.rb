@@ -490,7 +490,7 @@ describe "User privacy", type: :system do
       it "does not show user's name under 'attending participants'" do
         join_meeting
 
-        within ".collapsible-list" do
+        within "#list-of-public-participants" do
           expect(page).not_to have_content(user.name)
         end
       end
@@ -501,7 +501,7 @@ describe "User privacy", type: :system do
         user.update(published_at: Time.current)
         join_meeting
 
-        within ".collapsible-list" do
+        within "#list-of-public-participants" do
           expect(page).to have_content(user.name)
         end
       end
