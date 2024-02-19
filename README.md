@@ -38,7 +38,7 @@ normally show their information, such as the profile page.
 
 After installing this module, "Privacy settings" section will be added to the
 participant account settings as shown in the below image. Users will be able to
-make their profile public/ private. By default, accounts are private.
+make their profile public or private. By default, accounts are private.
 
 ![Privacy settings added to the participant's account settings](docs/privacy_settings.png)
 
