@@ -80,11 +80,11 @@ and `Decidim::UserGroup` models, which also affects the console environment.
 
 For example the User model has been scoped to only find public users by default
 (users that have a value in the attribute `published_at`). To list users that
-are private (i.e. `published_at: nil`) and public, use the `unscoped` method to
-fetch all these records, e.g.:
+are private (i.e. `published_at: nil`) and public, use the `entire_collection`
+method to fetch all these records, e.g.:
 
 ```irb
-> Decidim::User.unscoped.all
+> Decidim::User.entire_collection.all
 ```
 
 ## Contributing
