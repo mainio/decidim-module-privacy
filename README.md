@@ -49,6 +49,13 @@ notification, as shown in below image.
 
 ![Popup opened for a private user wanting to create a new proposal](docs/public_profile_popup.png)
 
+When the profile is not public, the sections in the profile menu that require a
+public profile are not shown:
+
+![Profile menu for non-public accounts](docs/profile_menu_private.png)
+
+If the profile is public, the profile menu works exactly as it would work in
+Decidim by default.
 
 ## Installation
 
