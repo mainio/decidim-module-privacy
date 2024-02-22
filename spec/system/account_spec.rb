@@ -208,7 +208,8 @@ describe "Account", type: :system do
         fill_in "Current password", with: "wrong password12345"
         find("*[type=submit]").click
       end
-      expect(page).to have_field("user[password]", with: "decidim1234567890", type: "password")
+      expect(page).to have_content("There was a problem updating your account.")
+      expect(page).to have_field("user[password]", with: "", type: "password")
       expect(page).to have_content("is invalid")
     end
 
