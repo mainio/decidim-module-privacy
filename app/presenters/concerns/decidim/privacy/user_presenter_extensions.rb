@@ -29,7 +29,7 @@ module Decidim
           return default_avatar_url unless avatar.attached?
           return default_avatar_url unless public_user?
 
-          avatar.path(variant: variant)
+          avatar.url(variant: variant)
         end
 
         def profile_path

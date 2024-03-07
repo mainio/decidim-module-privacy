@@ -15,7 +15,7 @@ describe Decidim::Comments::CommentType do
     let(:query) { "{ author { id name nickname avatarUrl profilePath badge organizationName } }" }
 
     context "when the author is public" do
-      let(:avatar_url) { author.attached_uploader(:avatar).path(variant: :thumb) }
+      let(:avatar_url) { author.attached_uploader(:avatar).url(variant: :thumb) }
 
       it "returns the user's name" do
         expect(response["author"]).to include("name" => author.name)
