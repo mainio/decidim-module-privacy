@@ -119,4 +119,4 @@ cs:
   devise:
     passwords:
       edit:
-        old_password_help: In order to confirm the changes to your account, please provide your current password.
+        old_password_help: Chcete-li potvrdit změny vašeho účtu, zadejte prosím své aktuální heslo.
