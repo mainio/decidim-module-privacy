@@ -3,7 +3,7 @@ cs:
   activemodel:
     attributes:
       user:
-        old_password: Current password
+        old_password: Stávající heslo
   layouts:
     decidim:
       user_profile:
