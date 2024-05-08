@@ -17,11 +17,11 @@ gem "decidim-conferences", DECIDIM_VERSION
 gem "decidim-elections", DECIDIM_VERSION
 gem "decidim-privacy", path: "."
 
-gem "bootsnap", "~> 1.4"
+gem "bootsnap", "~> 1.17"
 
-gem "puma", ">= 5.6.2"
+gem "puma", ">= 6.4.2"
 
-gem "faker", "~> 2.14"
+gem "faker", "~> 3.2.2"
 
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
@@ -34,14 +34,14 @@ group :development, :test do
   # gem "net-imap", "~> 0.2.3"
   # gem "net-pop", "~> 0.1.1"
   # gem "net-smtp", "~> 0.3.1"
-  gem "parallel_tests", "~> 3.7"
+  gem "parallel_tests", "~> 4.2"
   gem "rubocop-faker"
 end
 
 group :development do
   gem "letter_opener_web", "~> 2.0"
-  gem "listen", "~> 3.1"
-  gem "spring", "~> 2.0"
-  gem "spring-watcher-listen", "~> 2.0"
+  gem "listen", "~> 3.8"
+  gem "spring", "~> 4.1.3"
+  gem "spring-watcher-listen", "~> 2.1"
   gem "web-console", "~> 4.2"
 end

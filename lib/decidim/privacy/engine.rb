@@ -71,9 +71,6 @@ module Decidim
           Decidim::User # rubocop:disable Lint/Void
 
           # cells
-          Decidim::CollapsibleListCell.include(
-            Decidim::Privacy::CollapsibleListCellExtensions
-          )
           Decidim::ActivityCell.include(
             Decidim::Privacy::ActivityCellExtensions
           )
@@ -122,9 +119,6 @@ module Decidim
             Decidim::Privacy::ProfilesControllerExtensions
           )
           Decidim::UserActivitiesController.include(
-            Decidim::Privacy::ProfilesControllerExtensions
-          )
-          Decidim::UserTimelineController.include(
             Decidim::Privacy::ProfilesControllerExtensions
           )
           Decidim::UserActivitiesController.include(
@@ -295,9 +289,6 @@ module Decidim
             )
 
             # cells
-            Decidim::Meetings::MeetingMCell.include(
-              Decidim::Privacy::MeetingMCellExtensions
-            )
             Decidim::Meetings::MeetingSCell.include(
               Decidim::Privacy::MeetingSCellExtensions
             )
