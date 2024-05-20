@@ -133,9 +133,6 @@ module Decidim
           Decidim::OwnUserGroupsController.include(
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
-          # The following changes are related to "Ask old password for changing email/password(PR #11737)"
-          # These changes should be removed once it has been backported to v.27
-          Decidim::AccountController.include(Decidim::Privacy::AccountControllerExtensions)
 
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)

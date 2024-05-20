@@ -41,8 +41,8 @@ en:
               These privacy settings allow you to control how you appear on this platform publicly. You can decide to
               remain completely anonymous but it will limit what you can do on this platform.
             </p>
-            <h2 class="heading5 h5">Profile publicity</h2>
-            <p>
+            <h2 class="heading3 h3 pt-4">Profile publicity</h2>
+            <p class="pt-4">
               Making your profile public allows you to perform public activities on this platform, such as sending
               comments, participating in discussions, creating proposals, etc.
             </p>
@@ -52,17 +52,20 @@ en:
               activity on this platform, your followers and who you follow.
             </p>
           private_messaging_html: |
-            <h2 class="heading5 h5">Private messaging</h2>
-            <p>
+            <h2 class="heading3 h3">Private messaging</h2>
+            <p class="pt-2">
               These settings allow you to communicate with other participants on this platform. Other participants can
               send you private messages and you can send them to others as well. Your profile needs to be public in
               order to enable this feature because other people need to find you on this platform in order to have a
               conversation with you.
             </p>
           enable_public_profile: Enable public profile
+          public_profile: I want my profile to be public to other users
           enable_private_messaging: Enable private messaging
+          private_messaging: I want to be able to message other public users
           save_privacy_settings: Save privacy settings
-          allow_public_contact: Allow anyone to send me a direct message, even if I do not follow them.
+          allow_public_contact: Allow public contact
+          public_contact: Allow anyone to send me a direct message, even if I do not follow them.
         update:
           error: There was a problem updating your privacy settings.
           success: Your privacy settings were successfully updated.

@@ -13,12 +13,10 @@ module Decidim
 
       def privacy_modal_snippets
         return unless respond_to?(:snippets)
-        return if current_user && current_user.public?
 
-        snippets.add(:foot, helpers.javascript_pack_tag("decidim_account_publish_handler"))
-        return unless user_signed_in?
-
-        snippets.add(:foot, helpers.cell("decidim/privacy/publish_account_modal", current_user))
+        if current_user && !current_user.public? && user_signed_in?
+          snippets.add(:foot, helpers.cell("decidim/privacy/publish_account_modal", current_user))
+        end
       end
     end
   end

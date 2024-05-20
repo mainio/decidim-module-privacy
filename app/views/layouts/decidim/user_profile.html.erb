@@ -1,50 +1,21 @@
 <% subtitle = content_for(:subtitle) %>
 
 <%= render "layouts/decidim/application" do %>
-<% if controller_name == "privacy_settings" && current_user.public? || controller_name == "account" && current_user.public? %>
-  <div class="callout secondary">
-    <div class="row margin-bottom-1">
-      <div class="columns small-12">
-        <%= icon "information", class: "icon--big margin-right-1 private-icon", role: "img", "aria-hidden": true %>
-        <div class="h5 display-inline"><strong><%= t(".public") %></strong></div>
+  <% if controller_name == "privacy_settings" && current_user.public? || controller_name == "account" && current_user.public? %>
+    <div class="callout secondary">
+      <div class="row margin-bottom-1">
+        <div class="columns small-12">
+          <%= icon "information-line", class: "icon--big margin-right-1 private-icon", role: "img", "aria-hidden": true %>
+          <div class="h5 display-inline"><strong><%= t(".public") %></strong></div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="columns small-12">
-        <p><%= t(".message") %></p>
-        <%= link_to request.base_url + decidim.profile_path(current_user.nickname), decidim.profile_path(current_user.nickname) %>
-      </div>
-    </div>
-  </div>
-<% end %>
-  <div class="wrapper">
-    <div class="row collapse">
-      <div class="columns">
-        <h1 class="heading1 user-header">
-          <%= t("title", scope: "layouts.decidim.user_profile") %>
-          <%= " - #{subtitle}" unless subtitle.blank? %>
-        </h1>
-      </div>
-    </div>
-    <div class="row collapse">
-      <div class="main-container">
-        <div class="row collapse main-container--side-panel">
-          <div class="columns medium-4 large-3">
-            <div class="side-panel">
-              <ul class="tabs vertical side-panel__tabs" id="user-settings-tabs">
-                <%= user_menu.render %>
-              </ul>
-            </div>
-          </div>
-          <div class="columns medium-8 large-9">
-            <div class="main-container__content">
-              <div class="tabs-content vertical" aria-hidden="false">
-                <%= yield %>
-              </div>
-            </div>
-          </div>
+      <div class="row">
+        <div class="columns small-12">
+          <p><%= t(".message") %></p>
+          <%= link_to request.base_url + decidim.profile_path(current_user.nickname), decidim.profile_path(current_user.nickname) %>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
+  <%= yield %>
 <% end %>
