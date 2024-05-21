@@ -16,7 +16,8 @@
                 <%== %(checked="checked") if @privacy_settings.published_at %>
                 id="published_at"
                 type="checkbox"
-                name="published_at">
+                name="published_at"
+                data-publicity=<%= @privacy_settings.published_at %>>
               <span class="toggle__switch-toggle-content">
               </span>
               <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
@@ -30,13 +31,13 @@
       </div>
     </div>
 
-    <div id="toggle-privacy-messaging" class="hide form__wrapper">
+    <div id="toggle-privacy-messaging" class="form__wrapper">
       <%= t("private_messaging_html", scope: "decidim.privacy.privacy_settings.show") %>
 
       <label>
         <%= t("enable_private_messaging", scope: "decidim.privacy.privacy_settings.show") %>
       </label>
-      <div class="toggle__switch-trigger">
+      <div class="toggle__switch-trigger space-y-2">
         <label for="allow_private_messaging" class="toggle__switch-toggle">
           <span>
             <input
