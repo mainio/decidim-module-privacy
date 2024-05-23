@@ -18,6 +18,8 @@ end
 desc "Generates a development app."
 task :development_app do
   Bundler.with_original_env do
+    ENV["DEV_APP_GENERATION"] = "true"
+
     generate_decidim_app(
       "development_app",
       "--app_name",
