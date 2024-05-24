@@ -1,5 +1,5 @@
 <li role="presentation"><%= link_to t(".profile"), decidim.account_path, role: "menuitem" %></li>
-<% if current_user.nickname.present? && !current_user.managed? %>
+<% if current_user.nickname.present? && !current_user.managed? && current_user.public? %>
   <li role="presentation"><%= link_to t(".public_profile"), decidim.profile_path(current_user.nickname), role: "menuitem" %></li>
 <% end %>
 <li role="presentation"><%= link_to t(".notifications"), decidim.notifications_path, role: "menuitem" %></li>
