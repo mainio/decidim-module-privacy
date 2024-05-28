@@ -1,0 +1,23 @@
+<% messages.each do |message| %>
+  <div class="conversation__message<%= " flex-row-reverse ml-auto" if sender_is_user?(sender) %>">
+    <div class="w-8 h-8 flex-none border border-white">
+      <%= cell "decidim/author", present(sender), layout: :avatar %>
+    </div>
+
+    <div class="conversation__message-text">
+      <span class="conversation__message-sender<%= " ml-auto" if sender_is_user?(sender) %>">
+        <%= if sender.public?
+              sender.name
+            else
+              I18n.t("unnamed_user", scope: "decidim.privacy.private_account")
+            end %>
+      </span>
+      <div>
+        <%= simple_format(message.body_with_links) %>
+      </div>
+      <span class="conversation__message-time" title="<%= messages.last.created_at.strftime("%d-%m-%Y %H:%M:%S%z") %>">
+        <%= messages.last.friendly_created_at %>
+      </span>
+    </div>
+  </div>
+<% end %>
