@@ -52,7 +52,7 @@ module Decidim
         end
       end
 
-      initializer "decidim_privacy.add_cells_view_paths", before: "decidim_comments.add_cells_view_paths" do
+      initializer "decidim_privacy.add_cells_view_paths", before: "decidim_core.add_cells_view_paths" do
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/cells")
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
       end

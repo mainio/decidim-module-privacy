@@ -1,0 +1,9 @@
+<% if model.is_a?(Decidim::User) %>
+  <% if mode.public? %>
+    <%= image_tag model.avatar_url, alt: t("decidim.author.avatar", name: display_name), class: "author__avatar" %>
+  <% else %>
+    <%= image_tag model.default_avatar_url, alt: t("decidim.author.avatar", name: display_name), class: "author__avatar" %>
+  <% end %>
+<% else %>
+  <%= image_tag model.avatar_url, alt: t("decidim.author.avatar", name: display_name), class: "author__avatar" %>
+<% end %>
