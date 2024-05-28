@@ -121,7 +121,7 @@ en:
         unauthorized: Only participants with public profiles are allowed to perform this action.
     profile:
       private: Private participant
-      private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private_info_html: This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.
   devise:
     passwords:
       edit:

@@ -9,7 +9,7 @@
         <%= if sender.public?
               sender.name
             else
-              I18n.t("unnamed_user", scope: "decidim.privacy.private_account")
+              t("unnamed_user", scope: "decidim.privacy.private_account")
             end %>
       </span>
       <div>

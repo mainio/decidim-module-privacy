@@ -5,10 +5,16 @@
   <p><%= t("decidim.members.no_public_members") %></p>
 </div>
 <% if memberships.any? { |membership| membership.user.present? } %>
-  <div class="row small-up-1 medium-up-2 card-grid">
-    <% memberships.select { |membership| membership.user.present? }.each do |membership| %>
-      <%= cell membership_cell_name, membership %>
+  <% if validation_messages.present? %>
+    <% validation_messages.each do |validation| %>
+      <%= cell("decidim/announcement", validation) %>
     <% end %>
-  </div>
-  <%= decidim_paginate memberships %>
+  <% else %>
+    <div class="profile__user-grid">
+      <% memberships.each do |membership| %>
+        <%= card_for membership %>
+      <% end %>
+    </div>
+    <%= decidim_paginate memberships %>
+  <% end %>
 <% end %>

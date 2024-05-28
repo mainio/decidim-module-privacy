@@ -74,9 +74,6 @@ module Decidim
           Decidim::ActivityCell.include(
             Decidim::Privacy::ActivityCellExtensions
           )
-          Decidim::VersionAuthorCell.include(
-            Decidim::Privacy::VersionAuthorCellExtensions
-          )
           Decidim::CoauthorshipsCell.include(
             Decidim::Privacy::CoauthorshipsCellExtensions
           )
@@ -257,9 +254,6 @@ module Decidim
             Decidim::Comments::CommentCell.include(
               Decidim::Privacy::CommentCellExtensions
             )
-            Decidim::Comments::CommentThreadCell.include(
-              Decidim::Privacy::CommentThreadCellExtensions
-            )
           end
 
           if Decidim.module_installed? :debates
@@ -283,11 +277,6 @@ module Decidim
             # forms
             Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
               Decidim::Privacy::UnscopedOrganizationUsers
-            )
-
-            # cells
-            Decidim::Meetings::MeetingSCell.include(
-              Decidim::Privacy::MeetingSCellExtensions
             )
           end
 
