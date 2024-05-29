@@ -47,14 +47,14 @@ module Decidim
 
         def anonymize_user_nickname
           @user.update!(
-            nickname: UserBaseEntity.nicknamize("u_#{@user.id}", organization: organization)
+            nickname: UserBaseEntity.nicknamize("u_#{@user.id}", organization:)
           )
         end
 
         def create_or_find_user
           @user = User.entire_collection.find_or_initialize_by(
             email: verified_email,
-            organization: organization
+            organization:
           )
 
           if @user.persisted?
@@ -75,7 +75,7 @@ module Decidim
               url = URI.parse(form.avatar_url)
               filename = File.basename(url.path)
               file = url.open
-              @user.avatar.attach(io: file, filename: filename)
+              @user.avatar.attach(io: file, filename:)
             end
             @user.skip_confirmation! if verified_email
           end
