@@ -10,9 +10,9 @@ module Decidim
                          .entire_collection
                          .where(
                            organization: context.current_organization,
-                           nickname: nickname
+                           nickname:
                          )
-                         .where.not(id: id)
+                         .where.not(id:)
                          .empty?
 
           errors.add :nickname, :taken
