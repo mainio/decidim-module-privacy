@@ -33,7 +33,7 @@ shared_examples_for "coauthorable interface" do
         user_group.memberships.create!(user: creator, role: "member")
 
         coauthorship = model.coauthorships.first
-        coauthorship.update!(user_group: user_group)
+        coauthorship.update!(user_group:)
       end
 
       it "includes returns the user group's name as the author name" do
@@ -93,7 +93,7 @@ shared_examples_for "coauthorable interface" do
       end
 
       context "when author is the organization" do
-        let(:model) { create(:proposal, :official, component: component) }
+        let(:model) { create(:proposal, :official, component:) }
 
         it "returns 2 total co-authors" do
           expect(response["authorsCount"]).to eq(2)
@@ -110,7 +110,7 @@ shared_examples_for "coauthorable interface" do
       end
 
       context "when author is a meeting" do
-        let(:model) { create(:proposal, :official_meeting, component: component) }
+        let(:model) { create(:proposal, :official_meeting, component:) }
 
         it "returns 2 total co-authors" do
           expect(response["authorsCount"]).to eq(2)
