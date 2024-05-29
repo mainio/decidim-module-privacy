@@ -19,6 +19,7 @@ module Decidim
             url = arguments[1]
             html_options = arguments[2]
           end
+
           html_options ||= {}
           resource = html_options.delete(:resource)
           permissions_holder = html_options.delete(:permissions_holder)
@@ -29,7 +30,7 @@ module Decidim
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options["data-open"] = "loginModal"
             url = "#"
-          elsif action && !action_authorized_to(action, resource: resource, permissions_holder: permissions_holder).ok?
+          elsif action && !action_authorized_to(action, resource:, permissions_holder:).ok?
             html_options = clean_authorized_to_data_open(html_options)
 
             html_options["data-open"] = "authorizationModal"
@@ -57,7 +58,7 @@ module Decidim
         # rubocop: enable Metrics/PerceivedComplexity
       end
 
-      private # rubocop:disable Lint/UselessAccessModifier
+      private
 
       def generate_authorized_action_id(tag, action, url)
         "authorize-#{Digest::MD5.hexdigest("#{tag}#{action}#{url}")}"
