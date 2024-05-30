@@ -8,7 +8,7 @@ module Decidim
       included do
         def call
           if conversation.interlocutors(sender).count == 1 && conversation.interlocutors(sender).first.private_or_no_messaging?
-            return broadcast(:invalid, [t("private_info_html", scope: "decidim.profile")])
+            return broadcast(:invalid, [I18n.t("private_info_html", scope: "decidim.profile")])
           end
 
           if form.invalid?

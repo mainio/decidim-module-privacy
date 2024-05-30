@@ -12,8 +12,8 @@ describe Decidim::Privacy::UpdatePrivacySettings do
   let(:form) do
     double(
       valid?: valid?,
-      allow_private_messaging: allow_private_messaging,
-      allow_public_contact: allow_public_contact,
+      allow_private_messaging:,
+      allow_public_contact:,
       published_at: true,
       direct_message_types: "followed-only"
     )

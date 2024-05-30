@@ -4,8 +4,8 @@ require "spec_helper"
 
 describe Decidim::Privacy::StartConversationExtensions do
   let(:organization) { create(:organization) }
-  let!(:user) { create(:user, :admin, :confirmed, organization: organization) }
-  let!(:receiver) { create(:user, :confirmed, organization: organization) }
+  let!(:user) { create(:user, :admin, :confirmed, organization:) }
+  let!(:receiver) { create(:user, :confirmed, organization:) }
 
   let(:form_params) do
     {
@@ -58,7 +58,7 @@ describe Decidim::Privacy::StartConversationExtensions do
   end
 
   context "when starting a conversation to multiple participants" do
-    let(:participant) { create(:user, :confirmed, organization: organization) }
+    let(:participant) { create(:user, :confirmed, organization:) }
 
     let(:form_params) do
       {
