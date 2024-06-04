@@ -1,0 +1,25 @@
+<%= render layout: "show", locals: { participants: conversation.interlocutors(current_user) } do %>
+  <div id="messages" class="space-y-6" data-scroll-last-child>
+    <% user_grouped_messages.each do |sender, messages| %>
+      <%= render "messages", sender:, messages: %>
+    <% end %>
+  </div>
+
+  <% if conversation.with_deleted_users?(current_user) %>
+    <div callout_class="warning"><%= t ".deleted_accounts" %></div>
+  <% elsif conversation.interlocutors(current_user).count == 1 &&
+  conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
+  !conversation.interlocutors(current_user).first.public?
+  %>
+    <div callout_class="warning"><%= t(".private_account") %></div>
+  <% elsif conversation.interlocutors(current_user).count == 1 &&
+  conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
+  conversation.interlocutors(current_user).first.private_messaging_disabled?
+  %>
+    <div callout_class="warning"><%= t(".private_messaging_disabled") %></div>
+  <% elsif conversation.accept_user?(current_user) %>
+    <%= render "reply", form: @form, conversation: conversation %>
+  <% else %>
+    <div callout_class="warning"><%= t "not_allowed", scope: "decidim.messaging.conversations.show" %></div>
+  <% end %>
+<% end %>

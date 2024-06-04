@@ -1,0 +1,11 @@
+<%= render layout: "show", locals: { participants: @form.recipient.to_a } do %>
+  <div id="messages" class="space-y-6" data-scroll-last-child></div>
+  <% if @form.recipient.to_a.select { |recipient| recipient.instance_of?(Decidim::User) }.any?(&:private_messaging_disabled?) %>
+    <% if @form.recipient.count > 1 %>
+      <div callout_class="warning"><%= t(".private_messaging_disabled_new_multiple") %></div>
+    <% else %>
+      <div callout_class="warning"><%= t(".private_messaging_disabled_new") %></div>
+    <% end %>
+  <% else %>
+    <%= render "start", form: @form %>
+  <% end %><% end %>
