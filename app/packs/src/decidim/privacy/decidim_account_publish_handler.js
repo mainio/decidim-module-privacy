@@ -1,10 +1,10 @@
 $(() => {
-  let $publishAccountModal = $("#publishAccountModal");
+  let $publishAccountModal = $("#publish-account-modal");
   if ($publishAccountModal.length < 1) {
     $publishAccountModal = null;
   }
   let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
-
+  console.log(localStorage)
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
   // have logged in. These elements might or might not have the public account requirement to show the modal.
   const setFormValues =  (ev) => {

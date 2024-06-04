@@ -2,26 +2,26 @@
 
 require "spec_helper"
 
-describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
+describe Decidim::Devise::OmniauthRegistrationsController do
   routes { Decidim::Core::Engine.routes }
 
   let(:organization) { create(:organization) }
 
   before do
     request.env["decidim.current_organization"] = organization
-    request.env["devise.mapping"] = ::Devise.mappings[:user]
+    request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
   describe "POST create" do
     let(:provider) { "facebook" }
     let(:uid) { "12345" }
-    let(:oauth_info) { { name: "Facebook User", nickname: "facebook_user", email: email } }
+    let(:oauth_info) { { name: "Facebook User", nickname: "facebook_user", email: } }
     let(:email) { "user@from-facebook.com" }
 
     before do
       request.env["omniauth.auth"] = {
-        provider: provider,
-        uid: uid,
+        provider:,
+        uid:,
         info: oauth_info
       }
     end
@@ -36,7 +36,7 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
       end
 
       it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations")
+        expect(subject).to redirect_to("/authorizations/first_login")
       end
 
       it "creates a new user" do
@@ -50,7 +50,7 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
     end
 
     context "when someone else has reserved the automatically generated nickname" do
-      let!(:another_user) { create(:user, :confirmed, organization: organization) }
+      let!(:another_user) { create(:user, :confirmed, organization:) }
       let(:next_user_id) { another_user.id + 1 }
 
       before do
@@ -78,8 +78,8 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
     end
 
     context "when nickname is not forwarded and a user with matching nickname already exists" do
-      let(:oauth_info) { { name: "Facebook User", email: email } }
-      let!(:another_user) { create(:user, organization: organization, nickname: "facebook_user") }
+      let(:oauth_info) { { name: "Facebook User", email: } }
+      let!(:another_user) { create(:user, organization:, nickname: "facebook_user") }
 
       before do
         post :create
@@ -104,7 +104,7 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
     end
 
     context "when the unverified email address is already in use" do
-      let!(:user) { create(:user, organization: organization, email: email) }
+      let!(:user) { create(:user, organization:, email:) }
 
       before do
         post :create

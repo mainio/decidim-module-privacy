@@ -9,7 +9,7 @@ describe Decidim::Comments::CommentSerializer do
 
   let!(:commentable) { create(:dummy_resource) }
   let!(:author) { create(:user, :published, organization: commentable.organization) }
-  let!(:comment) { create(:comment, commentable: commentable, author: author) }
+  let!(:comment) { create(:comment, commentable:, author:) }
 
   describe "#serialize" do
     let(:serialized) { subject.serialize }

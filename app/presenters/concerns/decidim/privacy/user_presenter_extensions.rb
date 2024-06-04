@@ -24,6 +24,14 @@ module Decidim
           decidim.profile_url(__getobj__.nickname)
         end
 
+        def avatar_url(variant = nil)
+          return default_avatar_url if __getobj__.blocked?
+          return default_avatar_url unless avatar.attached?
+          return default_avatar_url unless public_user?
+
+          avatar.path(variant:)
+        end
+
         def profile_path
           return "" unless public_user?
           return "" if respond_to?(:deleted?) && deleted?

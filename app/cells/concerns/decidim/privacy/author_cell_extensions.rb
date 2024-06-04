@@ -13,6 +13,14 @@ module Decidim
 
           profile_path.present?
         end
+
+        def display_name
+          if model.is_a?(Decidim::NilPresenter)
+            t("decidim.profile.private")
+          else
+            model.deleted? ? t("decidim.profile.deleted") : decidim_sanitize(author_name)
+          end
+        end
       end
     end
   end

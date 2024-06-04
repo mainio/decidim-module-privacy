@@ -8,9 +8,9 @@ module Decidim
   end
 end
 
-describe Decidim::ApplicationController, type: :controller do
-  let!(:organization) { create :organization }
-  let!(:user) { create :user, :confirmed, organization: organization }
+describe Decidim::ApplicationController do
+  let!(:organization) { create(:organization) }
+  let!(:user) { create(:user, :confirmed, organization:) }
 
   controller Decidim::ApplicationController do
     def show
@@ -48,7 +48,7 @@ describe Decidim::ApplicationController, type: :controller do
   end
 
   context "when public user signed in" do
-    let!(:user) { create :user, :confirmed, :published, organization: organization }
+    let!(:user) { create(:user, :confirmed, :published, organization:) }
 
     before do
       sign_in user
@@ -64,7 +64,7 @@ describe Decidim::ApplicationController, type: :controller do
   private
 
   def asset_path(asset)
-    ::Webpacker.instance.manifest.lookup!(asset)
+    Webpacker.instance.manifest.lookup!(asset)
   end
 
   def snippets_instance

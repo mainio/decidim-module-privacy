@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe Decidim::Messaging::ConversationHelper do
   describe "#conversation_label_for" do
-    let(:user) { create :user, :confirmed }
+    let(:user) { create(:user, :confirmed) }
     let(:participants) { [user] }
 
     before do
@@ -16,7 +16,7 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when public user" do
-      let(:user) { create :user, :confirmed, :published }
+      let(:user) { create(:user, :confirmed, :published) }
 
       it "includes the user name" do
         expect(helper.conversation_label_for(participants)).to eq "Conversation with #{user.name} (@#{user.nickname})"
@@ -24,16 +24,16 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when user is deleted" do
-      let(:user) { create :user, :deleted }
+      let(:user) { create(:user, :deleted) }
 
       it "does not include the user name" do
-        expect(helper.conversation_label_for(participants)).to eq "Conversation with Participant deleted"
+        expect(helper.conversation_label_for(participants)).to eq "Conversation with Deleted participant"
       end
     end
   end
 
   describe "#username_list" do
-    let(:user) { create :user, :confirmed }
+    let(:user) { create(:user, :confirmed) }
     let(:participants) { [user] }
 
     before do
@@ -47,7 +47,7 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when public user" do
-      let(:user) { create :user, :confirmed, :published }
+      let(:user) { create(:user, :confirmed, :published) }
 
       it "includes the user name" do
         expect(helper.username_list(participants)).to eq "<strong>#{user.name}</strong>"
@@ -55,16 +55,16 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when user is deleted" do
-      let(:user) { create :user, :deleted }
+      let(:user) { create(:user, :deleted) }
 
       it "does not include the user name" do
-        expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Participant deleted</span>"
+        expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Deleted participant</span>"
       end
     end
   end
 
   describe "#conversation_name_for" do
-    let(:user) { create :user, :confirmed }
+    let(:user) { create(:user, :confirmed) }
     let(:participants) { [user] }
 
     before do
@@ -72,7 +72,7 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when user is public" do
-      let(:user) { create :user, :confirmed, :published }
+      let(:user) { create(:user, :confirmed, :published) }
 
       it "includes the user name" do
         expect(helper.conversation_name_for(participants)).to eq "<strong>#{user.name}</strong><br><span class=\"muted\">@#{user.nickname}</span>"
@@ -81,15 +81,15 @@ describe Decidim::Messaging::ConversationHelper do
 
     context "when private user" do
       it "includes the user name" do
-        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\"><i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i></span>"
+        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\">This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</span>"
       end
     end
 
     context "when user is deleted" do
-      let(:user) { create :user, :deleted }
+      let(:user) { create(:user, :deleted) }
 
       it "does not include the user name" do
-        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Participant deleted</span>"
+        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Deleted participant</span>"
       end
     end
   end

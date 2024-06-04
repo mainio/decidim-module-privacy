@@ -73,7 +73,7 @@ describe Decidim::UserPresenter, type: :helper do
         user.published_at = Time.current
       end
 
-      it { is_expected.to eq("http://localhost:#{Capybara.server_port}/rails/active_storage/blobs/redirect/#{avatar_image.signed_id}/city.jpeg") }
+      it { is_expected.to eq("/rails/active_storage/blobs/redirect/#{avatar_image.signed_id}/city.jpeg") }
     end
   end
 

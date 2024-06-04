@@ -12,9 +12,9 @@ describe Decidim::StatsUsersCount do
   context "without start and end date" do
     it "returns the number of confirmed users" do
       create(:user, :confirmed)
-      create(:user, :confirmed, organization: organization)
-      create(:user, :confirmed, :published, organization: organization)
-      create(:user, organization: organization)
+      create(:user, :confirmed, organization:)
+      create(:user, :confirmed, :published, organization:)
+      create(:user, organization:)
 
       expect(subject.query).to eq(2)
     end
@@ -24,9 +24,9 @@ describe Decidim::StatsUsersCount do
     let(:start_at) { 1.week.ago }
 
     it "returns the number of confirmed user created equal or after this date" do
-      create(:user, :confirmed, organization: organization, created_at: 2.weeks.ago)
-      create(:user, :confirmed, organization: organization)
-      create(:user, :confirmed, :published, organization: organization)
+      create(:user, :confirmed, organization:, created_at: 2.weeks.ago)
+      create(:user, :confirmed, organization:)
+      create(:user, :confirmed, :published, organization:)
 
       expect(subject.query).to eq(2)
     end
@@ -36,20 +36,20 @@ describe Decidim::StatsUsersCount do
     let(:end_at) { 1.week.from_now }
 
     it "returns the number of confirmed user created equal or after this date" do
-      create(:user, :confirmed, organization: organization, created_at: 2.weeks.from_now)
-      create(:user, :confirmed, organization: organization)
-      create(:user, :confirmed, :published, organization: organization)
+      create(:user, :confirmed, organization:, created_at: 2.weeks.from_now)
+      create(:user, :confirmed, organization:)
+      create(:user, :confirmed, :published, organization:)
 
       expect(subject.query).to eq(2)
     end
   end
 
   context "with blocked and deleted users" do
-    it "will exclude all the users blocked or with deleted account" do
-      create(:user, :confirmed, organization: organization, blocked: true)
-      create(:user, :confirmed, organization: organization, deleted_at: 1.day.ago)
-      create(:user, :confirmed, organization: organization)
-      create(:user, :confirmed, :published, organization: organization)
+    it "excludes all the users blocked or with deleted account" do
+      create(:user, :confirmed, organization:, blocked: true)
+      create(:user, :confirmed, organization:, deleted_at: 1.day.ago)
+      create(:user, :confirmed, organization:)
+      create(:user, :confirmed, :published, organization:)
 
       expect(subject.query).to eq(2)
     end

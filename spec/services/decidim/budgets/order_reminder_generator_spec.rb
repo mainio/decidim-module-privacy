@@ -18,10 +18,10 @@ describe Decidim::Budgets::OrderReminderGenerator do
   end
   let(:intervals) { [2.hours, 1.week, 2.weeks] }
   let(:organization) { create(:organization) }
-  let(:component) { create(:component, organization: organization, manifest_name: "budgets") }
-  let(:budget) { create(:budget, component: component, total_budget: 100_000) }
-  let(:project) { create(:project, budget: budget, budget_amount: 90_000) }
-  let(:user) { create(:user, :confirmed, organization: organization) }
+  let(:component) { create(:component, organization:, manifest_name: "budgets") }
+  let(:budget) { create(:budget, component:, total_budget: 100_000) }
+  let(:project) { create(:project, budget:, budget_amount: 90_000) }
+  let(:user) { create(:user, :confirmed, organization:) }
 
   before do
     allow(Decidim.reminders_registry).to receive(:for).with(:orders).and_return(manifest)
@@ -29,7 +29,7 @@ describe Decidim::Budgets::OrderReminderGenerator do
 
   describe "#generate" do
     context "when there is an order created yesterday" do
-      let!(:order) { create(:order, :with_projects, user: user, budget: budget, created_at: 1.day.ago) }
+      let!(:order) { create(:order, :with_projects, user:, budget:, created_at: 1.day.ago) }
 
       it "sends reminder" do
         expect(Decidim::Budgets::SendVoteReminderJob).to receive(:perform_later)
@@ -38,8 +38,8 @@ describe Decidim::Budgets::OrderReminderGenerator do
       end
 
       context "and another order in different budget" do
-        let(:another_budget) { create(:budget, component: component, total_budget: 100_000) }
-        let!(:another_order) { create(:order, :with_projects, user: user, budget: another_budget, created_at: 1.day.ago) }
+        let(:another_budget) { create(:budget, component:, total_budget: 100_000) }
+        let!(:another_order) { create(:order, :with_projects, user:, budget: another_budget, created_at: 1.day.ago) }
 
         it "sends reminder with two records" do
           expect(Decidim::Budgets::SendVoteReminderJob).to receive(:perform_later)
@@ -62,7 +62,7 @@ describe Decidim::Budgets::OrderReminderGenerator do
       end
 
       context "and reminder exists" do
-        let!(:reminder) { create(:reminder, user: user, component: component) }
+        let!(:reminder) { create(:reminder, user:, component:) }
 
         it "sends existing reminder" do
           expect(Decidim::Budgets::SendVoteReminderJob).to receive(:perform_later)
@@ -71,7 +71,7 @@ describe Decidim::Budgets::OrderReminderGenerator do
         end
 
         context "and record has been already added to the reminder" do
-          let(:reminder_record) { create(:reminder_record, reminder: reminder, remindable: order) }
+          let(:reminder_record) { create(:reminder_record, reminder:, remindable: order) }
 
           before { reminder.records << reminder_record }
 
@@ -94,7 +94,7 @@ describe Decidim::Budgets::OrderReminderGenerator do
         end
 
         context "and user has been already reminded" do
-          let!(:reminder_delivery) { create(:reminder_delivery, reminder: reminder, created_at: 1.hour.ago) }
+          let!(:reminder_delivery) { create(:reminder_delivery, reminder:, created_at: 1.hour.ago) }
 
           it "does not send reminder" do
             expect(Decidim::Budgets::SendVoteReminderJob).not_to receive(:perform_later)
@@ -105,11 +105,11 @@ describe Decidim::Budgets::OrderReminderGenerator do
     end
 
     context "when there is an order created more than week ago" do
-      let!(:order) { create(:order, :with_projects, user: user, budget: budget, created_at: 8.days.ago) }
-      let(:reminder) { create(:reminder, user: user, component: component) }
+      let!(:order) { create(:order, :with_projects, user:, budget:, created_at: 8.days.ago) }
+      let(:reminder) { create(:reminder, user:, component:) }
 
       context "and user has been reminded once" do
-        let!(:reminder_delivery) { create(:reminder_delivery, reminder: reminder, created_at: order.created_at + intervals[0]) }
+        let!(:reminder_delivery) { create(:reminder_delivery, reminder:, created_at: order.created_at + intervals[0]) }
 
         it "sends reminder again" do
           expect(Decidim::Budgets::SendVoteReminderJob).to receive(:perform_later)

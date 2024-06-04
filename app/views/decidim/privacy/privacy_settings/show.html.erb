@@ -40,6 +40,7 @@
       <div class="toggle__switch-trigger space-y-2">
         <label for="allow_private_messaging" class="toggle__switch-toggle">
           <span>
+            <input type="hidden" name="allow_private_messaging" value="false">
             <input
               <%== %(checked="checked") if @privacy_settings.allow_private_messaging %>
               id="allow_private_messaging"
@@ -62,6 +63,7 @@
       <div class="toggle__switch-trigger">
         <label for="allow_public_contact" class="toggle__switch-toggle">
           <span>
+            <input type="hidden" name="allow_public_contact" value="false">
             <input
               <%== %(checked="checked") if @privacy_settings.allow_public_contact %>
               id="allow_public_contact"
