@@ -6,20 +6,20 @@
   </div>
 
   <% if conversation.with_deleted_users?(current_user) %>
-    <div callout_class="warning"><%= t ".deleted_accounts" %></div>
+    <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.deleted_accounts"), callout_class: "warning") %>
   <% elsif conversation.interlocutors(current_user).count == 1 &&
   conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
   !conversation.interlocutors(current_user).first.public?
   %>
-    <div callout_class="warning"><%= t(".private_account") %></div>
+    <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.private_account"), callout_class: "warning") %>
   <% elsif conversation.interlocutors(current_user).count == 1 &&
   conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
   conversation.interlocutors(current_user).first.private_messaging_disabled?
   %>
-    <div callout_class="warning"><%= t(".private_messaging_disabled") %></div>
+    <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.private_messaging_disabled"), callout_class: "warning") %>
   <% elsif conversation.accept_user?(current_user) %>
     <%= render "reply", form: @form, conversation: conversation %>
   <% else %>
-    <div callout_class="warning"><%= t "not_allowed", scope: "decidim.messaging.conversations.show" %></div>
+    <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.not_allowed"), callout_class: "warning") %>
   <% end %>
 <% end %>

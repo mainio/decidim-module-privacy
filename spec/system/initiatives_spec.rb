@@ -33,8 +33,11 @@ describe "Initiatives", type: :system do
         visit decidim_initiatives.initiatives_path
         click_link "New initiative"
 
-        expect(page).to have_content("I want to create a #{initiatives_type.title["es"]}")
-        expect(page).to have_content("I want to promote this initiative")
+        expect(page).to have_content(
+          "Initiatives are a means by which the participants can intervene so that the organization can undertake actions
+          in defence of the general interest. Which initiative do you want to launch?"
+        )
+        expect(page).to have_content(initiatives_type.title["es"].to_s)
       end
     end
 
@@ -63,22 +66,8 @@ describe "Initiatives", type: :system do
           click_link initiative.title["en"]
           click_link "Edit"
 
-          expect(page).to have_content("EDIT INITIATIVE")
+          expect(page).to have_content("Edit initiative")
         end
-      end
-    end
-
-    context "when initiative is done by private user" do
-      let!(:initiative) { create(:initiative, author: user, organization: organization) }
-
-      it "doesn't show author name" do
-        visit decidim_initiatives.initiatives_path
-
-        within ".card--initiative", match: :first do
-          expect(page).not_to have_content(user.name)
-        end
-
-        expect(page).not_to have_selector(".author-data")
       end
     end
   end

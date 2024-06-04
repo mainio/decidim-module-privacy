@@ -1,0 +1,39 @@
+<% add_decidim_page_title(t("conversations", scope: "layouts.decidim.user_menu")) %>
+
+<% content_for :aside do %>
+  <div class="conversation__aside">
+    <h1 class="title-decorator">
+      <%= t("decidim.messaging.conversations.index.title") %>
+    </h1>
+
+    <div class="conversation__aside-actions">
+      <%= link_to decidim.conversations_path, class: "button button__sm button__transparent-secondary md:button__text-secondary" do %>
+        <%= icon "arrow-left-line", class: "fill-current" %>
+        <span class="sr-only md:not-sr-only"><%= t("decidim.messaging.conversations.show.back") %></span>
+      <% end %>
+
+      <%= render partial: "new_conversation_button" %>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/decidim/shared/layout_two_col" do %>
+  <section class="layout-main__section">
+    <h2 class="h4 conversation__title">
+      <%= t("decidim.messaging.conversations.show.chat_with") %>
+    </h2>
+
+    <div class="conversation__participants">
+      <% participants.each do |participant| %>
+        <%= cell "decidim/author", present(participant) %>
+      <% end %>
+      <% if participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? }.any?(&:private_messaging_disabled?) %>
+        <% public_participants = participants.select { |participant| participant.instance_of?(Decidim::User) && participant.public? && participant.private_messaging_disabled?} %>
+        <%= t("decidim.messaging.conversations.show.private_messaging_disabled_users", count: public_participants.count) %>
+        <%= public_participants.map(&:name).join(", ") %>
+      <% end %>
+    </div>
+
+    <%= yield %>
+  </section>
+<% end %>

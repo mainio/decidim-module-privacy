@@ -162,7 +162,7 @@ describe "Conversations", type: :system do
           expect(page).to have_content(receiver.name)
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
-          expect(page).to have_content("This participant does not accept direct messages")
+          expect(page).to have_content("You cannot have a conversation with a participant that has private messaging disabled.")
           expect(page).to have_css("a[href='/profiles/#{receiver.nickname}']")
         end
       end
