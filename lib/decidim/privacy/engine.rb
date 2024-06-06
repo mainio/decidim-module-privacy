@@ -83,6 +83,9 @@ module Decidim
           Decidim::ProfileSidebarCell.include(
             Decidim::Privacy::ProfileSidebarCellExtensions
           )
+          Decidim::ProfileActionsCell.include(
+            Decidim::Privacy::ProfileActionsCellExtensions
+          )
           Decidim::UserGroupPendingRequestsListCell.include(
             Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
           )

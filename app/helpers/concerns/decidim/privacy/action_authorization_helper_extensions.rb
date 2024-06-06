@@ -42,7 +42,7 @@ module Decidim
             html_options = clean_authorized_to_data_open(html_options)
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options["data-privacy"] = { open: html_options["data-open"], openUrl: html_options["data-open-url"] }.compact.to_json
-            html_options["data-open"] = "publishAccountModal"
+            html_options["data-open"] = "publish-account-modal"
             html_options.delete("data-open-url")
             url = "#"
           end

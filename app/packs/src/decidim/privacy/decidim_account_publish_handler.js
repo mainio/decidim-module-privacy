@@ -4,7 +4,6 @@ $(() => {
     $publishAccountModal = null;
   }
   let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
-  console.log(localStorage)
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
   // have logged in. These elements might or might not have the public account requirement to show the modal.
   const setFormValues =  (ev) => {
@@ -31,7 +30,7 @@ $(() => {
       }
     }
 
-    document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+    document.querySelectorAll("[data-open='publish-account-modal']").forEach((el) => {
       el.addEventListener("click", setFormValues)
     });
 
@@ -86,7 +85,7 @@ $(() => {
     handleCommentForms(commentsWrapper);
   });
   const removePublishModal = () => {
-    document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
+    document.querySelectorAll("[data-open='publish-account-modal']").forEach((item) => {
       item.removeEventListener("click", setFormValues)
       let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
       if (!dataPrivacy) {

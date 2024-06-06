@@ -1,0 +1,9 @@
+<% actions.each do |action| %>
+  <% if action[:cell].present? %>
+    <%= cell action[:cell], profile_holder, action[:options] %>
+  <% else %>
+    <% if action[:text] != "Request to join group" || can_join_user_group? %>
+      <%= cell "decidim/button", action, action[:options] %>
+    <% end %>
+  <% end %>
+<% end %>
