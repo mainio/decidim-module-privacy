@@ -28,22 +28,22 @@ module Decidim
             html_options = clean_authorized_to_data_open(html_options)
 
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
-            html_options["data-open"] = "loginModal"
+            html_options["data-dialog-open"] = "loginModal"
             url = "#"
           elsif action && !action_authorized_to(action, resource:, permissions_holder:).ok?
             html_options = clean_authorized_to_data_open(html_options)
 
-            html_options["data-open"] = "authorizationModal"
-            html_options["data-open-url"] = modal_path(action, resource)
+            html_options["data-dialog-open"] = "authorizationModal"
+            html_options["data-dialog-remote-url"] = modal_path(action, resource)
             url = "#"
           end
 
           if controller.respond_to?(:allowed_publicly_to?) && !controller.allowed_publicly_to?(action)
             html_options = clean_authorized_to_data_open(html_options)
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
-            html_options["data-privacy"] = { open: html_options["data-open"], openUrl: html_options["data-open-url"] }.compact.to_json
-            html_options["data-open"] = "publish-account-modal"
-            html_options.delete("data-open-url")
+            html_options["data-dialog-privacy"] = { open: html_options["data-open"], openUrl: html_options["data-open-url"] }.compact.to_json
+            html_options["data-dialog-open"] = "publish-account-modal"
+            html_options.delete("data-dialog-remote-url")
             url = "#"
           end
 

@@ -12,7 +12,7 @@ $(() => {
     }
 
     let redirectUrl = ev.target.getAttribute("data-redirect-url")
-    let dataPrivacy = ev.target.getAttribute("data-privacy") || "{}"
+    let dataPrivacy = ev.target.getAttribute("data-dialog-privacy") || "{}"
     if (dataPrivacy && dataPrivacy !== "{}") {
       $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id)
     } else {
@@ -24,22 +24,24 @@ $(() => {
     if (triggeredLoginElement) {
       let element = document.getElementById(triggeredLoginElement)
       if (element) {
-        $publishAccountModal.foundation("open")
+        $publishAccountModal.get(0).setAttribute("aria-hidden", "false");
         $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"))
         localStorage.removeItem("loginTriggeringElement");
       }
     }
-
-    document.querySelectorAll("[data-open='publish-account-modal']").forEach((el) => {
+    document.querySelectorAll("[data-dialog='publish-account-modal']").forEach((el) => {
       el.addEventListener("click", setFormValues)
-    });
-
-    $publishAccountModal.on("closed.zf.reveal", () => {
-      $publishAccountModal.find("form").removeAttr("data-redirect-url")
     });
   }
 
-  document.querySelectorAll("[data-open='loginModal']").forEach((el) => {
+  document.querySelectorAll("[data-dialog-close='publish-account-modal']").forEach((el) => {
+    el.addEventListener("click", () => {
+      $publishAccountModal.get(0).setAttribute("aria-hidden", "true");
+      $publishAccountModal.find("form").removeAttr("data-redirect-url")
+    })
+  })
+
+  document.querySelectorAll("[data-dialog-open='loginModal']").forEach((el) => {
     el.addEventListener("click", (ev) => {
       localStorage.setItem("loginTriggeringElement", ev.target.id);
     })
@@ -57,9 +59,10 @@ $(() => {
     if ($publishAccountModal !== null) {
       ev.preventDefault();
       setCommentData(ev.target)
-      $publishAccountModal.foundation("open");
+      $publishAccountModal.get(0).setAttribute("aria-hidden", "false");
     }
   };
+
   const handleCommentForms = (wrapper) => {
     wrapper.querySelectorAll("form").forEach((commentForm) => {
       commentForm.querySelectorAll("button[type='submit'], input[type='submit']").forEach((button) => {
@@ -84,28 +87,30 @@ $(() => {
     };
     handleCommentForms(commentsWrapper);
   });
+
   const removePublishModal = () => {
-    document.querySelectorAll("[data-open='publish-account-modal']").forEach((item) => {
+    document.querySelectorAll("[data-dialog='publish-account-modal']").forEach((item) => {
       item.removeEventListener("click", setFormValues)
-      let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+      let dataPrivacy = JSON.parse(item.getAttribute("data-dialog-privacy"));
       if (!dataPrivacy) {
         return;
       }
 
       if (dataPrivacy.open && dataPrivacy.openUrl) {
-        item.setAttribute("data-open", dataPrivacy.open);
+        item.setAttribute("data-dialog", dataPrivacy.open);
         $(item).data("open", dataPrivacy.open);
-        item.setAttribute("data-open-url", dataPrivacy.openUrl);
+        item.setAttribute("data-dialog-remote-url", dataPrivacy.openUrl);
         $(item).data("open-url", dataPrivacy.openUrl);
         item.removeAttribute("data-privacy");
       } else {
-        item.removeAttribute("data-open");
+        item.removeAttribute("data-dialog");
       }
     })
-    $publishAccountModal.foundation("close");
+    $publishAccountModal.get(0).setAttribute("aria-hidden", "true");
     $publishAccountModal.remove();
     $publishAccountModal = null;
   }
+
 
   const handleCommentSubmission = () => {
     removePublishModal();

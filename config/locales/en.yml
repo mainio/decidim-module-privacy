@@ -99,14 +99,14 @@ en:
               such as the proposals or comments you have submitted. The public profile displays the following
               information about you:
             </p>
-            <ul>
+            <ul class="list-disc pl-4">
               <li>your name</li>
               <li>your nickname</li>
               <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
               <li>who you follow and who follows you on this platform</li>
             </ul>
             <p>If you wish, you can also add the following information to your public profile:</p>
-            <ul>
+            <ul class="list-disc pl-4">
               <li>a profile photo (avatar)</li>
               <li>a profile description</li>
             </ul>

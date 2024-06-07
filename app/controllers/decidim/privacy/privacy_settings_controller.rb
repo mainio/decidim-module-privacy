@@ -28,7 +28,8 @@ module Decidim
       end
 
       def update_publicity
-        enforce_permission_to :read, :user, current_user:
+        enforce_permission_to(:read, :user, current_user:)
+
         @form = form(::Decidim::Privacy::PublishAccountForm).from_params(params)
 
         UpdateAccountPublicity.call(current_user, @form) do
