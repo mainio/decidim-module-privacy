@@ -11,7 +11,7 @@
         <div class="field margin-bottom-1">
           <%= f.check_box :agree_public_profile,label: t("agree_to_public_profile", scope: "decidim.privacy.partials.privacy_consent"), required: true %>
         </div>
-        <div>
+        <div data-dialog-actions>
           <div class="inline">
             <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button button__sm md:button__lg button__secondary" %>
           </div>

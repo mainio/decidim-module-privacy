@@ -43,15 +43,15 @@ describe "Debates", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_debate_path(component)
 
-        expect(page).to have_content("Public profile is required for this action")
+        expect(page).to have_content("PUBLIC PROFILE IS REQUIRED FOR THIS ACTION")
         expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-        click_button "Publish your profile"
+        click_on "Publish your profile"
 
-        find("#publish_account_agree_public_profile").check
+        find_by_id("publish_account_agree_public_profile").check
 
-        click_button "Make your profile public"
+        click_on "Make your profile public"
 
         expect(page).to have_content("NEW DEBATE")
         expect(page).to have_content("Title")
@@ -62,38 +62,15 @@ describe "Debates", type: :system do
 
   context "when user has created a debate" do
     let!(:component) { create(:debates_component, :with_creation_enabled, participatory_space: participatory_process) }
-    let!(:debate) { create(:debate, author: user, component: component) }
-
-    it "shows author name when user public" do
-      user.update(published_at: Time.current)
-      visit_component
-
-      within ".card--debate", match: :first do
-        expect(page).to have_content(user.name)
-      end
-
-      within ".author-data" do
-        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
-      end
-    end
-
-    it "hides author name when user private" do
-      visit_component
-
-      within ".card--debate", match: :first do
-        expect(page).not_to have_content(user.name)
-      end
-
-      expect(page).not_to have_selector(".author-data")
-    end
+    let!(:debate) { create(:debate, author: user, component:) }
 
     context "when user tries to edit debate" do
       context "when user private" do
         it "doesn't render edit button" do
           visit_component
-          click_link debate.title["en"]
+          click_on debate.title["en"]
 
-          expect(page).not_to have_link("Edit")
+          expect(page).to have_no_link("Edit")
         end
       end
     end

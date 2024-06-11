@@ -33,8 +33,9 @@ describe "Meetings" do
       find_by_id("publish_account_agree_public_profile").check
 
       click_on "Make your profile public"
-
-      expect(page).to have_content("CREATE YOUR MEETING")
+      expect(page).to have_no_content("Make your profile public")
+      expect(Decidim::User.entire_collection.first.public?).to be(true)
+      expect(page).to have_content("Create Your Meeting")
       expect(page).to have_content("Title")
       expect(page).to have_content("Description")
     end
@@ -53,7 +54,7 @@ describe "Meetings" do
 
         click_on "Make your profile public"
 
-        expect(page).to have_content("CREATE YOUR MEETING")
+        expect(page).to have_content("Create Your Meeting")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -62,7 +63,28 @@ describe "Meetings" do
 
   context "when user has created a meeting" do
     let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
-    let!(:meeting) { create(:meeting, :online, :not_official, :published, registrations_enabled: true, author: user, component:) }
+    let!(:questionnaire) { create(:questionnaire) }
+    let!(:question) { create(:questionnaire_question, questionnaire:, position: 0) }
+    let!(:meeting) { create(:meeting, :published, component:, questionnaire:) }
+    let(:registrations_enabled) { true }
+    let(:registration_form_enabled) { true }
+    let(:available_slots) { 20 }
+    let(:registration_terms) do
+      {
+        en: "A legal text",
+        es: "Un texto legal",
+        ca: "Un text legal"
+      }
+    end
+
+    before do
+      meeting.update!(
+        registrations_enabled:,
+        registration_form_enabled:,
+        available_slots:,
+        registration_terms:
+      )
+    end
 
     context "when user tries to edit meeting" do
       context "when user private" do
@@ -70,7 +92,7 @@ describe "Meetings" do
           visit_component
           click_on meeting.title["en"]
 
-          expect(page).to have_no_link("Edit")
+          expect(page).to have_no_link("Edit meeting")
         end
       end
     end
@@ -79,8 +101,9 @@ describe "Meetings" do
       it "does not show user's name under 'attending participants'" do
         join_meeting
 
-        within "#list-of-public-participants" do
+        within "#panel-participants" do
           expect(page).to have_no_content(user.name)
+          expect(page).to have_content("Unnamed participant")
         end
       end
     end
@@ -90,8 +113,9 @@ describe "Meetings" do
         user.update(published_at: Time.current)
         join_meeting
 
-        within "#list-of-public-participants" do
+        within "#panel-participants" do
           expect(page).to have_content(user.name)
+          expect(page).to have_no_content("Unnamed participant")
         end
       end
     end
@@ -103,14 +127,13 @@ describe "Meetings" do
 
   def join_meeting
     visit_meeting
-    expect(page).to have_link("Register")
-    find("a", text: "Register").click
+    click_on "Register"
     expect(page).to have_content("Show my attendance publicly")
     check "public_participation"
     check "questionnaire_tos_agreement"
     click_on "Submit"
-    within ".confirm-modal-footer" do
-      find("[data-confirm-ok]").click
+    within "#confirm-modal-content" do
+      find("button[data-confirm-ok]").click
     end
   end
 
