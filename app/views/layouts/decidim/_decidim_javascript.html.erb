@@ -1,7 +1,7 @@
 <%# NOTE: for performance reasons defer this javascript call would be good, although there are references to jquery that need to be reviewed %>
 
 <% if current_user && !current_user.public? %>
-  <% snippets.add(:foot, append_javascript_pack_tag("decidim_account_publish_handler")) %>
+  <% append_javascript_pack_tag("decidim_account_publish_handler") %>
 <% end %>
 
 <% if Decidim.service_worker_enabled %>

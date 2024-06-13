@@ -23,18 +23,18 @@ describe "Debates", type: :system do
       visit_component
 
       expect(page).to have_content("New debate")
-      click_link "New debate"
+      click_on "New debate"
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
         "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
       )
 
-      find("#publish_account_agree_public_profile").check
+      find_by_id("publish_account_agree_public_profile").check
 
-      click_button "Make your profile public"
+      click_on "Make your profile public"
 
-      expect(page).to have_content("NEW DEBATE")
+      expect(page).to have_content("New debate")
       expect(page).to have_content("Title")
       expect(page).to have_content("Description")
     end
@@ -53,7 +53,7 @@ describe "Debates", type: :system do
 
         click_on "Make your profile public"
 
-        expect(page).to have_content("NEW DEBATE")
+        expect(page).to have_content("New debate")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end

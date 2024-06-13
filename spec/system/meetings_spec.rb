@@ -16,13 +16,17 @@ describe "Meetings" do
     visit decidim.root_path
   end
 
+  after do
+    puts page.driver.send(:bridge).log(:browser)
+  end
+
   context "when trying to create a new meeting" do
     let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
 
     it "gives you a popup for consent, which has to be accepted in order to proceed" do
       visit_component
-
       expect(page).to have_content("New meeting")
+
       click_on "New meeting"
 
       expect(page).to have_content("Make your profile public")

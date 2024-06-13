@@ -17,6 +17,8 @@ module Decidim
         def display_name
           if model.is_a?(Decidim::NilPresenter)
             t("decidim.profile.private")
+          elsif model.is_a?(Decidim::UserPresenter)
+            decidim_sanitize(author_name)
           else
             model.deleted? ? t("decidim.profile.deleted") : decidim_sanitize(author_name)
           end

@@ -1,5 +1,5 @@
 $(() => {
-  let $publishAccountModal = $("#publish-account-modal");
+  let $publishAccountModal = $("#publishAccountModal");
   if ($publishAccountModal.length < 1) {
     $publishAccountModal = null;
   }
@@ -11,11 +11,11 @@ $(() => {
       return
     }
 
-    let redirectUrl = ev.target.dataset.redirectUrl
-    let dataPrivacy = ev.target.dataset.dialogPrivacy || "{}"
+    let redirectUrl = ev.currentTarget.dataset.redirectUrl
+    let dataPrivacy = ev.currentTarget.dataset.dialogPrivacy || "{}"
 
     if (dataPrivacy && dataPrivacy !== "{}") {
-      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id)
+      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.currentTarget.id)
     } else {
       $publishAccountModal.find("form").attr("data-redirect-url", redirectUrl)
     }
@@ -25,22 +25,19 @@ $(() => {
     if (triggeredLoginElement) {
       let element = document.getElementById(triggeredLoginElement)
       if (element) {
-        $publishAccountModal.get(0).setAttribute("aria-hidden", "false");
         $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"))
         localStorage.removeItem("loginTriggeringElement");
       }
     }
-    document.querySelectorAll("[data-dialog-open='publish-account-modal']").forEach((el) => {
+
+    document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((el) => {
       el.addEventListener("click", setFormValues)
     });
-  }
 
-  document.querySelectorAll("[data-dialog-close='publish-account-modal']").forEach((el) => {
-    el.addEventListener("click", () => {
-      $publishAccountModal.get(0).setAttribute("aria-hidden", "true");
+    $publishAccountModal.on("close.dialog", () => {
       $publishAccountModal.find("form").removeAttr("data-redirect-url")
-    })
-  })
+    });
+  }
 
   document.querySelectorAll("[data-dialog-open='loginModal']").forEach((el) => {
     el.addEventListener("click", (ev) => {
@@ -48,7 +45,7 @@ $(() => {
     })
   });
 
-  $("#loginModal").on("closed.zf.reveal", () => {
+  $("#loginModal").on("close.dialog", () => {
     localStorage.removeItem("loginTriggeringElement");
   });
 
@@ -60,7 +57,7 @@ $(() => {
     if ($publishAccountModal !== null) {
       ev.preventDefault();
       setCommentData(ev.target)
-      $publishAccountModal.get(0).setAttribute("aria-hidden", "false");
+      window.Decidim.currentDialogs.publishAccountModal.open()
     }
   };
 
@@ -90,7 +87,7 @@ $(() => {
   });
 
   const removePublishModal = () => {
-    document.querySelectorAll("[data-dialog-open='publish-account-modal']").forEach((item) => {
+    document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((item) => {
       item.removeEventListener("click", setFormValues)
       let dataPrivacy = JSON.parse(item.getAttribute("data-dialog-privacy"));
       if (!dataPrivacy) {
@@ -98,16 +95,15 @@ $(() => {
       }
 
       if (dataPrivacy.open && dataPrivacy.openUrl) {
-        item.setAttribute("data-dialog", dataPrivacy.open);
+        item.setAttribute("data-dialog-open", dataPrivacy.open);
         $(item).data("dialog-open", dataPrivacy.open);
         item.setAttribute("data-dialog-remote-url", dataPrivacy.openUrl);
-        $(item).data("open-url", dataPrivacy.openUrl);
+        $(item).data("dialog-remote-url", dataPrivacy.openUrl);
         item.removeAttribute("data-dialog-privacy");
       } else {
         item.removeAttribute("data-dialog-open");
       }
     })
-    $publishAccountModal.get(0).setAttribute("aria-hidden", "true");
     $publishAccountModal.remove();
     $publishAccountModal = null;
   }
@@ -123,19 +119,14 @@ $(() => {
   }
 
   $(".update-privacy").closest("form").on("ajax:complete", (el) => {
-    console.log(el)
     let redirectDestination =  el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
-    console.log(redirectDestination)
-    // if (redirectDestination) {
-    //   console.log("redirect")
-
-    //   window.location.href = el.target.getAttribute("data-redirect-url");
-    // } else if (dataTriggeringPrivacy) {
-    //   handleAuthorizationPopup(dataTriggeringPrivacy);
-    // } else {
-    //   console.log("else")
-    //   handleCommentSubmission();
-    // }
+    if (redirectDestination) {
+      window.location.href = el.target.getAttribute("data-redirect-url");
+    } else if (dataTriggeringPrivacy) {
+      handleAuthorizationPopup(dataTriggeringPrivacy);
+    } else {
+      handleCommentSubmission();
+    }
   });
 });

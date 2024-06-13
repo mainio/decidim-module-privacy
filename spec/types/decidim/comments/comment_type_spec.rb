@@ -6,7 +6,7 @@ require "decidim/api/test/type_context"
 describe Decidim::Comments::CommentType do
   include_context "with a graphql class type"
 
-  let(:model) { create(:comment, commentable: commentable, author: author, user_group: user_group) }
+  let(:model) { create(:comment, commentable:, author:, user_group:) }
   let(:commentable) { create(:dummy_resource) }
   let(:author) { create(:user, :confirmed, :published, organization: commentable.organization) }
   let(:user_group) { nil }
@@ -102,7 +102,7 @@ describe Decidim::Comments::CommentType do
           end
         end
 
-        let(:comment) { create(:comment, commentable: commentable, author: author, user_group: user_group) }
+        let(:comment) { create(:comment, commentable:, author:, user_group:) }
         let(:model) { dummy_class.find(comment.id) }
 
         it "returns an empty organization name" do

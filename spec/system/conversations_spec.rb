@@ -143,7 +143,7 @@ describe "Conversations", type: :system do
           receiver.update(published_at: Time.current, allow_private_messaging: false)
           visit decidim.profile_path(nickname: receiver.nickname)
 
-          expect(page).to have_css("button[title='This participant does not accept direct messages.'][disabled]")
+          expect(page).to have_button("Message", disabled: true)
         end
       end
     end

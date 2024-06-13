@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-describe "User privacy", type: :system do
-  let(:organization) { create(:organization) }
-  let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
-  let!(:admin) { create(:user, :confirmed, :admin, organization: organization) }
+describe "User privacy" do
+  let!(:organization) { create(:organization) }
+  let!(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:admin) { create(:user, :confirmed, :admin, organization:) }
 
   before do
     login_as user, scope: :user
@@ -31,6 +31,7 @@ describe "User privacy", type: :system do
       it "shows up in the admin search" do
         login_as admin, scope: :user
         visit decidim.root_path
+        refresh
 
         click_on "Admin dashboard"
         click_on "Participants"
@@ -69,6 +70,7 @@ describe "User privacy", type: :system do
       it "shows up in the admin search" do
         login_as admin, scope: :user
         visit decidim.root_path
+        refresh
 
         click_on "Admin dashboard"
         click_on "Participants"
@@ -103,6 +105,7 @@ describe "User privacy", type: :system do
       it "shows up in the admin search" do
         login_as admin, scope: :user
         visit decidim.root_path
+        refresh
 
         click_on "Admin dashboard"
         click_on "Participants"

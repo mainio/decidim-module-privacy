@@ -41,7 +41,7 @@ describe "Comments" do
         comment_blog_post
 
         within ".comment-thread" do
-          within ".author-data" do
+          within ".author" do
             expect(page).to have_content(user.name)
             expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
           end
@@ -58,7 +58,7 @@ describe "Comments" do
 
         refresh
         within ".comment-thread" do
-          expect(page).to have_no_selector(".author-data")
+          expect(page).to have_no_css(".author-data")
         end
       end
     end
@@ -92,7 +92,7 @@ describe "Comments" do
     visit_component
     click_on post.title["en"]
     fill_in "add-comment-Post-#{post.id}", with: "Hello there!"
-    click_on "Send"
+    click_on "Publish comment"
   end
 
   def reply
@@ -103,7 +103,7 @@ describe "Comments" do
     click_on "Reply"
 
     fill_in "add-comment-Comment-#{Decidim::Comments::Comment.first.id}", with: "Well hello"
-    click_on "Send", match: :first
+    click_on "Publish reply", match: :first
 
     expect(page).to have_css("#comment-#{Decidim::Comments::Comment.first.id}-replies")
   end

@@ -27,18 +27,18 @@ describe Decidim::ActionAuthorizationHelper do
 
         it "renders a widget toggling the authorization modal" do
           expect(subject).not_to include(path)
-          expect(subject).to include('data-open="authorizationModal"')
-          expect(subject).to include("data-open-url=\"/authorization_modals/#{action}/f/#{component.id}\"")
+          expect(subject).to include('data-dialog-open="authorizationModal"')
+          expect(subject).to include("data-dialog-remote-url=\"/authorization_modals/#{action}/f/#{component.id}\"")
           expect(subject).to include(*params[:widget_parts])
         end
 
         context "when called with a resource" do
-          let(:resource) { create(:dummy_resource, component: component) }
+          let(:resource) { create(:dummy_resource, component:) }
 
           it "renders a widget toggling the authorization modal" do
             expect(subject).not_to include(path)
-            expect(subject).to include('data-open="authorizationModal"')
-            expect(subject).to include("data-open-url=\"/authorization_modals/#{action}/f/#{component.id}/#{resource.resource_manifest.name}/#{resource.id}\"")
+            expect(subject).to include('data-dialog-open="authorizationModal"')
+            expect(subject).to include("data-dialog-remote-url=\"/authorization_modals/#{action}/f/#{component.id}/#{resource.resource_manifest.name}/#{resource.id}\"")
             expect(subject).to include(*params[:widget_parts])
           end
         end
@@ -50,8 +50,8 @@ describe Decidim::ActionAuthorizationHelper do
 
           it "renders a widget toggling the authorization modal of free resources not related with a component" do
             expect(subject).not_to include(path)
-            expect(subject).to include('data-open="authorizationModal"')
-            expect(subject).to include("data-open-url=\"/free_resource_authorization_modals/#{action}/f/#{resource.resource_manifest.name}/#{resource.id}\"")
+            expect(subject).to include('data-dialog-open="authorizationModal"')
+            expect(subject).to include("data-dialog-remote-url=\"/free_resource_authorization_modals/#{action}/f/#{resource.resource_manifest.name}/#{resource.id}\"")
             expect(subject).to include(*params[:widget_parts])
           end
         end
@@ -73,8 +73,8 @@ describe Decidim::ActionAuthorizationHelper do
 
             it "renders a widget toggling the publish account modal" do
               expect(subject).not_to include(path)
-              expect(CGI.unescapeHTML(subject)).to include("data-privacy=\"#{expected_data_privacy}\"")
-              expect(subject).to include('data-open="publishAccountModal"')
+              expect(CGI.unescapeHTML(subject)).to include("data-dialog-privacy=\"#{expected_data_privacy}\"")
+              expect(subject).to include('data-dialog-open="publishAccountModal"')
               expect(subject).not_to include("data-open-url")
               expect(subject).to include('id="authorize-dummy12345678"')
             end
@@ -84,8 +84,8 @@ describe Decidim::ActionAuthorizationHelper do
 
               it "adds data-open without data-privacy" do
                 expect(subject).not_to include(path)
-                expect(subject).to include("data-privacy=\"{}\"")
-                expect(subject).to include('data-open="publishAccountModal"')
+                expect(subject).to include("data-dialog-privacy=\"{}\"")
+                expect(subject).to include('data-dialog-open="publishAccountModal"')
                 expect(subject).not_to include("data-open-url")
                 expect(subject).to include('id="authorize-dummy12345678"')
               end
@@ -111,7 +111,7 @@ describe Decidim::ActionAuthorizationHelper do
 
       it "renders a widget toggling the login modal" do
         expect(subject).not_to include(path)
-        expect(subject).to include('data-open="loginModal"')
+        expect(subject).to include('data-dialog-open="loginModal"')
         expect(subject).to include(*params[:widget_parts])
       end
     end
