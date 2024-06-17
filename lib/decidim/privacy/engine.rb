@@ -165,6 +165,7 @@ module Decidim
           Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
+          Decidim::ParticipatorySpacePrivateUser.include(Decidim::Privacy::ParticipatorySpacePrivateUserExtensions)
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
