@@ -41,6 +41,7 @@ module Decidim
 
     context "when the user is public" do
       let(:user) { create(:user, :admin, :published, :confirmed) }
+
       it "broadcasts ok" do
         expect { subject.call }.to broadcast(:ok)
         expect(user.public?).to be(true)
