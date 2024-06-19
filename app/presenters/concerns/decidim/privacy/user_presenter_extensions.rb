@@ -23,6 +23,7 @@ module Decidim
 
         def avatar_url(variant = nil)
           return Decidim::AvatarUploader.new(Decidim::User.new, :avatar).default_url if __getobj__.nil?
+          return default_avatar_url unless __getobj__.public?
           return default_avatar_url if __getobj__.blocked?
           return default_avatar_url unless avatar.attached?
 

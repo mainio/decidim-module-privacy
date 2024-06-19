@@ -66,7 +66,9 @@ describe Decidim::UserPresenter, type: :helper do
       user.avatar.attach(avatar_image)
     end
 
-    it { is_expected.to eq(described_class.new(user).default_avatar_url) }
+    it "is a test" do
+      expect(subject).to eq(described_class.new(user).default_avatar_url)
+    end
 
     context "when public" do
       before do

@@ -24,6 +24,9 @@ describe Decidim::Devise::OmniauthRegistrationsController do
         uid:,
         info: oauth_info
       }
+
+      allow(organization).to receive(:available_authorizations)
+        .and_return(["facebook"])
     end
 
     context "with successful sign in" do
@@ -64,7 +67,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       end
 
       it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations")
+        expect(subject).to redirect_to("/authorizations/first_login")
       end
 
       it "creates a new user" do
@@ -90,7 +93,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       end
 
       it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations")
+        expect(subject).to redirect_to("/authorizations/first_login")
       end
 
       it "creates a new user" do
