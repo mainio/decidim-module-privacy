@@ -23,7 +23,7 @@
               <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
               <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
             </span>
-            <span class="toggle__switch-trigger-text">
+            <span class="toggle__switch-trigger-text font-semibold">
               <%= t("public_profile", scope: "decidim.privacy.privacy_settings.show") %>
             </span>
           </label>
@@ -31,53 +31,57 @@
       </div>
     </div>
 
-    <div id="toggle-privacy-messaging" class="form__wrapper">
+    <div id="toggle-privacy-messaging" class="pb-12">
       <%= t("private_messaging_html", scope: "decidim.privacy.privacy_settings.show") %>
 
-      <label>
-        <%= t("enable_private_messaging", scope: "decidim.privacy.privacy_settings.show") %>
-      </label>
-      <div class="toggle__switch-trigger space-y-2">
-        <label for="allow_private_messaging" class="toggle__switch-toggle">
-          <span>
-            <input type="hidden" name="allow_private_messaging" value="false">
-            <input
-              <%== %(checked="checked") if @privacy_settings.allow_private_messaging %>
-              id="allow_private_messaging"
-              type="checkbox"
-              name="allow_private_messaging">
-            <span class="toggle__switch-toggle-content">
-            </span>
-            <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
-            <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
-          </span>
-          <span class="toggle__switch-trigger-text">
-            <%= t("private_messaging", scope: "decidim.privacy.privacy_settings.show") %>
-          </span>
+      <div class="form__wrapper pt-4 pb-4">
+        <label>
+          <%= t("enable_private_messaging", scope: "decidim.privacy.privacy_settings.show") %>
         </label>
+        <div class="toggle__switch-trigger">
+          <label for="allow_private_messaging" class="toggle__switch-toggle">
+            <span>
+              <input type="hidden" name="allow_private_messaging" value="false">
+              <input
+                <%== %(checked="checked") if @privacy_settings.allow_private_messaging %>
+                id="allow_private_messaging"
+                type="checkbox"
+                name="allow_private_messaging">
+              <span class="toggle__switch-toggle-content">
+              </span>
+              <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
+              <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
+            </span>
+            <span class="toggle__switch-trigger-text font-semibold">
+              <%= t("private_messaging", scope: "decidim.privacy.privacy_settings.show") %>
+            </span>
+          </label>
+        </div>
       </div>
 
-      <label>
-        <%= t("allow_public_contact", scope: "decidim.privacy.privacy_settings.show") %>
-      </label>
-      <div class="toggle__switch-trigger">
-        <label for="allow_public_contact" class="toggle__switch-toggle">
-          <span>
-            <input type="hidden" name="allow_public_contact" value="false">
-            <input
-              <%== %(checked="checked") if @privacy_settings.allow_public_contact %>
-              id="allow_public_contact"
-              type="checkbox"
-              name="allow_public_contact">
-            <span class="toggle__switch-toggle-content">
-            </span>
-            <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
-            <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
-          </span>
-          <span class="toggle__switch-trigger-text">
-            <%= t("public_contact", scope: "decidim.privacy.privacy_settings.show") %>
-          </span>
+      <div class="form__wrapper pt-4">
+        <label>
+          <%= t("allow_public_contact", scope: "decidim.privacy.privacy_settings.show") %>
         </label>
+        <div class="toggle__switch-trigger">
+          <label for="allow_public_contact" class="toggle__switch-toggle">
+            <span>
+              <input type="hidden" name="allow_public_contact" value="false">
+              <input
+                <%== %(checked="checked") if @privacy_settings.allow_public_contact %>
+                id="allow_public_contact"
+                type="checkbox"
+                name="allow_public_contact">
+              <span class="toggle__switch-toggle-content">
+              </span>
+              <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
+              <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
+            </span>
+            <span class="toggle__switch-trigger-text font-semibold">
+              <%= t("public_contact", scope: "decidim.privacy.privacy_settings.show") %>
+            </span>
+          </label>
+        </div>
       </div>
     </div>
     <%= f.submit t(".save_privacy_settings"), class: "button button__sm md:button__lg button__secondary mr-auto !ml-0" %>

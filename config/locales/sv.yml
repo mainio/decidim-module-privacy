@@ -32,7 +32,10 @@ sv:
     privacy:
       message_block:
         title: Direktmeddelanden är inte aktiverat
-        content_html: För att komma åt den här sidan måste du aktivera privata meddelanden från "Integritetsinställningar" under dina profilinställningar.
+        content_html: |
+          <p class="text-lg pb-4">
+            För att komma åt den här sidan måste du aktivera privata meddelanden från "Integritetsinställningar" under dina profilinställningar.
+          </p>
         back: Föregående sida
       privacy_settings:
         show:
@@ -69,11 +72,11 @@ sv:
       privacy_block:
         title: Offentlig profil krävs för denna åtgärd
         content_html: |
-          <p class="text-center">
+          <p class="text-lg">
             Du försöker komma åt en sida som kräver att din profil är offentlig. Att göra din profil offentlig tillåter
             andra deltagare att se information om dig.
           </p>
-          <p class="text-center">
+          <p class="text-lg py-4">
             <strong>
               Ytterligare information om att göra din profil offentlig kommer att presenteras efter att klicka på knappen nedan.
             </strong>

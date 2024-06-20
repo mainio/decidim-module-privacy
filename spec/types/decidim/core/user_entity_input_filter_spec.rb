@@ -95,7 +95,7 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
       end
 
       context "when user is blocked" do
-        let!(:user1) { create(:user, :blocked, :published, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+        let!(:first_user) { create(:user, :blocked, :published, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
         it "does not returns matching users" do
           expect(response["users"]).not_to include("name" => first_user.name)
@@ -103,7 +103,7 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
       end
 
       context "when user is deleted" do
-        let!(:user1) { create(:user, :deleted, :confirmed, :published, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+        let!(:first_user) { create(:user, :deleted, :confirmed, :published, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
         it "does not returns matching users" do
           expect(response["users"]).not_to include("name" => first_user.name)
@@ -111,7 +111,7 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
       end
 
       context "when user is private" do
-        let!(:user1) { create(:user, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+        let!(:first_user) { create(:user, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
         it "does not returns matching users" do
           expect(response["users"]).not_to include("name" => first_user.name)
@@ -132,7 +132,7 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
         end
 
         context "when user is blocked" do
-          let!(:user1) { create(:user, :blocked, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+          let!(:first_user) { create(:user, :blocked, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
           it "does not returns matching users" do
             expect(response["users"]).not_to include("name" => first_user.name)
@@ -140,7 +140,7 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
         end
 
         context "when user is private" do
-          let!(:user1) { create(:user, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+          let!(:first_user) { create(:user, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
 
           it "does not returns matching users" do
             expect(response["users"]).not_to include("name" => first_user.name)

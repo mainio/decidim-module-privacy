@@ -1,22 +1,11 @@
-<div class="wrapper">
-  <div class="row">
-    <div class="row">
-      <div class="columns large-8 large-centered text-center page-title">
-        <h1><%= t(".title") %></h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="columns large-6 text-center medium-centered">
-        <div class="card">
-          <div class="card__content">
-            <%= t(".content_html") %>
-          </div>
-        </div>
-      </div>
-      <div class="columns large-4 medium-centered">
-        <%= link_to t(".back"), :back, class: "button expanded" %>
-      </div>
-    </div>
+<div class="text-center">
+  <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
+    <%= t(".title") %>
+  </span>
+  <p class="help-text pb-8">
+    <%= t(".content_html") %>
+  </p>
+  <div class="form__wrapper-block flex justify-center">
+    <%= link_to t(".back"), :back, class: "border border-secondary rounded hover:bg-secondary text-secondary hover:text-white px-4 py-1.5 font-semibold mx-auto" %>
   </div>
 </div>

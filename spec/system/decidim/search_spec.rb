@@ -9,7 +9,7 @@ describe "Search" do
   let!(:admin) { create(:user, :confirmed, :admin, organization:) }
 
   before do
-    login_as user, scope: :user
+    login_as admin, scope: :user
     switch_to_host(organization.host)
     visit decidim.root_path
     expect(page).to have_content(organization.name)
@@ -29,10 +29,6 @@ describe "Search" do
       end
 
       it "shows up in the admin search" do
-        login_as admin, scope: :user
-        visit decidim.root_path
-        refresh
-
         click_on "Admin dashboard"
         click_on "Participants"
         within ".sidebar-menu" do
@@ -46,6 +42,7 @@ describe "Search" do
     context "when user public" do
       it "shows up in search" do
         user.update(published_at: Time.current)
+        user.reload
 
         fill_in "term", with: user.name
         find("button[type='submit'][aria-label='Search']").click
@@ -68,10 +65,6 @@ describe "Search" do
       end
 
       it "shows up in the admin search" do
-        login_as admin, scope: :user
-        visit decidim.root_path
-        refresh
-
         click_on "Admin dashboard"
         click_on "Participants"
         click_on "Groups"
@@ -103,10 +96,6 @@ describe "Search" do
       end
 
       it "shows up in the admin search" do
-        login_as admin, scope: :user
-        visit decidim.root_path
-        refresh
-
         click_on "Admin dashboard"
         click_on "Participants"
         click_on "Groups"

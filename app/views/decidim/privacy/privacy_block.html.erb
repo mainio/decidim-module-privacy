@@ -1,12 +1,12 @@
 <div class="text-center">
-  <span class="uppercase font-semibold text-gray-2 mb-4 block">
+  <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
     <%= t("decidim.privacy.privacy_block.title") %>
   </span>
   <p class="help-text pb-8">
     <%= t("decidim.privacy.privacy_block.content_html") %>
   </p>
-  <div class="form__wrapper-block">
-    <button class="button button__sm md:button__lg button__secondary" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
+  <div class="form__wrapper-block flex justify-center">
+    <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
       <%= t("decidim.privacy.privacy_block.button") %>
     </button>
   </div>

@@ -32,7 +32,10 @@ fi:
     privacy:
       message_block:
         title: Yksityisviestit eivät ole käytössä
-        content_html: Käyttääksesi tätä toimintoa, sinun täytyy ottaa yksityisviestit käyttöön tilisi asetusten alta löytyvien "yksityisyysasetusten" kautta.
+        content_html: |
+          <p class="text-lg pb-4">
+            Käyttääksesi tätä toimintoa, sinun täytyy ottaa yksityisviestit käyttöön tilisi asetusten alta löytyvien "yksityisyysasetusten" kautta.
+          </p>
         back: Edellinen sivu
       privacy_settings:
         show:
@@ -69,11 +72,11 @@ fi:
       privacy_block:
         title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
         content_html: |
-          <p class="text-center">
+          <p class="text-lg">
             Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii
             muiden osallistujien nähdä sinua koskevia tietoja.
           </p>
-          <p class="text-center">
+          <p class="text-lg py-4">
             <strong>
               Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
             </strong>

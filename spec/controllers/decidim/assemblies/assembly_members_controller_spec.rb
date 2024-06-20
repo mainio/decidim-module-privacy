@@ -51,14 +51,14 @@ describe Decidim::Assemblies::AssemblyMembersController do
 
       context "when assembly has some public members" do
         before do
-          member1.user.update!(published_at: Time.current)
+          first_member.user.update!(published_at: Time.current)
         end
 
         context "when user has permissions" do
           it "displays only public members" do
             get :index, params: { assembly_slug: assembly.slug }
 
-            expect(controller.helpers.collection).to contain_exactly(member1)
+            expect(controller.helpers.collection).to contain_exactly(first_member)
           end
         end
       end

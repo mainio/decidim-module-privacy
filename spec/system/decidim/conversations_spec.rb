@@ -101,7 +101,7 @@ describe "Conversations" do
 
       visit decidim.conversations_path
 
-      expect(page).to have_content("Private messaging is not enabled")
+      expect(page).to have_content("PRIVATE MESSAGING IS NOT ENABLED")
     end
 
     it "does not show 'conversations' link in the navbar" do
