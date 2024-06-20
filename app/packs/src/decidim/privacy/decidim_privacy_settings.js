@@ -9,7 +9,7 @@ $(() => {
   }
 
   const toggleVisibility = () => {
-    if (privacyMessagingText.style.display === "none"){
+    if (privacyMessagingText.style.display === "none") {
       privacyMessagingText.style.display = "block";
     } else {
       privacyMessagingText.style.display = "none";
