@@ -120,15 +120,15 @@ describe Decidim::Budgets::OrderReminderGenerator do
     end
 
     context "when user has two orders" do
-      let(:another_budget) { create(:budget, component: component, total_budget: 100_000) }
-      let(:first_order) { create(:order, :with_projects, user: user, budget: budget, created_at: 9.days.ago) }
-      let(:recent_order) { create(:order, :with_projects, user: user, budget: another_budget, created_at: 8.days.ago) }
+      let(:another_budget) { create(:budget, component:, total_budget: 100_000) }
+      let(:first_order) { create(:order, :with_projects, user:, budget:, created_at: 9.days.ago) }
+      let(:recent_order) { create(:order, :with_projects, user:, budget: another_budget, created_at: 8.days.ago) }
 
       context "and user has been reminded once" do
-        let(:reminder) { create(:reminder, user: user, component: component) }
-        let!(:reminder_record) { create(:reminder_record, reminder: reminder, remindable: first_order) }
-        let!(:another_reminder_record) { create(:reminder_record, reminder: reminder, remindable: recent_order) }
-        let!(:reminder_delivery) { create(:reminder_delivery, reminder: reminder, created_at: first_order.created_at + intervals[0]) }
+        let(:reminder) { create(:reminder, user:, component:) }
+        let!(:reminder_record) { create(:reminder_record, reminder:, remindable: first_order) }
+        let!(:another_reminder_record) { create(:reminder_record, reminder:, remindable: recent_order) }
+        let!(:reminder_delivery) { create(:reminder_delivery, reminder:, created_at: first_order.created_at + intervals[0]) }
 
         context "when recent order is checked out" do
           before { recent_order.update!(checked_out_at: 1.minute.ago) }
@@ -185,8 +185,8 @@ describe Decidim::Budgets::OrderReminderGenerator do
     end
 
     context "when there is multiple orders created day ago and one order is checked out" do
-      let(:users) { create_list(:user, 6, :confirmed, organization: organization) }
-      let!(:orders) { users.map { |u| create(:order, :with_projects, user: u, budget: budget, created_at: 1.day.ago) } }
+      let(:users) { create_list(:user, 6, :confirmed, organization:) }
+      let!(:orders) { users.map { |u| create(:order, :with_projects, user: u, budget:, created_at: 1.day.ago) } }
 
       before do
         orders[0].update!(checked_out_at: Time.current)

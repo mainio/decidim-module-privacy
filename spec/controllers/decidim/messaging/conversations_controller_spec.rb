@@ -10,12 +10,12 @@ module Decidim
   end
 end
 
-describe Decidim::Messaging::ConversationsController, type: :controller do
+describe Decidim::Messaging::ConversationsController do
   routes { Decidim::Core::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :confirmed, organization: organization) }
-  let(:user1) { create(:user, organization: organization) }
+  let(:user) { create(:user, :confirmed, organization:) }
+  let(:user1) { create(:user, organization:) }
   let!(:conversation2) do
     Decidim::Messaging::Conversation.start!(
       originator: user,
@@ -39,7 +39,7 @@ describe Decidim::Messaging::ConversationsController, type: :controller do
     end
 
     context "when messaging is disabled" do
-      let!(:user) { create(:user, :confirmed, organization: organization, allow_private_messaging: false, published_at: Time.current) }
+      let!(:user) { create(:user, :confirmed, organization:, allow_private_messaging: false, published_at: Time.current) }
 
       it "renders 404 error" do
         expect(subject).to render_template("decidim/privacy/message_block")
@@ -47,7 +47,7 @@ describe Decidim::Messaging::ConversationsController, type: :controller do
     end
 
     context "when is public and private messaing is enabled" do
-      let!(:user) { create(:user, :confirmed, organization: organization, published_at: Time.current) }
+      let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
 
       context "when is the same user" do
         it "redirects to previous 2 participant created conversation" do
@@ -58,7 +58,7 @@ describe Decidim::Messaging::ConversationsController, type: :controller do
       context "when conversation with a private user" do
         subject { get :new, params: { recipient_id: user1.id } }
 
-        let!(:user) { create(:user, :confirmed, organization: organization, published_at: Time.current) }
+        let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
 
         it "redirects to previous 2 participant created conversation" do
           expect(subject).to redirect_to profile_path(user.nickname)
@@ -68,8 +68,8 @@ describe Decidim::Messaging::ConversationsController, type: :controller do
       context "when conversation with a public user" do
         subject { get :new, params: { recipient_id: user1.id } }
 
-        let!(:user) { create(:user, :confirmed, organization: organization, published_at: Time.current) }
-        let!(:user1) { create(:user, organization: organization, published_at: Time.current) }
+        let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
+        let!(:user1) { create(:user, organization:, published_at: Time.current) }
 
         it "redirects to previous 2 participant created conversation" do
           expect(subject).to redirect_to conversation_path(conversation2)

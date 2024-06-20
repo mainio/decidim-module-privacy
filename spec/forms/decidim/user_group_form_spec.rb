@@ -5,13 +5,13 @@ require "spec_helper"
 describe Decidim::UserGroupForm do
   subject do
     described_class.new(
-      name: name,
-      email: email,
-      nickname: nickname,
-      phone: phone,
-      document_number: document_number,
-      avatar: avatar,
-      about: about
+      name:,
+      email:,
+      nickname:,
+      phone:,
+      document_number:,
+      avatar:,
+      about:
     ).with_context(
       current_organization: organization,
       current_user: user
@@ -46,7 +46,7 @@ describe Decidim::UserGroupForm do
 
     context "when it's already in use in the same organization" do
       context "when private user" do
-        let!(:existing_user) { create(:user, nickname: nickname, organization: organization) }
+        let!(:existing_user) { create(:user, nickname:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -54,7 +54,7 @@ describe Decidim::UserGroupForm do
       end
 
       context "when public user" do
-        let!(:existing_user) { create(:user, nickname: nickname, organization: organization, published_at: Time.current) }
+        let!(:existing_user) { create(:user, nickname:, organization:, published_at: Time.current) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -63,7 +63,7 @@ describe Decidim::UserGroupForm do
     end
 
     context "when it's already in use in another organization" do
-      let!(:existing_user) { create(:user, nickname: nickname) }
+      let!(:existing_user) { create(:user, nickname:) }
 
       it "is valid" do
         expect(subject).to be_valid

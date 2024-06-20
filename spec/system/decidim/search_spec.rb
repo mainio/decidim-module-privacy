@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "User privacy" do
+describe "Search" do
   let!(:organization) { create(:organization) }
   let!(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let!(:user) { create(:user, :confirmed, organization:) }

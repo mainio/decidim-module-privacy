@@ -3,12 +3,12 @@
 require "spec_helper"
 require "decidim/privacy/test/rspec_support/component"
 
-describe "Debates", type: :system do
+describe "Debates" do
   include ComponentTestHelper
 
   let!(:organization) { create(:organization) }
-  let!(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
+  let!(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
 
   before do
     switch_to_host(organization.host)

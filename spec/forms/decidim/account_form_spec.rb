@@ -5,16 +5,16 @@ require "spec_helper"
 describe Decidim::AccountForm do
   subject do
     described_class.new(
-      name: name,
-      email: email,
-      nickname: nickname,
-      old_password: old_password,
-      password: password,
-      password_confirmation: password_confirmation,
-      avatar: avatar,
-      remove_avatar: remove_avatar,
-      personal_url: personal_url,
-      about: about,
+      name:,
+      email:,
+      nickname:,
+      old_password:,
+      password:,
+      password_confirmation:,
+      avatar:,
+      remove_avatar:,
+      personal_url:,
+      about:,
       locale: "es"
     ).with_context(
       current_organization: organization,
@@ -46,7 +46,7 @@ describe Decidim::AccountForm do
   describe "email" do
     context "when it's already in use in the same organization" do
       context "and belongs to a private user" do
-        let!(:existing_user) { create(:user, email: email, organization: organization) }
+        let!(:existing_user) { create(:user, email:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -54,7 +54,7 @@ describe Decidim::AccountForm do
       end
 
       context "and belongs to a public user" do
-        let!(:existing_user) { create(:user, email: email, organization: organization, published_at: Time.current) }
+        let!(:existing_user) { create(:user, email:, organization:, published_at: Time.current) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -62,7 +62,7 @@ describe Decidim::AccountForm do
       end
 
       context "and belongs to a group" do
-        let!(:existing_group) { create(:user_group, email: email, organization: organization) }
+        let!(:existing_group) { create(:user_group, email:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -71,7 +71,7 @@ describe Decidim::AccountForm do
     end
 
     context "when it's already in use in another organization" do
-      let!(:existing_user) { create(:user, email: email) }
+      let!(:existing_user) { create(:user, email:) }
 
       it "is valid" do
         expect(subject).to be_valid
@@ -82,7 +82,7 @@ describe Decidim::AccountForm do
   describe "nickname" do
     context "when it's already in use in the same organization" do
       context "and belongs to a private user" do
-        let!(:existing_user) { create(:user, nickname: nickname, organization: organization) }
+        let!(:existing_user) { create(:user, nickname:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -90,7 +90,7 @@ describe Decidim::AccountForm do
       end
 
       context "and belongs to a public user" do
-        let!(:existing_user) { create(:user, nickname: nickname, organization: organization, published_at: Time.current) }
+        let!(:existing_user) { create(:user, nickname:, organization:, published_at: Time.current) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -98,7 +98,7 @@ describe Decidim::AccountForm do
       end
 
       context "and belongs to a group" do
-        let!(:existing_group) { create(:user_group, nickname: nickname, organization: organization) }
+        let!(:existing_group) { create(:user_group, nickname:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid
@@ -121,7 +121,7 @@ describe Decidim::AccountForm do
       context "with incorrect old_password" do
         let(:old_password) { "foobar1234567890" }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
     end
 
@@ -137,7 +137,7 @@ describe Decidim::AccountForm do
       context "with incorrect old_password" do
         let(:old_password) { "foobar1234567890" }
 
-        it { is_expected.to be_invalid }
+        it { is_expected.not_to be_valid }
       end
     end
   end

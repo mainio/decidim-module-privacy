@@ -6,8 +6,8 @@ require "decidim/conferences/test/factories"
 describe Decidim::Conferences::Admin::ConferenceSpeakerForm do
   subject(:form) { described_class.from_params(attributes).with_context(context) }
 
-  let(:organization) { create :organization }
-  let(:conference) { create :conference, organization: organization }
+  let(:organization) { create(:organization) }
+  let(:conference) { create(:conference, organization:) }
   let(:current_participatory_space) { conference }
   let(:meeting_component) do
     create(:component, manifest_name: :meetings, participatory_space: conference)
@@ -70,13 +70,13 @@ describe Decidim::Conferences::Admin::ConferenceSpeakerForm do
     let(:existing_user) { true }
 
     context "and a private user exists" do
-      let(:user_id) { create(:user, organization: organization).id }
+      let(:user_id) { create(:user, organization:).id }
 
       it { is_expected.to be_valid }
     end
 
     context "and a public user exists" do
-      let(:user_id) { create(:user, organization: organization, published_at: Time.current).id }
+      let(:user_id) { create(:user, organization:, published_at: Time.current).id }
 
       it { is_expected.to be_valid }
     end
@@ -86,15 +86,15 @@ describe Decidim::Conferences::Admin::ConferenceSpeakerForm do
     subject { form.user }
 
     context "when a private user exists" do
-      let(:user_id) { create(:user, organization: organization).id }
+      let(:user_id) { create(:user, organization:).id }
 
-      it { is_expected.to be_kind_of(Decidim::User) }
+      it { is_expected.to be_a(Decidim::User) }
     end
 
     context "when a public user exists" do
-      let(:user_id) { create(:user, organization: organization, published_at: Time.current).id }
+      let(:user_id) { create(:user, organization:, published_at: Time.current).id }
 
-      it { is_expected.to be_kind_of(Decidim::User) }
+      it { is_expected.to be_a(Decidim::User) }
     end
   end
 end

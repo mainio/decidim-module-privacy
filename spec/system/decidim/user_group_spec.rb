@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "User group" do
+describe "UserGroup" do
   let!(:organization) { create(:organization) }
   let!(:user_group) { create(:user_group, :verified, :confirmed, organization:, users: group_users) }
   let(:group_users) { [public_member, private_member] }

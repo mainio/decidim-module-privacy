@@ -6,9 +6,9 @@ describe Decidim::UserBaseEntity do
   subject { described_class }
 
   let(:organization) { create(:organization) }
-  let(:published_user) { create(:user, :confirmed, :published, organization: organization) }
-  let(:private_user) { create(:user, :confirmed, organization: organization) }
-  let(:user_group) { create(:user_group, organization: organization) }
+  let(:published_user) { create(:user, :confirmed, :published, organization:) }
+  let(:private_user) { create(:user, :confirmed, organization:) }
+  let(:user_group) { create(:user_group, organization:) }
 
   describe "#default_scope" do
     it "returns only published profiles by default" do
@@ -28,10 +28,10 @@ describe Decidim::UserBaseEntity do
 
   describe ".nicknamize" do
     context "when private users occupy potential nickname" do
-      let!(:user1) { create(:user, :confirmed, nickname: "john_doe") }
-      let!(:user2) { create(:user, :confirmed, nickname: "john_doe_1") }
-      let!(:user3) { create(:user, :confirmed, nickname: "john_doe_2") }
-      let!(:user4) { create(:user, :confirmed, nickname: "john_doe_3") }
+      let!(:first_user) { create(:user, :confirmed, nickname: "john_doe") }
+      let!(:second_user) { create(:user, :confirmed, nickname: "john_doe_1") }
+      let!(:third_user) { create(:user, :confirmed, nickname: "john_doe_2") }
+      let!(:fourth_user) { create(:user, :confirmed, nickname: "john_doe_3") }
 
       it "returns a unique nickname when a private user has already taken the given nickname" do
         expect(described_class.nicknamize("John Doe")).to eq("john_doe_4")

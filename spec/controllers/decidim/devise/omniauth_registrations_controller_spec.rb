@@ -26,7 +26,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       }
 
       allow(organization).to receive(:available_authorizations)
-        .and_return(["facebook"])
+        .and_return(["dummy_authorization"])
     end
 
     context "with successful sign in" do

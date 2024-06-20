@@ -39,6 +39,11 @@ group :development, :test do
 end
 
 group :development do
+  gem "decidim-admin", DECIDIM_VERSION
+  gem "decidim-assemblies", DECIDIM_VERSION
+  gem "decidim-debates", DECIDIM_VERSION
+  gem "decidim-meetings", DECIDIM_VERSION
+  gem "decidim-proposals", DECIDIM_VERSION
   gem "letter_opener_web", "~> 2.0"
   gem "listen", "~> 3.8"
   gem "spring", "~> 4.1.3"

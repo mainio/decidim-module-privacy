@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin impersonation logs" do
+describe "AdminImpersonationLogs" do
   let(:organization) { create(:organization, available_authorizations:) }
   let(:available_authorizations) { ["dummy_authorization_handler"] }
   let(:current_user) { create(:user, :admin, :confirmed, :admin_terms_accepted, organization:) }
@@ -22,7 +22,7 @@ describe "Admin impersonation logs" do
     visit decidim_admin.root_path
     click_on "Participants"
     click_on "Impersonations"
-    within find("tr", text: impersonated_user.name) do
+    within "tr", text: impersonated_user.name do
       click_on "Impersonate"
     end
 
@@ -43,7 +43,7 @@ describe "Admin impersonation logs" do
 
     expect(page).to have_content("successfully")
 
-    within find("tr", text: impersonated_user.name) do
+    within "tr", text: impersonated_user.name do
       click_on "View logs"
     end
 

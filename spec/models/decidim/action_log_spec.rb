@@ -4,8 +4,8 @@ require "spec_helper"
 
 describe Decidim::ActionLog do
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :confirmed, organization: organization) }
-  let(:resource) { create(:user, :confirmed, organization: organization) }
+  let(:user) { create(:user, :confirmed, organization:) }
+  let(:resource) { create(:user, :confirmed, organization:) }
   let(:participatory_space) { nil }
   let(:component) { nil }
 
@@ -14,10 +14,10 @@ describe Decidim::ActionLog do
 
     let(:attributes) do
       {
-        user: user,
-        organization: organization,
+        user:,
+        organization:,
         action: "invite",
-        resource: resource,
+        resource:,
         resource_id: resource.id,
         resource_type: resource.class.name,
         extra: {

@@ -10,7 +10,7 @@ module Decidim
   end
 end
 
-describe Decidim::Assemblies::AssemblyMembersController, type: :controller do
+describe Decidim::Assemblies::AssemblyMembersController do
   routes { Decidim::Assemblies::Engine.routes }
 
   let(:organization) { create(:organization) }
@@ -19,7 +19,7 @@ describe Decidim::Assemblies::AssemblyMembersController, type: :controller do
     create(
       :assembly,
       :published,
-      organization: organization
+      organization:
     )
   end
 
@@ -32,20 +32,20 @@ describe Decidim::Assemblies::AssemblyMembersController, type: :controller do
       it "displays an empty array of members" do
         get :index, params: { assembly_slug: assembly.slug }
 
-        expect(controller.helpers.collection).to match_array([])
+        expect(controller.helpers.collection).to be_empty
       end
     end
 
     context "when there are members" do
-      let!(:member1) { create(:assembly_member, :with_user, assembly: assembly) }
-      let!(:member2) { create(:assembly_member, assembly: assembly) }
+      let!(:first_member) { create(:assembly_member, :with_user, assembly:) }
+      let!(:second_member) { create(:assembly_member, assembly:) }
       let!(:non_member) { create(:assembly_member) }
 
       context "when assembly has no public members" do
         it "displays an empty array of members" do
           get :index, params: { assembly_slug: assembly.slug }
 
-          expect(controller.helpers.collection).to match_array([])
+          expect(controller.helpers.collection).to be_empty
         end
       end
 
@@ -58,7 +58,7 @@ describe Decidim::Assemblies::AssemblyMembersController, type: :controller do
           it "displays only public members" do
             get :index, params: { assembly_slug: assembly.slug }
 
-            expect(controller.helpers.collection).to match_array([member1])
+            expect(controller.helpers.collection).to contain_exactly(member1)
           end
         end
       end

@@ -10,7 +10,7 @@ module Decidim
   end
 end
 
-describe Decidim::Proposals::ProposalsController, type: :controller do
+describe Decidim::Proposals::ProposalsController do
   routes { Decidim::Proposals::Engine.routes }
 
   let!(:user) { create(:user, :confirmed, organization: component.organization) }
@@ -34,7 +34,7 @@ describe Decidim::Proposals::ProposalsController, type: :controller do
 
   context "when updating" do
     let(:component) { create(:proposal_component, :with_creation_enabled, :with_attachments_allowed) }
-    let!(:proposal) { create(:proposal, component: component, users: [user]) }
+    let!(:proposal) { create(:proposal, component:, users: [user]) }
     let(:proposal_params) do
       {
         title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",

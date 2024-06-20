@@ -6,7 +6,7 @@ describe Decidim::Privacy::PublishAccountForm do
   subject(:form) { described_class.from_params(attributes) }
 
   let(:attributes) do
-    { agree_public_profile: agree_public_profile }
+    { agree_public_profile: }
   end
 
   describe "#agree_public_profile" do
@@ -22,7 +22,7 @@ describe Decidim::Privacy::PublishAccountForm do
       let(:agree_public_profile) { nil }
 
       it "is invalid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
       end
     end
 
@@ -30,7 +30,7 @@ describe Decidim::Privacy::PublishAccountForm do
       let(:agree_public_profile) { false }
 
       it "is valid" do
-        expect(subject).to be_invalid
+        expect(subject).not_to be_valid
       end
     end
   end

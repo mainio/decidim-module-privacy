@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-describe Decidim::Debates::DebatesController, type: :controller do
+describe Decidim::Debates::DebatesController do
   routes { Decidim::Debates::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let(:component) { create(:debates_component, :with_creation_enabled, organization: organization) }
-  let!(:debate) { create(:debate, component: component, author: user) }
-  let(:user) { create(:user, :confirmed, organization: organization) }
+  let(:component) { create(:debates_component, :with_creation_enabled, organization:) }
+  let!(:debate) { create(:debate, component:, author: user) }
+  let(:user) { create(:user, :confirmed, organization:) }
   let(:params) { { component_id: component.id } }
 
   before do

@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-describe Decidim::UserActivitiesController, type: :controller do
+describe Decidim::UserActivitiesController do
   routes { Decidim::Core::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let!(:user) { create(:user, nickname: "Nick", organization: organization, published_at: Time.current) }
+  let!(:user) { create(:user, nickname: "Nick", organization:, published_at: Time.current) }
 
   before do
     request.env["decidim.current_organization"] = organization
@@ -14,7 +14,7 @@ describe Decidim::UserActivitiesController, type: :controller do
 
   describe "#show" do
     context "when user is private" do
-      let!(:user) { create(:user, nickname: "Nick", organization: organization) }
+      let!(:user) { create(:user, nickname: "Nick", organization:) }
 
       it "renders private view" do
         expect do

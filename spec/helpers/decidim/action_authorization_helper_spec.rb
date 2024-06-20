@@ -15,9 +15,8 @@ describe Decidim::ActionAuthorizationHelper do
   let(:path) { "fake_path" }
 
   before do
-    allow(helper).to receive(:current_component).and_return(component)
-    allow(helper).to receive(:current_user).and_return(user)
-    allow(helper).to receive(:action_authorized_to).with(action, resource: resource, permissions_holder: permissions_holder).and_return(status)
+    allow(helper).to receive_messages(current_component: component, current_user: user)
+    allow(helper).to receive(:action_authorized_to).with(action, resource:, permissions_holder:).and_return(status)
   end
 
   shared_examples "an action authorization widget helper" do |params|
@@ -119,13 +118,13 @@ describe Decidim::ActionAuthorizationHelper do
 
   describe "action_authorized_link_to" do
     context "when called with text" do
-      subject(:rendered) { helper.action_authorized_link_to(action, widget_text, path, resource: resource, permissions_holder: permissions_holder) }
+      subject(:rendered) { helper.action_authorized_link_to(action, widget_text, path, resource:, permissions_holder:) }
 
       it_behaves_like "an action authorization widget helper", has_action: true, widget_parts: %w(<a)
     end
 
     context "when called with a block" do
-      subject(:rendered) { helper.action_authorized_link_to(action, path, resource: resource, permissions_holder: permissions_holder) { widget_text } }
+      subject(:rendered) { helper.action_authorized_link_to(action, path, resource:, permissions_holder:) { widget_text } }
 
       it_behaves_like "an action authorization widget helper", has_action: true, widget_parts: %w(<a)
     end
@@ -133,13 +132,13 @@ describe Decidim::ActionAuthorizationHelper do
 
   describe "action_authorized_button_to" do
     context "when called with text" do
-      subject(:rendered) { helper.action_authorized_button_to(action, widget_text, path, resource: resource, permissions_holder: permissions_holder) }
+      subject(:rendered) { helper.action_authorized_button_to(action, widget_text, path, resource:, permissions_holder:) }
 
       it_behaves_like "an action authorization widget helper", has_action: true, widget_parts: %w(<input type="submit")
     end
 
     context "when called with a block" do
-      subject(:rendered) { helper.action_authorized_button_to(action, path, resource: resource, permissions_holder: permissions_holder) { widget_text } }
+      subject(:rendered) { helper.action_authorized_button_to(action, path, resource:, permissions_holder:) { widget_text } }
 
       it_behaves_like "an action authorization widget helper", has_action: true, widget_parts: %w(<button type="submit")
     end
@@ -147,13 +146,13 @@ describe Decidim::ActionAuthorizationHelper do
 
   describe "logged_link_to" do
     context "when called with text" do
-      subject(:rendered) { helper.logged_link_to(widget_text, path, resource: resource) }
+      subject(:rendered) { helper.logged_link_to(widget_text, path, resource:) }
 
       it_behaves_like "an action authorization widget helper", has_action: false, widget_parts: %w(<a)
     end
 
     context "when called with a block" do
-      subject(:rendered) { helper.logged_link_to(path, resource: resource) { widget_text } }
+      subject(:rendered) { helper.logged_link_to(path, resource:) { widget_text } }
 
       it_behaves_like "an action authorization widget helper", has_action: false, widget_parts: %w(<a)
     end
@@ -161,13 +160,13 @@ describe Decidim::ActionAuthorizationHelper do
 
   describe "logged_button_to" do
     context "when called with text" do
-      subject(:rendered) { helper.logged_button_to(widget_text, path, resource: resource) }
+      subject(:rendered) { helper.logged_button_to(widget_text, path, resource:) }
 
       it_behaves_like "an action authorization widget helper", has_action: false, widget_parts: %w(<input type="submit")
     end
 
     context "when called with a block" do
-      subject(:rendered) { helper.logged_button_to(path, resource: resource) { widget_text } }
+      subject(:rendered) { helper.logged_button_to(path, resource:) { widget_text } }
 
       it_behaves_like "an action authorization widget helper", has_action: false, widget_parts: %w(<button type="submit")
     end

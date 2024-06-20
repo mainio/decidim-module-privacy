@@ -10,14 +10,14 @@ module Decidim
   end
 end
 
-describe Decidim::Admin::ImpersonatableUsersController, type: :controller do
+describe Decidim::Admin::ImpersonatableUsersController do
   routes { Decidim::Admin::Engine.routes }
 
-  let(:organization) { create :organization }
-  let(:admin_user) { create(:user, :admin, :confirmed, organization: organization) }
-  let(:private_user) { create(:user, organization: organization) }
-  let(:public_user) { create(:user, organization: organization, published_at: Time.current) }
-  let(:another_admin) { create(:user, :admin, :confirmed, organization: organization) }
+  let(:organization) { create(:organization) }
+  let(:admin_user) { create(:user, :admin, :confirmed, organization:) }
+  let(:private_user) { create(:user, organization:) }
+  let(:public_user) { create(:user, organization:, published_at: Time.current) }
+  let(:another_admin) { create(:user, :admin, :confirmed, organization:) }
 
   describe "#index" do
     before do

@@ -49,11 +49,11 @@ describe "Proposals" do
         expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-        click_button "Publish your profile"
+        click_on "Publish your profile"
 
-        find("#publish_account_agree_public_profile").check
+        find_by_id("publish_account_agree_public_profile").check
 
-        click_button "Make your profile public"
+        click_on "Make your profile public"
 
         expect(page).to have_content("Create your proposal")
         expect(page).to have_content("Title")
@@ -143,15 +143,15 @@ describe "Proposals" do
     it "hides endorsement if user private" do
       visit_component
 
-      click_link proposal.title["en"]
-      expect(page).not_to have_button("Endorse")
+      click_on proposal.title["en"]
+      expect(page).to have_no_button("Endorse")
     end
   end
 
   context "when creating a coauthored proposal" do
     let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
-    let!(:proposal) { create(:proposal, component: component, users: [user, coauthor], skip_injection: true) }
-    let!(:coauthor) { create(:user, :confirmed, :published, organization: organization) }
+    let!(:proposal) { create(:proposal, component:, users: [user, coauthor], skip_injection: true) }
+    let!(:coauthor) { create(:user, :confirmed, :published, organization:) }
 
     it "shows authors correctly if both users public" do
       user.update(published_at: Time.current)
@@ -174,15 +174,15 @@ describe "Proposals" do
   end
 
   context "when requesting access to a collaborative draft" do
-    let!(:scope) { create :scope, organization: organization }
-    let!(:author) { create :user, :confirmed, :published, organization: organization }
-    let!(:user) { create :user, :confirmed, organization: organization }
-    let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
+    let!(:scope) { create(:scope, organization:) }
+    let!(:author) { create(:user, :confirmed, :published, organization:) }
+    let!(:user) { create(:user, :confirmed, organization:) }
+    let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
     let!(:component) do
       create(:proposal_component,
              :with_creation_enabled,
              participatory_space: participatory_process,
-             organization: organization,
+             organization:,
              settings: {
                collaborative_drafts_enabled: true,
                scopes_enabled: true,
@@ -190,12 +190,12 @@ describe "Proposals" do
              })
     end
 
-    let!(:collaborative_draft) { create(:collaborative_draft, :open, component: component, scope: scope, users: [author]) }
+    let!(:collaborative_draft) { create(:collaborative_draft, :open, component:, scope:, users: [author]) }
 
     before do
       sign_in user, scope: :user
       visit main_component_path(component)
-      click_link "Access collaborative drafts"
+      click_on "Access collaborative drafts"
     end
 
     context "when private user" do
@@ -226,9 +226,9 @@ describe "Proposals" do
         it "doesn't render the edit button" do
           author.update(published_at: nil)
           sign_in author, scope: :user
-          click_link translated(collaborative_draft.title)
+          click_on translated(collaborative_draft.title)
 
-          expect(page).not_to have_link("Edit collaborative draft")
+          expect(page).to have_no_link("Edit collaborative draft")
         end
       end
     end

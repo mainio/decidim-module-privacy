@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-describe "Conversations", type: :system do
+describe "Conversations" do
   let(:organization) { create(:organization) }
-  let(:participatory_process) { (create :participatory_process, :with_steps, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
-  let!(:receiver) { create(:user, :confirmed, organization: organization) }
-  let!(:group_chat_participant) { create(:user, :confirmed, organization: organization) }
-  let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
+  let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:receiver) { create(:user, :confirmed, organization:) }
+  let!(:group_chat_participant) { create(:user, :confirmed, organization:) }
+  let!(:user_group) { create(:user_group, :confirmed, :verified, organization:) }
 
   before do
     switch_to_host(organization.host)
@@ -22,10 +22,10 @@ describe "Conversations", type: :system do
       it "does not show up in the search" do
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: receiver.name
 
-        expect(page).not_to have_selector("#autoComplete_list_1")
+        expect(page).to have_no_css("#autoComplete_list_1")
       end
     end
 
@@ -51,10 +51,10 @@ describe "Conversations", type: :system do
       it "shows up in the search" do
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: user_group.name
 
-        expect(page).to have_selector("#autoComplete_list_1")
+        expect(page).to have_css("#autoComplete_list_1")
       end
     end
 
@@ -63,10 +63,10 @@ describe "Conversations", type: :system do
         user_group.update(extended_data: { verified_at: nil })
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: user_group.name
 
-        expect(page).not_to have_selector("#autoComplete_list_1")
+        expect(page).to have_no_css("#autoComplete_list_1")
       end
     end
 
@@ -107,7 +107,7 @@ describe "Conversations", type: :system do
     it "does not show 'conversations' link in the navbar" do
       user.update(published_at: nil)
       refresh
-      expect(page).not_to have_selector(".icon--envelope-closed")
+      expect(page).to have_no_css(".icon--envelope-closed")
     end
   end
 

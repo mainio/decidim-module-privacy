@@ -3,9 +3,9 @@
 require "spec_helper"
 
 describe Decidim::Identity do
-  let!(:identity) { create(:identity, user: user) }
+  let!(:identity) { create(:identity, user:) }
   let(:organization) { create(:organization) }
-  let(:user) { create(:user, :confirmed, organization: organization) }
+  let(:user) { create(:user, :confirmed, organization:) }
 
   describe "#user" do
     subject { Decidim::Identity.last.user }

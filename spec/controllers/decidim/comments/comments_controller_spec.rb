@@ -2,20 +2,20 @@
 
 require "spec_helper"
 
-describe Decidim::Comments::CommentsController, type: :controller do
+describe Decidim::Comments::CommentsController do
   routes { Decidim::Comments::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let(:participatory_process) { create :participatory_process, organization: organization }
+  let(:participatory_process) { create(:participatory_process, organization:) }
   let(:component) { create(:component, participatory_space: participatory_process) }
-  let(:commentable) { create(:dummy_resource, component: component) }
+  let(:commentable) { create(:dummy_resource, component:) }
 
   before do
     request.env["decidim.current_organization"] = organization
   end
 
   describe "POST create" do
-    let(:user) { create(:user, :confirmed, locale: "en", organization: organization) }
+    let(:user) { create(:user, :confirmed, locale: "en", organization:) }
     let(:comment) { Decidim::Comments::Comment.last }
     let(:params) do
       { comment: comment_params, xhr: true }
@@ -35,7 +35,7 @@ describe Decidim::Comments::CommentsController, type: :controller do
       end
 
       it "does not permit create action" do
-        post :create, xhr: true, params: params
+        post(:create, xhr: true, params:)
         expect(response).to render_template("decidim/privacy/privacy_block")
       end
     end
@@ -47,7 +47,7 @@ describe Decidim::Comments::CommentsController, type: :controller do
       end
 
       it "permits create action" do
-        post :create, xhr: true, params: params
+        post(:create, xhr: true, params:)
         expect(response).to have_http_status(:ok).or have_http_status(:no_content)
       end
     end

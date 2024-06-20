@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin impersonatable users" do
+describe "AdminImpersonatableUsers" do
   let(:organization) { create(:organization) }
 
   let!(:admin) { create(:user, :admin, :confirmed, organization:) }

@@ -42,7 +42,7 @@ module Decidim
       end
 
       def deleted?(author)
-        return if author.blank?
+        return false if author.blank?
 
         !author.deleted_at.nil?
       end

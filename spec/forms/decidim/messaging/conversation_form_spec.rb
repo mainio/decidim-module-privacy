@@ -10,12 +10,12 @@ describe Decidim::Messaging::ConversationForm do
   let(:sender) { create(:user) }
   let(:params) do
     {
-      body: body,
-      recipient_id: recipient_id
+      body:,
+      recipient_id:
     }
   end
   let(:form) do
-    described_class.from_params(params).with_context(sender: sender)
+    described_class.from_params(params).with_context(sender:)
   end
 
   context "when everything is OK" do
@@ -25,6 +25,6 @@ describe Decidim::Messaging::ConversationForm do
   context "when private recipient" do
     let!(:recipient_id) { create(:user, organization: sender.organization).id }
 
-    it { is_expected.to be_invalid }
+    it { is_expected.not_to be_valid }
   end
 end

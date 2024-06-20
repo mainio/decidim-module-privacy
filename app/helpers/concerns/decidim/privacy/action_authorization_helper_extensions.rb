@@ -9,6 +9,7 @@ module Decidim
         private
 
         # rubocop: disable Metrics/PerceivedComplexity
+        # rubocop: disable Metrics/CyclomaticComplexity
         def authorized_to(tag, action, arguments, block)
           if block
             body = block
@@ -56,6 +57,7 @@ module Decidim
           end
         end
         # rubocop: enable Metrics/PerceivedComplexity
+        # rubocop: enable Metrics/CyclomaticComplexity
       end
 
       private
