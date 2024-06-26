@@ -3,7 +3,7 @@ cs:
   activemodel:
     attributes:
       user:
-        old_password: Current password
+        old_password: Stávající heslo
   layouts:
     decidim:
       user_profile:
@@ -40,26 +40,18 @@ cs:
         show:
           profile_publicity_html: |
             <p>
-              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
-              remain completely anonymous but it will limit what you can do on this platform.
+              Tato nastavení soukromí umožňují kontrolovat, jak se veřejně zobrazujete na této platformě. Můžete se rozhodnout, že zůstanete zcela anonymní, ale omezí to, co můžete udělat na této platformě.
             </p>
-            <h2 class="heading5 h5">Profile publicity</h2>
+            <h2 class="heading5 h5">Zveřejnění profilu</h2>
             <p>
-              Making your profile public allows you to perform public activities on this platform, such as sending
-              comments, participating in discussions, creating proposals, etc.
+              Zveřejnění profilu vám umožní provádět veřejné aktivity na této platformě, jako je zaslání komentářů, účast na diskusích, vytváření návrhů atd.
             </p>
             <p>
-              When you make your profile public, other participants can see your name publicly on this platform and also
-              see other public information about you, such as your nickname and profile photo (avatar), your public
-              activity on this platform, your followers and who you follow.
+              Když svůj profil zveřejníte, ostatní účastníci mohou vidět vaše jméno veřejně na této platformě a také uvidí další veřejné informace o vás, jako je vaše přezdívka a profilová fotografie (avatar), vaše veřejná aktivita na této platformě, vaše sledující a koho sledujete.
             </p>
           private_messaging_html: |
-            <h2 class="heading5 h5">Private messaging</h2>
-            <p>
-              These settings allow you to communicate with other participants on this platform. Other participants can
-              send you private messages and you can send them to others as well. Your profile needs to be public in
-              order to enable this feature because other people need to find you on this platform in order to have a
-              conversation with you.
+            <h2 class="heading5 h5">Soukromé zprávy</h2>
+            <p>Toto nastavení umožňuje komunikovat s ostatními účastníky na této platformě. Ostatní účastníci vám mohou posílat soukromé zprávy a můžete je poslat i ostatním. Aby bylo možné povolit tuto funkci, Váš profil musí být veřejný,  protože vás ostatní lidé potřebují najít na této platformě, aby s vámi mohli konverzovat.
             </p>
           enable_public_profile: Povolit veřejný profil
           enable_private_messaging: Povolit soukromé zprávy
@@ -72,12 +64,12 @@ cs:
         title: Pro tuto akci je vyžadován veřejný profil
         content_html: |
           <p class="text-center">
-            You are trying to access a page which requires your profile to be public. Making your profile public allows
-            other participants to see information about you.
+            Pokoušíte se o přístup ke stránce, která vyžaduje, aby váš profil byl veřejný. Zveřejnění profilu umožňuje
+            ostatním účastníkům vidět informace o vás.
           </p>
           <p class="text-center">
             <strong>
-              Additional information about making your profile public will be presented after clicking the button below.
+              Další informace o zveřejnění vašeho profilu budou prezentovány po kliknutí na tlačítko níže.
             </strong>
           </p>
         button: "Publikovat svůj profil"
@@ -87,26 +79,20 @@ cs:
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
           content_html: |
-            <p>
-              If you want to perform public activities on this platform, you must create a public profile. This means
-              that other participants will see your name and nickname alongside your public activity on this platform,
-              such as the proposals or comments you have submitted. The public profile displays the following
-              information about you:
+            <p>Pokud chcete provádět veřejné aktivity na této platformě, musíte vytvořit veřejný profil. To znamená, že ostatní účastníci uvidí vaše jméno a přezdívku vedle vaší veřejné aktivity na této platformě, jako návrhy nebo připomínky, které jste předložili. Veřejný profil zobrazí následující informace o vás:
             </p>
             <ul>
-              <li>your name</li>
-              <li>your nickname</li>
-              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
-              <li>who you follow and who follows you on this platform</li>
+              <li>Vaše jméno</li>
+              <li>vaše přezdívka</li>
+              <li>vaše veřejná aktivita na této platformě, jako návrhy a připomínky, které jste předložili</li>
+              <li>kteří vás sledují a kteří vás sledují na této platformě</li>
             </ul>
-            <p>If you wish, you can also add the following information to your public profile:</p>
+            <p>Pokud si přejete, do svého veřejného profilu můžete také přidat následující informace:</p>
             <ul>
-              <li>a profile photo (avatar)</li>
-              <li>a profile description</li>
+              <li>profilovou fotografii (avatar)</li>
+              <li>popis profilu</li>
             </ul>
-            <p>
-              If you change your mind later, you can always change your profile back to private through your account's
-              privacy settings.
+            <p>  Pokud později změníte názor, svůj profil můžete vždy změnit na soukromý pomocí nastavení ochrany osobních údajů.
             </p>
           close_modal: Zavřít
           agree_to_public_profile: Souhlasím s tím, aby o mně byl vytvořen veřejný profil
@@ -119,4 +105,4 @@ cs:
   devise:
     passwords:
       edit:
-        old_password_help: In order to confirm the changes to your account, please provide your current password.
+        old_password_help: Chcete-li potvrdit změny vašeho účtu, zadejte prosím své aktuální heslo.
