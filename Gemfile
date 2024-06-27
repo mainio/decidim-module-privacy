@@ -35,7 +35,13 @@ group :development, :test do
   # gem "net-pop", "~> 0.1.1"
   # gem "net-smtp", "~> 0.3.1"
   gem "parallel_tests", "~> 4.2"
+
+  # rubocop & rubocop-rspec are set to the following versions because of a change where FactoryBot/CreateList
+  # must be a boolean instead of contextual. These version locks can be removed when this problem is handled
+  # through decidim-dev.
+  gem "rubocop", "~>1.28"
   gem "rubocop-faker"
+  gem "rubocop-rspec", "2.20"
 end
 
 group :development do
