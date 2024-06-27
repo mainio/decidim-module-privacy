@@ -10,8 +10,7 @@ describe Decidim::Privacy::EndorsableHelperExtensions do
     subject { helper.endorsements_enabled? }
 
     before do
-      allow(helper).to receive(:current_settings).and_return(double(endorsements_enabled: endorsements_enabled))
-      allow(helper).to receive(:current_user).and_return(user)
+      allow(helper).to receive_messages(current_settings: double(endorsements_enabled:), current_user: user)
     end
 
     context "when user is private" do

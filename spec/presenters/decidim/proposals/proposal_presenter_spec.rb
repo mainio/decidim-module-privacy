@@ -4,7 +4,7 @@ require "spec_helper"
 
 describe Decidim::Proposals::ProposalPresenter, type: :helper do
   let(:component) { create(:proposal_component) }
-  let(:proposal) { create(:proposal, component: component, users: [author]) }
+  let(:proposal) { create(:proposal, component:, users: [author]) }
   let(:author) { create(:user, :confirmed, organization: component.organization) }
   let(:presenter) { described_class.new(proposal) }
 

@@ -17,6 +17,8 @@ module Decidim
           else
             broadcast(:invalid)
           end
+        rescue ActiveRecord::RecordNotUnique
+          broadcast(:invalid)
         end
       end
     end

@@ -3,12 +3,13 @@
 require "spec_helper"
 require "decidim/privacy/test/rspec_support/component"
 
-describe "Proposals", type: :system do
+describe "Proposals" do
   include ComponentTestHelper
 
   let!(:organization) { create(:organization) }
-  let!(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
+  let!(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:visitor) { create(:user, :confirmed, :published, organization:) }
 
   before do
     switch_to_host(organization.host)
@@ -23,18 +24,19 @@ describe "Proposals", type: :system do
       visit_component
 
       expect(page).to have_content("New proposal")
-      click_link "New proposal"
+      click_on "New proposal"
 
       expect(page).to have_content("Make your profile public")
       expect(page).to have_content(
         "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
       )
 
-      find("#publish_account_agree_public_profile").check
+      find_by_id("publish_account_agree_public_profile").check
 
-      click_button "Make your profile public"
-
-      expect(page).to have_content("CREATE YOUR PROPOSAL")
+      click_on "Make your profile public"
+      expect(page).to have_no_content("Make your profile public")
+      expect(Decidim::User.entire_collection.first.public?).to be(true)
+      expect(page).to have_content("Create your proposal")
       expect(page).to have_content("Title")
       expect(page).to have_content("Body")
     end
@@ -43,17 +45,17 @@ describe "Proposals", type: :system do
       it "renders a custom page with a prompt which has to be accepted in order to proceed" do
         visit new_proposal_path(component)
 
-        expect(page).to have_content("Public profile is required for this action")
+        expect(page).to have_content("PUBLIC PROFILE IS REQUIRED FOR THIS ACTION")
         expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
         expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-        click_button "Publish your profile"
+        click_on "Publish your profile"
 
-        find("#publish_account_agree_public_profile").check
+        find_by_id("publish_account_agree_public_profile").check
 
-        click_button "Make your profile public"
+        click_on "Make your profile public"
 
-        expect(page).to have_content("CREATE YOUR PROPOSAL")
+        expect(page).to have_content("Create your proposal")
         expect(page).to have_content("Title")
         expect(page).to have_content("Body")
       end
@@ -62,38 +64,33 @@ describe "Proposals", type: :system do
 
   context "when user has created a proposal" do
     let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
-    let!(:proposal) { create(:proposal, component: component, users: [user]) }
+    let!(:proposal) { create(:proposal, component:, users: [user]) }
 
     it "shows author name when user public" do
       user.update(published_at: Time.current)
       visit_component
 
-      within ".card--proposal", match: :first do
+      within "a.card__list", match: :first do
         expect(page).to have_content(user.name)
-      end
-
-      within ".author-data" do
-        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
       end
     end
 
     it "hides author name when user private" do
       visit_component
 
-      within ".card--proposal", match: :first do
-        expect(page).not_to have_content(user.name)
+      within ".card__list", match: :first do
+        expect(page).to have_no_content(user.name)
+        expect(page).to have_content("Private participant")
       end
-
-      expect(page).not_to have_selector(".author-data")
     end
 
     context "when user tries to edit proposal" do
       context "when user private" do
         it "doesn't render edit button" do
           visit_component
-          click_link proposal.title["en"]
+          click_on proposal.title["en"]
 
-          expect(page).not_to have_link("Edit proposal")
+          expect(page).to have_no_link("Edit proposal")
         end
       end
     end
@@ -101,18 +98,22 @@ describe "Proposals", type: :system do
 
   context "when user leaves an endorsement" do
     let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
-    let!(:proposal) { create(:proposal, component: component, users: [user]) }
+    let!(:proposal) { create(:proposal, component:, users: [user]) }
 
     it "shows user's name in endorsements list if public" do
       user.update(published_at: Time.current)
       visit_component
 
-      click_link proposal.title["en"]
-      click_button "Endorse"
+      click_on proposal.title["en"]
+      click_on "Like"
       refresh
 
-      within "#list-of-endorsements" do
-        expect(page).to have_selector("a[href='/profiles/#{user.nickname}']")
+      expect(page).to have_css(".endorsers-list__trigger")
+
+      find(".endorsers-list__trigger").click
+
+      within ".endorsers-list__grid" do
+        expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
       end
     end
 
@@ -120,64 +121,68 @@ describe "Proposals", type: :system do
       user.update(published_at: Time.current)
       visit_component
 
-      click_link proposal.title["en"]
-      click_button "Endorse"
+      click_on proposal.title["en"]
+      click_on "Like"
       refresh
 
-      expect(page).to have_selector("#list-of-endorsements")
+      expect(page).to have_css(".endorsers-list__trigger")
       user.update(published_at: nil)
       user.reload
 
-      refresh
+      login_as visitor, scope: :user
+      visit_component
+      click_on proposal.title["en"]
 
-      within "#list-of-endorsements" do
-        expect(page).not_to have_selector("a[href='/profiles/#{user.nickname}']")
+      find(".endorsers-list__trigger").click
+
+      within ".endorsers-list__grid" do
+        expect(page).to have_no_css("a[href='/profiles/#{user.nickname}']")
       end
     end
 
     it "hides endorsement if user private" do
       visit_component
 
-      click_link proposal.title["en"]
-      expect(page).not_to have_button("Endorse")
+      click_on proposal.title["en"]
+      expect(page).to have_no_button("Endorse")
     end
   end
 
   context "when creating a coauthored proposal" do
     let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
-    let!(:proposal) { create(:proposal, component: component, users: [user, coauthor], skip_injection: true) }
-    let!(:coauthor) { create(:user, :confirmed, :published, organization: organization) }
+    let!(:proposal) { create(:proposal, component:, users: [user, coauthor], skip_injection: true) }
+    let!(:coauthor) { create(:user, :confirmed, :published, organization:) }
 
-    it "shows collapsible list correctly if both users public" do
+    it "shows authors correctly if both users public" do
       user.update(published_at: Time.current)
       visit_component
 
-      within ".card--proposal" do
-        expect(page).to have_content(user.name)
-        expect(page).to have_content("and 1 more")
+      within ".card__list" do
+        expect(page).to have_css("img[alt='Avatar: #{coauthor.name}']")
+        expect(page).to have_css("img[alt='Avatar: #{user.name}']")
       end
     end
 
-    it "shows collapsible list correctly if one user private" do
+    it "shows authors correctly if one user private" do
       visit_component
 
-      within ".card--proposal" do
-        expect(page).to have_content(coauthor.name)
-        expect(page).not_to have_content("and 1 more")
+      within ".card__list" do
+        expect(page).to have_css("img[alt='Avatar: Private participant']")
+        expect(page).to have_css("img[alt='Avatar: #{coauthor.name}']")
       end
     end
   end
 
   context "when requesting access to a collaborative draft" do
-    let!(:scope) { create :scope, organization: organization }
-    let!(:author) { create :user, :confirmed, :published, organization: organization }
-    let!(:user) { create :user, :confirmed, organization: organization }
-    let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
+    let!(:scope) { create(:scope, organization:) }
+    let!(:author) { create(:user, :confirmed, :published, organization:) }
+    let!(:user) { create(:user, :confirmed, organization:) }
+    let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
     let!(:component) do
       create(:proposal_component,
              :with_creation_enabled,
              participatory_space: participatory_process,
-             organization: organization,
+             organization:,
              settings: {
                collaborative_drafts_enabled: true,
                scopes_enabled: true,
@@ -185,21 +190,21 @@ describe "Proposals", type: :system do
              })
     end
 
-    let!(:collaborative_draft) { create(:collaborative_draft, :open, component: component, scope: scope, users: [author]) }
+    let!(:collaborative_draft) { create(:collaborative_draft, :open, component:, scope:, users: [author]) }
 
     before do
       sign_in user, scope: :user
       visit main_component_path(component)
-      click_link "Access collaborative drafts"
+      click_on "Access collaborative drafts"
     end
 
     context "when private user" do
       it "hides the button to request access" do
         expect(page).to have_content(collaborative_draft.title)
-        click_link collaborative_draft.title
-        within ".view-side" do
+        click_on collaborative_draft.title
+        within ".layout-item__aside" do
           expect(page).to have_content("Version number")
-          expect(page).not_to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+          expect(page).to have_no_button("Request access")
         end
       end
     end
@@ -208,10 +213,10 @@ describe "Proposals", type: :system do
       it "renders a button to request access" do
         user.update(published_at: Time.current)
         expect(page).to have_content(translated(collaborative_draft.title))
-        click_link translated(collaborative_draft.title)
-        within ".view-side" do
+        click_on translated(collaborative_draft.title)
+        within ".layout-item__aside" do
           expect(page).to have_content("Version number")
-          expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+          expect(page).to have_button("Request access")
         end
       end
     end
@@ -221,9 +226,9 @@ describe "Proposals", type: :system do
         it "doesn't render the edit button" do
           author.update(published_at: nil)
           sign_in author, scope: :user
-          click_link translated(collaborative_draft.title)
+          click_on translated(collaborative_draft.title)
 
-          expect(page).not_to have_link("Edit collaborative draft")
+          expect(page).to have_no_link("Edit collaborative draft")
         end
       end
     end

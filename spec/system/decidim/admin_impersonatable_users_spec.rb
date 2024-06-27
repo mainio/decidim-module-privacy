@@ -2,37 +2,37 @@
 
 require "spec_helper"
 
-describe "Admin impersonatable users", type: :system do
+describe "AdminImpersonatableUsers" do
   let(:organization) { create(:organization) }
 
-  let!(:admin) { create(:user, :admin, :confirmed, organization: organization) }
+  let!(:admin) { create(:user, :admin, :confirmed, organization:) }
 
   before do
     switch_to_host(organization.host)
     login_as admin, scope: :user
     visit decidim_admin.root_path
-    click_link "Participants"
+    click_on "Participants"
   end
 
   describe "listing impersonatable users" do
-    let!(:managed) { create(:user, :managed, organization: organization) }
-    let!(:not_managed) { create(:user, organization: organization) }
+    let!(:managed) { create(:user, :managed, organization:) }
+    let!(:not_managed) { create(:user, organization:) }
 
-    let!(:deleted) { create(:user, :confirmed, :deleted, organization: organization) }
+    let!(:deleted) { create(:user, :confirmed, :deleted, organization:) }
     let!(:external_not_managed) { create(:user) }
     let!(:another_admin) { create(:user, :admin) }
     let!(:user_manager) { create(:user, :user_manager) }
 
     before do
-      click_link "Impersonations"
+      click_on "Impersonations"
     end
 
     it "shows each user and its managed status" do
-      expect(page).to have_selector("tr[data-user-id=\"#{managed.id}\"]", text: managed.name)
-      expect(page).to have_selector("tr[data-user-id=\"#{managed.id}\"]", text: "Managed")
+      expect(page).to have_css("tr[data-user-id=\"#{managed.id}\"]", text: managed.name)
+      expect(page).to have_css("tr[data-user-id=\"#{managed.id}\"]", text: "Managed")
 
-      expect(page).to have_selector("tr[data-user-id=\"#{not_managed.id}\"]", text: not_managed.name)
-      expect(page).to have_selector("tr[data-user-id=\"#{not_managed.id}\"]", text: "Not managed")
+      expect(page).to have_css("tr[data-user-id=\"#{not_managed.id}\"]", text: not_managed.name)
+      expect(page).to have_css("tr[data-user-id=\"#{not_managed.id}\"]", text: "Not managed")
 
       expect(page).to have_no_selector("tr[data-user-id=\"#{deleted.id}\"]", text: deleted.name)
       expect(page).to have_no_selector("tr[data-user-id=\"#{external_not_managed.id}\"]", text: external_not_managed.name)

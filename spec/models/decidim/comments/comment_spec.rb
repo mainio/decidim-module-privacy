@@ -5,7 +5,7 @@ require "spec_helper"
 describe Decidim::Comments::Comment do
   let!(:commentable) { create(:dummy_resource) }
   let!(:author) { create(:user, :published, organization: commentable.organization) }
-  let!(:comment) { create(:comment, commentable: commentable, author: author) }
+  let!(:comment) { create(:comment, commentable:, author:) }
 
   describe "#author" do
     subject { comment }
@@ -16,7 +16,7 @@ describe Decidim::Comments::Comment do
       end
 
       it "returns privateuser instance" do
-        expect(subject.author).to be_an_instance_of(::Decidim::Privacy::PrivateUser)
+        expect(subject.author).to be_an_instance_of(Decidim::Privacy::PrivateUser)
       end
     end
 

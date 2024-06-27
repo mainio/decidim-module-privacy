@@ -6,8 +6,8 @@ describe Decidim::User do
   subject { described_class }
 
   let!(:organization) { create(:organization) }
-  let!(:published_user) { create(:user, :confirmed, :published, organization: organization) }
-  let!(:private_user) { create(:user, :confirmed, organization: organization) }
+  let!(:published_user) { create(:user, :confirmed, :published, organization:) }
+  let!(:private_user) { create(:user, :confirmed, organization:) }
 
   describe ".default_scope" do
     subject { described_class.all }
@@ -90,7 +90,7 @@ describe Decidim::User do
   end
 
   describe "#accepts_conversation?" do
-    let!(:user) { create(:user, :published, :confirmed, organization: organization) }
+    let!(:user) { create(:user, :published, :confirmed, organization:) }
 
     it "returns false if private messaging is turned off" do
       published_user.update(allow_private_messaging: false)

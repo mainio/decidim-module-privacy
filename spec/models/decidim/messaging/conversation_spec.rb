@@ -14,7 +14,7 @@ describe Decidim::Messaging::Conversation do
 
     let(:conversation) do
       described_class.start!(
-        originator: originator,
+        originator:,
         interlocutors: [public_interlocutor, private_interlocutor],
         body: "Hei!"
       )

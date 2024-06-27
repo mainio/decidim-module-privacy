@@ -6,10 +6,10 @@ describe Decidim::Organization do
   subject { organization }
 
   let!(:organization) { create(:organization) }
-  let!(:private_admin) { create(:user, :admin, organization: organization) }
-  let!(:public_admin) { create(:user, :admin, :published, organization: organization) }
-  let!(:private_user) { create(:user, :user_manager, organization: organization) }
-  let!(:public_user) { create(:user, :user_manager, :published, organization: organization) }
+  let!(:private_admin) { create(:user, :admin, organization:) }
+  let!(:public_admin) { create(:user, :admin, :published, organization:) }
+  let!(:private_user) { create(:user, :user_manager, organization:) }
+  let!(:public_user) { create(:user, :user_manager, :published, organization:) }
 
   describe "#admin" do
     it "returns entire collection" do

@@ -7,7 +7,7 @@ describe Decidim::Privacy::PrivacySettingsForm do
 
   let(:organization) { create(:organization) }
   let(:context) { { current_organization: organization } }
-  let(:user) { create(:user, organization: organization) }
+  let(:user) { create(:user, organization:) }
 
   describe "#map_model" do
     context "when private user" do
@@ -19,7 +19,7 @@ describe Decidim::Privacy::PrivacySettingsForm do
     end
 
     context "with public user" do
-      let!(:user) { create(:user, organization: organization, published_at: Time.current) }
+      let!(:user) { create(:user, organization:, published_at: Time.current) }
 
       it "maps the model correctly" do
         expect(subject.published_at).to be(true)
@@ -27,7 +27,7 @@ describe Decidim::Privacy::PrivacySettingsForm do
     end
 
     context "with no direct message allowed" do
-      let!(:user) { create(:user, organization: organization, direct_message_types: "followed-only") }
+      let!(:user) { create(:user, organization:, direct_message_types: "followed-only") }
 
       it "maps the model correctly" do
         expect(subject.published_at).to be(false)

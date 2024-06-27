@@ -1,29 +1,27 @@
-<div class="reveal" id="publishAccountModal" data-reveal role="dialog" aria-modal="true" aria-labelledby="privacy-modal-label">
-  <div class="reveal__header">
-    <h2 id="privacy-consent-label" class="reveal__title"><%= t("make_profile_public", scope:"decidim.privacy.partials.privacy_consent") %></h2>
-    <button class="close-button" data-close aria-label="<%= t("close_modal", scope: "decidim.privacy.partials.privacy_consent") %>"
-      type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<%= decidim_modal id: "publishAccountModal" do %>
+  <div class="pb-4">
+    <h2 class="h2" id="privacy-consent-label"><%= t("make_profile_public", scope:"decidim.privacy.partials.privacy_consent") %></h2>
   </div>
   <div class="row columns">
-     <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent") %>
+      <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent") %>
   </div>
-  <div class="row">
-    <div class="columns medium-12">
-      <%= decidim_form_for(Decidim::Privacy::PublishAccountForm.new, url: decidim_privacy.update_account_publicity_path, html: { class: "public-account-form update-privacy" }, method: :put, remote: true) do |f| %>
+  <div class="pt-4">
+    <%= decidim_form_for(Decidim::Privacy::PublishAccountForm.new, url: decidim_privacy.update_account_publicity_path, html: { class: "public-account-form update-privacy" }, method: :put, remote: true) do |f| %>
+      <div class="space-y-4">
         <div class="field margin-bottom-1">
           <%= f.check_box :agree_public_profile,label: t("agree_to_public_profile", scope: "decidim.privacy.partials.privacy_consent"), required: true %>
         </div>
-        <div class="button--double">
-          <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button expanded" %>
+        <div data-dialog-actions>
+          <div class="inline">
+            <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button button__sm md:button__lg button__secondary" %>
+          </div>
+          <div class="inline">
+            <button class="button button__sm md:button__lg button__transparent-secondary" data-dialog-close="publish-account-modal" type="button">
+              <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
+            </button>
+          </div>
         </div>
-        <div class="text-center">
-          <button class="link" data-close type="button">
-            <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
-          </button>
-        </div>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
-</div>
+<% end %>

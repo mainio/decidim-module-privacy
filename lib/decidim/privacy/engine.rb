@@ -52,7 +52,7 @@ module Decidim
         end
       end
 
-      initializer "decidim_privacy.add_cells_view_paths", before: "decidim_comments.add_cells_view_paths" do
+      initializer "decidim_privacy.add_cells_view_paths", before: "decidim_core.add_cells_view_paths" do
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/cells")
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
       end
@@ -71,14 +71,8 @@ module Decidim
           Decidim::User # rubocop:disable Lint/Void
 
           # cells
-          Decidim::CollapsibleListCell.include(
-            Decidim::Privacy::CollapsibleListCellExtensions
-          )
           Decidim::ActivityCell.include(
             Decidim::Privacy::ActivityCellExtensions
-          )
-          Decidim::VersionAuthorCell.include(
-            Decidim::Privacy::VersionAuthorCellExtensions
           )
           Decidim::CoauthorshipsCell.include(
             Decidim::Privacy::CoauthorshipsCellExtensions
@@ -88,6 +82,9 @@ module Decidim
           )
           Decidim::ProfileSidebarCell.include(
             Decidim::Privacy::ProfileSidebarCellExtensions
+          )
+          Decidim::ProfileActionsCell.include(
+            Decidim::Privacy::ProfileActionsCellExtensions
           )
           Decidim::UserGroupPendingRequestsListCell.include(
             Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
@@ -124,9 +121,6 @@ module Decidim
           Decidim::UserActivitiesController.include(
             Decidim::Privacy::ProfilesControllerExtensions
           )
-          Decidim::UserTimelineController.include(
-            Decidim::Privacy::ProfilesControllerExtensions
-          )
           Decidim::UserActivitiesController.include(
             Decidim::Privacy::UserActivitiesControllerExtensions
           )
@@ -139,9 +133,6 @@ module Decidim
           Decidim::OwnUserGroupsController.include(
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
-          # The following changes are related to "Ask old password for changing email/password(PR #11737)"
-          # These changes should be removed once it has been backported to v.27
-          Decidim::AccountController.include(Decidim::Privacy::AccountControllerExtensions)
 
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
@@ -165,7 +156,6 @@ module Decidim
           Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
-          Decidim::ParticipatorySpacePrivateUser.include(Decidim::Privacy::ParticipatorySpacePrivateUserExtensions)
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
 
           # forms
@@ -268,9 +258,6 @@ module Decidim
             Decidim::Comments::CommentCell.include(
               Decidim::Privacy::CommentCellExtensions
             )
-            Decidim::Comments::CommentThreadCell.include(
-              Decidim::Privacy::CommentThreadCellExtensions
-            )
           end
 
           if Decidim.module_installed? :debates
@@ -294,14 +281,6 @@ module Decidim
             # forms
             Decidim::Meetings::Admin::MeetingRegistrationInviteForm.include(
               Decidim::Privacy::UnscopedOrganizationUsers
-            )
-
-            # cells
-            Decidim::Meetings::MeetingMCell.include(
-              Decidim::Privacy::MeetingMCellExtensions
-            )
-            Decidim::Meetings::MeetingSCell.include(
-              Decidim::Privacy::MeetingSCellExtensions
             )
           end
 

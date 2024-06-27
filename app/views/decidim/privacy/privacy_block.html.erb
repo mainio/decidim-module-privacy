@@ -1,22 +1,13 @@
-<div class="wrapper">
-  <div class="row collapse">
-    <div class="row collapse">
-      <div class="columns large-8 large-centered text-center page-title">
-        <h1><%= t(".title") %></h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="columns large-10 medium-centered">
-        <div class="card">
-          <div class="card__content">
-            <%= t(".content_html") %>
-          </div>
-        </div>
-      </div>
-      <div class="columns large-6 medium-centered">
-        <button class="button expanded" data-open="publishAccountModal" data-redirect-url=<%= request.original_url %>><%= t(".button") %></button>
-      </div>
-    </div>
+<div class="text-center">
+  <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
+    <%= t("decidim.privacy.privacy_block.title") %>
+  </span>
+  <p class="help-text pb-8">
+    <%= t("decidim.privacy.privacy_block.content_html") %>
+  </p>
+  <div class="form__wrapper-block flex justify-center">
+    <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
+      <%= t("decidim.privacy.privacy_block.button") %>
+    </button>
   </div>
 </div>

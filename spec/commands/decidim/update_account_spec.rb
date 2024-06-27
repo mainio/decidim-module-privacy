@@ -14,7 +14,6 @@ module Decidim
         email: user.email,
         old_password: nil,
         password: nil,
-        password_confirmation: nil,
         avatar: nil,
         remove_avatar: nil,
         personal_url: "https://example.org",
@@ -30,7 +29,6 @@ module Decidim
         email: data[:email],
         password: data[:password],
         old_password: data[:old_password],
-        password_confirmation: data[:password_confirmation],
         avatar: data[:avatar],
         remove_avatar: data[:remove_avatar],
         personal_url: data[:personal_url],
@@ -45,8 +43,7 @@ module Decidim
       before do
         form.email = "new@example.com"
         allow(ValidEmail2::Address).to receive(:new).and_return(validator)
-        allow(validator).to receive(:valid?).and_return(true)
-        allow(validator).to receive(:disposable?).and_return(false)
+        allow(validator).to receive_messages(valid?: true, disposable?: false)
       end
 
       context "with correct old password" do
@@ -88,7 +85,6 @@ module Decidim
 
       before do
         form.password = "pNY6h9crVtVHZbdE"
-        form.password_confirmation = "pNY6h9crVtVHZbdE"
       end
 
       context "with incorrect old password" do

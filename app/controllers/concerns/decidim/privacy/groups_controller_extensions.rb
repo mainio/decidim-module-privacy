@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def create
-          enforce_permission_to :create, :user_group, current_user: current_user
+          enforce_permission_to(:create, :user_group, current_user:)
           @form = form(UserGroupForm).from_params(params)
 
           CreateUserGroup.call(@form) do

@@ -34,7 +34,10 @@ cs:
     privacy:
       message_block:
         title: Soukromé zprávy nejsou povoleny
-        content_html: Pro přístup na tuto stránku musíte v nastavení profilu povolit soukromé zprávy z "Nastavení soukromí".
+        content_html: |
+          <p class="text-lg pb-4">
+            Pro přístup na tuto stránku musíte v nastavení profilu povolit soukromé zprávy z "Nastavení soukromí".
+          </p>
         back: Předchozí strana
       privacy_settings:
         show:
@@ -63,11 +66,11 @@ cs:
       privacy_block:
         title: Pro tuto akci je vyžadován veřejný profil
         content_html: |
-          <p class="text-center">
+          <p class="text-lg">
             Pokoušíte se o přístup ke stránce, která vyžaduje, aby váš profil byl veřejný. Zveřejnění profilu umožňuje
             ostatním účastníkům vidět informace o vás.
           </p>
-          <p class="text-center">
+          <p class="text-lg py-4">
             <strong>
               Další informace o zveřejnění vašeho profilu budou prezentovány po kliknutí na tlačítko níže.
             </strong>

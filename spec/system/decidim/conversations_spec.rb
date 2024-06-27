@@ -2,13 +2,13 @@
 
 require "spec_helper"
 
-describe "Conversations", type: :system do
+describe "Conversations" do
   let(:organization) { create(:organization) }
-  let(:participatory_process) { (create :participatory_process, :with_steps, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
-  let!(:receiver) { create(:user, :confirmed, organization: organization) }
-  let!(:group_chat_participant) { create(:user, :confirmed, organization: organization) }
-  let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
+  let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:receiver) { create(:user, :confirmed, organization:) }
+  let!(:group_chat_participant) { create(:user, :confirmed, organization:) }
+  let!(:user_group) { create(:user_group, :confirmed, :verified, organization:) }
 
   before do
     switch_to_host(organization.host)
@@ -22,10 +22,10 @@ describe "Conversations", type: :system do
       it "does not show up in the search" do
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: receiver.name
 
-        expect(page).not_to have_selector("#autoComplete_list_1")
+        expect(page).to have_no_css("#autoComplete_list_1")
       end
     end
 
@@ -35,12 +35,12 @@ describe "Conversations", type: :system do
         group_chat_participant.update(published_at: Time.current)
 
         visit decidim.conversations_path
-        click_button "New conversation"
+        click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
 
         within "#autoComplete_result_0" do
-          expect(page).to have_content("This participant has disabled message reception")
+          expect(page).to have_content("This participant does not want to receive private messages")
         end
       end
     end
@@ -51,10 +51,10 @@ describe "Conversations", type: :system do
       it "shows up in the search" do
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: user_group.name
 
-        expect(page).to have_selector("#autoComplete_list_1")
+        expect(page).to have_css("#autoComplete_list_1")
       end
     end
 
@@ -63,10 +63,10 @@ describe "Conversations", type: :system do
         user_group.update(extended_data: { verified_at: nil })
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: user_group.name
 
-        expect(page).not_to have_selector("#autoComplete_list_1")
+        expect(page).to have_no_css("#autoComplete_list_1")
       end
     end
 
@@ -75,10 +75,10 @@ describe "Conversations", type: :system do
         user_group.update(confirmed_at: nil)
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: user_group.name
 
-        expect(page).not_to have_selector("#autoComplete_list_1")
+        expect(page).to have_no_css("#autoComplete_list_1")
       end
     end
   end
@@ -88,9 +88,11 @@ describe "Conversations", type: :system do
       user.update(published_at: nil)
       refresh
 
-      click_link user.name
+      within "div.main-bar__dropdown-container" do
+        find_by_id("trigger-dropdown-account").click
+      end
 
-      expect(page).not_to have_link("Conversations")
+      expect(page).to have_no_link("Conversations")
     end
 
     it "renders a page telling the user that the account is private if trying to access 'conversations' page" do
@@ -99,13 +101,13 @@ describe "Conversations", type: :system do
 
       visit decidim.conversations_path
 
-      expect(page).to have_content("Private messaging is not enabled")
+      expect(page).to have_content("PRIVATE MESSAGING IS NOT ENABLED")
     end
 
     it "does not show 'conversations' link in the navbar" do
       user.update(published_at: nil)
       refresh
-      expect(page).not_to have_selector(".icon--envelope-closed")
+      expect(page).to have_no_css(".icon--envelope-closed")
     end
   end
 
@@ -120,16 +122,18 @@ describe "Conversations", type: :system do
       it "is possible even if user group is private" do
         user_group_conversation
 
-        expect(page).to have_selector(".p-s")
-        expect(page).to have_content("Hello there receiver!")
+        within ".conversation__message-text" do
+          expect(page).to have_content("Hello there receiver!")
+        end
       end
 
       it "is possible even if user group has private messaging disabled" do
         user_group.update(published_at: Time.current, allow_private_messaging: false)
         user_group_conversation
 
-        expect(page).to have_selector(".p-s")
-        expect(page).to have_content("Hello there receiver!")
+        within ".conversation__message-text" do
+          expect(page).to have_content("Hello there receiver!")
+        end
       end
     end
 
@@ -139,7 +143,7 @@ describe "Conversations", type: :system do
           receiver.update(published_at: Time.current, allow_private_messaging: false)
           visit decidim.profile_path(nickname: receiver.nickname)
 
-          expect(page).to have_selector(".icon--envelope-closed.icon.icon--small.muted")
+          expect(page).to have_button("Message", disabled: true)
         end
       end
     end
@@ -159,7 +163,7 @@ describe "Conversations", type: :system do
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
           expect(page).to have_content("You cannot have a conversation with a participant that has private messaging disabled.")
-          expect(page).to have_selector("a[href='/profiles/#{receiver.nickname}']")
+          expect(page).to have_css("a[href='/profiles/#{receiver.nickname}']")
         end
       end
 
@@ -173,11 +177,11 @@ describe "Conversations", type: :system do
           refresh
 
           expect(page).to have_content("Conversation with")
-          expect(page).to have_content("Private participant")
+          expect(page).to have_content("Unnamed participant")
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
           expect(page).to have_content("You cannot have a conversation with a private participant.")
-          expect(page).not_to have_selector("a[href='/profiles/#{receiver.nickname}']")
+          expect(page).to have_no_css("a[href='/profiles/#{receiver.nickname}']")
         end
       end
     end
@@ -189,21 +193,22 @@ describe "Conversations", type: :system do
         receiver.update(published_at: Time.current)
 
         visit decidim.conversations_path
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: receiver.name
-        find("#autoComplete_result_0").click
+        find_by_id("autoComplete_result_0").click
 
         fill_in "add_conversation_users", with: user_group.name
-        find("#autoComplete_result_0").click
-        click_button "Next"
+        find_by_id("autoComplete_result_0").click
+        click_on "Next"
 
-        expect(page).to have_content("START A CONVERSATION")
+        expect(page).to have_content("Conversation with")
         fill_in "conversation_body", with: "Hello there receiver!"
 
-        click_button "Send"
+        click_on "Send"
 
-        expect(page).to have_selector(".p-s")
-        expect(page).to have_content("Hello there receiver!")
+        within ".conversation__message-text" do
+          expect(page).to have_content("Hello there receiver!")
+        end
       end
     end
 
@@ -214,21 +219,21 @@ describe "Conversations", type: :system do
 
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
-        find("#autoComplete_result_0").click
+        find_by_id("autoComplete_result_0").click
 
         fill_in "add_conversation_users", with: group_chat_participant.name
-        find("#autoComplete_result_0").click
+        find_by_id("autoComplete_result_0").click
 
-        click_button "Next"
+        click_on "Next"
 
-        expect(page).to have_content("START A CONVERSATION")
+        expect(page).to have_content("Conversation with")
 
         fill_in "conversation_body", with: "Hello there receiver!"
 
-        click_button "Send"
+        click_on "Send"
 
         initiate_convo
 
@@ -236,7 +241,7 @@ describe "Conversations", type: :system do
         refresh
 
         expect(page).to have_content("Conversation with")
-        expect(page).to have_content("Private participant")
+        expect(page).to have_content("Unnamed participant")
         expect(page).to have_content(group_chat_participant.name)
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")
@@ -250,21 +255,21 @@ describe "Conversations", type: :system do
 
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
-        find("#autoComplete_result_0").click
+        find_by_id("autoComplete_result_0").click
 
         fill_in "add_conversation_users", with: group_chat_participant.name
-        find("#autoComplete_result_0").click
+        find_by_id("autoComplete_result_0").click
 
-        click_button "Next"
+        click_on "Next"
 
-        expect(page).to have_content("START A CONVERSATION")
+        expect(page).to have_content("Conversation with")
 
         fill_in "conversation_body", with: "Hello there receiver!"
 
-        click_button "Send"
+        click_on "Send"
 
         initiate_convo
 
@@ -282,8 +287,9 @@ describe "Conversations", type: :system do
   end
 
   def initiate_convo
-    expect(page).to have_selector(".p-s")
-    expect(page).to have_content("Hello there receiver!")
+    within ".conversation__message-text" do
+      expect(page).to have_content("Hello there receiver!")
+    end
 
     login_as receiver, scope: :user
 
@@ -293,7 +299,7 @@ describe "Conversations", type: :system do
 
     fill_in "message_body", with: "Hello there user!"
 
-    click_button "Send"
+    click_on "Send"
 
     expect(page).to have_content("Hello there user!")
 
@@ -308,15 +314,21 @@ describe "Conversations", type: :system do
     receiver.update(published_at: Time.current)
     visit decidim.profile_path(nickname: receiver.nickname)
 
-    find(".user-contact_link").click
+    within ".profile__actions-main" do
+      find("a[title='Message']").click
+    end
+
     fill_in "conversation_body", with: "Hello there receiver!"
-    click_button "Send"
+    click_on "Send"
   end
 
   def user_group_conversation
     visit decidim.profile_path(nickname: user_group.nickname)
-    find(".user-contact_link").click
+    within ".profile__actions-main" do
+      find("a[title='Message']").click
+    end
+
     fill_in "conversation_body", with: "Hello there receiver!"
-    click_button "Send"
+    click_on "Send"
   end
 end

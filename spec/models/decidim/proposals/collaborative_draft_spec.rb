@@ -6,12 +6,12 @@ describe Decidim::Proposals::CollaborativeDraft do
   subject { collaborative_draft }
 
   let(:organization) { component.participatory_space.organization }
-  let(:component) { create :proposal_component }
-  let(:collaborative_draft) { create(:collaborative_draft, component: component, users: authors) }
+  let(:component) { create(:proposal_component) }
+  let(:collaborative_draft) { create(:collaborative_draft, component:, users: authors) }
 
   describe "#authors" do
-    let(:private_user) { create(:user, :confirmed, organization: organization) }
-    let(:public_users) { create_list(:user, 3, :confirmed, :published, organization: organization) }
+    let(:private_user) { create(:user, :confirmed, organization:) }
+    let(:public_users) { create_list(:user, 3, :confirmed, :published, organization:) }
     let(:authors) { public_users + [private_user] }
 
     it "filters out private authors" do
@@ -22,8 +22,8 @@ describe Decidim::Proposals::CollaborativeDraft do
 
   describe "editable_by" do
     let(:authors) { [private_user, public_user] }
-    let(:public_user) { create(:user, :confirmed, :published, organization: organization) }
-    let(:private_user) { create(:user, :confirmed, organization: organization) }
+    let(:public_user) { create(:user, :confirmed, :published, organization:) }
+    let(:private_user) { create(:user, :confirmed, organization:) }
 
     it "is editable by public author" do
       expect(subject.editable_by?(public_user)).to be true

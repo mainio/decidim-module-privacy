@@ -4,7 +4,6 @@ $(() => {
     $publishAccountModal = null;
   }
   let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
-
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
   // have logged in. These elements might or might not have the public account requirement to show the modal.
   const setFormValues =  (ev) => {
@@ -12,10 +11,11 @@ $(() => {
       return
     }
 
-    let redirectUrl = ev.target.getAttribute("data-redirect-url")
-    let dataPrivacy = ev.target.getAttribute("data-privacy") || "{}"
+    let redirectUrl = ev.currentTarget.dataset.redirectUrl
+    let dataPrivacy = ev.currentTarget.dataset.dialogPrivacy || "{}"
+
     if (dataPrivacy && dataPrivacy !== "{}") {
-      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id)
+      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.currentTarget.id)
     } else {
       $publishAccountModal.find("form").attr("data-redirect-url", redirectUrl)
     }
@@ -25,28 +25,27 @@ $(() => {
     if (triggeredLoginElement) {
       let element = document.getElementById(triggeredLoginElement)
       if (element) {
-        $publishAccountModal.foundation("open")
         $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"))
         localStorage.removeItem("loginTriggeringElement");
       }
     }
 
-    document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+    document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((el) => {
       el.addEventListener("click", setFormValues)
     });
 
-    $publishAccountModal.on("closed.zf.reveal", () => {
+    $publishAccountModal.on("close.dialog", () => {
       $publishAccountModal.find("form").removeAttr("data-redirect-url")
     });
   }
 
-  document.querySelectorAll("[data-open='loginModal']").forEach((el) => {
+  document.querySelectorAll("[data-dialog-open='loginModal']").forEach((el) => {
     el.addEventListener("click", (ev) => {
       localStorage.setItem("loginTriggeringElement", ev.target.id);
     })
   });
 
-  $("#loginModal").on("closed.zf.reveal", () => {
+  $("#loginModal").on("close.dialog", () => {
     localStorage.removeItem("loginTriggeringElement");
   });
 
@@ -58,9 +57,10 @@ $(() => {
     if ($publishAccountModal !== null) {
       ev.preventDefault();
       setCommentData(ev.target)
-      $publishAccountModal.foundation("open");
+      window.Decidim.currentDialogs.publishAccountModal.open()
     }
   };
+
   const handleCommentForms = (wrapper) => {
     wrapper.querySelectorAll("form").forEach((commentForm) => {
       commentForm.querySelectorAll("button[type='submit'], input[type='submit']").forEach((button) => {
@@ -85,28 +85,29 @@ $(() => {
     };
     handleCommentForms(commentsWrapper);
   });
+
   const removePublishModal = () => {
-    document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
+    document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((item) => {
       item.removeEventListener("click", setFormValues)
-      let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+      let dataPrivacy = JSON.parse(item.getAttribute("data-dialog-privacy"));
       if (!dataPrivacy) {
         return;
       }
 
       if (dataPrivacy.open && dataPrivacy.openUrl) {
-        item.setAttribute("data-open", dataPrivacy.open);
-        $(item).data("open", dataPrivacy.open);
-        item.setAttribute("data-open-url", dataPrivacy.openUrl);
-        $(item).data("open-url", dataPrivacy.openUrl);
-        item.removeAttribute("data-privacy");
+        item.setAttribute("data-dialog-open", dataPrivacy.open);
+        $(item).data("dialog-open", dataPrivacy.open);
+        item.setAttribute("data-dialog-remote-url", dataPrivacy.openUrl);
+        $(item).data("dialog-remote-url", dataPrivacy.openUrl);
+        item.removeAttribute("data-dialog-privacy");
       } else {
-        item.removeAttribute("data-open");
+        item.removeAttribute("data-dialog-open");
       }
     })
-    $publishAccountModal.foundation("close");
     $publishAccountModal.remove();
     $publishAccountModal = null;
   }
+
 
   const handleCommentSubmission = () => {
     removePublishModal();

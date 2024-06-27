@@ -7,11 +7,11 @@ describe Decidim::UserGroup do
 
   describe "usergroup extension" do
     let!(:organization) { create(:organization) }
-    let(:private_verified) { create(:user_group, :verified, organization: organization) }
+    let(:private_verified) { create(:user_group, :verified, organization:) }
 
-    let(:private_confirmed) { create(:user_group, :confirmed, organization: organization) }
-    let(:public_verified) { create(:user_group, :confirmed, :verified, published_at: Time.current, organization: organization) }
-    let!(:public_confirmed) { create(:user_group, :confirmed, published_at: Time.current, organization: organization) }
+    let(:private_confirmed) { create(:user_group, :confirmed, organization:) }
+    let(:public_verified) { create(:user_group, :confirmed, :verified, published_at: Time.current, organization:) }
+    let!(:public_confirmed) { create(:user_group, :confirmed, published_at: Time.current, organization:) }
 
     describe "#scopes" do
       it "returns visibles by default" do

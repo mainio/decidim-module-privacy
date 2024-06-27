@@ -28,7 +28,8 @@ module Decidim
 
       def self.resolve_type(obj, _ctx)
         return Decidim::Core::UserType if obj.is_a?(Decidim::User) || obj.is_a?(Decidim::Privacy::PrivateUser)
-        return Decidim::Core::UserGroupType if obj.is_a? Decidim::UserGroup
+
+        Decidim::Core::UserGroupType if obj.is_a? Decidim::UserGroup
       end
     end
   end

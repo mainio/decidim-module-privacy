@@ -2,14 +2,14 @@
 
 require "spec_helper"
 
-describe Decidim::Meetings::MeetingsController, type: :controller do
+describe Decidim::Meetings::MeetingsController do
   routes { Decidim::Meetings::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let(:participatory_process) { create :participatory_process, organization: organization }
+  let(:participatory_process) { create(:participatory_process, organization:) }
   let(:meeting_component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
-  let(:meeting) { create :meeting, :online, :not_official, :published, author: user, component: meeting_component }
-  let(:user) { create(:user, :confirmed, organization: organization) }
+  let(:meeting) { create(:meeting, :online, :not_official, :published, author: user, component: meeting_component) }
+  let(:user) { create(:user, :confirmed, organization:) }
   let(:params) { { component_id: meeting_component.id } }
 
   before do
@@ -28,7 +28,7 @@ describe Decidim::Meetings::MeetingsController, type: :controller do
         component_id: meeting_component.id,
         meeting: {
           title: generate_localized_title,
-          description: ::Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title },
+          description: Decidim::Faker::Localized.wrapped("<p>", "</p>") { generate_localized_title },
           type_of_meeting: meeting.type_of_meeting,
           online_meeting_url: meeting.online_meeting_url,
           start_time: meeting.start_time,

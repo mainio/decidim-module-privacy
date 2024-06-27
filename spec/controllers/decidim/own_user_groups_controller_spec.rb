@@ -8,11 +8,11 @@ module Decidim
   end
 end
 
-describe Decidim::OwnUserGroupsController, type: :controller do
+describe Decidim::OwnUserGroupsController do
   routes { Decidim::Core::Engine.routes }
 
   let!(:organization) { create(:organization) }
-  let!(:current_user) { create(:user, :admin, :confirmed, organization: organization) }
+  let!(:current_user) { create(:user, :admin, :confirmed, organization:) }
   let!(:private_user_group) { create(:user_group, decidim_organization_id: organization.id, users: [current_user]) }
   let!(:user_group) { create(:user_group, decidim_organization_id: organization.id, users: [current_user], published_at: Time.current) }
 

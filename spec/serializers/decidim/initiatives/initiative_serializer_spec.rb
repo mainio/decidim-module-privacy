@@ -8,8 +8,8 @@ describe Decidim::Initiatives::InitiativeSerializer do
   end
 
   let(:organization) { create(:organization) }
-  let!(:author) { create(:user, :published, :confirmed, organization: organization) }
-  let!(:initiative) { create(:initiative, organization: organization, author: author) }
+  let!(:author) { create(:user, :published, :confirmed, organization:) }
+  let!(:initiative) { create(:initiative, organization:, author:) }
 
   describe "#serialize" do
     let(:serialized) { subject.serialize }
