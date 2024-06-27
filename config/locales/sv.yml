@@ -12,6 +12,11 @@ sv:
         public: Din profil är offentlig
         profile: Min offentliga profil
         message: "Din profil är offentlig på denna plattform och andra personer kan se detaljer om dig, såsom ditt namn, smeknamn, profilbild och din offentliga aktivitet på denna plattform. Du kan ändra synligheten av din profil via sidan för integritetsinställningar. Din profil är tillgänglig på:"
+      shared:
+        layout_two_col:
+          private_account: Private account
+        layout_center:
+          save_privacy_settings: Save privacy settings
   decidim:
     components:
       privacy:
@@ -63,9 +68,12 @@ sv:
               kunna ha en konversation med dig.
             </p>
           enable_public_profile: Aktivera offentlig profil
+          public_profile: I want my profile to be public to other users
           enable_private_messaging: Aktivera direktmeddelanden
+          private_messaging: I want to be able to message other public users
           save_privacy_settings: Spara integritetsinställningar
           allow_public_contact: Tillåt alla att skicka direktmeddelanden till mig, även de som jag inte följer.
+          public_contact: Allow anyone to send me a direct message, even if I do not follow them.
         update:
           error: Det gick inte att uppdatera dina integritetsinställningar.
           success: Dina integritetsinställningar har uppdaterats.
