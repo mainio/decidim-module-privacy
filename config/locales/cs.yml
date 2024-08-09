@@ -14,9 +14,9 @@ cs:
         message: "Váš profil je na této platformě nastaven jako veřejný a další lidé o vás mohou vidět podrobnosti. jako je vaše jméno, přezdívka, profilový obrázek a veřejná aktivita na této platformě. Viditelnost svého profilu můžete změnit prostřednictvím stránky s nastavením soukromí. Váš profil je k dispozici na:"
       shared:
         layout_two_col:
-          private_account: Private account
+          private_account: Soukromý účet
         layout_center:
-          save_privacy_settings: Save privacy settings
+          save_privacy_settings: Uložit nastavení soukromí
   decidim:
     components:
       privacy:
@@ -62,12 +62,12 @@ cs:
             <p>Toto nastavení umožňuje komunikovat s ostatními účastníky na této platformě. Ostatní účastníci vám mohou posílat soukromé zprávy a můžete je poslat i ostatním. Aby bylo možné povolit tuto funkci, Váš profil musí být veřejný,  protože vás ostatní lidé potřebují najít na této platformě, aby s vámi mohli konverzovat.
             </p>
           enable_public_profile: Povolit veřejný profil
-          public_profile: I want my profile to be public to other users
+          public_profile: Chci, aby můj profil byl veřejný pro ostatní uživatele
           enable_private_messaging: Povolit soukromé zprávy
-          private_messaging: I want to be able to message other public users
+          private_messaging: Chci být schopen poslat zprávy jiným veřejným uživatelům
           save_privacy_settings: Uložit nastavení soukromí
           allow_public_contact: Dovolit, aby mi někdo poslal přímou zprávu, i když je nesleduji.
-          public_contact: Allow anyone to send me a direct message, even if I do not follow them.
+          public_contact: Umožnit komukoli poslat mi přímou zprávu, i když je nesleduji.
         update:
           error: Při aktualizaci nastavení soukromí došlo k chybě.
           success: Nastavení ochrany soukromí bylo úspěšně aktualizováno.
