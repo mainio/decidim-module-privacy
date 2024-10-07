@@ -5,7 +5,8 @@ require "spec_helper"
 describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
   routes { Decidim::Core::Engine.routes }
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, available_authorizations: available_authorizations) }
+  let(:available_authorizations) { ["dummy_authorization_handler"] }
 
   before do
     request.env["decidim.current_organization"] = organization
@@ -36,7 +37,7 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
       end
 
       it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations")
+        expect(subject).to redirect_to("/authorizations/first_login")
       end
 
       it "creates a new user" do
@@ -64,7 +65,7 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
       end
 
       it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations")
+        expect(subject).to redirect_to("/authorizations/first_login")
       end
 
       it "creates a new user" do
@@ -90,7 +91,7 @@ describe Decidim::Devise::OmniauthRegistrationsController, type: :controller do
       end
 
       it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations")
+        expect(subject).to redirect_to("/authorizations/first_login")
       end
 
       it "creates a new user" do
