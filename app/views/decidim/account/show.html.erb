@@ -23,10 +23,9 @@
       <% end %>
 
       <%= form_required_explanation %>
-
       <%= f.text_field :name, autocomplete: "name" %>
       <%= f.text_field :nickname, autocomplete: "nickname" %>
-      <%= f.email_field :email, disabled: current_user.unconfirmed_email.present?, autocomplete: "email", data: { original: current_user.email } %>
+      <%= f.email_field :email, readonly: current_user.unconfirmed_email.present?, autocomplete: "email", data: { original: current_user.email } %>
       <%= f.url_field :personal_url, autocomplete: "url" %>
       <%= f.text_area :about, rows: 5 %>
 
@@ -38,8 +37,13 @@
           ) %>
       <p class="help-text"><%= t(".available_locales_helper") %></p>
 
-      <% if @account.errors[:password].any? || @account.errors[:password_confirmation].any? || @account.errors[:old_password].any?%>
+      <% if @account.errors[:password].any? || @account.errors[:password_confirmation].any? %>
         <%= render partial: "password_fields", locals: { form: f, user: current_user } %>
+        <%= render partial: "old_password_field", locals: { form: f, show_help_text: true, unhide: false } %>
+      <% elsif @account.errors[:old_password].any? && @account.password.present? && @account.password_confirmation.present? %>
+        <%= render partial: "password_fields", locals: { form: f, user: current_user } %>
+        <%= render partial: "old_password_field", locals: { form: f, show_help_text: true, unhide: false } %>
+      <% elsif @account.errors[:old_password].any? %>
         <%= render partial: "old_password_field", locals: { form: f, show_help_text: true, unhide: false } %>
       <% else %>
         <% if current_organization.sign_in_enabled? %>

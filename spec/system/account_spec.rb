@@ -116,14 +116,18 @@ describe "Account", type: :system do
       it "renders the old password with error" do
         within "form.edit_user" do
           find("*[type=submit]").click
+        end
+
+        within "form.new_user" do
           fill_in :user_old_password, with: "wrong password"
           find("*[type=submit]").click
         end
         within ".flash.alert" do
           expect(page).to have_content "There was a problem updating your account."
         end
+        find("#old_password_field").click
         within "#old_password_field" do
-          expect(page).to have_content "is invalid"
+          expect(page).to have_css('[role="alert"]', text: "is invalid")
         end
       end
     end
@@ -149,7 +153,7 @@ describe "Account", type: :system do
 
       it "tells user to confirm new email" do
         expect(page).to have_content("Email change verification")
-        expect(page).to have_selector("#user_email[disabled='disabled']")
+        expect(page).to have_selector("#user_email[readonly='readonly']")
         expect(page).to have_content("You'll receive an email to confirm your new email address.")
       end
 
