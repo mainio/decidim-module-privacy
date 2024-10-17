@@ -6,8 +6,6 @@ def install_module(path)
   Dir.chdir(path) do
     system("bundle exec rake decidim_privacy:install:migrations")
     system("bundle exec rake db:migrate")
-
-    system("npm i sass-embedded@~1.62.0")
   end
 end
 
