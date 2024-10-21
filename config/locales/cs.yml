@@ -13,10 +13,6 @@ cs:
         profile: Můj veřejný profil
         message: "Váš profil je na této platformě nastaven jako veřejný a další lidé o vás mohou vidět podrobnosti. jako je vaše jméno, přezdívka, profilový obrázek a veřejná aktivita na této platformě. Viditelnost svého profilu můžete změnit prostřednictvím stránky s nastavením soukromí. Váš profil je k dispozici na:"
   decidim:
-    admin:
-      user_group:
-        verify:
-          confirmation_pending: The group's email address has to be confirmed in order to verify the group.
     components:
       privacy:
         name: Nastavení soukromí
