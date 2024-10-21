@@ -14,9 +14,9 @@ fi:
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
       shared:
         layout_two_col:
-          private_account: Private account
+          private_account: Yksityinen tili
         layout_center:
-          save_privacy_settings: Save privacy settings
+          save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
     components:
       privacy:
@@ -68,12 +68,12 @@ fi:
               keskustellakseen kanssasi.
             </p>
           enable_public_profile: Ota julkinen profiili käyttöön
-          public_profile: I want my profile to be public to other users
+          public_profile: Haluan, että profiilini on julkinen ja näkyvillä muille käyttäjille
           enable_private_messaging: Ota yksityisviestit käyttöön
-          private_messaging: I want to be able to message other public users
+          private_messaging: Haluan mahdollisuuden lähettää yksityisviestejä muille julkisille käyttäjille
           save_privacy_settings: Tallenna yksityisyysasetukset
           allow_public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
-          public_contact: Allow anyone to send me a direct message, even if I do not follow them.
+          public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
         update:
           error: Yksityisyysasetusten päivittäminen epäonnistui.
           success: Yksityisyysasetusten päivitys onnistui.
