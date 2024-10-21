@@ -13,6 +13,10 @@ sv:
         profile: Min offentliga profil
         message: "Din profil är offentlig på denna plattform och andra personer kan se detaljer om dig, såsom ditt namn, smeknamn, profilbild och din offentliga aktivitet på denna plattform. Du kan ändra synligheten av din profil via sidan för integritetsinställningar. Din profil är tillgänglig på:"
   decidim:
+    admin:
+      user_group:
+        verify:
+          confirmation_pending: The group's email address has to be confirmed in order to verify the group.
     components:
       privacy:
         name: Integritetsinställningar
@@ -111,6 +115,11 @@ sv:
           do_not_agree: Nej, jag vill inte göra min profil offentlig
       publish_account:
         unauthorized: Endast deltagare med offentliga profiler tillåts utföra denna åtgärd.
+      groups:
+        create:
+          email_confirmation: Group successfully created! Please check the group's email address for a verification message to verify the group's email address.
+        verify:
+          email_confirmation: The group's email address has to be confirmed in order to verify the group.
     profile:
       private: Privat deltagare
       private_info_html: <i>Denna deltagare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
