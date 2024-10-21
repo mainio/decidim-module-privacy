@@ -14,7 +14,7 @@ DECIDIM_VERSION = Decidim::Privacy.decidim_version
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-conferences", DECIDIM_VERSION
-gem "decidim-elections", DECIDIM_VERSION
+#gem "decidim-elections", DECIDIM_VERSION
 gem "decidim-privacy", path: "."
 
 gem "bootsnap", "~> 1.17"
