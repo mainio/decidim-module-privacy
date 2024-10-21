@@ -74,8 +74,9 @@ GEM
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     ast (2.4.2)
-    axe-core-api (4.10.0)
+    axe-core-api (4.10.1)
       dumb_delegator
+      ostruct
       virtus
     axe-core-rspec (4.1.0)
       axe-core-api
@@ -715,7 +716,7 @@ GEM
     rspec-cells (0.3.9)
       cells (>= 4.0.0, < 6.0.0)
       rspec-rails (>= 3.0.0, < 6.2.0)
-    rspec-core (3.13.1)
+    rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.1)
       diff-lcs (>= 1.2.0, < 2.0)
