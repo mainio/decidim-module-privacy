@@ -13,6 +13,10 @@ fi:
         profile: Oma julkinen profiili
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
   decidim:
+    admin:
+      user_group:
+        verify:
+          confirmation_pending: The group's email address has to be confirmed in order to verify the group.
     components:
       privacy:
         name: Yksityisyysasetukset
@@ -111,6 +115,11 @@ fi:
           do_not_agree: Ei, en halua tehdä profiilistani julkista
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
+      groups:
+        create:
+          email_confirmation: Group successfully created! Please check the group's email address for a verification message to verify the group's email address.
+        verify:
+          email_confirmation: The group's email address has to be confirmed in order to verify the group.
     profile:
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
