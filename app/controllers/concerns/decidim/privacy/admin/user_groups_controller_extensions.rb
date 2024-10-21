@@ -23,7 +23,7 @@ module Decidim
               end
 
               on(:email_confirmation) do
-                flash[:alert] = I18n.t("user_group.verify.confirmation_pending", scope: "decidim.admin")
+                flash[:alert] = I18n.t("groups.verify.email_confirmation", scope: "decidim.privacy")
                 redirect_back(fallback_location: decidim_admin.user_groups_path)
               end
             end
