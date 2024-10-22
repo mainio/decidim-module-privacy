@@ -14,7 +14,7 @@ DECIDIM_VERSION = Decidim::Privacy.decidim_version
 
 gem "decidim", DECIDIM_VERSION
 gem "decidim-conferences", DECIDIM_VERSION
-#gem "decidim-elections", DECIDIM_VERSION
+# gem "decidim-elections", DECIDIM_VERSION
 gem "decidim-privacy", path: "."
 
 gem "bootsnap", "~> 1.17"
@@ -34,8 +34,14 @@ group :development, :test do
   # gem "net-imap", "~> 0.2.3"
   # gem "net-pop", "~> 0.1.1"
   # gem "net-smtp", "~> 0.3.1"
+
+  # rubocop & rubocop-rspec are set to the following versions because of a change where FactoryBot/CreateList
+  # must be a boolean instead of contextual. These version locks can be removed when this problem is handled
+  # through decidim-dev.
   gem "parallel_tests", "~> 4.2"
+  gem "rubocop", "~>1.28"
   gem "rubocop-faker"
+  gem "rubocop-rspec", "2.20"
 end
 
 group :development do

@@ -2,10 +2,10 @@
 
 require "spec_helper"
 
-describe "Admin filters user_groups", type: :system do
+describe "UserGroups" do
   let(:organization) { create(:organization) }
-  let!(:user) { create(:user, :admin, :confirmed, organization: organization) }
-  let!(:pending_ug) { create(:user_group, organization: organization, users: [user]) }
+  let!(:user) { create(:user, :admin, :confirmed, organization:) }
+  let!(:pending_ug) { create(:user_group, organization:, users: [user]) }
 
   before do
     switch_to_host(organization.host)
@@ -16,7 +16,7 @@ describe "Admin filters user_groups", type: :system do
   context "when user group is not confirmed" do
     it "gives a flash alert that the user group needs to be confirmed before verification" do
       within "td.table-list__actions" do
-        click_link "Verify"
+        click_on "Verify"
       end
       expect(page).to have_content("The group's email address has to be confirmed in order to verify the group.")
     end
