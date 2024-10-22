@@ -71,4 +71,16 @@ describe "UserGroup" do
       end
     end
   end
+
+  context "when creating a user group" do
+    it "gives a flash alert to check email for confirmation" do
+      visit decidim.profile_path(public_member.nickname)
+      click_link "Create group"
+      fill_in(:group_name, with: "Example group")
+      fill_in(:group_nickname, with: "eg")
+      fill_in(:group_email, with: "example@group.org")
+      click_button "Create group"
+      expect(page).to have_content("Group successfully created! Please check the group's email address for a verification message to verify the group's email address")
+    end
+  end
 end

@@ -12,7 +12,7 @@ module Decidim
 
           CreateUserGroup.call(@form) do
             on(:ok) do
-              flash[:notice] = t("groups.create.email_confirmation", scope: "decidim")
+              flash[:notice] = t("groups.create.email_confirmation", scope: "decidim.privacy")
 
               redirect_to profile_path(current_user.nickname)
             end
