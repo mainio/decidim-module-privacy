@@ -122,6 +122,11 @@ en:
           do_not_agree: No, I do not want to make my profile public
       publish_account:
         unauthorized: Only participants with public profiles are allowed to perform this action.
+      groups:
+        create:
+          email_confirmation: Group successfully created! Please verify the group's email address by clicking the link included in the verification email message in order to act on behalf of the group on this platform.
+        verify:
+          email_confirmation: The group's email address has to be confirmed in order to verify the group.
     profile:
       private: Private participant
       private_info_html: This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.

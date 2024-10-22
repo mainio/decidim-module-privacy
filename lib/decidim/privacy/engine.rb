@@ -115,6 +115,9 @@ module Decidim
           )
 
           # controllers
+          Decidim::Admin::UserGroupsController.include(
+            Decidim::Privacy::Admin::UserGroupsControllerExtensions
+          )
           Decidim::ApplicationController.include(
             Decidim::Privacy::ApplicationControllerExtensions
           )
