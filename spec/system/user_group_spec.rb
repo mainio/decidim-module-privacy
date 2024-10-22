@@ -77,7 +77,7 @@ describe "User group", type: :system do
       fill_in(:group_nickname, with: "eg")
       fill_in(:group_email, with: "example@group.org")
       click_button "Create group"
-      expect(page).to have_content("Group successfully created! Please check the group's email address for a verification message to verify the group's email address")
+      expect(page).to have_content("Group successfully created! Please verify the group's email address by clicking the link included in the verification email message in order to act on behalf of the group on this platform.")
     end
   end
 end
