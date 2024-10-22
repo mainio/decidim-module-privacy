@@ -122,6 +122,11 @@ sv:
           do_not_agree: Nej, jag vill inte göra min profil offentlig
       publish_account:
         unauthorized: Endast deltagare med offentliga profiler tillåts utföra denna åtgärd.
+      groups:
+        create:
+          email_confirmation: Group successfully created! Please verify the group's email address by clicking the link included in the verification email message in order to act on behalf of the group on this platform.
+        verify:
+          email_confirmation: The group's email address has to be confirmed in order to verify the group.
     profile:
       private: Privat deltagare
       private_info_html: <i>Denna deltagare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
