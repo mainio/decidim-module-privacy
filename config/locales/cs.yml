@@ -112,9 +112,9 @@ cs:
         unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
       groups:
         create:
-          email_confirmation: Group successfully created! Please verify the group's email address by clicking the link included in the verification email message in order to act on behalf of the group on this platform.
+          email_confirmation: Skupina úspěšně vytvořena! Ověřte prosím e-mailovou adresu skupiny kliknutím na odkaz obsažený v ověřovací e-mailové zprávě, abyste mohli jednat jménem skupiny na této platformě.
         verify:
-          email_confirmation: The group's email address has to be confirmed in order to verify the group.
+          email_confirmation: E-mailová adresa skupiny musí být potvrzena pro ověření skupiny.
     profile:
       private: Soukromý účastník
       private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
