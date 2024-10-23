@@ -103,7 +103,7 @@ cs:
         create:
           email_confirmation: Group successfully created! Please check the group's email address for a verification message to verify the group's email address.
         verify:
-          email_confirmation: The group's email address has to be confirmed in order to verify the group.
+          email_confirmation: E-mailová adresa skupiny musí být potvrzena pro ověření skupiny.
     profile:
       private: Soukromý účastník
       private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
