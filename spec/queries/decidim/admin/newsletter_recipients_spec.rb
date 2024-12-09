@@ -15,11 +15,11 @@ describe Decidim::Admin::NewsletterRecipients do
 
   let(:form_params) do
     {
-      send_to_all_users:,
-      send_to_followers:,
-      send_to_participants:,
-      participatory_space_types:,
-      scope_ids:
+      send_to_all_users: send_to_all_users,
+      send_to_followers: send_to_followers,
+      send_to_participants: send_to_participants,
+      participatory_space_types: participatory_space_types,
+      scope_ids: scope_ids
     }
   end
 
@@ -33,7 +33,7 @@ describe Decidim::Admin::NewsletterRecipients do
 
   describe "querying recipients" do
     context "when sending to all users" do
-      let!(:recipients) { create_list(:user, 5, :confirmed, newsletter_notifications_at: Time.current, organization:) }
+      let!(:recipients) { create_list(:user, 5, :confirmed, newsletter_notifications_at: Time.current, organization: organization) }
 
       it "returns all users" do
         expect(subject.query).to match_array recipients
@@ -51,10 +51,10 @@ describe Decidim::Admin::NewsletterRecipients do
     end
 
     context "when sending to followers" do
-      let!(:recipients) { create_list(:user, 3, :confirmed, newsletter_notifications_at: Time.current, organization:) }
+      let!(:recipients) { create_list(:user, 3, :confirmed, newsletter_notifications_at: Time.current, organization: organization) }
       let(:send_to_all_users) { false }
       let(:send_to_followers) { true }
-      let(:participatory_processes) { create_list(:participatory_process, 2, organization:) }
+      let(:participatory_processes) { create_list(:participatory_process, 2, organization: organization) }
       let(:participatory_space_types) do
         [
           { "id" => nil,
@@ -89,7 +89,7 @@ describe Decidim::Admin::NewsletterRecipients do
     context "when sending to participants" do
       let(:send_to_all_users) { false }
       let(:send_to_participants) { true }
-      let!(:component) { create(:dummy_component, organization:) }
+      let!(:component) { create(:dummy_component, organization: organization) }
       let(:participatory_space_types) do
         [
           { "id" => nil,
@@ -109,12 +109,12 @@ describe Decidim::Admin::NewsletterRecipients do
 
       context "when recipients participate to the participatory space" do
         let!(:authors) do
-          create_list(:user, 3, :confirmed, organization:, newsletter_notifications_at: Time.current)
+          create_list(:user, 3, :confirmed, organization: organization, newsletter_notifications_at: Time.current)
         end
 
         before do
           authors.each do |participant|
-            create(:dummy_resource, :published, component:, author: participant)
+            create(:dummy_resource, :published, component: component, author: participant)
           end
         end
 
@@ -125,13 +125,13 @@ describe Decidim::Admin::NewsletterRecipients do
 
         context "and other comment in other participatory spaces" do
           # non participant commentator (comments into other spaces)
-          let!(:non_participant) { create(:user, :confirmed, newsletter_notifications_at: Time.current, organization:) }
-          let!(:component_out_of_newsletter) { create(:dummy_component, organization:) }
+          let!(:non_participant) { create(:user, :confirmed, newsletter_notifications_at: Time.current, organization: organization) }
+          let!(:component_out_of_newsletter) { create(:dummy_component, organization: organization) }
           let!(:resource_out_of_newsletter) { create(:dummy_resource, :published, author: non_participant, component: component_out_of_newsletter) }
           let!(:outlier_comment) { create(:comment, author: non_participant, commentable: resource_out_of_newsletter) }
           # participant commentator
-          let!(:commentator_participant) { create(:user, :confirmed, newsletter_notifications_at: Time.current, organization:) }
-          let!(:resource_in_newsletter) { create(:dummy_resource, :published, author: authors.first, component:) }
+          let!(:commentator_participant) { create(:user, :confirmed, newsletter_notifications_at: Time.current, organization: organization) }
+          let!(:resource_in_newsletter) { create(:dummy_resource, :published, author: authors.first, component: component) }
           let!(:comment_in_newsletter) { create(:comment, author: commentator_participant, commentable: resource_in_newsletter) }
 
           let(:recipients) { authors + [commentator_participant] }
@@ -146,13 +146,13 @@ describe Decidim::Admin::NewsletterRecipients do
 
     context "with scopes segment" do
       let(:scopes) do
-        create_list(:scope, 5, organization:)
+        create_list(:scope, 5, organization: organization)
       end
       let(:scope_ids) { scopes.pluck(:id) }
 
       context "when recipients interested in scopes" do
         let!(:recipients) do
-          create_list(:user, 3, :confirmed, organization:, newsletter_notifications_at: Time.current, extended_data: { "interested_scopes" => scopes.first.id })
+          create_list(:user, 3, :confirmed, organization: organization, newsletter_notifications_at: Time.current, extended_data: { "interested_scopes" => scopes.first.id })
         end
 
         it "returns all users" do
@@ -162,9 +162,9 @@ describe Decidim::Admin::NewsletterRecipients do
       end
 
       context "when interest not match the selected scopes" do
-        let(:user_interset) { create(:scope, organization:) }
+        let(:user_interset) { create(:scope, organization: organization) }
         let!(:recipients) do
-          create_list(:user, 3, :confirmed, organization:, newsletter_notifications_at: Time.current, extended_data: { "interested_scopes" => user_interset.id })
+          create_list(:user, 3, :confirmed, organization: organization, newsletter_notifications_at: Time.current, extended_data: { "interested_scopes" => user_interset.id })
         end
 
         it "do not return recipients" do
