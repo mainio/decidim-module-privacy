@@ -202,6 +202,9 @@ module Decidim
           Decidim::StatsUsersCount.include(
             Decidim::Privacy::StatsUsersCountExtensions
           )
+          Decidim::Admin::NewsletterRecipients.include(
+            Decidim::Privacy::AdminNewsletterRecipientsExtensions
+          )
 
           # Initialize concerns for each installed Decidim-module
           if Decidim.module_installed? :budgets
