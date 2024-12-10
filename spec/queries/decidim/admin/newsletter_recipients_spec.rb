@@ -50,7 +50,7 @@ describe Decidim::Admin::NewsletterRecipients do
       end
 
       context "with blocked accounts" do
-        let!(:blocked_recipients) { create_list(:user, 5, :confirmed, :blocked, newsletter_notifications_at: Time.current, organization:) }
+        let!(:blocked_recipients) { create_list(:user, 5, :confirmed, :blocked, newsletter_notifications_at: Time.current, organization: organization) }
 
         it "returns all not blocked users" do
           expect(subject.query).to match_array recipients
