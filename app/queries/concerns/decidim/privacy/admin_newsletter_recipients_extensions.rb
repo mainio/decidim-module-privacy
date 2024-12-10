@@ -27,6 +27,7 @@ module Decidim
       def recipients_base_query
         Decidim::User
           .entire_collection
+          .available
           .where(organization: @form.current_organization)
           .where.not(newsletter_notifications_at: nil)
           .where.not(email: nil)
