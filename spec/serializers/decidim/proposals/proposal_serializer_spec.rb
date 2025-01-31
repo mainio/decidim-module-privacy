@@ -8,7 +8,7 @@ describe Decidim::Proposals::ProposalSerializer do
   end
 
   let!(:body) { { en: Faker::Lorem.sentence } }
-  let!(:proposal) { create(:proposal, :accepted, body:) }
+  let!(:proposal) { create(:proposal, :accepted, body: body) }
   let(:participatory_process) { component.participatory_space }
   let(:component) { proposal.component }
 
@@ -43,7 +43,7 @@ describe Decidim::Proposals::ProposalSerializer do
       context "when it is a user" do
         let!(:user) { create(:user, :published, name: "John Doe", organization: component.organization) }
         let(:component) { create(:proposal_component) }
-        let!(:proposal) { create(:proposal, component:, users: [user]) }
+        let!(:proposal) { create(:proposal, component: component, users: [user]) }
 
         it "serializes the user name" do
           expect(serialized[:author]).to include(name: ["John Doe"])
@@ -55,7 +55,7 @@ describe Decidim::Proposals::ProposalSerializer do
 
         context "when author is deleted" do
           let!(:user) { create(:user, :published, :deleted, name: "", nickname: "", organization: component.organization) }
-          let!(:proposal) { create(:proposal, component:, users: [user]) }
+          let!(:proposal) { create(:proposal, component: component, users: [user]) }
 
           it "serializes the user id" do
             expect(serialized[:author]).to include(id: [user.id])
@@ -74,7 +74,7 @@ describe Decidim::Proposals::ProposalSerializer do
   end
 
   def profile_url(nickname)
-    Decidim::Core::Engine.routes.url_helpers.profile_url(nickname, host:)
+    Decidim::Core::Engine.routes.url_helpers.profile_url(nickname, host: host)
   end
 
   def host
