@@ -174,6 +174,7 @@ module Decidim
           Decidim::ParticipatorySpacePrivateUser.include(Decidim::Privacy::ParticipatorySpacePrivateUserExtensions)
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
           Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
+          Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
@@ -210,6 +211,14 @@ module Decidim
           )
           Decidim::StatsUsersCount.include(
             Decidim::Privacy::StatsUsersCountExtensions
+          )
+          Decidim::Admin::NewsletterRecipients.include(
+            Decidim::Privacy::AdminNewsletterRecipientsExtensions
+          )
+
+          # Jobs
+          Decidim::Admin::NewsletterJob.include(
+            Decidim::Privacy::AdminNewsletterJobExtensions
           )
 
           # Initialize concerns for each installed Decidim-module
