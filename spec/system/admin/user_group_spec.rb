@@ -4,7 +4,7 @@ require "spec_helper"
 describe "Admin filters user_groups", type: :system do
   let(:organization) { create(:organization) }
   let!(:user) { create(:user, :admin, :confirmed, organization: organization) }
-  let!(:pending_ug) { create(:user_group, organization: organization, users: [user]) }
+  let!(:pending_usergroup) { create(:user_group, organization: organization, users: [user]) }
 
   before do
     switch_to_host(organization.host)
@@ -19,6 +19,14 @@ describe "Admin filters user_groups", type: :system do
       end
 
       expect(page).to have_content("The group's email address has to be confirmed in order to verify the group.")
+    end
+
+    it "allows rejecting the user group" do
+      within "td.table-list__actions" do
+        click_link "Reject"
+      end
+
+      expect(page).to have_content("Group successfully rejected")
     end
   end
 end
