@@ -222,6 +222,9 @@ module Decidim
           Decidim::Admin::NewsletterJob.include(
             Decidim::Privacy::AdminNewsletterJobExtensions
           )
+          Decidim::EmailNotificationsDigestGeneratorJob.include(
+            Decidim::Privacy::EmailNotificationsDigestGeneratorJobExtensions
+          )
 
           # Initialize concerns for each installed Decidim-module
           if Decidim.module_installed? :budgets
