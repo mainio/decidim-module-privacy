@@ -139,6 +139,7 @@ module Decidim
           Decidim::OwnUserGroupsController.include(
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
+          Decidim::Admin::BlockUserController.include(Decidim::Privacy::Admin::BlockUserControllerExtensions)
 
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
@@ -173,6 +174,7 @@ module Decidim
           Decidim::Messaging::ConversationForm.include(
             Decidim::Privacy::ConversationFormExtensions
           )
+          Decidim::Admin::BlockUserForm.include(Decidim::Privacy::BlockUserFormExtensions)
 
           # helpers
           Decidim::ActionAuthorizationHelper.include(
@@ -210,6 +212,9 @@ module Decidim
           # Jobs
           Decidim::Admin::NewsletterJob.include(
             Decidim::Privacy::AdminNewsletterJobExtensions
+          )
+          Decidim::EmailNotificationsDigestGeneratorJob.include(
+            Decidim::Privacy::EmailNotificationsDigestGeneratorJobExtensions
           )
 
           # Initialize concerns for each installed Decidim-module
