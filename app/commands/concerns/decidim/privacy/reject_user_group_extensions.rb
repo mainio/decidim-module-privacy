@@ -7,7 +7,6 @@ module Decidim
 
       included do
         def call
-          return broadcast(:invalid) unless @user_group.confirmed?
           return broadcast(:invalid) unless @user_group.valid?
 
           reject_user_group
