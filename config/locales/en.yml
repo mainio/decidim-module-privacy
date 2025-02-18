@@ -102,24 +102,27 @@ en:
               such as the proposals or comments you have submitted. The public profile displays the following
               information about you:
             </p>
-            <ul class="list-disc pl-4">
-              <li>your name</li>
-              <li>your nickname</li>
+            <ul class="list-disc pl-4 mt-2">
+              <li>your name (%{user_name})</li>
+              <li>your nickname (%{nickname})</li>
               <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
               <li>who you follow and who follows you on this platform</li>
             </ul>
-            <p>If you wish, you can also add the following information to your public profile:</p>
+            <p class="my-2">If you wish, you can also add the following information to your public profile:</p>
             <ul class="list-disc pl-4">
               <li>a profile photo (avatar)</li>
               <li>a profile description</li>
             </ul>
-            <p>
+            <p class="mt-2 mb-1">You can change this info through the profile settings:</p>
+            <p>%{profile_settings}</p>
+            <p class="mt-2">
               If you change your mind later, you can always change your profile back to private through your account's
               privacy settings.
             </p>
           close_modal: Close
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
+          profile_settings: Profile settings
       publish_account:
         unauthorized: Only participants with public profiles are allowed to perform this action.
       groups:

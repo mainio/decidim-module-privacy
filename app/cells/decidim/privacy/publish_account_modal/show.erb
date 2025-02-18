@@ -3,7 +3,7 @@
     <h2 class="h2" id="privacy-consent-label"><%= t("make_profile_public", scope:"decidim.privacy.partials.privacy_consent") %></h2>
   </div>
   <div class="row columns">
-      <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent") %>
+      <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent", user_name: current_user.name, nickname: current_user.nickname, profile_settings: link_to(t("profile_settings", scope:"decidim.privacy.partials.privacy_consent"), decidim.account_path, class: "text-secondary",)).html_safe %>
   </div>
   <div class="pt-4">
     <%= decidim_form_for(Decidim::Privacy::PublishAccountForm.new, url: decidim_privacy.update_account_publicity_path, html: { class: "public-account-form update-privacy" }, method: :put, remote: true) do |f| %>
