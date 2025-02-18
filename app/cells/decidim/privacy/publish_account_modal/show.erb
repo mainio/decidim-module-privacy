@@ -7,7 +7,7 @@
     </button>
   </div>
   <div class="row columns">
-     <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent") %>
+     <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent", user_name: current_user.name, nickname: current_user.nickname, profile_settings: link_to(t("profile_settings", scope: "decidim.privacy.partials.privacy_consent"), decidim.account_path, class: "text-secondary")).html_safe %>
   </div>
   <div class="row">
     <div class="columns medium-12">

@@ -92,8 +92,8 @@ en:
               information about you:
             </p>
             <ul>
-              <li>your name</li>
-              <li>your nickname</li>
+              <li>your name (%{user_name})</li>
+              <li>your nickname (%{nickname})</li>
               <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
               <li>who you follow and who follows you on this platform</li>
             </ul>
@@ -102,6 +102,8 @@ en:
               <li>a profile photo (avatar)</li>
               <li>a profile description</li>
             </ul>
+            <p>You can change this info through the profile settings:</p>
+            <p>%{profile_settings}</p>
             <p>
               If you change your mind later, you can always change your profile back to private through your account's
               privacy settings.
@@ -109,6 +111,7 @@ en:
           close_modal: Close
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
+          profile_settings: Profile settings
       publish_account:
         unauthorized: Only participants with public profiles are allowed to perform this action.
       groups:
