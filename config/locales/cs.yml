@@ -80,32 +80,28 @@ cs:
           make_profile_public: Zveřejnit svůj profil
           content_html: |
             <p>
-              If you want to perform public activities on this platform, you must create a public profile. This means
-              that other participants will see your name and nickname alongside your public activity on this platform,
-              such as the proposals or comments you have submitted. The public profile displays the following
-              information about you:
+             Pokud chcete na této platformě vykonávat veřejné aktivity, musíte si vytvořit veřejný profil. To znamená, že ostatní účastníci uvidí vaše jméno a přezdívku vedle vaší veřejné aktivity na této platformě, jako jsou návrhy nebo komentáře, které jste odeslali. Ve veřejném profilu se o vás zobrazují následující informace:
             </p>
             <ul>
-              <li>your name (%{user_name})</li>
-              <li>your nickname (%{nickname})</li>
-              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
-              <li>who you follow and who follows you on this platform</li>
+             <li>vaše jméno (%{user_name})</li>
+             <li>vaše přezdívka (%{nickname})</li>
+             <li>vaše veřejná aktivita na této platformě, jako jsou návrhy a komentáře, které jste odeslali</li>
+             <li>koho sledujete a kdo sleduje vás na této platformě</li>
             </ul>
-            <p>If you wish, you can also add the following information to your public profile:</p>
+            <p>Pokud si přejete, můžete do svého veřejného profilu přidat také následující informace:</p>
             <ul>
-              <li>a profile photo (avatar)</li>
-              <li>a profile description</li>
+             <li>profilovou fotku (avatar)</li>
+             <li>popis profilu</li>
             </ul>
-            <p>You can change this info through the profile settings:</p>
+            <p>Tyto informace můžete změnit v nastavení profilu:</p>
             <p>%{profile_settings}</p>
             <p>
-              If you change your mind later, you can always change your profile back to private through your account's
-              privacy settings.
+             Pokud si to později rozmyslíte, můžete svůj profil kdykoli změnit zpět na soukromý prostřednictvím nastavení ochrany osobních údajů svého účtu.
             </p>
           close_modal: Zavřít
           agree_to_public_profile: Souhlasím s tím, aby o mně byl vytvořen veřejný profil
           do_not_agree: Ne, nechci zveřejnit svůj profil
-          profile_settings: Profile settings
+          profile_settings: Nastavení profilu
       publish_account:
         unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
       groups:
