@@ -2,11 +2,8 @@
 
 module Decidim
   module Privacy
-    # Modal that displays the controls to make the profile public.
-    class PublishAccountModalCell < Decidim::ViewModel
-      def show
-        render
-      end
+    class AnonymityModalCell < Decidim::ViewModel
+      delegate :decidim_privacy, to: :controller
     end
   end
 end

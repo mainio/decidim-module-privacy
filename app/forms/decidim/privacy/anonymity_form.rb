@@ -3,9 +3,9 @@
 module Decidim
   module Privacy
     class AnonymityForm < Form
-      attribute :agree_anonymous
+      attribute :set_anonymity
 
-      validates :agree_anonymous, allow_nil: false, acceptance: true
+      validates :set_anonymity, allow_nil: false, acceptance: true
     end
   end
 end

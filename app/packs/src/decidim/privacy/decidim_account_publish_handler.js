@@ -1,8 +1,16 @@
 $(() => {
+  let $anonymityModal = $("#anonymityModal");
+
+  if ($anonymityModal.length < 1) {
+    $anonymityModal = null;
+  }
+
   let $publishAccountModal = $("#publishAccountModal");
+
   if ($publishAccountModal.length < 1) {
     $publishAccountModal = null;
   }
+
   let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
 
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
@@ -23,21 +31,33 @@ $(() => {
 
   if ($publishAccountModal) {
     if (triggeredLoginElement) {
-      let element = document.getElementById(triggeredLoginElement)
+      let element = document.getElementById(triggeredLoginElement);
       if (element) {
-        $publishAccountModal.foundation("open")
-        $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"))
-        localStorage.removeItem("loginTriggeringElement");
+        if ($anonymityModal) {
+          $anonymityModal.foundation("open");
+        } else {
+          $publishAccountModal.foundation("open");
+          $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
+          localStorage.removeItem("loginTriggeringElement");
+        }
       }
     }
 
-    document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+    document.querySelectorAll("[data-open='publishAccountModal'], [data-open='AnonymityModal']").forEach((el) => {
       el.addEventListener("click", setFormValues)
     });
 
     $publishAccountModal.on("closed.zf.reveal", () => {
       $publishAccountModal.find("form").removeAttr("data-redirect-url")
     });
+
+    if ($anonymityModal) {
+      document.querySelector("#publicize").addEventListener("click", () => {
+        $anonymityModal.foundation("close");
+
+        $publishAccountModal.foundation("open");
+      })
+    }
   }
 
   document.querySelectorAll("[data-open='loginModal']").forEach((el) => {

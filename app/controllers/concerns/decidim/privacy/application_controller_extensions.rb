@@ -18,6 +18,8 @@ module Decidim
         snippets.add(:foot, helpers.javascript_pack_tag("decidim_account_publish_handler"))
         return unless user_signed_in?
 
+        snippets.add(:foot, helpers.cell("decidim/privacy/anonymity_modal", current_user)) if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?
+
         snippets.add(:foot, helpers.cell("decidim/privacy/publish_account_modal", current_user))
       end
     end
