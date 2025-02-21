@@ -99,7 +99,11 @@ $(() => {
     if ($publishAccountModal !== null) {
       ev.preventDefault();
       setCommentData(ev.target)
-      $publishAccountModal.foundation("open");
+      if ($anonymityModal) {
+        $anonymityModal.foundation("open")
+      } else {
+        $publishAccountModal.foundation("open");
+      }
     }
   };
   const handleCommentForms = (wrapper) => {
@@ -127,8 +131,17 @@ $(() => {
     handleCommentForms(commentsWrapper);
   });
   const removePublishModal = () => {
+    if ($anonymityModal) {
+      document.querySelectorAll("[data-open='anonymityModal']").forEach((item) => {
+        item.removeEventListener("click", setFormValues);
+        let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+
+        console.log(dataPrivacy)
+      })
+    }
+
     document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
-      item.removeEventListener("click", setFormValues)
+      item.removeEventListener("click", setFormValues);
       let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
       if (!dataPrivacy) {
         return;
