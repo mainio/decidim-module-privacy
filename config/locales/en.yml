@@ -92,7 +92,7 @@ en:
               to be public" below.
             </p>
           continue: Continue anonymous
-          publicize: I want to make my profile public
+          publicize: I want my profile to be public
         privacy_consent:
           make_profile_public: Make your profile public
           content_html: |
@@ -123,6 +123,7 @@ en:
           agree_to_public_profile: I agree that a public profile is created about me
           do_not_agree: No, I do not want to make my profile public
           profile_settings: Profile settings
+          continue_anonymous: No, I do not want to make my profile public, continue anonymous
       publish_account:
         unauthorized: Only participants with public profiles are allowed to perform this action.
       groups:

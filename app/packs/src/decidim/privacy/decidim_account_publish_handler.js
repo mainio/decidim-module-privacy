@@ -23,8 +23,16 @@ $(() => {
     let redirectUrl = ev.target.getAttribute("data-redirect-url")
     let dataPrivacy = ev.target.getAttribute("data-privacy") || "{}"
     if (dataPrivacy && dataPrivacy !== "{}") {
-      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id)
+      if ($anonymityModal) {
+        $anonymityModal.find("form").attr("data-triggering-privacy", ev.target.id);
+      }
+
+      $publishAccountModal.find("form").attr("data-triggering-privacy", ev.target.id);
     } else {
+      if ($anonymityModal) {
+        $anonymityModal.find("form").attr("data-redirect-url", redirectUrl)
+      }
+
       $publishAccountModal.find("form").attr("data-redirect-url", redirectUrl)
     }
   }
@@ -35,17 +43,30 @@ $(() => {
       if (element) {
         if ($anonymityModal) {
           $anonymityModal.foundation("open");
-        } else {
-          $publishAccountModal.foundation("open");
-          $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
-          localStorage.removeItem("loginTriggeringElement");
+          $anonymityModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
         }
+        $publishAccountModal.foundation("open");
+        $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
+
+        localStorage.removeItem("loginTriggeringElement");
       }
     }
 
-    document.querySelectorAll("[data-open='publishAccountModal'], [data-open='AnonymityModal']").forEach((el) => {
-      el.addEventListener("click", setFormValues)
-    });
+    if ($anonymityModal) {
+      document.querySelectorAll("[data-open='anonymityModal']").forEach((el) => {
+        el.addEventListener("click", setFormValues);
+      });
+    } else {
+      document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+        el.addEventListener("click", setFormValues);
+      });
+    }
+
+    if ($anonymityModal) {
+      $anonymityModal.on("closed.zf.reveal", () => {
+        $anonymityModal.find("form").removeAttr("data-redirect-url");
+      });
+    }
 
     $publishAccountModal.on("closed.zf.reveal", () => {
       $publishAccountModal.find("form").removeAttr("data-redirect-url")
@@ -56,7 +77,7 @@ $(() => {
         $anonymityModal.foundation("close");
 
         $publishAccountModal.foundation("open");
-      })
+      });
     }
   }
 
@@ -137,7 +158,27 @@ $(() => {
     $(`#${el}`).click();
   }
 
-  $(".update-privacy").closest("form").on("ajax:complete", (el) => {
+  if ($anonymityModal) {
+    $("#update-anonymity-form").closest("form").on("ajax:complete", (el) => {
+      let redirectDestination =  el.target.getAttribute("data-redirect-url");
+      let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
+      if (redirectDestination) {
+        window.location.href = el.target.getAttribute("data-redirect-url");
+      } else if (dataTriggeringPrivacy) {
+        handleAuthorizationPopup(dataTriggeringPrivacy);
+      } else {
+        handleCommentSubmission();
+      }
+    });
+  }
+
+  $("#update-privacy-form").closest("form").on("ajax:complete", (el) => {
+    let anonymityForm = document.getElementById("update-anonymity-form");
+    let anonymityHiddenField = document.getElementById("anonymity-hidden-field");
+
+    anonymityHiddenField.value = false;
+    anonymityForm.requestSubmit();
+
     let redirectDestination =  el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
     if (redirectDestination) {
