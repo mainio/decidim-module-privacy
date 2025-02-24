@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     <div class="columns medium-12">
-      <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form update-anonymity" }, method: :put, remote: true) do |f| %>
+      <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-form" }, method: :put, remote: true) do |f| %>
         <%= f.hidden_field :set_anonymity, value: true %>
 
         <div class="button--double">

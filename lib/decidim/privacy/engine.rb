@@ -219,6 +219,11 @@ module Decidim
             Decidim::Privacy::AdminNewsletterRecipientsExtensions
           )
 
+          # Services
+          Decidim::Comments::NewCommentNotificationCreator.include(
+            Decidim::Privacy::NewCommentNotificationCreatorExtensions
+          )
+
           # Jobs
           Decidim::Admin::NewsletterJob.include(
             Decidim::Privacy::AdminNewsletterJobExtensions

@@ -51,6 +51,12 @@ module Decidim
           published_at.present?
         end
 
+        def anonymous?
+          return unless Decidim::Privacy.anonymity_enabled
+
+          anonymity == true
+        end
+
         def private_messaging_disabled?
           public? && !allow_private_messaging
         end

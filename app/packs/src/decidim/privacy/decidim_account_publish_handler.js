@@ -22,6 +22,7 @@ $(() => {
 
     let redirectUrl = ev.target.getAttribute("data-redirect-url")
     let dataPrivacy = ev.target.getAttribute("data-privacy") || "{}"
+
     if (dataPrivacy && dataPrivacy !== "{}") {
       if ($anonymityModal) {
         $anonymityModal.find("form").attr("data-triggering-privacy", ev.target.id);
@@ -40,11 +41,13 @@ $(() => {
   if ($publishAccountModal) {
     if (triggeredLoginElement) {
       let element = document.getElementById(triggeredLoginElement);
+
       if (element) {
         if ($anonymityModal) {
           $anonymityModal.foundation("open");
           $anonymityModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
         }
+
         $publishAccountModal.foundation("open");
         $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
 
@@ -96,16 +99,17 @@ $(() => {
   }
 
   const handleCommentAction = (ev) => {
-    if ($publishAccountModal !== null) {
+    if ($anonymityModal) {
       ev.preventDefault();
-      setCommentData(ev.target)
-      if ($anonymityModal) {
-        $anonymityModal.foundation("open")
-      } else {
-        $publishAccountModal.foundation("open");
-      }
+      setCommentData(ev.target);
+      $anonymityModal.foundation("open")
+    } else if ($publishAccountModal) {
+      ev.preventDefault();
+      setCommentData(ev.target);
+      $publishAccountModal.foundation("open");
     }
-  };
+  }
+
   const handleCommentForms = (wrapper) => {
     wrapper.querySelectorAll("form").forEach((commentForm) => {
       commentForm.querySelectorAll("button[type='submit'], input[type='submit']").forEach((button) => {
@@ -113,7 +117,7 @@ $(() => {
         button.addEventListener("click", handleCommentAction);
       });
     });
-  };
+  }
 
   document.querySelectorAll("[data-decidim-comments]").forEach((commentsWrapper) => {
     const component = $(commentsWrapper).data("comments");
@@ -124,50 +128,71 @@ $(() => {
       originalAddReply(...args)
       handleCommentForms(commentsWrapper);
     };
+
     component.addThread = (...args) => {
       originalAddThread(...args);
       handleCommentForms(commentsWrapper);
     };
+
     handleCommentForms(commentsWrapper);
-  });
-  const removePublishModal = () => {
+  })
+
+  const removePrompt = () => {
     if ($anonymityModal) {
       document.querySelectorAll("[data-open='anonymityModal']").forEach((item) => {
         item.removeEventListener("click", setFormValues);
         let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+        if (!dataPrivacy) {
+          return;
+        }
 
-        console.log(dataPrivacy)
+        if (dataPrivacy.open && dataPrivacy.openUrl) {
+          item.setAttribute("data-open", dataPrivacy.open);
+          $(item).data("open", dataPrivacy.open);
+          item.setAttribute("data-open-url", dataPrivacy.openUrl);
+          $(item).data("open-url", dataPrivacy.openUrl);
+          item.removeAttribute("data-privacy");
+        } else {
+          item.removeAttribute("data-open");
+        }
       })
+      $anonymityModal.foundation("close");
+      $anonymityModal.remove();
+      $anonymityModal = null;
+      $publishAccountModal.foundation("close");
+      $publishAccountModal.remove();
+      $publishAccountModal = null;
+    } else {
+      document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
+        item.removeEventListener("click", setFormValues);
+        let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+        if (!dataPrivacy) {
+          return;
+        }
+
+        if (dataPrivacy.open && dataPrivacy.openUrl) {
+          item.setAttribute("data-open", dataPrivacy.open);
+          $(item).data("open", dataPrivacy.open);
+          item.setAttribute("data-open-url", dataPrivacy.openUrl);
+          $(item).data("open-url", dataPrivacy.openUrl);
+          item.removeAttribute("data-privacy");
+        } else {
+          item.removeAttribute("data-open");
+        }
+      })
+      $publishAccountModal.foundation("close");
+      $publishAccountModal.remove();
+      $publishAccountModal = null;
     }
-
-    document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
-      item.removeEventListener("click", setFormValues);
-      let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
-      if (!dataPrivacy) {
-        return;
-      }
-
-      if (dataPrivacy.open && dataPrivacy.openUrl) {
-        item.setAttribute("data-open", dataPrivacy.open);
-        $(item).data("open", dataPrivacy.open);
-        item.setAttribute("data-open-url", dataPrivacy.openUrl);
-        $(item).data("open-url", dataPrivacy.openUrl);
-        item.removeAttribute("data-privacy");
-      } else {
-        item.removeAttribute("data-open");
-      }
-    })
-    $publishAccountModal.foundation("close");
-    $publishAccountModal.remove();
-    $publishAccountModal = null;
   }
 
   const handleCommentSubmission = () => {
-    removePublishModal();
+    removePrompt();
     $("[data-popup-comment-id]").click();
   }
+
   const handleAuthorizationPopup = (el) => {
-    removePublishModal();
+    removePrompt();
     $(`#${el}`).click();
   }
 
@@ -175,6 +200,7 @@ $(() => {
     $("#update-anonymity-form").closest("form").on("ajax:complete", (el) => {
       let redirectDestination =  el.target.getAttribute("data-redirect-url");
       let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
+
       if (redirectDestination) {
         window.location.href = el.target.getAttribute("data-redirect-url");
       } else if (dataTriggeringPrivacy) {
@@ -186,14 +212,17 @@ $(() => {
   }
 
   $("#update-privacy-form").closest("form").on("ajax:complete", (el) => {
-    let anonymityForm = document.getElementById("update-anonymity-form");
-    let anonymityHiddenField = document.getElementById("anonymity-hidden-field");
+    if ($anonymityModal) {
+      let anonymityForm = document.getElementById("update-anonymity-form");
+      let anonymityHiddenField = document.getElementById("anonymity-hidden-field");
 
-    anonymityHiddenField.value = false;
-    anonymityForm.requestSubmit();
+      anonymityHiddenField.value = false;
+      anonymityForm.requestSubmit();
+    }
 
     let redirectDestination =  el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
+
     if (redirectDestination) {
       window.location.href = el.target.getAttribute("data-redirect-url");
     } else if (dataTriggeringPrivacy) {
