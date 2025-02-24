@@ -33,7 +33,6 @@ $(() => {
       if ($anonymityModal) {
         $anonymityModal.find("form").attr("data-redirect-url", redirectUrl)
       }
-
       $publishAccountModal.find("form").attr("data-redirect-url", redirectUrl)
     }
   }
@@ -50,7 +49,6 @@ $(() => {
 
         $publishAccountModal.foundation("open");
         $publishAccountModal.find("form").attr("data-redirect-url", element.getAttribute("data-redirect-url"));
-
         localStorage.removeItem("loginTriggeringElement");
       }
     }
@@ -66,21 +64,17 @@ $(() => {
     }
 
     if ($anonymityModal) {
-      $anonymityModal.on("closed.zf.reveal", () => {
-        $anonymityModal.find("form").removeAttr("data-redirect-url");
-      });
-    }
-
-    $publishAccountModal.on("closed.zf.reveal", () => {
-      $publishAccountModal.find("form").removeAttr("data-redirect-url")
-    });
-
-    if ($anonymityModal) {
       document.querySelector("#publicize").addEventListener("click", () => {
         $anonymityModal.foundation("close");
 
         $publishAccountModal.foundation("open");
       });
+
+      document.querySelector("#anonymize").addEventListener("click", () => {
+        let anonymityForm = document.getElementById("update-anonymity-form");
+
+        anonymityForm.requestSubmit();
+      })
     }
   }
 

@@ -1,22 +1,47 @@
-<div class="wrapper">
-  <div class="row collapse">
+<% if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?%>
+  <div class="wrapper">
     <div class="row collapse">
-      <div class="columns large-8 large-centered text-center page-title">
-        <h1><%= t(".title") %></h1>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="columns large-10 medium-centered">
-        <div class="card">
-          <div class="card__content">
-            <%= t(".content_html") %>
-          </div>
+      <div class="row collapse">
+        <div class="columns large-8 large-centered text-center page-title">
+          <h1><%= t("title", scope: "decidim.privacy.privacy_block.anonymous") %></h1>
         </div>
       </div>
-      <div class="columns large-6 medium-centered">
-        <button class="button expanded" data-open="publishAccountModal" data-redirect-url=<%= request.original_url %>><%= t(".button") %></button>
+
+      <div class="row">
+        <div class="columns large-10 medium-centered">
+          <div class="card">
+            <div class="card__content">
+              <%= t("content_html", scope: "decidim.privacy.privacy_block.anonymous") %>
+            </div>
+          </div>
+        </div>
+        <div class="columns large-6 medium-centered">
+          <button class="button expanded" data-open="anonymityModal" data-redirect-url=<%= request.original_url %>><%= t("button", scope: "decidim.privacy.privacy_block.anonymous") %></button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% else %>
+  <div class="wrapper">
+    <div class="row collapse">
+      <div class="row collapse">
+        <div class="columns large-8 large-centered text-center page-title">
+          <h1><%= t("title", scope: "decidim.privacy.privacy_block.private") %></h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="columns large-10 medium-centered">
+          <div class="card">
+            <div class="card__content">
+              <%= t("content_html", scope: "decidim.privacy.privacy_block.private") %>
+            </div>
+          </div>
+        </div>
+        <div class="columns large-6 medium-centered">
+          <button class="button expanded" data-open="publishAccountModal" data-redirect-url=<%= request.original_url %>><%= t("button", scope: "decidim.privacy.privacy_block.private") %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

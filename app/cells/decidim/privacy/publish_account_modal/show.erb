@@ -24,7 +24,9 @@
           <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-form" }, method: :put, remote: true) do |f| %>
             <%= f.hidden_field :set_anonymity, value: true, id: "anonymity-hidden-field" %>
 
-            <%= f.submit t("continue_anonymous", scope: "decidim.privacy.partials.privacy_consent"), class: "link" %>
+            <button id="anonymize" class="link" type="button">
+              <%= t("continue_anonymous", scope: "decidim.privacy.partials.privacy_consent")%>
+            </button>
           <% end %>
         <% else %>
           <button class="link" data-close type="button">
