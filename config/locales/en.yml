@@ -36,11 +36,28 @@ en:
         back: Previous page
       privacy_settings:
         show:
-          profile_publicity_html: |
+          profile_publicity_intro_anonymous_html: |
             <p>
               These privacy settings allow you to control how you appear on this platform publicly. You can decide to
-              remain completely anonymous but it will limit what you can do on this platform.
+              remain completely anonymous but it will limit the information others can see about you, if you choose to
+              be private instead of anonymous it will limit what you can do on this platform.
             </p>
+            <h2 class="heading5 h5">Anonymity</h2>
+            <p>
+              Making your account anonymous still allows you to perform public activities on this platform, such as
+              sending comments, participating in discussions, creating proposals, etc.
+            </p>
+            <p>
+              While being anonymous, other participants cannot see your name, or other public information, such as your
+              nickname or profile photo (avatar), your public activity on this platform, your followers or who you
+              follow. Your public profile page is also inaccessible and you cannot be found through the search of Decidim.
+            </p>
+          profile_publicity_intro_private_html: |
+            <p>
+              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
+              remain completely private but it will limit what you can do on this platform.
+            </p>
+          profile_publicity_html: |
             <h2 class="heading5 h5">Profile publicity</h2>
             <p>
               Making your profile public allows you to perform public activities on this platform, such as sending
@@ -59,6 +76,7 @@ en:
               order to enable this feature because other people need to find you on this platform in order to have a
               conversation with you.
             </p>
+          enable_anonymity: Enable anonymity
           enable_public_profile: Enable public profile
           enable_private_messaging: Enable private messaging
           save_privacy_settings: Save privacy settings

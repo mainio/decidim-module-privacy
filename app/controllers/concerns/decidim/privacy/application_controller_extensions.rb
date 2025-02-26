@@ -15,6 +15,8 @@ module Decidim
         return unless respond_to?(:snippets)
         return if current_user && current_user.public?
 
+        return if Decidim::Privacy.anonymity_enabled && (current_user && current_user.anonymous?)
+
         snippets.add(:foot, helpers.javascript_pack_tag("decidim_account_publish_handler"))
         return unless user_signed_in?
 

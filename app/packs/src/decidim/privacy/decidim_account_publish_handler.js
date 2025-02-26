@@ -20,6 +20,20 @@ $(() => {
       return
     }
 
+    if ($anonymityModal) {
+      document.querySelector("#publicize").addEventListener("click", () => {
+        $anonymityModal.foundation("close");
+
+        $publishAccountModal.foundation("open");
+      });
+
+      document.querySelector("#anonymize").addEventListener("click", () => {
+        let anonymityForm = document.getElementById("update-anonymity-form");
+
+        anonymityForm.requestSubmit();
+      })
+    }
+
     let redirectUrl = ev.target.getAttribute("data-redirect-url")
     let dataPrivacy = ev.target.getAttribute("data-privacy") || "{}"
 
@@ -61,20 +75,6 @@ $(() => {
       document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
         el.addEventListener("click", setFormValues);
       });
-    }
-
-    if ($anonymityModal) {
-      document.querySelector("#publicize").addEventListener("click", () => {
-        $anonymityModal.foundation("close");
-
-        $publishAccountModal.foundation("open");
-      });
-
-      document.querySelector("#anonymize").addEventListener("click", () => {
-        let anonymityForm = document.getElementById("update-anonymity-form");
-
-        anonymityForm.requestSubmit();
-      })
     }
   }
 
