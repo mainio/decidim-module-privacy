@@ -12,12 +12,36 @@ module Decidim
       has_one_attached :avatar
       validates_avatar :avatar, uploader: Decidim::AvatarUploader
 
+      def name
+        I18n.t("unnamed_user", scope: "decidim.privacy.private_account")
+      end
+
       def deleted?
         false
       end
 
       def public?
         false
+      end
+
+      def avatar
+        attached_uploader(:avatar)
+      end
+
+      def default_avatar_url
+        avatar.default_url
+      end
+
+      def avatar_url(_variant = nil)
+        default_avatar_url
+      end
+
+      def has_tooltip?
+        false
+      end
+
+      def badge
+        ""
       end
 
       def officialized?
