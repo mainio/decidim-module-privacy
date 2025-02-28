@@ -7,15 +7,13 @@ module Decidim
 
       included do
         def list
-          model.map! do |user|
+          model.map do |user|
             if user.is_a?(Decidim::NilPresenter) || !user.try(:public?)
               PrivateUser.new
             else
               user
             end
           end
-
-          # model.reject { |user| user.is_a?(Decidim::NilPresenter) || !user.try(:public?) }
         end
       end
     end

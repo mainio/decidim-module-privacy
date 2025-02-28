@@ -81,10 +81,8 @@ describe "Proposals", type: :system do
       visit_component
 
       within ".card--proposal", match: :first do
-        expect(page).not_to have_content(user.name)
+        expect(page).to have_content("Unnamed participant")
       end
-
-      expect(page).not_to have_selector(".author-data")
     end
 
     context "when user tries to edit proposal" do
@@ -162,8 +160,10 @@ describe "Proposals", type: :system do
       visit_component
 
       within ".card--proposal" do
+        expect(page).to have_content("and 1 more")
+        find(".collapsible-list__see-more", text: "(see more)").click
         expect(page).to have_content(coauthor.name)
-        expect(page).not_to have_content("and 1 more")
+        expect(page).to have_content("Unnamed participant")
       end
     end
   end

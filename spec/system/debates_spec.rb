@@ -82,9 +82,8 @@ describe "Debates", type: :system do
 
       within ".card--debate", match: :first do
         expect(page).not_to have_content(user.name)
+        expect(page).to have_content("Unnamed participant")
       end
-
-      expect(page).not_to have_selector(".author-data")
     end
 
     context "when user tries to edit debate" do

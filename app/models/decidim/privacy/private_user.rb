@@ -32,18 +32,6 @@ module Decidim
         avatar.default_url
       end
 
-      def avatar_url(_variant = nil)
-        default_avatar_url
-      end
-
-      def has_tooltip?
-        false
-      end
-
-      def badge
-        ""
-      end
-
       def officialized?
         false
       end
