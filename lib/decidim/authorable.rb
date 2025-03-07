@@ -51,7 +51,9 @@ module Decidim
       #
       # user - the user to check for authorship
       def authored_by?(other_author)
-        other_author&.id == decidim_author_id || (other_author.respond_to?(:user_groups) && other_author.user_groups.include?(user_group))
+        return false if author.nil?
+
+        other_author == author || (other_author.respond_to?(:user_groups) && other_author.user_groups.include?(user_group))
       end
 
       # Returns the normalized author, whether it is a user group or a user. Ideally this should be
