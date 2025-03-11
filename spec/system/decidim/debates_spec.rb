@@ -92,7 +92,9 @@ describe "Debates", type: :system do
         it "doesn't render edit button" do
           visit_component
           click_link debate.title["en"]
-
+          find("#user-menu-control").click
+          click_on "Sign out"
+          expect(page).to have_content("#:ASD")
           expect(page).not_to have_link("Edit")
         end
       end
