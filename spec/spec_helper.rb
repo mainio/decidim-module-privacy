@@ -13,3 +13,15 @@ require "decidim/dev/test/base_spec_helper"
 # Selenium methods are undefined without this change.
 # See: https://github.com/decidim/decidim/pull/12160
 require "#{ENV.fetch("ENGINE_ROOT")}/lib/decidim/privacy/test/rspec_support/capybara"
+
+RSpec.configure do |config|
+  config.around(:each, :anonymity) do |example|
+    initial_value = Decidim::Privacy.config.anonymity_enabled
+
+    Decidim::Privacy.config.anonymity_enabled = true
+
+    example.run
+
+    Decidim::Privacy.config.anonymity_enabled = initial_value
+  end
+end
