@@ -66,6 +66,9 @@ module Decidim
           self::OrmAdapter = ::Decidim::Privacy::OrmAdapter
         end
 
+        Decidim.send(:remove_const, :Authorable) if Decidim.const_defined?(:Authorable)
+        Decidim::Authorable = Decidim::Privacy::Authorable
+
         config.to_prepare do
           # this has to be added because of a bug in decidim core, other 'valid_email2' gem will not be
           # available through the account form, which leads an error.

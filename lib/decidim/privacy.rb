@@ -10,6 +10,7 @@ module Decidim
 
     autoload :OrmAdapter, "decidim/privacy/orm_adapter"
     autoload :CommentSerializerExtensions, "decidim/privacy/comment_serializer_extensions"
+    autoload :Authorable, "decidim/privacy/authorable"
 
     # The default migrations and seeds can fail during the application
     # generation because of the extensions added to the User/UserGroup models,

@@ -23,13 +23,11 @@ $(() => {
     if ($anonymityModal) {
       document.querySelector("#publicize").addEventListener("click", () => {
         $anonymityModal.foundation("close");
-
         $publishAccountModal.foundation("open");
       });
 
       document.querySelector("#anonymize").addEventListener("click", () => {
         let anonymityForm = document.getElementById("update-anonymity-form");
-
         anonymityForm.requestSubmit();
       })
     }
@@ -88,6 +86,36 @@ $(() => {
     localStorage.removeItem("loginTriggeringElement");
   });
 
+  const handleAnonymize = () => {
+    let anonymityForm = document.getElementById("update-anonymity-form");
+    anonymityForm.requestSubmit();
+  };
+
+  const handleModals = () => {
+    $anonymityModal.foundation("close");
+    document.querySelector("#anonymize").addEventListener("click", handleAnonymize);
+
+    $publishAccountModal.foundation("open");
+  };
+
+  if ($anonymityModal) {
+    $("#anonymityModal").on("closed.zf.reveal", () => {
+      const publicizeButton = $anonymityModal.find("#publicize").get(0);
+
+      if (publicizeButton) {
+        publicizeButton.removeEventListener("click", handleModals);
+      }
+    });
+  };
+
+  $("#publishAccountModal").on("closed.zf.reveal", () => {
+    const anonymizeButton = $publishAccountModal.find("#anonymize").get(0);
+
+    if (anonymizeButton) {
+      anonymizeButton.removeEventListener("click", handleAnonymize);
+    }
+  });
+
   const setCommentData = (buttonElement) => {
     buttonElement.setAttribute("data-popup-comment-id", buttonElement.closest("form").id)
   }
@@ -96,6 +124,7 @@ $(() => {
     if ($anonymityModal) {
       ev.preventDefault();
       setCommentData(ev.target);
+      document.querySelector("#publicize").addEventListener("click", handleModals);
       $anonymityModal.foundation("open")
     } else if ($publishAccountModal) {
       ev.preventDefault();
