@@ -51,6 +51,8 @@ module Decidim
         #
         # user - the user to check for authorship
         def authored_by?(other_author)
+          return other_author.id == decidim_author_id if Decidim::Privacy.anonymity_enabled && other_author.anonymous?
+
           return false if author.nil?
 
           other_author == author || (other_author.respond_to?(:user_groups) && other_author.user_groups.include?(user_group))
