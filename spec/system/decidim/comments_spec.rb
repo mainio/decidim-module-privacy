@@ -106,9 +106,10 @@ describe "Comments", type: :system do
         it "gives you a publicity popup for consent" do
           comment_blog_post
 
-          expect(page).to have_content("Profile publicity")
+          expect(page).to have_selector("#anonymityModal")
           click_button "I want my profile to be public"
-          expect(page).to have_content("Make your profile public")
+
+          expect(page).to have_selector("#publishAccountModal")
           expect(page).to have_content(
             "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
           )
