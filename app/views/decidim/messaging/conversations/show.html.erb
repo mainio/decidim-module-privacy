@@ -8,6 +8,11 @@
     <div class="callout warning margin-top-2"><%= t ".deleted_accounts" %></div>
   <% elsif conversation.interlocutors(current_user).count == 1 &&
   conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
+  conversation.interlocutors(current_user).first.anonymous?
+  %>
+    <div class="callout warning margin-top-2"><%= t(".anonymous_account") %></div>
+  <% elsif conversation.interlocutors(current_user).count == 1 &&
+  conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
   !conversation.interlocutors(current_user).first.public?
   %>
     <div class="callout warning margin-top-2"><%= t(".private_account") %></div>

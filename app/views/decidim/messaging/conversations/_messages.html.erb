@@ -3,8 +3,10 @@
     <span class="label label--small label--basic">
       <%= t("deleted", scope: "decidim.profile") %>
     </span>
+  <% elsif sender.anonymous? %>
+    <%= image_tag present(sender).default_avatar_url, alt: t("decidim.profile.anonymous"), name: t("decidim.profile.anonymous") %>
   <% elsif !sender.public? %>
-      <%= image_tag present(sender).default_avatar_url, alt: t("decidim.profile.private"), name: t("decidim.profile.private") %>
+    <%= image_tag present(sender).default_avatar_url, alt: t("decidim.profile.private"), name: t("decidim.profile.private") %>
   <% else %>
     <%= link_to profile_path(sender.nickname) do %>
       <%= image_tag present(sender).avatar_url, alt: t("decidim.author.avatar", name: decidim_sanitize(sender.name)) %>

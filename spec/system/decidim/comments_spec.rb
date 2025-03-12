@@ -58,7 +58,8 @@ describe "Comments", type: :system do
 
         refresh
         within ".comment-thread" do
-          expect(page).not_to have_selector(".author-data")
+          expect(page).to have_selector(".author-data")
+          expect(page).to have_content("Unnamed participant")
         end
       end
     end

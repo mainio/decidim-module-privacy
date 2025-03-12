@@ -22,6 +22,7 @@ en:
     messaging:
       conversations:
         show:
+          anonymous_account: You cannot have a conversation with an anonymous participant.
           private_account: You cannot have a conversation with a private participant.
           private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
@@ -166,6 +167,8 @@ en:
     profile:
       private: Private participant
       private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      anonymous: Anonymous participant
+      anonymous_info_html: <i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i>
   devise:
     passwords:
       edit:

@@ -5,20 +5,32 @@ require "spec_helper"
 describe "Conversations", type: :system do
   let(:organization) { create(:organization) }
   let(:participatory_process) { (create :participatory_process, :with_steps, organization: organization) }
-  let!(:user) { create(:user, :confirmed, organization: organization) }
+  let!(:user) { create(:user, :published, :confirmed, organization: organization) }
   let!(:receiver) { create(:user, :confirmed, organization: organization) }
   let!(:group_chat_participant) { create(:user, :confirmed, organization: organization) }
   let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
 
   before do
     switch_to_host(organization.host)
-    user.update(published_at: Time.current)
     login_as user, scope: :user
     visit decidim.root_path
   end
 
   context "when searching for users in 'new conversation'" do
     context "when receiver profile is private" do
+      it "does not show up in the search" do
+        visit decidim.conversations_path
+
+        click_button "New conversation"
+        fill_in "add_conversation_users", with: receiver.name
+
+        expect(page).not_to have_selector("#autoComplete_list_1")
+      end
+    end
+
+    context "when receiver profile is anonymous", :anonymity do
+      let!(:receiver) { create(:user, :anonymous, :confirmed, organization: organization) }
+
       it "does not show up in the search" do
         visit decidim.conversations_path
 
@@ -84,27 +96,41 @@ describe "Conversations", type: :system do
   end
 
   context "when own profile private" do
-    it "does not have 'conversations' link in the user menu" do
-      user.update(published_at: nil)
-      refresh
+    let!(:user) { create(:user, :confirmed, organization: organization) }
 
+    it "does not have 'conversations' link in the user menu" do
       click_link user.name
 
       expect(page).not_to have_link("Conversations")
     end
 
     it "renders a page telling the user that the account is private if trying to access 'conversations' page" do
-      user.update(published_at: nil)
-      refresh
-
       visit decidim.conversations_path
 
       expect(page).to have_content("Private messaging is not enabled")
     end
 
     it "does not show 'conversations' link in the navbar" do
-      user.update(published_at: nil)
-      refresh
+      expect(page).not_to have_selector(".icon--envelope-closed")
+    end
+  end
+
+  context "when own profile anonymous", :anonymity do
+    let!(:user) { create(:user, :anonymous, :confirmed, organization: organization) }
+
+    it "does not have 'conversations' link in the user menu" do
+      click_link user.name
+
+      expect(page).not_to have_link("Conversations")
+    end
+
+    it "renders a page telling the user that the account is private if trying to access 'conversations' page" do
+      visit decidim.conversations_path
+
+      expect(page).to have_content("Private messaging is not enabled")
+    end
+
+    it "does not show 'conversations' link in the navbar" do
       expect(page).not_to have_selector(".icon--envelope-closed")
     end
   end
@@ -180,14 +206,32 @@ describe "Conversations", type: :system do
           expect(page).not_to have_selector("a[href='/profiles/#{receiver.nickname}']")
         end
       end
+
+      context "when receiver profile turns anonymous", :anonymity do
+        it "shows the message history but blocks the possibility of replying" do
+          start_conversation
+
+          initiate_convo
+
+          receiver.update(anonymity: true, published_at: nil)
+          refresh
+
+          expect(page).to have_content("Conversation with")
+          expect(page).to have_content("Anonymous participant")
+          expect(page).to have_content("Hello there receiver!")
+          expect(page).to have_content("Hello there user!")
+          expect(page).to have_content("You cannot have a conversation with an anonymous participant.")
+          expect(page).not_to have_selector("a[href='/profiles/#{receiver.nickname}']")
+        end
+      end
     end
   end
 
   context "when group conversation" do
+    let!(:receiver) { create(:user, :published, :confirmed, organization: organization) }
+
     context "when starting a group conversation with a user group and the user group is private" do
       it "is possible to start the group conversation" do
-        receiver.update(published_at: Time.current)
-
         visit decidim.conversations_path
         click_button "New conversation"
         fill_in "add_conversation_users", with: receiver.name
@@ -208,10 +252,9 @@ describe "Conversations", type: :system do
     end
 
     context "when a group conversation established and one user goes private" do
-      it "shows the user as private but shows all messages" do
-        receiver.update(published_at: Time.current)
-        group_chat_participant.update(published_at: Time.current)
+      let!(:group_chat_participant) { create(:user, :published, :confirmed, organization: organization) }
 
+      it "shows the user as private but shows all messages" do
         visit decidim.conversations_path
 
         click_button "New conversation"
@@ -243,11 +286,45 @@ describe "Conversations", type: :system do
       end
     end
 
-    context "when a group conversation established and one user turns private messaging off" do
-      it "shows who has disabled private messaging but shows all messages" do
-        receiver.update(published_at: Time.current)
-        group_chat_participant.update(published_at: Time.current)
+    context "when a group conversation established and one user goes anonymous", :anonymity do
+      let!(:group_chat_participant) { create(:user, :published, :confirmed, organization: organization) }
 
+      it "shows the user as anonymous but shows all messages" do
+        visit decidim.conversations_path
+
+        click_button "New conversation"
+
+        fill_in "add_conversation_users", with: receiver.name
+        find("#autoComplete_result_0").click
+
+        fill_in "add_conversation_users", with: group_chat_participant.name
+        find("#autoComplete_result_0").click
+
+        click_button "Next"
+
+        expect(page).to have_content("START A CONVERSATION")
+
+        fill_in "conversation_body", with: "Hello there receiver!"
+
+        click_button "Send"
+
+        initiate_convo
+
+        receiver.update(anonymity: true, published_at: nil)
+        refresh
+
+        expect(page).to have_content("Conversation with")
+        expect(page).to have_content("Anonymous participant")
+        expect(page).to have_content(group_chat_participant.name)
+        expect(page).to have_content("Hello there receiver!")
+        expect(page).to have_content("Hello there user!")
+      end
+    end
+
+    context "when a group conversation established and one user turns private messaging off" do
+      let!(:group_chat_participant) { create(:user, :published, :confirmed, organization: organization) }
+
+      it "shows who has disabled private messaging but shows all messages" do
         visit decidim.conversations_path
 
         click_button "New conversation"
