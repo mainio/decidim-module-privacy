@@ -28,7 +28,7 @@ describe "Admin blocks private user", type: :system do
     end
   end
 
-  context "when anonymous user blocked" do
+  context "when anonymous user blocked", :anonymity do
     let!(:visitor) { create(:user, :anonymous, :confirmed, organization: organization) }
 
     it "finds the user and blocks them" do
