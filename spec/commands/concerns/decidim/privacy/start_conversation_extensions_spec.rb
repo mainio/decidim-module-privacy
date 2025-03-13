@@ -47,6 +47,16 @@ describe Decidim::Privacy::StartConversationExtensions do
     end
   end
 
+  context "when an anonymous user", :anonymity do
+    let!(:receiver) { create(:user, :anonymous, :confirmed, organization: organization) }
+
+    it "broadcasts invalid" do
+      expect do
+        command.call
+      end.to broadcast(:invalid)
+    end
+  end
+
   context "when public user with messages disabled" do
     it "broadcasts invalid" do
       receiver.update(published_at: Time.current, allow_private_messaging: false)
@@ -59,6 +69,7 @@ describe Decidim::Privacy::StartConversationExtensions do
 
   context "when starting a conversation to multiple participants" do
     let(:participant) { create(:user, :confirmed, organization: organization) }
+    let!(:receiver) { create(:user, :published, :confirmed, organization: organization) }
 
     let(:form_params) do
       {
@@ -69,8 +80,8 @@ describe Decidim::Privacy::StartConversationExtensions do
 
     context "when 1 participant has private messaging disabled" do
       it "broadcasts invalid" do
-        receiver.update(published_at: Time.current, allow_private_messaging: false)
         participant.update(published_at: Time.current)
+        receiver.update(published_at: nil)
 
         expect do
           command.call
@@ -80,7 +91,18 @@ describe Decidim::Privacy::StartConversationExtensions do
 
     context "when 1 participant is private" do
       it "broadcasts invalid" do
-        receiver.update(published_at: Time.current)
+        command.call
+
+        expect do
+          command.call
+        end.to broadcast(:invalid)
+      end
+    end
+
+    context "when 1 participant is anonymous", :anonymity do
+      let!(:participant) { create(:user, :anonymous, :confirmed, organization: organization) }
+
+      it "broadcasts invalid" do
         command.call
 
         expect do

@@ -23,6 +23,18 @@ shared_examples "permittable create actions" do
       expect(response).to have_http_status(:ok).or have_http_status(:no_content)
     end
   end
+
+  context "when anonymous user", :anonymity do
+    before do
+      user.update!(anonymity: true)
+      sign_in user
+    end
+
+    it "permits create action" do
+      post :create, params: params
+      expect(response).to have_http_status(:ok).or have_http_status(:no_content)
+    end
+  end
 end
 
 shared_examples "permittable new actions" do
@@ -40,6 +52,19 @@ shared_examples "permittable new actions" do
   context "when public user" do
     before do
       user.update!(published_at: Time.current)
+      sign_in user
+    end
+
+    it "permits new action" do
+      get :new, params: params
+      expect(response).to render_template(:new)
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  context "when anonymous user", :anonymity do
+    before do
+      user.update!(anonymity: true)
       sign_in user
     end
 
@@ -76,6 +101,19 @@ shared_examples "permittable update actions" do
       expect(flash[:alert]).not_to be_present
     end
   end
+
+  context "when anonymous user", :anonymity do
+    before do
+      user.update!(anonymity: true)
+      sign_in user
+    end
+
+    it "permits update action" do
+      patch :update, params: params
+      expect(response).to have_http_status(:found)
+      expect(flash[:alert]).not_to be_present
+    end
+  end
 end
 
 shared_examples "permittable edit actions" do
@@ -94,6 +132,20 @@ shared_examples "permittable edit actions" do
   context "when public user" do
     before do
       user.update!(published_at: Time.current)
+      sign_in user
+    end
+
+    it "permits edit action" do
+      get :edit, params: params
+      expect(response).to render_template(:edit)
+      expect(response).to have_http_status(:ok)
+      expect(flash[:alert]).not_to be_present
+    end
+  end
+
+  context "when anonymous user", :anonymity do
+    before do
+      user.update!(anonymity: true)
       sign_in user
     end
 
