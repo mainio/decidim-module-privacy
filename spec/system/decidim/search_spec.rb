@@ -20,103 +20,134 @@ describe "User privacy", type: :system do
     Warden.test_reset!
   end
 
-  context "when listing users" do
-    context "when user private" do
-      it "does not show up in search" do
-        fill_in "term", with: user.name
-        find("button[name='commit']").click
+  context "when anonymity disabled" do
+    context "when listing users" do
+      context "when user private" do
+        it "does not show up in search" do
+          fill_in "term", with: user.name
+          find("button[name='commit']").click
 
-        expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
+          expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
+        end
+
+        it "shows up in the admin search" do
+          login_as admin, scope: :user
+          visit decidim.pages_path
+          expect(page).to have_content("Help")
+          expect(page).to have_content(admin.name)
+
+          click_link "user-menu-control"
+          click_link "Admin dashboard"
+          click_link "Participants"
+
+          click_link "Participants"
+          expect(page).to have_content(user.name)
+        end
       end
 
-      it "shows up in the admin search" do
-        login_as admin, scope: :user
-        visit decidim.pages_path
-        expect(page).to have_content("Help")
-        expect(page).to have_content(admin.name)
+      context "when user public" do
+        it "shows up in search" do
+          user.update(published_at: Time.current)
 
-        click_link "user-menu-control"
-        click_link "Admin dashboard"
-        click_link "Participants"
+          fill_in "term", with: user.name
+          find("button[name='commit']").click
 
-        click_link "Participants"
-        expect(page).to have_content(user.name)
+          expect(page).to have_content("1 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
+          expect(page).to have_selector("a", text: user.name)
+        end
       end
     end
 
-    context "when user public" do
-      it "shows up in search" do
-        user.update(published_at: Time.current)
+    context "when listing user groups" do
+      context "when user group is not verified but is confirmed" do
+        let!(:user_group) { create(:user_group, :confirmed, organization: organization, users: [admin]) }
 
-        fill_in "term", with: user.name
-        find("button[name='commit']").click
+        it "does not show up in search" do
+          fill_in "term", with: user_group.name
+          find("button[name='commit']").click
 
-        expect(page).to have_content("1 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
-        expect(page).to have_selector("a", text: user.name)
+          expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
+        end
+
+        it "shows up in the admin search" do
+          login_as admin, scope: :user
+          visit decidim.pages_path
+          expect(page).to have_content("Help")
+          expect(page).to have_content(admin.name)
+
+          click_link "user-menu-control"
+          click_link "Admin dashboard"
+          click_link "Participants"
+          click_link "Groups"
+
+          expect(page).to have_content(user_group.name)
+        end
+      end
+
+      context "when user group is verified and confirmed" do
+        let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
+
+        it "shows up in search" do
+          fill_in "term", with: user_group.name
+          find("button[name='commit']").click
+
+          expect(page).to have_content("1 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
+          expect(page).to have_selector("a", text: user_group.name)
+        end
+      end
+
+      context "when user group is not confirmed" do
+        let!(:user_group) { create(:user_group, organization: organization, users: [admin]) }
+
+        it "does not show up in search" do
+          fill_in "term", with: user_group.name
+          find("button[name='commit']").click
+
+          expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
+        end
+
+        it "shows up in the admin search" do
+          login_as admin, scope: :user
+          visit decidim.pages_path
+          expect(page).to have_content("Help")
+          expect(page).to have_content(admin.name)
+
+          click_link "user-menu-control"
+          click_link "Admin dashboard"
+          click_link "Participants"
+          click_link "Groups"
+
+          expect(page).to have_content(user_group.name)
+        end
       end
     end
   end
 
-  context "when listing user groups" do
-    context "when user group is not verified but is confirmed" do
-      let!(:user_group) { create(:user_group, :confirmed, organization: organization, users: [admin]) }
+  context "when anonymity enabled", :anonymity do
+    context "when listing users" do
+      context "when user anonymous" do
+        let!(:user) { create(:user, :anonymous, :confirmed, organization: organization) }
 
-      it "does not show up in search" do
-        fill_in "term", with: user_group.name
-        find("button[name='commit']").click
+        it "does not show up in search" do
+          fill_in "term", with: user.name
+          find("button[name='commit']").click
 
-        expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
-      end
+          expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user.name.upcase}")
+        end
 
-      it "shows up in the admin search" do
-        login_as admin, scope: :user
-        visit decidim.pages_path
-        expect(page).to have_content("Help")
-        expect(page).to have_content(admin.name)
+        it "shows up in the admin search" do
+          login_as admin, scope: :user
+          visit decidim.pages_path
+          expect(page).to have_content("Help")
+          expect(page).to have_content(admin.name)
 
-        click_link "user-menu-control"
-        click_link "Admin dashboard"
-        click_link "Participants"
-        click_link "Groups"
+          click_link "user-menu-control"
+          click_link "Admin dashboard"
+          click_link "Participants"
 
-        expect(page).to have_content(user_group.name)
-      end
-    end
-
-    context "when user group is verified and confirmed" do
-      let!(:user_group) { create(:user_group, :confirmed, :verified, organization: organization) }
-
-      it "shows up in search" do
-        fill_in "term", with: user_group.name
-        find("button[name='commit']").click
-
-        expect(page).to have_content("1 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
-        expect(page).to have_selector("a", text: user_group.name)
-      end
-    end
-
-    context "when user group is not confirmed" do
-      let!(:user_group) { create(:user_group, organization: organization, users: [admin]) }
-
-      it "does not show up in search" do
-        fill_in "term", with: user_group.name
-        find("button[name='commit']").click
-
-        expect(page).to have_content("0 RESULTS FOR THE SEARCH: \"#{user_group.name.upcase}")
-      end
-
-      it "shows up in the admin search" do
-        login_as admin, scope: :user
-        visit decidim.pages_path
-        expect(page).to have_content("Help")
-        expect(page).to have_content(admin.name)
-
-        click_link "user-menu-control"
-        click_link "Admin dashboard"
-        click_link "Participants"
-        click_link "Groups"
-
-        expect(page).to have_content(user_group.name)
+          click_link "Participants"
+          expect(page).to have_content(user.name)
+        end
       end
     end
   end

@@ -9,46 +9,96 @@ describe "Private Participatory Processes", type: :system do
   let!(:private_user) { create :user, :confirmed, organization: organization }
   let!(:participatory_space_private_user) { create :participatory_space_private_user, user: private_user, privatable_to: private_participatory_process }
 
-  context "when user is logged in and is a \"private participatory process\" -user and also a private user" do
-    before do
-      switch_to_host(organization.host)
-      login_as private_user, scope: :user
-      visit decidim_participatory_processes.participatory_processes_path
-    end
+  context "when anonymity disabled" do
+    context "when user is logged in and is a \"private participatory process\" -user and also a private user" do
+      before do
+        switch_to_host(organization.host)
+        login_as private_user, scope: :user
+        visit decidim_participatory_processes.participatory_processes_path
+      end
 
-    it "lists private participatory processes" do
-      within "#processes-grid" do
-        within "#processes-grid h3" do
-          expect(page).to have_content("2")
+      it "lists private participatory processes" do
+        within "#processes-grid" do
+          within "#processes-grid h3" do
+            expect(page).to have_content("2")
+          end
+
+          expect(page).to have_content(translated(participatory_process.title, locale: :en))
+          expect(page).to have_content(translated(private_participatory_process.title, locale: :en))
+          expect(page).to have_selector(".card", count: 2)
         end
+      end
 
-        expect(page).to have_content(translated(participatory_process.title, locale: :en))
-        expect(page).to have_content(translated(private_participatory_process.title, locale: :en))
-        expect(page).to have_selector(".card", count: 2)
+      it "links to the individual process page" do
+        first(".card__link", text: translated(private_participatory_process.title, locale: :en)).click
+
+        expect(page).to have_current_path decidim_participatory_processes.participatory_process_path(private_participatory_process)
+        expect(page).to have_content "This is a private process"
       end
     end
 
-    it "links to the individual process page" do
-      first(".card__link", text: translated(private_participatory_process.title, locale: :en)).click
+    context "when listing private participatory process private users and user is a private user" do
+      let!(:admin) { create :user, :admin, :confirmed, organization: organization }
 
-      expect(page).to have_current_path decidim_participatory_processes.participatory_process_path(private_participatory_process)
-      expect(page).to have_content "This is a private process"
+      before do
+        switch_to_host(organization.host)
+        login_as admin, scope: :user
+        visit decidim_admin_participatory_processes.edit_participatory_process_path(private_participatory_process)
+        find("a[href*='participatory_space_private_users']").click
+      end
+
+      it "shows user in the list" do
+        expect(page).to have_content(private_user.name)
+        expect(page).to have_content(private_user.email)
+      end
     end
   end
 
-  context "when listing private participatory process private users and user is a private user" do
-    let!(:admin) { create :user, :admin, :confirmed, organization: organization }
+  context "when anonymity enabled", :anonymity do
+    let!(:anonymous_user) { create :user, :anonymous, :confirmed, organization: organization }
+    let!(:participatory_space_private_user) { create :participatory_space_private_user, user: anonymous_user, privatable_to: private_participatory_process }
 
-    before do
-      switch_to_host(organization.host)
-      login_as admin, scope: :user
-      visit decidim_admin_participatory_processes.edit_participatory_process_path(private_participatory_process)
-      find("a[href*='participatory_space_private_users']").click
+    context "when user is logged in and is a \"private participatory process\" -user and also a private user" do
+      before do
+        switch_to_host(organization.host)
+        login_as anonymous_user, scope: :user
+        visit decidim_participatory_processes.participatory_processes_path
+      end
+
+      it "lists private participatory processes" do
+        within "#processes-grid" do
+          within "#processes-grid h3" do
+            expect(page).to have_content("2")
+          end
+
+          expect(page).to have_content(translated(participatory_process.title, locale: :en))
+          expect(page).to have_content(translated(private_participatory_process.title, locale: :en))
+          expect(page).to have_selector(".card", count: 2)
+        end
+      end
+
+      it "links to the individual process page" do
+        first(".card__link", text: translated(private_participatory_process.title, locale: :en)).click
+
+        expect(page).to have_current_path decidim_participatory_processes.participatory_process_path(private_participatory_process)
+        expect(page).to have_content "This is a private process"
+      end
     end
 
-    it "shows user in the list" do
-      expect(page).to have_content(private_user.name)
-      expect(page).to have_content(private_user.email)
+    context "when listing private participatory process private users and user is a private user" do
+      let!(:admin) { create :user, :admin, :confirmed, organization: organization }
+
+      before do
+        switch_to_host(organization.host)
+        login_as admin, scope: :user
+        visit decidim_admin_participatory_processes.edit_participatory_process_path(private_participatory_process)
+        find("a[href*='participatory_space_private_users']").click
+      end
+
+      it "shows user in the list" do
+        expect(page).to have_content(anonymous_user.name)
+        expect(page).to have_content(anonymous_user.email)
+      end
     end
   end
 end
