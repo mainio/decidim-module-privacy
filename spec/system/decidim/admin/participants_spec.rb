@@ -27,4 +27,18 @@ describe "Admin blocks private user", type: :system do
       expect(page).to have_content("Participant successfully blocked")
     end
   end
+
+  context "when anonymous user blocked" do
+    let!(:visitor) { create(:user, :anonymous, :confirmed, organization: organization) }
+
+    it "finds the user and blocks them" do
+      find("a[title='Block User']").click
+      expect(page).to have_content("Block User #{visitor.name}")
+
+      fill_in "block_user_justification", with: "Example of a justification"
+      click_on "Block account and send justification"
+
+      expect(page).to have_content("Participant successfully blocked")
+    end
+  end
 end

@@ -83,7 +83,7 @@ describe "User group", type: :system do
     end
   end
 
-  context "when anonymity enabled" do
+  context "when anonymity enabled", :anonymity do
     context "with anonymous user" do
       let(:anonymous_user) { create(:user, :anonymous, :confirmed, organization: organization) }
 
