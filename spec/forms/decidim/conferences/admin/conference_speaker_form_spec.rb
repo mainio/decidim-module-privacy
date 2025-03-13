@@ -75,6 +75,12 @@ describe Decidim::Conferences::Admin::ConferenceSpeakerForm do
       it { is_expected.to be_valid }
     end
 
+    context "and an anonymous user exists", :anonymity do
+      let(:user_id) { create(:user, :anonymous, organization: organization).id }
+
+      it { is_expected.to be_valid }
+    end
+
     context "and a public user exists" do
       let(:user_id) { create(:user, organization: organization, published_at: Time.current).id }
 
@@ -87,6 +93,12 @@ describe Decidim::Conferences::Admin::ConferenceSpeakerForm do
 
     context "when a private user exists" do
       let(:user_id) { create(:user, organization: organization).id }
+
+      it { is_expected.to be_kind_of(Decidim::User) }
+    end
+
+    context "when an anonymous user exists", :anonymity do
+      let(:user_id) { create(:user, :anonymous, organization: organization).id }
 
       it { is_expected.to be_kind_of(Decidim::User) }
     end

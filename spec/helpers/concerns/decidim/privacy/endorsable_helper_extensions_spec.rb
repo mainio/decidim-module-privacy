@@ -20,6 +20,14 @@ describe Decidim::Privacy::EndorsableHelperExtensions do
       end
     end
 
+    context "when user is anonymous", :anonymity do
+      let(:user) { create(:user, :anonymous, :confirmed) }
+
+      it "allows endorsing" do
+        expect(subject).to be(true)
+      end
+    end
+
     context "when user is public" do
       let(:user) { create(:user, :confirmed, :published) }
 
