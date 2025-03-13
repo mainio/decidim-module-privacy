@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def call
-          return broadcast(:invalid) unless @current_user.public?
+          return broadcast(:invalid) unless @current_user.public? || @current_user.anonymous?
           return broadcast(:invalid) if existing_group_endorsement?
 
           endorsement = build_resource_endorsement

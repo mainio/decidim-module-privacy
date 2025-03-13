@@ -39,11 +39,25 @@ describe Decidim::ApplicationController, type: :controller do
       sign_in user
     end
 
-    it "addes publish_account_modal to snippets to the snippets" do
+    it "adds publish_account_modal to the snippets" do
       get :show
 
       expect(snippets_instance).to include(%(<script src="#{asset_path("decidim_account_publish_handler.js")}" defer="defer"></script>))
       expect(snippets_instance).to include(an_instance_of(Decidim::Privacy::PublishAccountModalCell))
+    end
+  end
+
+  context "when anonymity enabled and user signed in", :anonymity do
+    before do
+      sign_in user
+    end
+
+    it "adds publish_account_modal and anonymity_modal to the snippets" do
+      get :show
+
+      expect(snippets_instance).to include(%(<script src="#{asset_path("decidim_account_publish_handler.js")}" defer="defer"></script>))
+      expect(snippets_instance).to include(an_instance_of(Decidim::Privacy::PublishAccountModalCell))
+      expect(snippets_instance).to include(an_instance_of(Decidim::Privacy::AnonymityModalCell))
     end
   end
 

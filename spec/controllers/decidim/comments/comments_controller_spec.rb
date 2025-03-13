@@ -40,6 +40,18 @@ describe Decidim::Comments::CommentsController, type: :controller do
       end
     end
 
+    context "when anonymous user", :anonymity do
+      before do
+        user.update!(anonymity: true)
+        sign_in user
+      end
+
+      it "permits create action" do
+        post :create, xhr: true, params: params
+        expect(response).to have_http_status(:ok).or have_http_status(:no_content)
+      end
+    end
+
     context "when public user" do
       before do
         user.update!(published_at: Time.current)

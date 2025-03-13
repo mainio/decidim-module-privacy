@@ -23,6 +23,16 @@ describe Decidim::UserActivitiesController, type: :controller do
       end
     end
 
+    context "when user is anonymous", :anonymity do
+      let!(:user) { create(:user, :anonymous, nickname: "Nick", organization: organization) }
+
+      it "renders private view" do
+        expect do
+          get :index, params: { nickname: "NICK" }
+        end.to raise_error(ActionController::RoutingError, "Missing user: NICK")
+      end
+    end
+
     context "with an unknown user" do
       it "raises an ActionController::RoutingError" do
         expect do

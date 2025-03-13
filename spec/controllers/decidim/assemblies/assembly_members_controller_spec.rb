@@ -62,6 +62,18 @@ describe Decidim::Assemblies::AssemblyMembersController, type: :controller do
           end
         end
       end
+
+      context "when assembly has some anonymous members", :anonymity do
+        before do
+          member1.user.update!(anonymity: true)
+        end
+
+        it "displays an empty array of members" do
+          get :index, params: { assembly_slug: assembly.slug }
+
+          expect(controller.helpers.collection).to match_array([member1])
+        end
+      end
     end
   end
 end
