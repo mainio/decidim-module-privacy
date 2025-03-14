@@ -17,7 +17,14 @@ describe Decidim::Comments::CommentSerializer do
     context "when there's a private user in data" do
       it "hides author's information" do
         author.update(published_at: nil)
-        expect(serialized[:author]).to include(id: 0, name: "Anonymous")
+        expect(serialized[:author]).to include(id: 0, name: "Unnamed participant")
+      end
+    end
+
+    context "when there's an anonymous user in data", :anonymity do
+      it "hides author's information" do
+        author.update(published_at: nil, anonymity: true)
+        expect(serialized[:author]).to include(id: 0, name: "Unnamed participant")
       end
     end
 

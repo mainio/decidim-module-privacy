@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::UserPresenter, type: :helper do
+describe Decidim::UserPresenter, :anonymity, type: :helper do
   let(:user) { build(:user) }
 
   describe "#nickname" do
@@ -20,6 +20,14 @@ describe Decidim::UserPresenter, type: :helper do
       it { is_expected.to eq("") }
     end
 
+    context "when anonymous" do
+      before do
+        user.anonymity = true
+      end
+
+      it { is_expected.to eq("") }
+    end
+
     context "when not blocked & public" do
       before do
         user.published_at = Time.current
@@ -33,6 +41,14 @@ describe Decidim::UserPresenter, type: :helper do
     subject { described_class.new(user).profile_url }
 
     context "when private" do
+      it { is_expected.to eq("") }
+    end
+
+    context "when anonymous" do
+      before do
+        user.anonymity = true
+      end
+
       it { is_expected.to eq("") }
     end
 
@@ -87,6 +103,14 @@ describe Decidim::UserPresenter, type: :helper do
     end
 
     context "when user is private" do
+      it { is_expected.to eq("") }
+    end
+
+    context "when user is anonymous" do
+      before do
+        user.anonymity = true
+      end
+
       it { is_expected.to eq("") }
     end
 
