@@ -22,4 +22,14 @@ describe Decidim::Proposals::ProposalType, type: :graphql do
       expect(response["author"]).to be_nil
     end
   end
+
+  context "with an anonymous author", :anonymity do
+    let(:creator) { create(:user, :anonymous, :confirmed, organization: component.organization) }
+
+    let(:query) { "{ author { name } }" }
+
+    it "returns the user's name as the author name" do
+      expect(response["author"]).to be_nil
+    end
+  end
 end
