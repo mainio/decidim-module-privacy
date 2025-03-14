@@ -18,6 +18,7 @@ module Decidim
         scope :entire_collection, -> { unscope(where: :published_at) }
         scope :profile_published, -> { where.not(published_at: nil) }
         scope :profile_private, -> { entire_collection.where(published_at: nil) }
+        scope :profile_anonymous, -> { entire_collection.where(anonymity: true) }
 
         searchable_fields({
                             # scope_id: :decidim_scope_id,

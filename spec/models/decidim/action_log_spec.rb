@@ -31,5 +31,14 @@ describe Decidim::ActionLog do
     it "knows its user" do
       expect(subject).to be_a(Decidim::ActionLog)
     end
+
+    context "when user and resource anonymous", :anonymity do
+      let(:user) { create(:user, :anonymous, :confirmed, organization: organization) }
+      let(:resource) { create(:user, :anonymous, :confirmed, organization: organization) }
+
+      it "knows its user" do
+        expect(subject).to be_a(Decidim::ActionLog)
+      end
+    end
   end
 end

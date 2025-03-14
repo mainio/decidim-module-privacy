@@ -35,5 +35,18 @@ describe Decidim::Initiative do
         expect(subject.author_users).not_to include(rejected_member)
       end
     end
+
+    context "when anonymous author", :anonymity do
+      let(:anonymous_user) { create(:user, :anonymous, :confirmed, organization: organization) }
+      let(:anonymous_member) { create(:initiatives_committee_member, :accepted, initiative: initiative, user: anonymous_user) }
+      let(:initiative) { create(:initiative, organization: organization, author: anonymous_user) }
+
+      it "returns public authors" do
+        expect(subject.author_users).not_to include(anonymous_member)
+        expect(subject.author_users).not_to include(public_member)
+        expect(subject.author_users).not_to include(rejected_member)
+        expect(subject.author_users).to include(an_instance_of(Decidim::Privacy::PrivateUser))
+      end
+    end
   end
 end

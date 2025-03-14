@@ -2,12 +2,13 @@
 
 require "spec_helper"
 
-describe Decidim::User do
+describe Decidim::User, :anonymity do
   subject { described_class }
 
   let!(:organization) { create(:organization) }
   let!(:published_user) { create(:user, :confirmed, :published, organization: organization) }
   let!(:private_user) { create(:user, :confirmed, organization: organization) }
+  let!(:anonymous_user) { create(:user, :anonymous, :confirmed, organization: organization) }
 
   describe ".default_scope" do
     subject { described_class.all }
@@ -15,6 +16,7 @@ describe Decidim::User do
     it "returns only published users by default" do
       expect(subject).to include(published_user)
       expect(subject).not_to include(private_user)
+      expect(subject).not_to include(anonymous_user)
     end
   end
 
@@ -24,6 +26,7 @@ describe Decidim::User do
     it "rerutns entire_collection when scoped" do
       expect(subject).to include(published_user)
       expect(subject).to include(private_user)
+      expect(subject).to include(anonymous_user)
     end
   end
 
@@ -33,6 +36,7 @@ describe Decidim::User do
     it "returns the published users only" do
       expect(subject).to include(published_user)
       expect(subject).not_to include(private_user)
+      expect(subject).not_to include(anonymous_user)
     end
   end
 
@@ -42,6 +46,17 @@ describe Decidim::User do
     it "returns private when scoped" do
       expect(subject).not_to include(published_user)
       expect(subject).to include(private_user)
+      expect(subject).to include(anonymous_user)
+    end
+  end
+
+  describe ".profile_anonymous" do
+    subject { described_class.profile_anonymous }
+
+    it "returns anonymous when scoped" do
+      expect(subject).not_to include(published_user)
+      expect(subject).not_to include(private_user)
+      expect(subject).to include(anonymous_user)
     end
   end
 
@@ -53,6 +68,14 @@ describe Decidim::User do
     it "finds the private user for authentication" do
       expect(subject).to eq(private_user)
     end
+
+    context "when anonymous user" do
+      let(:conditions) { { email: anonymous_user.email, env: { "decidim.current_organization" => organization } } }
+
+      it "finds the anonymous user for authentication" do
+        expect(subject).to eq(anonymous_user)
+      end
+    end
   end
 
   describe ".user_collection" do
@@ -62,17 +85,27 @@ describe Decidim::User do
       expect(subject.count).to eq(1)
       expect(subject).to include(private_user)
     end
+
+    context "when anonymous user" do
+      subject { described_class.user_collection(anonymous_user) }
+
+      it "finds the anonymous user for export" do
+        expect(subject.count).to eq(1)
+        expect(subject).to include(anonymous_user)
+      end
+    end
   end
 
   describe "#public?" do
     it "return true if user is public" do
       expect(private_user).not_to be_public
+      expect(anonymous_user).not_to be_public
       expect(published_user).to be_public
     end
   end
 
   describe "#private_messaging_disabled?" do
-    it "returns true only if use is public and disabled messaging" do
+    it "returns true only if user is public and disabled messaging" do
       expect(private_user).not_to be_private_messaging_disabled
       expect do
         published_user.update(allow_private_messaging: false)

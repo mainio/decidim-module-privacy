@@ -16,7 +16,7 @@ describe Decidim::Messaging::Conversation, :anonymity do
     let(:conversation) do
       described_class.start!(
         originator: originator,
-        interlocutors: [public_interlocutor, private_interlocutor],
+        interlocutors: [public_interlocutor, private_interlocutor, anonymous_interlocutor],
         body: "Hei!"
       )
     end
