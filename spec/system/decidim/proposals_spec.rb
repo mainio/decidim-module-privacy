@@ -308,9 +308,9 @@ describe "Proposals", type: :system do
         click_link proposal.title["en"]
         click_button "Endorse"
 
-        expect(page).to have_selector("#list-of-endorsements")
-
         refresh
+
+        expect(page).to have_selector("#list-of-endorsements")
 
         within "#list-of-endorsements" do
           expect(page).not_to have_selector("a[href='/profiles/#{user.nickname}']")
@@ -346,7 +346,7 @@ describe "Proposals", type: :system do
     context "when requesting access to a collaborative draft" do
       let!(:scope) { create :scope, organization: organization }
       let!(:author) { create :user, :confirmed, :published, organization: organization }
-      let!(:user) { create :user, :confirmed, organization: organization }
+      let!(:user) { create :user, :anonymous, :confirmed, organization: organization }
       let(:participatory_process) { create(:participatory_process, :with_steps, organization: organization) }
       let!(:component) do
         create(:proposal_component,

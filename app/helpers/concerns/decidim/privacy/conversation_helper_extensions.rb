@@ -12,7 +12,7 @@ module Decidim
           if users.first.public?
             content_tag = content_tag(:strong, users.first.name)
             nickname = content_tag(:span, "@#{users.first.nickname}", class: "muted")
-          elsif users.first.anonymous?
+          elsif users.first.is_a?(Decidim::User) && users.first.anonymous?
             content_tag = content_tag(:span, t("decidim.profile.anonymous"), class: "label label--small label--basic")
             nickname = content_tag(:span, t("decidim.profile.anonymous_info_html"), class: "muted")
           else
@@ -30,7 +30,7 @@ module Decidim
 
           chat_with_user = if participants.first.deleted?
                              t("decidim.profile.deleted")
-                           elsif participants.first.anonymous?
+                           elsif participants.first.is_a?(Decidim::User) && participants.first.anonymous?
                              t("decidim.profile.anonymous")
                            elsif participants.first.public?
                              "#{participants.first.name} (@#{participants.first.nickname})"
@@ -51,7 +51,7 @@ module Decidim
             content_tags.push(
               if u.deleted?
                 deleted_user_tag
-              elsif u.anonymous?
+              elsif u.is_a?(Decidim::User) && u.anonymous?
                 anonymous_user_tag
               elsif u.public?
                 content_tag(:strong, u.name)

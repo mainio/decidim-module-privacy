@@ -24,13 +24,9 @@ module Decidim
         false
       end
 
-      # def avatar
-      #   attached_uploader(:avatar)
-      # end
-
-      # def default_avatar_url
-      #   avatar.default_url
-      # end
+      def default_avatar_url
+        attached_uploader(:avatar).default_url
+      end
 
       def officialized?
         false

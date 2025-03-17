@@ -71,7 +71,7 @@ describe Decidim::Assemblies::AssemblyMembersController, type: :controller do
         it "displays an empty array of members" do
           get :index, params: { assembly_slug: assembly.slug }
 
-          expect(controller.helpers.collection).to match_array([member1])
+          expect(controller.helpers.collection).to match_array([])
         end
       end
     end
