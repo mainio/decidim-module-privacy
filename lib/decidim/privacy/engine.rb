@@ -153,6 +153,7 @@ module Decidim
           # These changes should be removed once it has been backported to v.27
           Decidim::AccountController.include(Decidim::Privacy::AccountControllerExtensions)
           Decidim::Admin::BlockUserController.include(Decidim::Privacy::Admin::BlockUserControllerExtensions)
+          Decidim::Debates::DebatesController.include(Decidim::Privacy::DebatesControllerExtensions)
 
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
@@ -180,6 +181,7 @@ module Decidim
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
           Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
           Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
+          Decidim::Debates::Debate.include(Decidim::Privacy::DebateExtensions)
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
