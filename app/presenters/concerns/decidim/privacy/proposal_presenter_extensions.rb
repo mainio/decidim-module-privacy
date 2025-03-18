@@ -11,8 +11,18 @@ module Decidim
                         Decidim::Proposals::OfficialAuthorPresenter.new
                       else
                         coauthorship = coauthorships.includes(:author, :user_group).first
-                        coauthorship.user_group&.presenter || coauthorship.author&.presenter
+                        get_presenter(coauthorship)
                       end
+        end
+
+        private
+
+        def get_presenter(coauthorship)
+          if Decidim::Privacy.anonymity_enabled
+            coauthorship.user_group&.presenter || (coauthorship.author&.presenter unless coauthorship.author.anonymous?)
+          else
+            coauthorship.user_group&.presenter || coauthorship.author&.presenter
+          end
         end
       end
     end
