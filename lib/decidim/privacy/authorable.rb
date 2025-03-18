@@ -98,7 +98,15 @@ module Decidim
         def user_group_membership
           return unless user_group
 
-          errors.add :user_group, :invalid unless user_group.users.include? author
+          if Decidim::Privacy.anonymity_enabled
+            if author.anonymous?
+              errors.add :user_group, :invalid unless user_group.users.entire_collection.include? author
+            else
+              errors.add :user_group, :invalid unless user_group.users.include? author
+            end
+          else
+            errors.add :user_group, :invalid unless user_group.users.include? author
+          end
         end
 
         def author_belongs_to_organization
