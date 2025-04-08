@@ -165,8 +165,9 @@ module Decidim
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
           Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
-          Decidim::InitiativesCommitteeMember.include(Decidim::Privacy::InitiativesCommitteeMemberExtensions)
           Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
+
+          Decidim::InitiativesCommitteeMember.include(Decidim::Privacy::InitiativesCommitteeMemberExtensions) if Decidim.module_installed? :initiatives
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
