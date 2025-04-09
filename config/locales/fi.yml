@@ -12,6 +12,11 @@ fi:
         public: Profiilisi on julkinen
         profile: Oma julkinen profiili
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
+      shared:
+        layout_two_col:
+          private_account: Yksityinen tili
+        layout_center:
+          save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
     components:
       privacy:
@@ -63,9 +68,12 @@ fi:
               keskustellakseen kanssasi.
             </p>
           enable_public_profile: Ota julkinen profiili käyttöön
+          public_profile: Haluan, että profiilini on julkinen ja näkyvillä muille käyttäjille
           enable_private_messaging: Ota yksityisviestit käyttöön
+          private_messaging: Haluan mahdollisuuden lähettää yksityisviestejä muille julkisille käyttäjille
           save_privacy_settings: Tallenna yksityisyysasetukset
           allow_public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
+          public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
         update:
           error: Yksityisyysasetusten päivittäminen epäonnistui.
           success: Yksityisyysasetusten päivitys onnistui.
@@ -94,26 +102,34 @@ fi:
               kuten lähettämäsi ehdotukset tai kommentit. Julkisessa profiilissa näkyy seuraavat
               tiedot sinusta:
             </p>
-            <ul>
-              <li>nimesi</li>
-              <li>nimimerkkisi</li>
+            <ul class="list-disc pl-4 mt-2">
+              <li>nimesi (%{user_name})</li>
+              <li>nimimerkkisi (%{nickname})</li>
               <li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li>
               <li>ketä sinä seuraat ja ketkä seuraavat sinua tällä alustalla</li>
             </ul>
-            <p>Halutessasi voit myös lisätä seuraavat tiedot julkiseen profiiliin:</p>
-            <ul>
+            <p class="my-2">Halutessasi voit myös lisätä seuraavat tiedot julkiseen profiiliin:</p>
+            <ul class="list-disc pl-4">
               <li>profiilikuva</li>
               <li>profiilin kuvaus</li>
             </ul>
-            <p>
+            <p class="mt-2 mb-1">Voit muuttaa näitä tietoja profiilin asetuksista:</p>
+            <p>%{profile_settings}</p>
+            <p class="mt-2">
               Jos muutat mieltäsi myöhemmin, voit aina muuttaa profiilisi takaisin yksityiseksi tilisi
               yksityisyysasetusten kautta.
             </p>
           close_modal: Sulje
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
+          profile_settings: Profiilin asetukset
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
+      groups:
+        create:
+          email_confirmation: Ryhmän luonti onnistui! Vahvista vielä ryhmälle määritetyn sähköpostiosoitteen oikeellisuus painamalla kyseiseen sähköpostiosoitteeseen lähetettyä linkkiä, jotta voit esiintyä ryhmän puolesta tällä alustalla.
+        verify:
+          email_confirmation: Ryhmän sähköpostiosoitteen oikeellisuuden täytyy olla vahvistettu jotta ryhmä voidaan vahvistaa.
     profile:
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
