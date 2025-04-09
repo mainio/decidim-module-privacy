@@ -97,32 +97,32 @@ fi:
           make_profile_public: Tee profiilistasi julkinen
           content_html: |
             <p>
-              If you want to perform public activities on this platform, you must create a public profile. This means
-              that other participants will see your name and nickname alongside your public activity on this platform,
-              such as the proposals or comments you have submitted. The public profile displays the following
-              information about you:
+              Suorittaaksesi julkisia toimintoja tällä alustalla, sinun täytyy luoda julkinen profiili. Tämä tarkoittaa
+              että muut osallistujat näkevät nimesi ja nimimerkkisi julkisen toimintasi yhteydessä tällä alustalla,
+              kuten lähettämäsi ehdotukset tai kommentit. Julkisessa profiilissa näkyy seuraavat
+              tiedot sinusta:
             </p>
             <ul class="list-disc pl-4 mt-2">
-              <li>your name (%{user_name})</li>
-              <li>your nickname (%{nickname})</li>
-              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
-              <li>who you follow and who follows you on this platform</li>
+              <li>nimesi (%{user_name})</li>
+              <li>nimimerkkisi (%{nickname})</li>
+              <li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li>
+              <li>ketä sinä seuraat ja ketkä seuraavat sinua tällä alustalla</li>
             </ul>
-            <p class="my-2">If you wish, you can also add the following information to your public profile:</p>
+            <p class="my-2">Halutessasi voit myös lisätä seuraavat tiedot julkiseen profiiliin:</p>
             <ul class="list-disc pl-4">
-              <li>a profile photo (avatar)</li>
-              <li>a profile description</li>
+              <li>profiilikuva</li>
+              <li>profiilin kuvaus</li>
             </ul>
-            <p class="mt-2 mb-1">You can change this info through the profile settings:</p>
+            <p class="mt-2 mb-1">Voit muuttaa näitä tietoja profiilin asetuksista:</p>
             <p>%{profile_settings}</p>
             <p class="mt-2">
-              If you change your mind later, you can always change your profile back to private through your account's
-              privacy settings.
+              Jos muutat mieltäsi myöhemmin, voit aina muuttaa profiilisi takaisin yksityiseksi tilisi
+              yksityisyysasetusten kautta.
             </p>
           close_modal: Sulje
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
-          profile_settings: Profile settings
+          profile_settings: Profiilin asetukset
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
       groups:
