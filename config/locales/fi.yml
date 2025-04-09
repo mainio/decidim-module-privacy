@@ -92,8 +92,8 @@ fi:
               tiedot sinusta:
             </p>
             <ul>
-              <li>nimesi</li>
-              <li>nimimerkkisi</li>
+              <li>nimesi (%{user_name})</li>
+              <li>nimimerkkisi (%{nickname})</li>
               <li>julkinen toimintasi tällä alustalla, kuten jättämäsi kommentit, ehdotukset, jne.</li>
               <li>ketä sinä seuraat ja ketkä seuraavat sinua tällä alustalla</li>
             </ul>
@@ -102,6 +102,8 @@ fi:
               <li>profiilikuva</li>
               <li>profiilin kuvaus</li>
             </ul>
+            <p>Voit muuttaa näitä tietoja profiilin asetuksista:</p>
+            <p>%{profile_settings}</p>
             <p>
               Jos muutat mieltäsi myöhemmin, voit aina muuttaa profiilisi takaisin yksityiseksi tilisi
               yksityisyysasetusten kautta.
@@ -109,6 +111,7 @@ fi:
           close_modal: Sulje
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
+          profile_settings: Profiilin asetukset
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
       groups:
