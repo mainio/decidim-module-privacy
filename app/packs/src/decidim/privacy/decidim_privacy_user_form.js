@@ -23,44 +23,42 @@ const initializeAccountForm = () => {
 
   const originalEmail = emailField.dataset.original;
   let newPwVisible = false;
-  let oldPasswordVisible = false;
 
   // Foundation uses jQuery so these have to be bound using jQuery and the
   // attribute value needs to be set through jQuery.
   const toggleOldPassword = () => {
     let oldPasswordInput = oldPasswordField.querySelector("input[type='password']");
-    if (newPwVisible && oldPasswordVisible) {
-      return
-    }
-
-    if ($(oldPasswordField).hasClass("hide")) {
-      $(oldPasswordField).removeClass("hide")
+    if (newPwVisible || emailField.value !== originalEmail) {
+      $(oldPasswordField).removeClass("hide");
+      $(oldPasswordInput).attr("required", true);
     } else {
       $(oldPasswordField).addClass("hide")
-    }
-    $(oldPasswordInput).attr("require", oldPasswordVisible);
-    oldPasswordVisible = !oldPasswordVisible;
-  }
-
-  const togglePasswordFieldValidators = () => {
-    $(passwordFields).attr("required", !newPwVisible);
-
-    if (!newPwVisible) {
-      passwordFields.forEach((field) => (field.value = ""));
-    }
-    newPwVisible = !newPwVisible;
-    if (emailField.value === originalEmail) {
-      toggleOldPassword();
+      $(oldPasswordInput).attr("required", false);
     }
   }
+
+  const showPasswordChange = () => {
+    $(passwordFields).attr("required", true);
+    newPwVisible = true;
+
+    toggleOldPassword();
+  };
+
+  const hidePasswordChange = () => {
+    $(passwordFields).attr("required", false);
+    passwordFields.forEach((field) => (field.value = ""));
+    newPwVisible = false;
+
+    toggleOldPassword();
+  };
 
   $(passwordChange).on("on.zf.toggler", () => {
-    togglePasswordFieldValidators();
+    showPasswordChange();
   });
 
 
   $(passwordChange).on("off.zf.toggler", () => {
-    togglePasswordFieldValidators();
+    hidePasswordChange();
   });
 
   emailField.addEventListener("change", () => {
