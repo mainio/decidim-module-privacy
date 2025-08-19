@@ -12,6 +12,11 @@ fi:
         public: Profiilisi on julkinen
         profile: Oma julkinen profiili
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
+      shared:
+        layout_two_col:
+          private_account: Yksityinen tili
+        layout_center:
+          save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
     components:
       privacy:
@@ -44,8 +49,8 @@ fi:
               Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina,
               mutta se rajoittaa, mitä voit tehdä tällä alustalla.
             </p>
-            <h2 class="heading5 h5">Profiilin julkisuus</h2>
-            <p>
+            <h2 class="heading3 h3 pt-4">Profiilin julkisuus</h2>
+            <p class="pt-4">
               Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
               kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
             </p>
@@ -55,17 +60,20 @@ fi:
               seuraajasi ja keitä sinä seuraat.
             </p>
           private_messaging_html: |
-            <h2 class="heading5 h5">Yksityisviestit</h2>
-            <p>
+            <h2 class="heading3 h3">Yksityisviestit</h2>
+            <p class="pt-2">
               Näiden asetusten avulla voit keskustella muiden osallistujien kanssa tällä alustalla. Muut osallistujat voivat
               lähettää sinulle yksityisviestejä ja myös sinä voit lähettää niitä muille. Profiilisi on oltava julkinen tämän
               asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta
               keskustellakseen kanssasi.
             </p>
           enable_public_profile: Ota julkinen profiili käyttöön
+          public_profile: Julkinen profiili.
           enable_private_messaging: Ota yksityisviestit käyttöön
+          private_messaging: Salli yksityisviestit.
           save_privacy_settings: Tallenna yksityisyysasetukset
-          allow_public_contact: Salli kenen tahansa lähettää minulle yksityisviestejä, vaikka en seuraisi heitä.
+          allow_public_contact: Ota julkinen yhteydenotto käyttöön
+          public_contact: Salli yhteydenotto.
         update:
           error: Yksityisyysasetusten päivittäminen epäonnistui.
           success: Yksityisyysasetusten päivitys onnistui.
@@ -112,6 +120,7 @@ fi:
           close_modal: Sulje
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
+          profile_settings: Profiilin asetukset
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
     profile:
