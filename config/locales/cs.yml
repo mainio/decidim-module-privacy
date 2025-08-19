@@ -62,9 +62,9 @@ cs:
             <p>Toto nastavení umožňuje komunikovat s ostatními účastníky na této platformě. Ostatní účastníci vám mohou posílat soukromé zprávy a můžete je poslat i ostatním. Aby bylo možné povolit tuto funkci, Váš profil musí být veřejný,  protože vás ostatní lidé potřebují najít na této platformě, aby s vámi mohli konverzovat.
             </p>
           enable_public_profile: Povolit veřejný profil
-          public_profile: Chci, aby můj profil byl veřejný pro ostatní uživatele
+          public_profile: I want my profile to be public to other users.
           enable_private_messaging: Povolit soukromé zprávy
-          private_messaging: Chci být schopen poslat zprávy jiným veřejným uživatelům
+          private_messaging: I want to be able to message other public users.
           save_privacy_settings: Uložit nastavení soukromí
           allow_public_contact: Dovolit, aby mi někdo poslal přímou zprávu, i když je nesleduji.
           public_contact: Umožnit komukoli poslat mi přímou zprávu, i když je nesleduji.
