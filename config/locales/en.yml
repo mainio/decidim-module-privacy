@@ -68,9 +68,9 @@ en:
               conversation with you.
             </p>
           enable_public_profile: Enable public profile
-          public_profile: I want my profile to be public to other users
+          public_profile: I want my profile to be public to other users.
           enable_private_messaging: Enable private messaging
-          private_messaging: I want to be able to message other public users
+          private_messaging: I want to be able to message other public users.
           save_privacy_settings: Save privacy settings
           allow_public_contact: Allow public contact
           public_contact: Allow anyone to send me a direct message, even if I do not follow them.
