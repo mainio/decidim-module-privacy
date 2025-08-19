@@ -123,6 +123,11 @@ fi:
           profile_settings: Profiilin asetukset
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
+      groups:
+        create:
+          email_confirmation: Ryhmän luonti onnistui! Vahvista vielä ryhmälle määritetyn sähköpostiosoitteen oikeellisuus painamalla kyseiseen sähköpostiosoitteeseen lähetettyä linkkiä, jotta voit esiintyä ryhmän puolesta tällä alustalla.
+        verify:
+          email_confirmation: Ryhmän sähköpostiosoitteen oikeellisuuden täytyy olla vahvistettu jotta ryhmä voidaan vahvistaa.
     profile:
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
