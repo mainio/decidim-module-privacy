@@ -68,9 +68,9 @@ sv:
               kunna ha en konversation med dig.
             </p>
           enable_public_profile: Aktivera offentlig profil
-          public_profile: I want my profile to be public to other users
+          public_profile: I want my profile to be public to other users.
           enable_private_messaging: Aktivera direktmeddelanden
-          private_messaging: I want to be able to message other public users
+          private_messaging: I want to be able to message other public users.
           save_privacy_settings: Spara integritetsinställningar
           allow_public_contact: Tillåt alla att skicka direktmeddelanden till mig, även de som jag inte följer.
           public_contact: Allow anyone to send me a direct message, even if I do not follow them.
