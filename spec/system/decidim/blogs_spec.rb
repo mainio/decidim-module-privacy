@@ -35,6 +35,20 @@ describe "Blogs" do
       end
     end
 
+    context "when user anonymous" do
+      let!(:user) { create(:user, :anonymous, :confirmed, :published, organization:) }
+
+      it "shows endorse, follow and comments -buttons" do
+        visit_blog_post
+
+        within ".view-side" do
+          expect(page).to have_button("Endorse")
+          expect(page).to have_css('[href="#comments"]')
+          expect(page).to have_css(".follow-button")
+        end
+      end
+    end
+
     context "when user private" do
       it "hides endorse button" do
         visit_blog_post

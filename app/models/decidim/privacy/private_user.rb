@@ -12,6 +12,14 @@ module Decidim
       has_one_attached :avatar
       validates_avatar :avatar, uploader: Decidim::AvatarUploader
 
+      def name
+        I18n.t("unnamed_user", scope: "decidim.privacy.private_account")
+      end
+
+      def default_avatar_url
+        attached_uploader(:avatar).default_url
+      end
+
       def deleted?
         false
       end

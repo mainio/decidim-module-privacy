@@ -287,6 +287,60 @@ describe "Account" do
         expect(user.direct_message_types).to eq("followed-only")
       end
     end
+
+    context "when anonymity enabled", :anonymity do
+      context "when anonymous account" do
+        let(:user) { create(:user, :anonymous, :confirmed, password:, password_confirmation: password) }
+
+        it "disables publicity", :anonymity do
+          visit "/privacy_settings"
+
+          expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
+          expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+        end
+
+        context "when switching anonymity off" do
+          it "keeps anonymity and publicity off" do
+            visit "/privacy_settings"
+            expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+
+            find("label[for='user_anonymity']").click
+
+            expect(page.find_by_id("user_anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+          end
+        end
+
+        context "when switching publicity on" do
+          it "turns anonymity off" do
+            visit "/privacy_settings"
+            expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+
+            find("label[for='user_published_at']").click
+
+            expect(page.find_by_id("user_anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("user_published_at", visible: :hidden)).to be_checked
+          end
+        end
+
+        context "when publicity enabled and switching to anonymous" do
+          let(:user) { create(:user, :published, :confirmed, password:, password_confirmation: password) }
+
+          it "turns publicity off" do
+            visit "/privacy_settings"
+            expect(page.find_by_id("user_anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("user_published_at", visible: :hidden)).to be_checked
+
+            find("label[for='user_anonymity']").click
+
+            expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+          end
+        end
+      end
+    end
   end
 
   context "when on the notifications settings page" do

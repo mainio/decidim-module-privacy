@@ -118,6 +118,14 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
         end
       end
 
+      context "when user is anonymous", :anonymity do
+        let!(:user1) { create(:user, :anonymous, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+
+        it "does not returns matching users" do
+          expect(response["users"]).not_to include("name" => user1.name)
+        end
+      end
+
       context "when search a user by name" do
         let(:query) { %({ users(filter: { name: "#{term}" }) { name }}) }
         let(:term) { "FooBar User" }
@@ -145,6 +153,14 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
           it "does not returns matching users" do
             expect(response["users"]).not_to include("name" => first_user.name)
           end
+        end
+      end
+
+      context "when user is anonymous", :anonymity do
+        let!(:user1) { create(:user, :anonymous, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+
+        it "does not returns matching users" do
+          expect(response["users"]).not_to include("name" => user1.name)
         end
       end
     end

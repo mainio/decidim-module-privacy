@@ -1,0 +1,27 @@
+<%= decidim_modal id: "anonymityModal" do %>
+  <div class="pb-4">
+    <h2 class="h2" id="anonymity-consent-label"><%= t("title", scope:"decidim.privacy.partials.anonymity_prompt") %></h2>
+  </div>
+  <div class="row columns">
+      <%= t("content_html", scope:"decidim.privacy.partials.anonymity_prompt", user_name: current_user.name, nickname: current_user.nickname, profile_settings: link_to(t("profile_settings", scope:"decidim.privacy.partials.privacy_consent"), decidim.account_path, class: "text-secondary",)).html_safe %>
+  </div>
+  <div class="pt-4">
+    <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-form" }, method: :put, remote: true) do |f| %>
+      <div class="space-y-4">
+        <div class="field margin-bottom-1">
+          <%= f.hidden_field :set_anonymity, value: true %>
+        </div>
+        <div data-dialog-actions>
+          <div class="inline">
+            <%= f.submit t("continue", scope: "decidim.privacy.partials.anonymity_prompt"), class: "button button__sm md:button__lg button__secondary" %>
+          </div>
+          <div class="inline">
+            <button id="publicize" class="button button__sm md:button__lg button__transparent-secondary" type="button">
+              <%= t("publicize", scope: "decidim.privacy.partials.anonymity_prompt")%>
+            </button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

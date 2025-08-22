@@ -53,6 +53,14 @@ describe Decidim::UserGroupForm do
         end
       end
 
+      context "when anonymous user", :anonymity do
+        let!(:existing_user) { create(:user, :anonymous, nickname:, organization:) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+        end
+      end
+
       context "when public user" do
         let!(:existing_user) { create(:user, nickname:, organization:, published_at: Time.current) }
 

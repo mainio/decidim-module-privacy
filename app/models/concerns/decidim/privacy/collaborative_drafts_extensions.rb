@@ -13,7 +13,7 @@ module Decidim
         #
         # For further details, see the Asana task.
         def editable_by?(user)
-          user.public? && authored_by?(user)
+          (user.public? || user.anonymous?) && authored_by?(user)
         end
       end
     end

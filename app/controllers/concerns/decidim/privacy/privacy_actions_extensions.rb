@@ -9,20 +9,21 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        helper_method :public_action?, :allowed_publicly_to?
+        helper_method :public_action?, :allowed_participation_to?
 
         rescue_from Decidim::Privacy::ActionForbidden, with: :user_is_not_public
 
         def enforce_permission_to(action, subject, extra_context = {})
           super
 
-          raise ActionForbidden unless allowed_publicly_to?(action)
+          raise ActionForbidden unless allowed_participation_to?(action)
         end
       end
 
-      def allowed_publicly_to?(action)
+      def allowed_participation_to?(action)
         return true unless user_signed_in?
         return true unless public_action?(action)
+        return true if current_user.anonymous?
 
         current_user.public?
       end

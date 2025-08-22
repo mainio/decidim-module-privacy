@@ -12,6 +12,7 @@ describe Decidim::Privacy::UpdatePrivacySettings do
   let(:form) do
     double(
       valid?: valid?,
+      anonymity: nil,
       allow_private_messaging:,
       allow_public_contact:,
       published_at: true,

@@ -20,7 +20,7 @@ describe "Comments" do
     let!(:component) { create(:post_component, participatory_space: participatory_process) }
     let!(:post) { create(:post, component:) }
 
-    it "gives you a popup for consent, which has to be accepted in order to proceed" do
+    it "gives you a publicity popup for consent, which has to be accepted in order to proceed" do
       comment_blog_post
 
       expect(page).to have_content("Make your profile public")
@@ -58,7 +58,8 @@ describe "Comments" do
 
         refresh
         within ".comment-thread" do
-          expect(page).to have_no_css(".author-data")
+          expect(page).to have_css(".author-data")
+          expect(page).to have_content("Unnamed participant")
         end
       end
     end
@@ -83,6 +84,42 @@ describe "Comments" do
         within "#comment-#{Decidim::Comments::Comment.first.id}-replies" do
           expect(page).to have_no_content(user.name)
           expect(page).to have_no_selector("a[href='/profiles/#{user.nickname}']")
+        end
+      end
+    end
+
+    context "when anonymity enabled", :anonymity do
+      it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
+        comment_blog_post
+
+        expect(page).to have_content("Profile publicity")
+        expect(page).to have_content(
+          "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
+        )
+
+        click_button "Continue anonymous"
+
+        expect(page).to have_content("Hello there!")
+        expect(page).to have_content("Unnamed participant")
+      end
+
+      context "when 'I want my profile to be public' is pressed" do
+        it "gives you a publicity popup for consent" do
+          comment_blog_post
+
+          expect(page).to have_css("#anonymityModal")
+          click_button "I want my profile to be public"
+          expect(page).to have_css("#publishAccountModal")
+
+          expect(page).to have_content(
+            "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
+          )
+
+          find_by_id("publish_account_agree_public_profile").check
+
+          click_button "Make your profile public"
+
+          expect(page).to have_content("Hello there!")
         end
       end
     end

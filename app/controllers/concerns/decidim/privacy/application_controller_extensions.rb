@@ -14,7 +14,15 @@ module Decidim
       def privacy_modal_snippets
         return unless respond_to?(:snippets)
 
+        return if anonymous_user?
+
+        snippets.add(:foot, helpers.cell("decidim/privacy/anonymity_modal", current_user)) if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?
+
         snippets.add(:foot, helpers.cell("decidim/privacy/publish_account_modal", current_user)) if current_user && !current_user.public? && user_signed_in?
+      end
+
+      def anonymous_user?
+        Decidim::Privacy.anonymity_enabled && (current_user && current_user.anonymous?)
       end
     end
   end

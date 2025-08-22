@@ -16,6 +16,7 @@ module Decidim
           # match "/update_account_publicity", to: "privacy_settings#update_publicity", via: :post, constraints: ->(request) { request.xhr? }
 
           put "consent_to_privacy", to: "privacy_settings#update_publicity", as: "update_account_publicity", constraints: ->(request) { request.xhr? }
+          put "set_anonymity", to: "privacy_settings#update_anonymity", as: "update_anonymity", constraints: ->(request) { request.xhr? }
         end
       end
 
@@ -140,6 +141,7 @@ module Decidim
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
           Decidim::Admin::BlockUserController.include(Decidim::Privacy::Admin::BlockUserControllerExtensions)
+          Decidim::Debates::DebatesController.include(Decidim::Privacy::DebatesControllerExtensions)
 
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
@@ -166,6 +168,8 @@ module Decidim
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
           Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
           Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
+          Decidim::Debates::Debate.include(Decidim::Privacy::DebateExtensions)
+          Decidim::Coauthorship.include(Decidim::Privacy::CoauthorshipExtensions)
 
           Decidim::InitiativesCommitteeMember.include(Decidim::Privacy::InitiativesCommitteeMemberExtensions) if Decidim.module_installed? :initiatives
 
@@ -208,6 +212,11 @@ module Decidim
           )
           Decidim::Admin::NewsletterRecipients.include(
             Decidim::Privacy::AdminNewsletterRecipientsExtensions
+          )
+
+          # Services
+          Decidim::Comments::NewCommentNotificationCreator.include(
+            Decidim::Privacy::NewCommentNotificationCreatorExtensions
           )
 
           # Jobs

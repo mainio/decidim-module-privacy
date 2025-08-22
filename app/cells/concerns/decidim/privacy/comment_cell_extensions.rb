@@ -6,6 +6,10 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
+        def anonymous_user
+          @anonymous_user ||= Decidim::Privacy::PrivateUser.new
+        end
+
         private
 
         def cache_hash
