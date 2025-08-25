@@ -5,12 +5,29 @@
   <%= form_for(@privacy_settings, url: privacy_settings_path, method: :put, class: "user-form") do |f| %>
     <% if Decidim::Privacy.anonymity_enabled %>
       <%= t(".profile_publicity_intro_anonymous_html") %>
-      <div class="switch tiny switch-with-label notifications_from_followed">
-        <%= f.label :anonymity do %>
-          <%= f.check_box :anonymity, label: false, class: "switch-input" %>
-          <span class="switch-paddle"></span>
-          <span class="switch-label"><%= t(".enable_anonymity") %></span>
-        <% end %>
+      <div class="form__wrapper pt-4">
+        <label>
+          <%= t(".enable_anonymity") %>
+        </label>
+        <div class="toggle__switch-trigger">
+          <label for="anonymity" class="toggle__switch-toggle">
+            <span>
+              <input
+                <%== %(checked="checked") if @privacy_settings.anonymity %>
+                id="anonymity"
+                type="checkbox"
+                name="anonymity"
+                data-anonymity=<%= @privacy_settings.anonymity %>>
+              <span class="toggle__switch-toggle-content">
+              </span>
+              <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
+              <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
+            </span>
+            <span class="toggle__switch-trigger-text font-semibold">
+              <%= t(".enable_anonymity") %>
+            </span>
+          </label>
+        </div>
       </div>
     <% else %>
       <%= t(".profile_publicity_intro_private_html") %>
@@ -103,6 +120,6 @@
   <%= append_javascript_pack_tag "decidim_privacy_settings" %>
 
   <% if Decidim::Privacy.anonymity_enabled %>
-    <%= javascript_pack_tag "decidim_anonymity_settings" %>
+    <%= append_javascript_pack_tag "decidim_anonymity_settings" %>
   <% end %>
 <% end %>

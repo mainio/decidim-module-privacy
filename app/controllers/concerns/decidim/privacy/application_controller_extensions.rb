@@ -15,6 +15,7 @@ module Decidim
         return unless respond_to?(:snippets)
 
         return if anonymous_user?
+        return unless user_signed_in?
 
         snippets.add(:foot, helpers.cell("decidim/privacy/anonymity_modal", current_user)) if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?
 

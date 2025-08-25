@@ -20,7 +20,6 @@ $(() => {
     if ($anonymityModal) {
       document.querySelector("#publicize").addEventListener("click", () => {
         window.Decidim.currentDialogs.anonymityModal.close();
-
         window.Decidim.currentDialogs.publishAccountModal.open();
       });
 
@@ -67,11 +66,11 @@ $(() => {
     }
 
     if ($anonymityModal) {
-      document.querySelectorAll("[data-open='anonymityModal']").forEach((el) => {
+      document.querySelectorAll("[data-dialog-open='anonymityModal']").forEach((el) => {
         el.addEventListener("click", setFormValues);
       });
     } else {
-      document.querySelectorAll("[data-open='publishAccountModal']").forEach((el) => {
+      document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((el) => {
         el.addEventListener("click", setFormValues);
       });
     }
@@ -189,7 +188,7 @@ $(() => {
       $publishAccountModal.remove();
       $publishAccountModal = null;
     } else {
-      document.querySelectorAll("[data-open='publishAccountModal']").forEach((item) => {
+      document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((item) => {
         item.removeEventListener("click", setFormValues);
         let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
         if (!dataPrivacy) {
@@ -227,6 +226,7 @@ $(() => {
     $("#update-anonymity-form").closest("form").on("ajax:complete", (el) => {
       let redirectDestination =  el.target.getAttribute("data-redirect-url");
       let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
+
       if (redirectDestination) {
         window.location.href = el.target.getAttribute("data-redirect-url");
       } else if (dataTriggeringPrivacy) {

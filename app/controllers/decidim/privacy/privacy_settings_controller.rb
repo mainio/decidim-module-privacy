@@ -13,7 +13,6 @@ module Decidim
       def update
         enforce_permission_to(:read, :user, current_user:)
         @privacy_settings = form(::Decidim::Privacy::PrivacySettingsForm).from_params(params)
-
         UpdatePrivacySettings.call(current_user, @privacy_settings) do
           on(:ok) do
             flash.now[:notice] = t(".success")
@@ -42,7 +41,7 @@ module Decidim
       end
 
       def update_anonymity
-        enforce_permission_to :read, :user, current_user: current_user
+        enforce_permission_to :read, :user, current_user:
         @form = form(::Decidim::Privacy::AnonymityForm).from_params(params)
 
         UpdateAnonymity.call(current_user, @form) do

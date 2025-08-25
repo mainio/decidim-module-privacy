@@ -15,7 +15,7 @@ module Decidim
         end
 
         def show
-          if model.is_a?(PrivateUser) || model.is_a?(Decidim::NilPresenter) || (model.is_a?(Decidim::UserPresenter) && model.private?)
+          if model.is_a?(PrivateUser) || model.is_a?(Decidim::NilPresenter) || !model.is_a?(Decidim::UserGroup) || (model.is_a?(Decidim::UserPresenter) && model.private?)
             render :unnamed_user
           else
             render

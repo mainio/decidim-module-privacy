@@ -16,6 +16,23 @@ en:
         layout_two_col:
           private_account: Private account
         layout_center:
+          enable_anonymity: Enable anonymity
+          profile_publicity_intro_anonymous_html: |
+            <p>
+              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
+              remain completely anonymous but it will limit the information others can see about you, if you choose to
+              be private instead of anonymous it will limit what you can do on this platform.
+            </p>
+            <h2 class="heading3 h3 pt-4">Anonymity</h2>
+            <p class="pt-4">
+              Making your account anonymous still allows you to perform public activities on this platform, such as
+              sending comments, participating in discussions, creating proposals, etc.
+            </p>
+            <p class="pt-2">
+              While being anonymous, other participants cannot see your name, or other public information, such as your
+              nickname or profile photo (avatar), your public activity on this platform, your followers or who you
+              follow. Your public profile page is also inaccessible and you cannot be found through the search of Decidim.
+            </p>
           save_privacy_settings: Save privacy settings
   decidim:
     components:
@@ -45,22 +62,6 @@ en:
         back: Previous page
       privacy_settings:
         show:
-          profile_publicity_intro_anonymous_html: |
-            <p>
-              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
-              remain completely anonymous but it will limit the information others can see about you, if you choose to
-              be private instead of anonymous it will limit what you can do on this platform.
-            </p>
-            <h2 class="heading5 h5">Anonymity</h2>
-            <p>
-              Making your account anonymous still allows you to perform public activities on this platform, such as
-              sending comments, participating in discussions, creating proposals, etc.
-            </p>
-            <p>
-              While being anonymous, other participants cannot see your name, or other public information, such as your
-              nickname or profile photo (avatar), your public activity on this platform, your followers or who you
-              follow. Your public profile page is also inaccessible and you cannot be found through the search of Decidim.
-            </p>
           profile_publicity_intro_private_html: |
             <p>
               These privacy settings allow you to control how you appear on this platform publicly. You can decide to
@@ -72,7 +73,7 @@ en:
               Making your profile public allows you to perform public activities on this platform, such as sending
               comments, participating in discussions, creating proposals, etc.
             </p>
-            <p>
+            <p class="pt-2">
               When you make your profile public, other participants can see your name publicly on this platform and also
               see other public information about you, such as your nickname and profile photo (avatar), your public
               activity on this platform, your followers and who you follow.
@@ -85,7 +86,6 @@ en:
               order to enable this feature because other people need to find you on this platform in order to have a
               conversation with you.
             </p>
-          enable_anonymity: Enable anonymity
           enable_public_profile: Enable public profile
           public_profile: I want my profile to be public to other users.
           enable_private_messaging: Enable private messaging

@@ -1,7 +1,9 @@
 <div class="author author--inline">
-  <span class="author__avatar">
-    <%= image_tag model.default_avatar_url, alt: t("decidim.author.avatar", name: decidim_sanitize(author_name)) %>
-  </span>
+  <% if (url = model.try(:default_avatar_url)).present? %>
+    <span class="author__avatar">
+      <%= image_tag url, alt: t("decidim.author.avatar", name: decidim_sanitize(author_name)) %>
+    </span>
+  <% end %>
 
   <span class="author__name">
     <%= decidim_sanitize author_name %>

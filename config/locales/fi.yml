@@ -16,6 +16,23 @@ fi:
         layout_two_col:
           private_account: Yksityinen tili
         layout_center:
+          enable_anonymity: Salli anonyymisyys
+          profile_publicity_intro_anonymous_html: |
+            <p>
+              Näiden yksityisyysasetusten avulla voi hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
+              mutta se rajoittaa, mitä tietoja muut voivat sinusta nähdä. Jos päätät asettaa profiilisi yksityiseksi,
+              se rajoittaa mitä voit tehdä tällä alustalla.
+            </p>
+            <h2 class="heading3 h3">Anonyymisyys</h2>
+            <p class="pt-4">
+              Profiilin anonyymisyys sallii tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
+              kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
+            </p>
+            <p class="pt-2">
+              Kun profiilisi on anonyymi, muut osallistujat eivät voi nähdä nimeäsi tällä alustalla, tai muuta julkista
+              tietoa. Kuten nimimerkkiäsi, profiilikuvaasi, toimintaasi tällä alustalla, seuraajiasi tai ketä itse
+              seuraat. Myös profiilisivusi on piilotettu, eikä sinua voida löytää alustan hakukentästä.
+            </p>
           save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
     components:
@@ -45,22 +62,6 @@ fi:
         back: Edellinen sivu
       privacy_settings:
         show:
-          profile_publicity_intro_html: |
-            <p>
-              Näiden yksityisyysasetusten avulla voi hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
-              mutta se rajoittaa, mitä tietoja muut voivat sinusta nähdä. Jos päätät asettaa profiilisi yksityiseksi,
-              se rajoittaa mitä voit tehdä tällä alustalla.
-            </p>
-            <h2 class="heading5 h5">Anonyymisyys</h2>
-            <p>
-              Profiilin anonyymisyys sallii tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
-              kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
-            </p>
-            <p>
-              Kun profiilisi on anonyymi, muut osallistujat eivät voi nähdä nimeäsi tällä alustalla, tai muuta julkista
-              tietoa. Kuten nimimerkkiäsi, profiilikuvaasi, toimintaasi tällä alustalla, seuraajiasi tai ketä itse
-              seuraat. Myös profiilisivusi on piilotettu, eikä sinua voida löytää alustan hakukentästä.
-            </p>
           profile_publicity_intro_private_html: |
             <p>
               Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
@@ -72,7 +73,7 @@ fi:
               Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
               kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
             </p>
-            <p>
+            <p class="pt-2">
               Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla
               ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla,
               seuraajasi ja keitä sinä seuraat.
@@ -85,7 +86,6 @@ fi:
               asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta
               keskustellakseen kanssasi.
             </p>
-          enable_anonymity: Salli anonyymisyys
           enable_public_profile: Ota julkinen profiili käyttöön
           public_profile: Julkinen profiili.
           enable_private_messaging: Ota yksityisviestit käyttöön
