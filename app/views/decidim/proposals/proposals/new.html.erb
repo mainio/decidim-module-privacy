@@ -1,0 +1,39 @@
+<% add_decidim_page_title(proposal_wizard_step_title(action_name)) %>
+
+<%= append_stylesheet_pack_tag "decidim_proposals", media: "all" %>
+<%= append_javascript_pack_tag "decidim_proposals" %>
+
+<%= render layout: "layouts/decidim/shared/layout_center" do %>
+
+  <%= render partial: "wizard_header" %>
+
+  <%= decidim_form_for(@form) do |form| %>
+    <%= form_required_explanation %>
+
+    <div class="form__wrapper">
+      <%= form.text_field :title, class: "js-hashtags" %>
+      <%= text_editor_for_proposal_body(form) %>
+
+      <% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
+        <% if Decidim::Privacy.anonymity_enabled && current_user.anonymous? %>
+          <div class="help-text"><%= t("anonymous_user", scope: "decidim.proposals.proposals.help") %></div>
+        <% end %>
+
+        <%= user_group_select_field form, :user_group_id %>
+      <% end %>
+    </div>
+
+    <div class="form__wrapper-block flex-col-reverse md:flex-row justify-between">
+      <%= link_to proposal_wizard_aside_link_to_back(@step), class: "button button__sm md:button__lg button__text-secondary" do %>
+        <%= icon "arrow-left-line" %>
+        <%= wizard_aside_back_text(@step) %>
+      <% end %>
+
+      <button type="submit" class="button button__sm md:button__lg button__secondary">
+        <span><%= t("send", scope: "decidim.proposals.proposals.new") %></span>
+        <%= icon "arrow-right-line" %>
+      </button>
+    </div>
+  <% end %>
+
+<% end %>

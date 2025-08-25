@@ -1,8 +1,8 @@
-<div class="author author--inline">
+<div class="author__container">
   <% if (url = model.try(:default_avatar_url)).present? %>
-    <span class="author__avatar">
+    <%= content_tag :span, class: "author__avatar-container" do %>
       <%= image_tag url, alt: t("decidim.author.avatar", name: decidim_sanitize(author_name)) %>
-    </span>
+    <% end %>
   <% end %>
 
   <span class="author__name">

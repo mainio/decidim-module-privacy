@@ -172,6 +172,11 @@ fi:
       anonymous_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan anonyymin. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
+    proposals:
+      proposals:
+        help:
+          anonymous_user: Profiilisi on anonyymi. Jos luot ehdotuksen omana itsenäsi käyttäjäryhmän sijaan, nimesi
+                          piilotetaan kunnes julkistat profiilisi.
   devise:
     passwords:
       edit:
