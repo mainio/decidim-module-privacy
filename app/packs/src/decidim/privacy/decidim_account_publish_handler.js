@@ -25,7 +25,6 @@ $(() => {
 
       document.querySelector("#anonymize").addEventListener("click", () => {
         let anonymityForm = document.getElementById("update-anonymity-form");
-
         anonymityForm.requestSubmit();
       })
     }

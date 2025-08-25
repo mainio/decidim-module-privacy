@@ -19,7 +19,7 @@ module Decidim
       private
 
       def update_anonymity
-        @user.update!(anonymity: @form.set_anonymity)
+        @user.update!(anonymity: ActiveModel::Type::Boolean.new.cast(@form.set_anonymity))
       end
     end
   end

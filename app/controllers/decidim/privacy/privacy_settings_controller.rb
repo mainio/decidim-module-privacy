@@ -41,7 +41,8 @@ module Decidim
       end
 
       def update_anonymity
-        enforce_permission_to :read, :user, current_user:
+        enforce_permission_to(:read, :user, current_user:)
+
         @form = form(::Decidim::Privacy::AnonymityForm).from_params(params)
 
         UpdateAnonymity.call(current_user, @form) do

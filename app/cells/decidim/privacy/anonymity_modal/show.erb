@@ -6,7 +6,7 @@
       <%= t("content_html", scope:"decidim.privacy.partials.anonymity_prompt", user_name: current_user.name, nickname: current_user.nickname, profile_settings: link_to(t("profile_settings", scope:"decidim.privacy.partials.privacy_consent"), decidim.account_path, class: "text-secondary",)).html_safe %>
   </div>
   <div class="pt-4">
-    <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-form" }, method: :put, remote: true) do |f| %>
+    <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-form", "data-type": "json" }, method: :put, remote: true) do |f| %>
       <div class="space-y-4">
         <div class="field margin-bottom-1">
           <%= f.hidden_field :set_anonymity, value: true %>
