@@ -104,11 +104,11 @@ fi:
         private:
           title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
           content_html: |
-            <p class="text-lg">
+            <p class="text-center">
               Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii
               muiden osallistujien nähdä sinua koskevia tietoja.
             </p>
-            <p class="text-lg py-4">
+            <p class="text-center my-4">
               <strong>
                 Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
               </strong>
@@ -121,7 +121,7 @@ fi:
               Olet siirtymässä sivulle anonyymina. Jos haluat muiden käyttäjien näkevän tietoja sinusta, voit myös
               tehdä profiilistasi julkisen.
             </p>
-            <p class="text-center">
+            <p class="text-center my-4">
               <strong>
                 Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
               </strong>

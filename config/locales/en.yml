@@ -104,11 +104,11 @@ en:
         private:
           title: Public profile is required for this action
           content_html: |
-            <p class="text-lg">
+            <p class="text-center">
               You are trying to access a page which requires your profile to be public. Making your profile public allows
               other participants to see information about you.
             </p>
-            <p class="text-lg py-4">
+            <p class="text-center my-4">
               <strong>
                 Additional information about making your profile public will be presented after clicking the button below.
               </strong>
@@ -121,7 +121,7 @@ en:
               You are entering a page anonymously. If you want other participants to see information about you,
               you can also make your profile public.
             </p>
-            <p class="text-center">
+            <p class="text-center my-4">
               <strong>
                 Additional information about making your profile public will be presented after clicking the button below.
               </strong>
