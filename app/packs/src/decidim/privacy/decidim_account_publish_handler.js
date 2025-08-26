@@ -222,7 +222,7 @@ $(() => {
   }
 
   if ($anonymityModal) {
-    $("#update-anonymity-publish-form").closest("form").on("ajax:complete", (el) => {
+    $("#update-anonymity-form, #update-anonymity-publish-form").closest("form").on("ajax:complete", (el) => {
       let redirectDestination =  el.target.getAttribute("data-redirect-url");
       let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
 

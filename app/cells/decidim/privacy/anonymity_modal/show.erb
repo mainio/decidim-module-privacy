@@ -13,12 +13,12 @@
         </div>
         <div data-dialog-actions>
           <div class="inline">
-            <%= f.submit t("continue", scope: "decidim.privacy.partials.anonymity_prompt"), class: "button button__sm md:button__lg button__secondary" %>
-          </div>
-          <div class="inline">
             <button id="publicize" class="button button__sm md:button__lg button__transparent-secondary" type="button">
               <%= t("publicize", scope: "decidim.privacy.partials.anonymity_prompt")%>
             </button>
+          </div>
+          <div class="inline">
+            <%= f.submit t("continue", scope: "decidim.privacy.partials.anonymity_prompt"), class: "button button__sm md:button__lg button__secondary" %>
           </div>
         </div>
       </div>

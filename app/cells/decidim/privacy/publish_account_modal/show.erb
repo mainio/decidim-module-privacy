@@ -6,34 +6,26 @@
       <%= t("content_html", scope:"decidim.privacy.partials.privacy_consent", user_name: current_user.name, nickname: current_user.nickname, profile_settings: link_to(t("profile_settings", scope:"decidim.privacy.partials.privacy_consent"), decidim.account_path, class: "text-secondary",)).html_safe %>
   </div>
 
-  <div class="pt-4">
+  <div class="pt-6 space-y-8">
     <%= decidim_form_for(Decidim::Privacy::PublishAccountForm.new, url: decidim_privacy.update_account_publicity_path, html: { class: "public-account-form", id: "update-privacy-form" }, method: :put, remote: true) do |f| %>
-      <div class="space-y-4">
-        <div class="field margin-bottom-1">
-          <%= f.check_box :agree_public_profile,label: t("agree_to_public_profile", scope: "decidim.privacy.partials.privacy_consent"), required: true %>
-        </div>
-        <div data-dialog-actions>
-          <div class="inline">
-            <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button button__sm md:button__lg button__secondary" %>
-          </div>
-        </div>
+      <div class="flex flex-col items-center gap-4 inline">
+        <%= f.check_box :agree_public_profile,label: t("agree_to_public_profile", scope: "decidim.privacy.partials.privacy_consent"), required: true %>
+        <%= f.submit t("make_profile_public", scope: "decidim.privacy.partials.privacy_consent"), class: "button button__sm md:button__lg button__secondary" %>
       </div>
     <% end %>
 
-    <div class="inline">
-      <% if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil? %>
-        <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-publish-form" }, method: :put, remote: true) do |f| %>
-          <%= f.hidden_field :set_anonymity, value: true, id: "anonymity-hidden-field" %>
+    <% if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil? %>
+      <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-publish-form" }, method: :put, remote: true) do |f| %>
+        <%= f.hidden_field :set_anonymity, value: true, id: "anonymity-hidden-field" %>
 
-          <button id="anonymize" class="link" type="button">
-            <%= t("continue_anonymous", scope: "decidim.privacy.partials.privacy_consent")%>
-          </button>
-        <% end %>
-      <% else %>
-        <button class="button button__sm md:button__lg button__transparent-secondary" data-dialog-close="publishAccountModal" type="button">
-          <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
+        <button id="anonymize" class="block mx-auto link underline underline-offset-2" type="button">
+          <%= t("continue_anonymous", scope: "decidim.privacy.partials.privacy_consent")%>
         </button>
       <% end %>
-    </div>
+    <% else %>
+      <button class="block mx-auto link underline underline-offset-2" data-dialog-close="publishAccountModal" type="button">
+        <%= t("do_not_agree", scope: "decidim.privacy.partials.privacy_consent")%>
+      </button>
+    <% end %>
   </div>
 <% end %>
