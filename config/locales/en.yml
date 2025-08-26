@@ -35,6 +35,10 @@ en:
             </p>
           save_privacy_settings: Save privacy settings
   decidim:
+    anonymous:
+      help:
+        anonymous_user: "Your profile is anonymous. If %{resource} is created as yourself instead of a user group, your name will be hidden
+                        until you publicize your profile."
     components:
       privacy:
         name: Privacy settings
@@ -180,11 +184,6 @@ en:
       anonymous_info_html: <i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i>
       private: Private participant
       private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
-    proposals:
-      proposals:
-        help:
-          anonymous_user: Your profile is anonymous. If proposal is created as yourself instead of a user group, your name will be hidden
-                          until you publicize your profile.
   devise:
     passwords:
       edit:

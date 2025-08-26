@@ -15,11 +15,7 @@
       <%= text_editor_for_proposal_body(form) %>
 
       <% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-        <% if Decidim::Privacy.anonymity_enabled && current_user.anonymous? %>
-          <div class="help-text"><%= t("anonymous_user", scope: "decidim.proposals.proposals.help") %></div>
-        <% end %>
-
-        <%= user_group_select_field form, :user_group_id %>
+        <%= user_group_select_field form, :user_group_id, help_text: (t("anonymous_user", scope: "decidim.anonymous.help", resource: "proposal") if Decidim::Privacy.anonymity_enabled && current_user.anonymous?) %>
       <% end %>
     </div>
 

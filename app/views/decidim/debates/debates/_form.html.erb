@@ -1,0 +1,16 @@
+<div class="form__wrapper">
+  <%= form.text_field :title %>
+  <%= text_editor_for_debate_description(form) %>
+
+  <% if current_component.has_subscopes? %>
+    <%= scopes_select_field form, :scope_id, root: current_component.scope %>
+  <% end %>
+
+  <% if current_participatory_space.categories&.any? %>
+    <%= form.categories_select :category_id, current_participatory_space.categories, include_blank: t(".select_a_category"), disable_parents: false %>
+  <% end %>
+
+  <% if @form.id.blank? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
+    <%= form.select :user_group_id, Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.map { |g| [g.name, g.id] }, prompt: current_user.name, help_text: (t("anonymous_user", scope: "decidim.anonymous.help", resource: "debate") if Decidim::Privacy.anonymity_enabled && current_user.anonymous?) %>
+  <% end %>
+</div>

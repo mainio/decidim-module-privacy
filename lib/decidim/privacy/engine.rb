@@ -191,6 +191,9 @@ module Decidim
           Decidim::EndorsableHelper.include(
             Decidim::Privacy::EndorsableHelperExtensions
           )
+          Decidim::UserGroupHelper.include(
+            Decidim::Privacy::UserGroupHelperExtensions
+          )
 
           # presenters
           Decidim::UserPresenter.include(
