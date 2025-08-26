@@ -15,7 +15,7 @@ module Decidim
         end
 
         def show
-          if model.is_a?(PrivateUser) || model.is_a?(Decidim::NilPresenter) || !model.is_a?(Decidim::UserGroup) || (model.is_a?(Decidim::UserPresenter) && model.private?)
+          if model.is_a?(PrivateUser) || model.is_a?(Decidim::NilPresenter)
             render :unnamed_user
           else
             render
@@ -30,14 +30,8 @@ module Decidim
           profile_path.present?
         end
 
-        def display_name
-          if model.is_a?(Decidim::NilPresenter)
-            t("decidim.profile.private")
-          elsif model.is_a?(Decidim::UserPresenter)
-            decidim_sanitize(author_name)
-          else
-            model.deleted? ? t("decidim.profile.deleted") : decidim_sanitize(author_name)
-          end
+        def avatar_url
+          ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")
         end
       end
     end
