@@ -12,8 +12,9 @@
         <div class="toggle__switch-trigger">
           <label for="anonymity" class="toggle__switch-toggle">
             <span>
+              <input type="hidden" name="anonymity" value="false">
               <input
-                <%== %(checked="checked") if @privacy_settings.anonymity %>
+                <%== %(checked="checked") if @privacy_settings.anonymity == "on" %>
                 id="anonymity"
                 type="checkbox"
                 name="anonymity"
