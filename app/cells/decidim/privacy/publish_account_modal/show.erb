@@ -22,7 +22,7 @@
 
     <div class="inline">
       <% if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil? %>
-        <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-form" }, method: :put, remote: true) do |f| %>
+        <%= decidim_form_for(Decidim::Privacy::AnonymityForm.new, url: decidim_privacy.update_anonymity_path, html: { class: "anonymity-form", id: "update-anonymity-publish-form" }, method: :put, remote: true) do |f| %>
           <%= f.hidden_field :set_anonymity, value: true, id: "anonymity-hidden-field" %>
 
           <button id="anonymize" class="link" type="button">

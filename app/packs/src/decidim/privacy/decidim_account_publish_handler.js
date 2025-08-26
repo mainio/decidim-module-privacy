@@ -24,7 +24,7 @@ $(() => {
       });
 
       document.querySelector("#anonymize").addEventListener("click", () => {
-        let anonymityForm = document.getElementById("update-anonymity-form");
+        let anonymityForm = document.getElementById("update-anonymity-publish-form");
         anonymityForm.requestSubmit();
       })
     }
@@ -222,7 +222,7 @@ $(() => {
   }
 
   if ($anonymityModal) {
-    $("#update-anonymity-form").closest("form").on("ajax:complete", (el) => {
+    $("#update-anonymity-publish-form").closest("form").on("ajax:complete", (el) => {
       let redirectDestination =  el.target.getAttribute("data-redirect-url");
       let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
 
@@ -238,7 +238,7 @@ $(() => {
 
   $("#update-privacy-form").closest("form").on("ajax:complete", (el) => {
     if ($anonymityModal) {
-      let anonymityForm = document.getElementById("update-anonymity-form");
+      let anonymityForm = document.getElementById("update-anonymity-publish-form");
       let anonymityHiddenField = document.getElementById("anonymity-hidden-field");
 
       anonymityHiddenField.value = false;
