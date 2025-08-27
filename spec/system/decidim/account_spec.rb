@@ -295,33 +295,33 @@ describe "Account" do
         it "disables publicity", :anonymity do
           visit "/privacy_settings"
 
-          expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
-          expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+          expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+          expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
         end
 
         context "when switching anonymity off" do
           it "keeps anonymity and publicity off" do
             visit "/privacy_settings"
-            expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
-            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
 
-            find("label[for='user_anonymity']").click
+            find("label[for='anonymity']").click
 
-            expect(page.find_by_id("user_anonymity", visible: :hidden)).not_to be_checked
-            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
           end
         end
 
         context "when switching publicity on" do
           it "turns anonymity off" do
             visit "/privacy_settings"
-            expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
-            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
 
-            find("label[for='user_published_at']").click
+            find("label[for='published_at']").click
 
-            expect(page.find_by_id("user_anonymity", visible: :hidden)).not_to be_checked
-            expect(page.find_by_id("user_published_at", visible: :hidden)).to be_checked
+            expect(page.find_by_id("anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).to be_checked
           end
         end
 
@@ -330,13 +330,13 @@ describe "Account" do
 
           it "turns publicity off" do
             visit "/privacy_settings"
-            expect(page.find_by_id("user_anonymity", visible: :hidden)).not_to be_checked
-            expect(page.find_by_id("user_published_at", visible: :hidden)).to be_checked
+            expect(page.find_by_id("anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).to be_checked
 
-            find("label[for='user_anonymity']").click
+            find("label[for='anonymity']").click
 
-            expect(page.find_by_id("user_anonymity", visible: :hidden)).to be_checked
-            expect(page.find_by_id("user_published_at", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
           end
         end
       end

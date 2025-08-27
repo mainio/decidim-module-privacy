@@ -14,7 +14,7 @@
             <span>
               <input type="hidden" name="anonymity" value="false">
               <input
-                <%== %(checked="checked") if @privacy_settings.anonymity == "on" %>
+                <%== %(checked="checked") if ActiveModel::Type::Boolean.new.cast(@privacy_settings.anonymity) %>
                 id="anonymity"
                 type="checkbox"
                 name="anonymity"
