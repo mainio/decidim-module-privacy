@@ -41,10 +41,10 @@ describe "Blogs" do
       it "shows endorse, follow and comments -buttons" do
         visit_blog_post
 
-        within ".view-side" do
-          expect(page).to have_button("Endorse")
-          expect(page).to have_css('[href="#comments"]')
-          expect(page).to have_css(".follow-button")
+        within ".blog__actions" do
+          expect(page).to have_link("Follow")
+          expect(page).to have_button("Like")
+          expect(page).to have_link("Comment")
         end
       end
     end

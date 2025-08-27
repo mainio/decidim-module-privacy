@@ -51,6 +51,8 @@ module Decidim
       #
       # user - the user to check for authorship
       def authored_by?(other_author)
+        return false if other_author.nil?
+
         return other_author.id == decidim_author_id if Decidim::Privacy.anonymity_enabled && other_author.anonymous?
 
         return false if author.nil?

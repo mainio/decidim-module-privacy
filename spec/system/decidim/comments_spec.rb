@@ -58,8 +58,7 @@ describe "Comments" do
 
         refresh
         within ".comment-thread" do
-          expect(page).to have_css(".author-data")
-          expect(page).to have_content("Unnamed participant")
+          expect(page).to have_css(".author__name", text: "Unnamed participant")
         end
       end
     end

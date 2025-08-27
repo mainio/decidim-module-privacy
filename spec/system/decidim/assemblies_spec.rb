@@ -74,7 +74,10 @@ describe "Assemblies" do
         visit_assembly
         click_on "Members"
 
-        expect(page).to have_content("MEMBERS (0)")
+        within ".decorator" do
+          expect(page).to have_content("Members")
+          expect(page).to have_css("span", text: "0")
+        end
       end
     end
 

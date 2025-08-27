@@ -24,11 +24,11 @@ describe "Accountability" do
         it "renders the linked proposals without the author name" do
           visit path
           expect(page).to have_content(translated(result.title))
-          page.scroll_to(find(".section-heading", text: "Proposals included in this result".upcase))
+          expect(page).to have_button("Included proposals")
 
-          expect(page).to have_css(".card--list__item", text: translated(proposal.title))
-          expect(page).to have_css(".card--list__item .author")
-          within ".author" do
+          expect(page).to have_css(".card__list-title", text: translated(proposal.title))
+          expect(page).to have_css(".card__list-content .author__container")
+          within ".author__name" do
             expect(page).to have_content("Unnamed participant")
           end
         end
@@ -40,10 +40,11 @@ describe "Accountability" do
         it "renders the linked proposals without the author name" do
           visit path
           expect(page).to have_content(translated(result.title))
-          page.scroll_to(find(".section-heading", text: "Proposals included in this result".upcase))
-          expect(page).to have_css(".card--list__item", text: translated(proposal.title))
-          expect(page).to have_css(".card--list__item .author")
-          within ".author" do
+          expect(page).to have_button("Included proposals")
+
+          expect(page).to have_css(".card__list-title", text: translated(proposal.title))
+          expect(page).to have_css(".card__list-content .author__container")
+          within ".author__name" do
             expect(page).to have_content("Unnamed participant")
           end
         end
