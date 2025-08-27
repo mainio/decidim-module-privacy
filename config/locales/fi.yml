@@ -33,6 +33,11 @@ fi:
               tietoa. Kuten nimimerkkiäsi, profiilikuvaasi, toimintaasi tällä alustalla, seuraajiasi tai ketä itse
               seuraat. Myös profiilisivusi on piilotettu, eikä sinua voida löytää alustan hakukentästä.
             </p>
+          profile_publicity_intro_private_html: |
+            <p>
+              Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
+              mutta se rajoittaa mitä voit tehdä tällä alustalla.
+            </p>
           save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
     anonymous:
@@ -66,11 +71,6 @@ fi:
         back: Edellinen sivu
       privacy_settings:
         show:
-          profile_publicity_intro_private_html: |
-            <p>
-              Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
-              mutta se rajoittaa mitä voit tehdä tällä alustalla.
-            </p>
           profile_publicity_html: |
             <h2 class="heading3 h3 pt-4">Profiilin julkisuus</h2>
             <p class="pt-4">
