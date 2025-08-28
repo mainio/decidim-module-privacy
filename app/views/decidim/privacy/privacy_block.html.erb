@@ -1,29 +1,35 @@
-<% if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?%>
-  <div class="text-center">
-    <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
-      <%= t("decidim.privacy.privacy_block.anonymous.title") %>
-    </span>
-    <p class="help-text pb-8">
-      <%= t("decidim.privacy.privacy_block.anonymous.content_html") %>
-    </p>
-    <div class="flex justify-center mb-4">
-      <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="anonymityModal" data-redirect-url=<%= request.original_url %>>
-        <%= t("decidim.privacy.privacy_block.anonymous.button") %>
-      </button>
-    </div>
+<% anonymity = Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil? %>
+
+<%= render layout:"layouts/decidim/shared/layout_center" do %>
+  <div class="text-center py-12">
+    <h1 class="h1 decorator inline-block text-center">
+      <% if anonymity %>
+        <%= t("decidim.privacy.privacy_block.anonymous.title") %>
+      <% else %>
+        <%= t("decidim.privacy.privacy_block.private.title") %>
+      <% end %>
+    </h1>
   </div>
-<% else %>
-  <div class="text-center">
-    <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
-      <%= t("decidim.privacy.privacy_block.private.title") %>
-    </span>
-    <p class="help-text pb-8">
-      <%= t("decidim.privacy.privacy_block.private.content_html") %>
-    </p>
-    <div class="flex justify-center mb-4">
-      <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
-        <%= t("decidim.privacy.privacy_block.private.button") %>
-      </button>
+
+  <div class="page__container">
+    <div class="editor-content">
+      <% if anonymity %>
+        <%= t("decidim.privacy.privacy_block.anonymous.content_html") %>
+
+        <div class="flex justify-center mt-8 mb-4">
+          <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="anonymityModal" data-redirect-url=<%= request.original_url %>>
+            <%= t("decidim.privacy.privacy_block.anonymous.button") %>
+          </button>
+        </div>
+      <% else %>
+        <%= t("decidim.privacy.privacy_block.private.content_html") %>
+
+        <div class="flex justify-center mt-8 mb-4">
+          <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
+            <%= t("decidim.privacy.privacy_block.private.button") %>
+          </button>
+        </div>
+      <% end %>
     </div>
   </div>
 <% end %>
