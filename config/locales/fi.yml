@@ -68,11 +68,24 @@ fi:
         back: Edellinen sivu
       privacy_settings:
         show:
+          anonymous_profile: Anonyymi profiili käytössä
           profile_publicity_html: |
             <h2 class="heading3 h3 pt-4">Profiilin julkisuus</h2>
             <p class="pt-4">
               Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
               kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
+            </p>
+            <p class="pt-2">
+              Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla
+              ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla,
+              seuraajasi ja keitä sinä seuraat.
+            </p>
+          profile_publicity_with_anonymity_html: |
+            <h2 class="heading3 h3 pt-4">Julkinen profiili</h2>
+            <p class="pt-4">
+              Julkisen profiilin kanssa toimit alustalla omalla nimelläsi ja nimesi näkyy tekemiesi kommenttien,
+              ehdotusten ja muun julkisen toimintasi yhteydessä. Sinulle luodaan myös oma profiilisivu, jonka kautta
+              alustan muut osallistujat näkevät, mitä olet tehnyt alustalla.
             </p>
             <p class="pt-2">
               Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla
@@ -87,13 +100,14 @@ fi:
               asetuksen käyttöönottoa varten, koska muiden osallistujien on löydettävä sinut tältä alustalta
               keskustellakseen kanssasi.
             </p>
+          enable_anonymity: Ota anonyymi profiili käyttöön
           enable_public_profile: Ota julkinen profiili käyttöön
-          public_profile: Julkinen profiili.
+          public_profile: Julkinen profiili käytössä
           enable_private_messaging: Ota yksityisviestit käyttöön
-          private_messaging: Salli yksityisviestit.
+          private_messaging: Salli yksityisviestit
           save_privacy_settings: Tallenna yksityisyysasetukset
           allow_public_contact: Ota julkinen yhteydenotto käyttöön
-          public_contact: Salli yhteydenotto.
+          public_contact: Salli yhteydenotto
         update:
           error: Yksityisyysasetusten päivittäminen epäonnistui.
           success: Yksityisyysasetusten päivitys onnistui.
