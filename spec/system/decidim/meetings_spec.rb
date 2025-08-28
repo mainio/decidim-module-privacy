@@ -79,25 +79,45 @@ describe "Meetings" do
   end
 
   context "when anonymity enabled", :anonymity do
-    context "when trying to create a new meeting" do
+    context "when creating a meeting" do
       let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
 
-      it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
-        visit_component
+      context "when anonymous while being part of a user group" do
+        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
+        let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
 
-        expect(page).to have_content("New meeting")
-        click_on "New meeting"
+        it "create as -field has a help text" do
+          visit_component
+          expect(page).to have_content("New meeting")
+          click_on "New meeting"
 
-        expect(page).to have_content("Profile publicity")
-        expect(page).to have_content(
-          "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
-        )
+          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Title")
+          expect(page).to have_content("Description")
+          within "label[for='meeting_user_group_id']" do
+            expect(page).to have_content("Your profile is anonymous. If meeting is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+          end
+        end
+      end
 
-        click_on "Continue anonymous"
+      context "when pressing create new meeting -button" do
+        it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
+          visit_component
 
-        expect(page).to have_content("Create Your Meeting")
-        expect(page).to have_content("Title")
-        expect(page).to have_content("Description")
+          expect(page).to have_content("New meeting")
+          click_on "New meeting"
+
+          expect(page).to have_content("Profile publicity")
+          expect(page).to have_content(
+            "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
+          )
+
+          click_on "Continue anonymous"
+
+          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Title")
+          expect(page).to have_content("Description")
+        end
       end
 
       context "when trying to visit url for creating a new meeting" do
@@ -131,6 +151,19 @@ describe "Meetings" do
             click_on meeting.title["en"]
 
             expect(page).to have_link("Edit")
+          end
+
+          context "when part of user group" do
+            let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
+
+            it "create as -field has a help text" do
+              visit_component
+              click_on meeting.title["en"]
+              click_on "Edit meeting"
+              within "label[for='meeting_user_group_id']" do
+                expect(page).to have_content("Your profile is anonymous. If meeting is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+              end
+            end
           end
         end
       end
