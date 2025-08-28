@@ -14,22 +14,22 @@ fi:
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
       shared:
         layout_center:
-          enable_anonymity: Salli anonyymisyys
+          enable_anonymity: Anonyymi profiili
           profile_publicity_intro_anonymous_html: |
             <p>
               Näiden yksityisyysasetusten avulla voi hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
               mutta se rajoittaa, mitä tietoja muut voivat sinusta nähdä. Jos päätät asettaa profiilisi yksityiseksi,
               se rajoittaa mitä voit tehdä tällä alustalla.
             </p>
-            <h2 class="heading3 h3">Anonyymisyys</h2>
+            <h2 class="heading3 h3 pt-4">Anonyymi profiili</h2>
             <p class="pt-4">
-              Profiilin anonyymisyys sallii tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
+              Anonyymi profiili sallii tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
               kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
             </p>
             <p class="pt-2">
               Kun profiilisi on anonyymi, muut osallistujat eivät voi nähdä nimeäsi tällä alustalla, tai muuta julkista
               tietoa. Kuten nimimerkkiäsi, profiilikuvaasi, toimintaasi tällä alustalla, seuraajiasi tai ketä itse
-              seuraat. Myös profiilisivusi on piilotettu, eikä sinua voida löytää alustan hakukentästä.
+              seuraat. Myös profiilisivusi on piilotettu, eikä sinua voida löytää alustan hausta.
             </p>
           profile_publicity_intro_private_html: |
             <p>
@@ -134,7 +134,7 @@ fi:
           content_html: |
             <p>
               Profiilisi on oletuksena anonyymi tällä alustalla. Julkaisemasi ideat ja kommentit näkyvät muille
-              anonyymeinä. Jos haluat toimia julkisesti, valitse vaihtoehto "Haluan, että profiilini on julkinen".
+              anonyymeinä. Jos haluat toimia julkisesti, valitse vaihtoehto "Haluan profiilini olevan julkinen".
             </p>
           continue: Jatka anonyyminä
           publicize: Haluan profiilini olevan julkinen
