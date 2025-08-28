@@ -5,7 +5,7 @@ module Decidim
     class PrivacySettingsForm < Form
       mimic :user
 
-      attribute :anonymity
+      attribute :anonymity, Boolean
       attribute :published_at, Boolean
       attribute :allow_private_messaging, Boolean
       attribute :allow_public_contact, Boolean

@@ -42,6 +42,7 @@
         <div class="toggle__switch-trigger">
           <label for="published_at" class="toggle__switch-toggle">
             <span>
+              <input type="hidden" name="published_at" value="false">
               <input
                 <%== %(checked="checked") if @privacy_settings.published_at %>
                 id="published_at"
