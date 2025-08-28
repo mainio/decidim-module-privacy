@@ -112,7 +112,7 @@ describe "Conversations" do
     it "renders a page telling the user that the account is private if trying to access 'conversations' page" do
       visit decidim.conversations_path
 
-      expect(page).to have_content("Private messaging is not enabled")
+      expect(page).to have_content("Private messaging is not enabled".upcase)
     end
 
     it "does not show 'conversations' link in the navbar" do
@@ -124,15 +124,16 @@ describe "Conversations" do
     let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
 
     it "does not have 'conversations' link in the user menu" do
-      click_link user.name
-
+      within "div.main-bar__dropdown-container" do
+        find_by_id("trigger-dropdown-account").click
+      end
       expect(page).to have_no_link("Conversations")
     end
 
     it "renders a page telling the user that the account is private if trying to access 'conversations' page" do
       visit decidim.conversations_path
 
-      expect(page).to have_content("PRIVATE MESSAGING IS NOT ENABLED")
+      expect(page).to have_content("Private messaging is not enabled".upcase)
     end
 
     it "does not show 'conversations' link in the navbar" do
@@ -224,7 +225,7 @@ describe "Conversations" do
           refresh
 
           expect(page).to have_content("Conversation with")
-          expect(page).to have_content("Anonymous participant")
+          expect(page).to have_content("Unnamed participant")
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
           expect(page).to have_content("You cannot have a conversation with an anonymous participant.")
@@ -310,7 +311,7 @@ describe "Conversations" do
 
         click_button "Next"
 
-        expect(page).to have_content("START A CONVERSATION")
+        expect(page).to have_content("Conversation with")
 
         fill_in "conversation_body", with: "Hello there receiver!"
 
@@ -322,7 +323,7 @@ describe "Conversations" do
         refresh
 
         expect(page).to have_content("Conversation with")
-        expect(page).to have_content("Anonymous participant")
+        expect(page).to have_content("Unnamed participant")
         expect(page).to have_content(group_chat_participant.name)
         expect(page).to have_content("Hello there receiver!")
         expect(page).to have_content("Hello there user!")

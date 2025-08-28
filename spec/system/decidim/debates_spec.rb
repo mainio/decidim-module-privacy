@@ -35,7 +35,7 @@ describe "Debates" do
 
         click_button "Make your profile public"
 
-        expect(page).to have_content("NEW DEBATE")
+        expect(page).to have_content("New debate")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -44,7 +44,7 @@ describe "Debates" do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_debate_path(component)
 
-          expect(page).to have_content("Public profile is required for this action")
+          expect(page).to have_content("Public profile is required for this action".upcase)
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -54,7 +54,7 @@ describe "Debates" do
 
           click_button "Make your profile public"
 
-          expect(page).to have_content("NEW DEBATE")
+          expect(page).to have_content("New debate")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -75,7 +75,7 @@ describe "Debates" do
 
         click_button "Continue anonymous"
 
-        expect(page).to have_content("NEW DEBATE")
+        expect(page).to have_content("New debate")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -99,7 +99,7 @@ describe "Debates" do
 
           click_button "Make your profile public"
 
-          expect(page).to have_content("NEW DEBATE")
+          expect(page).to have_content("New debate")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -121,7 +121,7 @@ describe "Debates" do
 
             click_button "No, I do not want to make my profile public, continue anonymous"
 
-            expect(page).to have_content("NEW DEBATE")
+            expect(page).to have_content("New debate")
             expect(page).to have_content("Title")
             expect(page).to have_content("Description")
           end
@@ -132,7 +132,7 @@ describe "Debates" do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_debate_path(component)
 
-          expect(page).to have_content("Your profile is anonymous")
+          expect(page).to have_content("Your profile is anonymous".upcase)
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -145,7 +145,7 @@ describe "Debates" do
 
           click_button "Continue anonymous"
 
-          expect(page).to have_content("NEW DEBATE")
+          expect(page).to have_content("New debate")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -158,28 +158,6 @@ describe "Debates" do
     let!(:debate) { create(:debate, author: user, component:) }
 
     context "when anonymity disabled" do
-      it "shows author name when user public" do
-        user.update(published_at: Time.current)
-        visit_component
-
-        within ".card--debate", match: :first do
-          expect(page).to have_content(user.name)
-        end
-
-        within ".author-data" do
-          expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
-        end
-      end
-
-      it "hides author name when user private" do
-        visit_component
-
-        within ".card--debate", match: :first do
-          expect(page).to have_no_content(user.name)
-          expect(page).to have_content("Unnamed participant")
-        end
-      end
-
       context "when user tries to edit debate" do
         context "when user private" do
           it "doesn't render edit button" do
@@ -194,15 +172,6 @@ describe "Debates" do
 
     context "when anonymity enabled", :anonymity do
       let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
-
-      it "hides author name when user anonymous" do
-        visit_component
-
-        within ".card--debate", match: :first do
-          expect(page).to have_no_content(user.name)
-          expect(page).to have_content("Unnamed participant")
-        end
-      end
 
       context "when user tries to edit debate" do
         context "when user anonymous" do

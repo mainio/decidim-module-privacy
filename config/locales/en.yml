@@ -14,7 +14,8 @@ en:
         message: "Your profile is set as public on this platform and other people can see details about you, such as your name, nickname, profile picture and your public activity on this platform. You can change the visibility of your profile through the privacy settings page. Your profile is available at:"
       shared:
         layout_two_col:
-          private_account: Private account
+          anonymous_account: You cannot have a conversation with an anonymous participant.
+          private_account: You cannot have a conversation with a private participant.
         layout_center:
           enable_anonymity: Enable anonymity
           profile_publicity_intro_anonymous_html: |
@@ -53,8 +54,6 @@ en:
     messaging:
       conversations:
         show:
-          anonymous_account: You cannot have a conversation with an anonymous participant.
-          private_account: You cannot have a conversation with a private participant.
           private_messaging_disabled: You cannot have a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new: You cannot start a conversation with a participant that has private messaging disabled.
           private_messaging_disabled_new_multiple: One or more of the participants in this conversation have private messaging disabled, which is why the conversation cannot be started.
@@ -65,7 +64,7 @@ en:
       message_block:
         title: Private messaging is not enabled
         content_html: |
-          <p class="text-lg pb-4">
+          <p class="text-center pb-4">
             To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
           </p>
         back: Previous page

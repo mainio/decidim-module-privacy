@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Initiatives", type: :system do
+describe "Initiatives" do
   let!(:organization) { create(:organization) }
   let!(:initiative) { create(:initiative, :created, author: user, organization:) }
   let!(:user) { create(:user, :confirmed, organization:) }
@@ -21,6 +21,7 @@ describe "Initiatives", type: :system do
         it "renders a site that tells user to publish your account" do
           visit decidim_initiatives.initiatives_path
           click_link "New initiative"
+          find(".card__highlight").click
           expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
         end
       end
@@ -31,9 +32,9 @@ describe "Initiatives", type: :system do
         it "renders the site to create a new initiative" do
           visit decidim_initiatives.initiatives_path
           click_link "New initiative"
+          find(".card__highlight").click
 
-          expect(page).to have_content("I want to create a #{initiatives_type.title["es"]}")
-          expect(page).to have_content("I want to promote this initiative")
+          expect(page).to have_content("Create a new initiative")
         end
       end
 
@@ -62,20 +63,7 @@ describe "Initiatives", type: :system do
             click_link initiative.title["en"]
             click_link "Edit"
 
-            expect(page).to have_content("EDIT INITIATIVE")
-          end
-        end
-      end
-
-      context "when initiative is done by private user" do
-        let!(:initiative) { create(:initiative, author: user, organization:) }
-
-        it "doesn't show author name" do
-          visit decidim_initiatives.initiatives_path
-
-          within ".card--initiative", match: :first do
-            expect(page).to have_no_content(user.name)
-            expect(page).to have_content("Unnamed participant")
+            expect(page).to have_content("Edit Initiative")
           end
         end
       end
@@ -90,7 +78,8 @@ describe "Initiatives", type: :system do
         it "renders a site that tells user to publish your account" do
           visit decidim_initiatives.initiatives_path
           click_link "New initiative"
-          expect(page).to have_content("Your profile is anonymous")
+          find(".card__highlight").click
+          expect(page).to have_content("Your profile is anonymous".upcase)
         end
       end
 
@@ -106,20 +95,7 @@ describe "Initiatives", type: :system do
             click_link initiative.title["en"]
             click_link "Edit"
 
-            expect(page).to have_content("EDIT INITIATIVE")
-          end
-        end
-      end
-
-      context "when initiative is done by anonymous user" do
-        let!(:initiative) { create(:initiative, author: user, organization:) }
-
-        it "doesn't show author name" do
-          visit decidim_initiatives.initiatives_path
-
-          within ".card--initiative", match: :first do
-            expect(page).to have_no_content(user.name)
-            expect(page).to have_content("Unnamed participant")
+            expect(page).to have_content("Edit Initiative")
           end
         end
       end

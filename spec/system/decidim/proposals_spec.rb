@@ -35,7 +35,7 @@ describe "Proposals", type: :system do
 
         click_button "Make your profile public"
 
-        expect(page).to have_content("CREATE YOUR PROPOSAL")
+        expect(page).to have_content("Create your proposal")
         expect(page).to have_content("Title")
         expect(page).to have_content("Body")
       end
@@ -44,7 +44,7 @@ describe "Proposals", type: :system do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_proposal_path(component)
 
-          expect(page).to have_content("Public profile is required for this action")
+          expect(page).to have_content("Public profile is required for this action".upcase)
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -54,7 +54,7 @@ describe "Proposals", type: :system do
 
           click_button "Make your profile public"
 
-          expect(page).to have_content("CREATE YOUR PROPOSAL")
+          expect(page).to have_content("Create your proposal")
           expect(page).to have_content("Title")
           expect(page).to have_content("Body")
         end
@@ -69,20 +69,16 @@ describe "Proposals", type: :system do
         user.update(published_at: Time.current)
         visit_component
 
-        within ".card--proposal", match: :first do
-          expect(page).to have_content(user.name)
-        end
-
-        within ".author-data" do
-          expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
+        within ".card__list-metadata" do
+          expect(page).to have_css(".author__avatar-container img[alt='Avatar: #{user.name}']")
         end
       end
 
       it "hides author name when user private" do
         visit_component
 
-        within ".card--proposal", match: :first do
-          expect(page).to have_content("Unnamed participant")
+        within ".card__list", match: :first do
+          expect(page).to have_css(".author__container .author__name", text: "Unnamed participant")
         end
       end
 
@@ -107,38 +103,36 @@ describe "Proposals", type: :system do
         visit_component
 
         click_link proposal.title["en"]
-        click_button "Endorse"
+        click_button "Like"
         refresh
 
-        within "#list-of-endorsements" do
-          expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
+        within ".endorsers-list__trigger" do
+          expect(page).to have_css(".author__avatar-container img[alt='Avatar: #{user.name}']")
         end
       end
 
       it "hides user's name in endorsements list if private" do
-        user.update(published_at: Time.current)
+        user.update!(published_at: Time.current)
         visit_component
 
         click_link proposal.title["en"]
-        click_button "Endorse"
+        click_button "Like"
         refresh
 
-        expect(page).to have_css("#list-of-endorsements")
-        user.update(published_at: nil)
+        expect(page).to have_css(".endorsers-list__trigger")
+        user.update!(published_at: nil)
         user.reload
 
         refresh
 
-        within "#list-of-endorsements" do
-          expect(page).to have_no_css("a[href='/profiles/#{user.nickname}']")
-        end
+        expect(page).to have_no_css(".endorsers-list__trigger")
       end
 
       it "hides endorsement if user private" do
         visit_component
 
         click_link proposal.title["en"]
-        expect(page).to have_no_button("Endorse")
+        expect(page).to have_no_button("Like")
       end
     end
 
@@ -151,20 +145,19 @@ describe "Proposals", type: :system do
         user.update(published_at: Time.current)
         visit_component
 
-        within ".card--proposal" do
-          expect(page).to have_content(user.name)
-          expect(page).to have_content("and 1 more")
+        within ".card__list-metadata" do
+          expect(page).to have_css(".author", count: 2)
+          expect(page).to have_css(".author__avatar-container img[alt='Avatar: #{coauthor.name}']")
+          expect(page).to have_css(".author__avatar-container img[alt='Avatar: #{user.name}']")
         end
       end
 
       it "shows collapsible list correctly if one user private" do
         visit_component
 
-        within ".card--proposal" do
-          expect(page).to have_content("and 1 more")
-          find(".collapsible-list__see-more", text: "(see more)").click
-          expect(page).to have_content(coauthor.name)
-          expect(page).to have_content("Unnamed participant")
+        within ".card__list" do
+          expect(page).to have_css(".author__container .author__name", text: "Unnamed participant")
+          expect(page).to have_css(".author img[alt='Avatar: #{coauthor.name}']")
         end
       end
     end
@@ -198,9 +191,9 @@ describe "Proposals", type: :system do
         it "hides the button to request access" do
           expect(page).to have_content(collaborative_draft.title)
           click_link collaborative_draft.title
-          within ".view-side" do
+          within ".layout-item__aside" do
             expect(page).to have_content("Version number")
-            expect(page).to have_no_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+            expect(page).to have_no_button("Request access")
           end
         end
       end
@@ -210,9 +203,9 @@ describe "Proposals", type: :system do
           user.update(published_at: Time.current)
           expect(page).to have_content(translated(collaborative_draft.title))
           click_link translated(collaborative_draft.title)
-          within ".view-side" do
+          within ".layout-item__aside" do
             expect(page).to have_content("Version number")
-            expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+            expect(page).to have_button("Request access")
           end
         end
       end
@@ -248,7 +241,7 @@ describe "Proposals", type: :system do
 
         click_button "Continue anonymous"
 
-        expect(page).to have_content("CREATE YOUR PROPOSAL")
+        expect(page).to have_content("Create your proposal")
         expect(page).to have_content("Title")
         expect(page).to have_content("Body")
       end
@@ -257,7 +250,7 @@ describe "Proposals", type: :system do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_proposal_path(component)
 
-          expect(page).to have_content("Your profile is anonymous")
+          expect(page).to have_content("Your profile is anonymous".upcase)
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -265,7 +258,7 @@ describe "Proposals", type: :system do
 
           click_button "Continue anonymous"
 
-          expect(page).to have_content("CREATE YOUR PROPOSAL")
+          expect(page).to have_content("Create your proposal")
           expect(page).to have_content("Title")
           expect(page).to have_content("Body")
         end
@@ -280,7 +273,7 @@ describe "Proposals", type: :system do
       it "hides author name when user anonymous" do
         visit_component
 
-        within ".card--proposal", match: :first do
+        within ".card__list", match: :first do
           expect(page).to have_content("Unnamed participant")
         end
       end
@@ -306,14 +299,14 @@ describe "Proposals", type: :system do
         visit_component
 
         click_link proposal.title["en"]
-        click_button "Endorse"
+        click_button "Like"
 
         refresh
 
-        expect(page).to have_css("#list-of-endorsements")
+        expect(page).to have_css(".endorsers-list__trigger")
 
-        within "#list-of-endorsements" do
-          expect(page).to have_no_css("a[href='/profiles/#{user.nickname}']")
+        within ".endorsers-list__trigger" do
+          expect(page).to have_css(".author__container .author__name", text: "Unnamed participant", visible: :all)
         end
       end
 
@@ -321,7 +314,7 @@ describe "Proposals", type: :system do
         visit_component
 
         click_link proposal.title["en"]
-        expect(page).to have_button("Endorse")
+        expect(page).to have_button("Like")
       end
     end
 
@@ -334,11 +327,10 @@ describe "Proposals", type: :system do
       it "shows collapsible list correctly if one user anonymous" do
         visit_component
 
-        within ".card--proposal" do
-          expect(page).to have_content("and 1 more")
-          find(".collapsible-list__see-more", text: "(see more)").click
-          expect(page).to have_content(coauthor.name)
-          expect(page).to have_content("Unnamed participant")
+        within ".card__list" do
+          expect(page).to have_css(".author", count: 2)
+          expect(page).to have_css(".author img[alt='Avatar: Unnamed participant']")
+          expect(page).to have_css(".author img[alt='Avatar: #{coauthor.name}']")
         end
       end
     end
@@ -372,9 +364,9 @@ describe "Proposals", type: :system do
         it "renders the button to request access" do
           expect(page).to have_content(collaborative_draft.title)
           click_link collaborative_draft.title
-          within ".view-side" do
+          within ".layout-item__aside" do
             expect(page).to have_content("Version number")
-            expect(page).to have_css(".button.expanded.button--sc.mt-s", text: "REQUEST ACCESS")
+            expect(page).to have_button("Request access")
           end
         end
       end

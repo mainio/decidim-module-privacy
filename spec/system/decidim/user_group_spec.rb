@@ -58,11 +58,11 @@ describe "User group", type: :system do
 
       before do
         expect(page).to have_content(user_group.name)
-        visit decidim.group_manage_users_path(user_group.nickname)
+        visit decidim.profile_group_members_path(user_group.nickname)
       end
 
       it "displays the requests only for public users" do
-        within ".list-request" do
+        within "#list-request" do
           expect(page).to have_link("Accept", count: 1)
           expect(page).to have_content(public_requester.name)
           expect(page).to have_no_content(private_requester.name)
@@ -106,14 +106,14 @@ describe "User group", type: :system do
 
       before do
         expect(page).to have_content(user_group.name)
-        visit decidim.group_manage_users_path(user_group.nickname)
+        visit decidim.profile_group_members_path(user_group.nickname)
       end
 
       it "displays the requests only for public users" do
-        within ".list-request" do
+        within "#list-request" do
           expect(page).to have_link("Accept", count: 1)
           expect(page).to have_content(public_requester.name)
-          expect(page).to have_no_content(anonymous_requester.name)
+          expect(page).to have_no_content(private_requester.name)
         end
       end
     end

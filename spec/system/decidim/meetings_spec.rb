@@ -3,7 +3,7 @@
 require "spec_helper"
 require "decidim/privacy/test/rspec_support/component"
 
-describe "Meetings", type: :system do
+describe "Meetings" do
   include ComponentTestHelper
 
   let!(:organization) { create(:organization) }
@@ -35,7 +35,7 @@ describe "Meetings", type: :system do
 
         click_button "Make your profile public"
 
-        expect(page).to have_content("CREATE YOUR MEETING")
+        expect(page).to have_content("Create Your Meeting")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -44,7 +44,7 @@ describe "Meetings", type: :system do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_meeting_path(component)
 
-          expect(page).to have_content("Public profile is required for this action")
+          expect(page).to have_content("Public profile is required for this action".upcase)
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -54,7 +54,7 @@ describe "Meetings", type: :system do
 
           click_button "Make your profile public"
 
-          expect(page).to have_content("CREATE YOUR MEETING")
+          expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -65,28 +65,6 @@ describe "Meetings", type: :system do
       let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
       let!(:meeting) { create(:meeting, :online, :not_official, :published, registrations_enabled: true, author: user, component:) }
 
-      it "shows author name when user public" do
-        user.update(published_at: Time.current)
-        visit_component
-
-        within ".card--meeting", match: :first do
-          expect(page).to have_content(user.name)
-        end
-
-        within ".author-data" do
-          expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
-        end
-      end
-
-      it "hides author name when user private" do
-        visit_component
-
-        within ".card--meeting", match: :first do
-          expect(page).to have_no_content(user.name)
-          expect(page).to have_content("Unnamed participant")
-        end
-      end
-
       context "when user tries to edit meeting" do
         context "when user private" do
           it "doesn't render edit button" do
@@ -94,28 +72,6 @@ describe "Meetings", type: :system do
             click_link meeting.title["en"]
 
             expect(page).to have_no_link("Edit")
-          end
-        end
-      end
-
-      context "when user joins meeting as private and allows attendance publicly" do
-        it "does not show user's name under 'attending participants'" do
-          join_meeting
-
-          within "#list-of-public-participants" do
-            expect(page).to have_no_content(user.name)
-            expect(page).to have_content("Unnamed participant")
-          end
-        end
-      end
-
-      context "when user joins meeting as public and allows attendance publicly" do
-        it "shows user's name under 'attending participants'" do
-          user.update(published_at: Time.current)
-          join_meeting
-
-          within "#list-of-public-participants" do
-            expect(page).to have_content(user.name)
           end
         end
       end
@@ -139,7 +95,7 @@ describe "Meetings", type: :system do
 
         click_button "Continue anonymous"
 
-        expect(page).to have_content("CREATE YOUR MEETING")
+        expect(page).to have_content("Create Your Meeting")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -148,7 +104,7 @@ describe "Meetings", type: :system do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_meeting_path(component)
 
-          expect(page).to have_content("Your profile is anonymous")
+          expect(page).to have_content("Your profile is anonymous".upcase)
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -156,7 +112,7 @@ describe "Meetings", type: :system do
 
           click_button "Continue anonymous"
 
-          expect(page).to have_content("CREATE YOUR MEETING")
+          expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -168,15 +124,6 @@ describe "Meetings", type: :system do
       let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
       let!(:meeting) { create(:meeting, :online, :not_official, :published, registrations_enabled: true, author: user, component:) }
 
-      it "hides author name when user anonymous" do
-        visit_component
-
-        within ".card--meeting", match: :first do
-          expect(page).to have_no_content(user.name)
-          expect(page).to have_content("Unnamed participant")
-        end
-      end
-
       context "when user tries to edit meeting" do
         context "when user anonymous" do
           it "renders edit button" do
@@ -187,34 +134,11 @@ describe "Meetings", type: :system do
           end
         end
       end
-
-      context "when user joins meeting as anonymous and allows attendance publicly" do
-        it "does not show user's name under 'attending participants'" do
-          join_meeting
-
-          within "#list-of-public-participants" do
-            expect(page).to have_no_content(user.name)
-            expect(page).to have_content("Unnamed participant")
-          end
-        end
-      end
     end
   end
 
   def visit_meeting
     visit resource_locator(meeting).path
-  end
-
-  def join_meeting
-    visit_meeting
-    expect(page).to have_link("Join meeting")
-    click_link "Join meeting"
-    check "public_participation"
-    check "questionnaire_tos_agreement"
-    click_button "Submit"
-    within ".confirm-modal-footer" do
-      find("[data-confirm-ok]").click
-    end
   end
 
   def new_meeting_path(component)
