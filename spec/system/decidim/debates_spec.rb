@@ -62,22 +62,44 @@ describe "Debates" do
     end
 
     context "when anonymity enabled", :anonymity do
-      it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
-        visit_component
+      context "when creating a debate" do
+        context "when anonymous while being part of a user group" do
+          let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
+          let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
 
-        expect(page).to have_content("New debate")
-        click_on "New debate"
+          it "create as -field has a help text" do
+            visit_component
+            expect(page).to have_content("New debate")
+            click_on "New debate"
 
-        expect(page).to have_css("#anonymityModal")
-        expect(page).to have_content(
-          "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
-        )
+            expect(page).to have_content("New debate")
+            expect(page).to have_content("Title")
+            expect(page).to have_content("Description")
+            within "label[for='debate_user_group_id']" do
+              expect(page).to have_content("Your profile is anonymous. If debate is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+            end
+          end
+        end
 
-        click_on "Continue anonymous"
+        context "when pressing create new debate -button" do
+          it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
+            visit_component
 
-        expect(page).to have_content("New debate")
-        expect(page).to have_content("Title")
-        expect(page).to have_content("Description")
+            expect(page).to have_content("New debate")
+            click_on "New debate"
+
+            expect(page).to have_css("#anonymityModal")
+            expect(page).to have_content(
+              "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
+            )
+
+            click_on "Continue anonymous"
+
+            expect(page).to have_content("New debate")
+            expect(page).to have_content("Title")
+            expect(page).to have_content("Description")
+          end
+        end
       end
 
       context "when 'I want my profile to be public' is pressed" do

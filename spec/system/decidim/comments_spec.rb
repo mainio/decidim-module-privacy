@@ -88,18 +88,34 @@ describe "Comments" do
     end
 
     context "when anonymity enabled", :anonymity do
-      it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
-        comment_blog_post
+      context "when anonymous and part of a user group" do
+        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
+        let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
 
-        expect(page).to have_content("Profile publicity")
-        expect(page).to have_content(
-          "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
-        )
+        it "create as -field has a help text" do
+          visit_component
+          click_on post.title["en"]
 
-        click_on "Continue anonymous"
+          within ".new_comment" do
+            expect(page).to have_css(".help-text", text: "Your profile is anonymous. If comment is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+          end
+        end
+      end
 
-        expect(page).to have_content("Hello there!")
-        expect(page).to have_content("Unnamed participant")
+      context "when posting a comment" do
+        it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
+          comment_blog_post
+
+          expect(page).to have_content("Profile publicity")
+          expect(page).to have_content(
+            "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
+          )
+
+          click_on "Continue anonymous"
+
+          expect(page).to have_content("Hello there!")
+          expect(page).to have_content("Unnamed participant")
+        end
       end
 
       context "when 'I want my profile to be public' is pressed" do
