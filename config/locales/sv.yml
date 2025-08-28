@@ -23,13 +23,14 @@ sv:
             </p>
             <h2 class="heading3 h3 pt-4">Anonymity</h2>
             <p class="pt-4">
-              Making your account anonymous still allows you to perform public activities on this platform, such as
+              Making your profile anonymous allows you to perform certain public activities on this platform, such as
               sending comments, participating in discussions, creating proposals, etc.
             </p>
             <p class="pt-2">
               While being anonymous, other participants cannot see your name, or other public information, such as your
               nickname or profile photo (avatar), your public activity on this platform, your followers or who you
-              follow. Your public profile page is also inaccessible and you cannot be found through the search of Decidim.
+              follow. Your public profile page is also inaccessible and you cannot be found through the platform search
+              feature.
             </p>
           profile_publicity_intro_private_html: |
             <p>
