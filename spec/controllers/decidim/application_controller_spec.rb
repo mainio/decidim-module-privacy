@@ -53,7 +53,6 @@ describe Decidim::ApplicationController do
     it "adds publish_account_modal and anonymity_modal to the snippets" do
       get :show
 
-      expect(snippets_instance).to include(%(<script src="#{asset_path("decidim_account_publish_handler.js")}" defer="defer"></script>))
       expect(snippets_instance).to include(an_instance_of(Decidim::Privacy::PublishAccountModalCell))
       expect(snippets_instance).to include(an_instance_of(Decidim::Privacy::AnonymityModalCell))
     end

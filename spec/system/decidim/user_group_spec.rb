@@ -113,7 +113,7 @@ describe "User group", type: :system do
         within "#list-request" do
           expect(page).to have_link("Accept", count: 1)
           expect(page).to have_content(public_requester.name)
-          expect(page).to have_no_content(private_requester.name)
+          expect(page).to have_no_content(anonymous_requester.name)
         end
       end
     end

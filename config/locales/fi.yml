@@ -13,9 +13,6 @@ fi:
         profile: Oma julkinen profiili
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
       shared:
-        layout_two_col:
-          anonymous_account: Et voi keskustella anonyymien osallistujien kanssa.
-          private_account: Et voi keskustella yksityisten osallistujien kanssa.
         layout_center:
           enable_anonymity: Salli anonyymisyys
           profile_publicity_intro_anonymous_html: |
@@ -54,6 +51,8 @@ fi:
     messaging:
       conversations:
         show:
+          anonymous_account: Et voi keskustella anonyymien osallistujien kanssa.
+          private_account: Et voi keskustella yksityisten osallistujien kanssa.
           private_messaging_disabled: Et voi keskustella sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
           private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
           private_messaging_disabled_new_multiple: Yhdellä tai useammalla tämän keskustelun osanottajalla on yksityisviestit pois käytöstä, minkä vuoksi keskustelua ei voi aloittaa.

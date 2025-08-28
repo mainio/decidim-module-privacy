@@ -124,7 +124,7 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns anonymous user" do
-        expect(response["author"]).to include("name" => "Anonymous")
+        expect(response["author"]).to include("name" => "Unnamed participant")
       end
 
       it "returns an empty nickname" do

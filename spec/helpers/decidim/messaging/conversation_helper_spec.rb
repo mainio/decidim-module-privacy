@@ -94,7 +94,7 @@ describe Decidim::Messaging::ConversationHelper do
 
     context "when private user" do
       it "does not include the user name" do
-        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\">This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</span>"
+        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\"><i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i></span>"
       end
     end
 

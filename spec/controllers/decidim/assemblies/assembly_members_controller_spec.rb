@@ -65,7 +65,7 @@ describe Decidim::Assemblies::AssemblyMembersController do
 
       context "when assembly has some anonymous members", :anonymity do
         before do
-          member1.user.update!(anonymity: true)
+          first_member.user.update!(anonymity: true)
         end
 
         it "displays an empty array of members" do
