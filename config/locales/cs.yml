@@ -71,6 +71,7 @@ cs:
         back: Předchozí strana
       privacy_settings:
         show:
+          anonymous_profile: Enable anonymous profile
           profile_publicity_html: |
             <h2 class="heading3 h3 pt-4">Profile publicity</h2>
             <p class="pt-4">
@@ -82,17 +83,30 @@ cs:
               see other public information about you, such as your nickname and profile photo (avatar), your public
               activity on this platform, your followers and who you follow.
             </p>
+          profile_publicity_with_anonymity_html: |
+            <h2 class="heading3 h3 pt-4">Public profile</h2>
+            <p class="pt-4">
+              When your profile is public, you perform activities on this platform with your own name which appears with
+              your comments, proposals and other public activity. Also a public profile is created about you where other
+              platform participants can see your activity on this platform.
+            </p>
+            <p class="pt-2">
+              When you make your profile public, other participants can see your name publicly on this platform and also
+              see other public information about you, such as your nickname and profile photo (avatar), your public
+              activity on this platform, your followers and who you follow.
+            </p>
           private_messaging_html: |
             <h2 class="heading5 h5">Soukromé zprávy</h2>
             <p>Toto nastavení umožňuje komunikovat s ostatními účastníky na této platformě. Ostatní účastníci vám mohou posílat soukromé zprávy a můžete je poslat i ostatním. Aby bylo možné povolit tuto funkci, Váš profil musí být veřejný,  protože vás ostatní lidé potřebují najít na této platformě, aby s vámi mohli konverzovat.
             </p>
+          enable_anonymity: Enable anonymous profile
           enable_public_profile: Povolit veřejný profil
-          public_profile: I want my profile to be public to other users.
+          public_profile: Public profile enabled
           enable_private_messaging: Povolit soukromé zprávy
-          private_messaging: I want to be able to message other public users.
+          private_messaging: Allow private messages
           save_privacy_settings: Uložit nastavení soukromí
-          allow_public_contact: Dovolit, aby mi někdo poslal přímou zprávu, i když je nesleduji.
-          public_contact: Umožnit komukoli poslat mi přímou zprávu, i když je nesleduji.
+          allow_public_contact: Enable public contacting
+          public_contact: Allow public contacting
         update:
           error: Při aktualizaci nastavení soukromí došlo k chybě.
           success: Nastavení ochrany soukromí bylo úspěšně aktualizováno.
