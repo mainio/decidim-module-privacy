@@ -69,11 +69,24 @@ sv:
         back: Föregående sida
       privacy_settings:
         show:
+          anonymous_profile: Enable anonymous profile
           profile_publicity_html: |
             <h2 class="heading3 h3 pt-4">Profile publicity</h2>
             <p class="pt-4">
               Making your profile public allows you to perform public activities on this platform, such as sending
               comments, participating in discussions, creating proposals, etc.
+            </p>
+            <p class="pt-2">
+              When you make your profile public, other participants can see your name publicly on this platform and also
+              see other public information about you, such as your nickname and profile photo (avatar), your public
+              activity on this platform, your followers and who you follow.
+            </p>
+          profile_publicity_with_anonymity_html: |
+            <h2 class="heading3 h3 pt-4">Public profile</h2>
+            <p class="pt-4">
+              When your profile is public, you perform activities on this platform with your own name which appears with
+              your comments, proposals and other public activity. Also a public profile is created about you where other
+              platform participants can see your activity on this platform.
             </p>
             <p class="pt-2">
               When you make your profile public, other participants can see your name publicly on this platform and also
@@ -88,13 +101,14 @@ sv:
               aktivera den här funktionen eftersom andra människor behöver hitta dig från denna plattform för att
               kunna ha en konversation med dig.
             </p>
+          enable_anonymity: Enable anonymous profile
           enable_public_profile: Aktivera offentlig profil
-          public_profile: I want my profile to be public to other users.
+          public_profile: Public profile enabled
           enable_private_messaging: Aktivera direktmeddelanden
-          private_messaging: I want to be able to message other public users.
+          private_messaging: Allow private messages
           save_privacy_settings: Spara integritetsinställningar
-          allow_public_contact: Tillåt alla att skicka direktmeddelanden till mig, även de som jag inte följer.
-          public_contact: Allow anyone to send me a direct message, even if I do not follow them.
+          allow_public_contact: Enable public contacting
+          public_contact: Allow public contacting
         update:
           error: Det gick inte att uppdatera dina integritetsinställningar.
           success: Dina integritetsinställningar har uppdaterats.
