@@ -70,11 +70,24 @@ en:
         back: Previous page
       privacy_settings:
         show:
+          anonymous_profile: Enable anonymous profile
           profile_publicity_html: |
             <h2 class="heading3 h3 pt-4">Profile publicity</h2>
             <p class="pt-4">
               Making your profile public allows you to perform public activities on this platform, such as sending
               comments, participating in discussions, creating proposals, etc.
+            </p>
+            <p class="pt-2">
+              When you make your profile public, other participants can see your name publicly on this platform and also
+              see other public information about you, such as your nickname and profile photo (avatar), your public
+              activity on this platform, your followers and who you follow.
+            </p>
+          profile_publicity_with_anonymity_html: |
+            <h2 class="heading3 h3 pt-4">Public profile</h2>
+            <p class="pt-4">
+              When your profile is public, you perform activities on this platform with your own name which appears with
+              your comments, proposals and other public activity. Also a public profile is created about you where other
+              platform participants can see your activity on this platform.
             </p>
             <p class="pt-2">
               When you make your profile public, other participants can see your name publicly on this platform and also
@@ -89,13 +102,14 @@ en:
               order to enable this feature because other people need to find you on this platform in order to have a
               conversation with you.
             </p>
+          enable_anonymity: Enable anonymous profile
           enable_public_profile: Enable public profile
-          public_profile: I want my profile to be public to other users.
+          public_profile: Public profile enabled
           enable_private_messaging: Enable private messaging
-          private_messaging: I want to be able to message other public users.
+          private_messaging: Allow private messages
           save_privacy_settings: Save privacy settings
-          allow_public_contact: Allow public contact
-          public_contact: Allow anyone to send me a direct message, even if I do not follow them.
+          allow_public_contact: Enable public contacting
+          public_contact: Allow public contacting
         update:
           error: There was a problem updating your privacy settings.
           success: Your privacy settings were successfully updated.

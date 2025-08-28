@@ -7,7 +7,7 @@
       <%= t(".profile_publicity_intro_anonymous_html") %>
       <div class="form__wrapper pt-4">
         <label>
-          <%= t(".enable_anonymity") %>
+          <%= t("enable_anonymity", scope: "decidim.privacy.privacy_settings.show") %>
         </label>
         <div class="toggle__switch-trigger">
           <label for="anonymity" class="toggle__switch-toggle">
@@ -25,15 +25,16 @@
               <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
             </span>
             <span class="toggle__switch-trigger-text font-semibold">
-              <%= t(".enable_anonymity") %>
+              <%= t("anonymous_profile", scope: "decidim.privacy.privacy_settings.show") %>
             </span>
           </label>
         </div>
       </div>
+      <%= t("profile_publicity_with_anonymity_html", scope: "decidim.privacy.privacy_settings.show") %>
     <% else %>
       <%= t(".profile_publicity_intro_private_html") %>
+      <%= t("profile_publicity_html", scope: "decidim.privacy.privacy_settings.show") %>
     <% end %>
-    <%= t("profile_publicity_html", scope: "decidim.privacy.privacy_settings.show") %>
     <div class="form__wrapper pt-4">
       <label>
         <%= t("enable_public_profile", scope: "decidim.privacy.privacy_settings.show") %>
