@@ -225,42 +225,62 @@ describe "Proposals" do
   end
 
   context "when anonymity enabled", :anonymity do
-    context "when trying to create a new proposal" do
+    context "when creating a proposal" do
       let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
 
-      it "gives you a popup for consent, which has to be accepted in order to proceed" do
-        visit_component
+      context "when anonymous while being part of a user group" do
+        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
+        let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
 
-        expect(page).to have_content("New proposal")
-        click_on "New proposal"
+        it "create as -field has a help text" do
+          visit_component
+          expect(page).to have_content("New proposal")
+          click_on "New proposal"
 
-        expect(page).to have_content("Profile publicity")
-        expect(page).to have_content(
-          "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
-        )
-
-        click_on "Continue anonymous"
-
-        expect(page).to have_content("Create your proposal")
-        expect(page).to have_content("Title")
-        expect(page).to have_content("Body")
+          expect(page).to have_content("Create your proposal")
+          expect(page).to have_content("Title")
+          expect(page).to have_content("Body")
+          within "label[for='proposal_user_group_id']" do
+            expect(page).to have_content("Your profile is anonymous. If proposal is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+          end
+        end
       end
 
-      context "when trying to visit url for creating a new proposal" do
-        it "renders a custom page with a prompt which has to be accepted in order to proceed" do
-          visit new_proposal_path(component)
+      context "when pressing create new proposal -button" do
+        it "gives you a popup for consent, which has to be accepted in order to proceed" do
+          visit_component
 
-          expect(page).to have_content("Your profile is anonymous".upcase)
-          expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
-          expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
+          expect(page).to have_content("New proposal")
+          click_on "New proposal"
 
-          click_on "Continue"
+          expect(page).to have_content("Profile publicity")
+          expect(page).to have_content(
+            "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
+          )
 
           click_on "Continue anonymous"
 
           expect(page).to have_content("Create your proposal")
           expect(page).to have_content("Title")
           expect(page).to have_content("Body")
+        end
+
+        context "when trying to visit url for creating a new proposal" do
+          it "renders a custom page with a prompt which has to be accepted in order to proceed" do
+            visit new_proposal_path(component)
+
+            expect(page).to have_content("Your profile is anonymous".upcase)
+            expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
+            expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
+
+            click_on "Continue"
+
+            click_on "Continue anonymous"
+
+            expect(page).to have_content("Create your proposal")
+            expect(page).to have_content("Title")
+            expect(page).to have_content("Body")
+          end
         end
       end
     end
@@ -278,13 +298,26 @@ describe "Proposals" do
         end
       end
 
-      context "when user tries to edit proposal" do
+      context "when user edits proposal" do
         context "when user anonymous" do
           it "renders edit button" do
             visit_component
             click_on proposal.title["en"]
 
             expect(page).to have_link("Edit proposal")
+          end
+
+          context "when part of user group" do
+            let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
+
+            it "create as -field has a help text" do
+              visit_component
+              click_on proposal.title["en"]
+              click_on "Edit proposal"
+              within "label[for='proposal_user_group_id']" do
+                expect(page).to have_content("Your profile is anonymous. If proposal is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+              end
+            end
           end
         end
       end
