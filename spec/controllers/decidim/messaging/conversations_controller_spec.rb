@@ -38,6 +38,12 @@ describe Decidim::Messaging::ConversationsController do
       end
     end
 
+    context "when is anonymous user", :anonymity do
+      it "renders 404 error" do
+        expect(subject).to render_template("decidim/privacy/message_block")
+      end
+    end
+
     context "when messaging is disabled" do
       let!(:user) { create(:user, :confirmed, organization:, allow_private_messaging: false, published_at: Time.current) }
 
@@ -59,6 +65,17 @@ describe Decidim::Messaging::ConversationsController do
         subject { get :new, params: { recipient_id: user1.id } }
 
         let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
+
+        it "redirects to previous 2 participant created conversation" do
+          expect(subject).to redirect_to profile_path(user.nickname)
+        end
+      end
+
+      context "when conversation with an anonymous user", :anonymity do
+        subject { get :new, params: { recipient_id: user1.id } }
+
+        let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
+        let(:user1) { create(:user, :anonymous, organization:) }
 
         it "redirects to previous 2 participant created conversation" do
           expect(subject).to redirect_to profile_path(user.nickname)

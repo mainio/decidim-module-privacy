@@ -6,6 +6,8 @@ module Decidim
   # This namespace holds the logic of the `Privacy` component. This component
   # allows users to create privacy in a participatory space.
   module Privacy
+    include ActiveSupport::Configurable
+
     autoload :OrmAdapter, "decidim/privacy/orm_adapter"
     autoload :CommentSerializerExtensions, "decidim/privacy/comment_serializer_extensions"
 
@@ -24,6 +26,10 @@ module Decidim
       return false if ENV["DEV_APP_GENERATION"] == "true"
 
       true
+    end
+
+    config_accessor :anonymity_enabled do
+      false
     end
   end
 end

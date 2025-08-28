@@ -66,6 +66,21 @@ describe "Assemblies" do
       end
     end
 
+    context "when member anonymous", :anonymity do
+      let(:user) { create(:user, :anonymous, :confirmed, organization:) }
+      let!(:assembly_member) { create(:assembly_member, assembly:, user:) }
+
+      it "shows empty list" do
+        visit_assembly
+        click_on "Members"
+
+        within ".decorator" do
+          expect(page).to have_content("Members")
+          expect(page).to have_css("span", text: "0")
+        end
+      end
+    end
+
     context "when member public" do
       let!(:user) { create(:user, :confirmed, :published, organization:) }
       let!(:assembly_member) { create(:assembly_member, assembly:, user:) }
@@ -81,11 +96,13 @@ describe "Assemblies" do
       end
     end
 
-    context "when one member public and one member private" do
+    context "when one member public, one member private and one member anonymous" do
       let!(:public_member) { create(:user, :confirmed, :published, organization:) }
       let!(:private_member) { create(:user, :confirmed, organization:) }
+      let!(:anonymous_member) { create(:user, :anonymous, :confirmed, organization:) }
       let!(:public_assembly_member) { create(:assembly_member, assembly:, user: public_member) }
       let!(:private_assembly_member) { create(:assembly_member, assembly:, user: private_member) }
+      let!(:anonymous_assembly_member) { create(:assembly_member, assembly:, user: anonymous_member) }
 
       it "shows list with one user" do
         visit_assembly
@@ -114,6 +131,20 @@ describe "Assemblies" do
 
       context "when user group has private members" do
         let!(:user) { create(:user, :confirmed, organization:) }
+        let(:user_group) { create(:user_group, :confirmed, :verified, users: [user], published_at: Time.current, organization:) }
+
+        it "shows no members" do
+          visit decidim.profile_path(user_group.nickname)
+
+          within "#content" do
+            expect(page).to have_content("This group does not have any public members.")
+            expect(page).to have_no_content(user.name)
+          end
+        end
+      end
+
+      context "when user group has anonymous members" do
+        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
         let(:user_group) { create(:user_group, :confirmed, :verified, users: [user], published_at: Time.current, organization:) }
 
         it "shows no members" do

@@ -13,11 +13,35 @@ fi:
         profile: Oma julkinen profiili
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
       shared:
-        layout_two_col:
-          private_account: Yksityinen tili
         layout_center:
+          enable_anonymity: Salli anonyymisyys
+          profile_publicity_intro_anonymous_html: |
+            <p>
+              Näiden yksityisyysasetusten avulla voi hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
+              mutta se rajoittaa, mitä tietoja muut voivat sinusta nähdä. Jos päätät asettaa profiilisi yksityiseksi,
+              se rajoittaa mitä voit tehdä tällä alustalla.
+            </p>
+            <h2 class="heading3 h3">Anonyymisyys</h2>
+            <p class="pt-4">
+              Profiilin anonyymisyys sallii tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
+              kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
+            </p>
+            <p class="pt-2">
+              Kun profiilisi on anonyymi, muut osallistujat eivät voi nähdä nimeäsi tällä alustalla, tai muuta julkista
+              tietoa. Kuten nimimerkkiäsi, profiilikuvaasi, toimintaasi tällä alustalla, seuraajiasi tai ketä itse
+              seuraat. Myös profiilisivusi on piilotettu, eikä sinua voida löytää alustan hakukentästä.
+            </p>
+          profile_publicity_intro_private_html: |
+            <p>
+              Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
+              mutta se rajoittaa mitä voit tehdä tällä alustalla.
+            </p>
           save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
+    anonymous:
+      help:
+        anonymous_user: Profiilisi on anonyymi. Jos luot ehdotuksen omana itsenäsi käyttäjäryhmän sijaan, nimesi
+                        piilotetaan kunnes julkistat profiilisi.
     components:
       privacy:
         name: Yksityisyysasetukset
@@ -27,6 +51,7 @@ fi:
     messaging:
       conversations:
         show:
+          anonymous_account: Et voi keskustella anonyymien osallistujien kanssa.
           private_account: Et voi keskustella yksityisten osallistujien kanssa.
           private_messaging_disabled: Et voi keskustella sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
           private_messaging_disabled_new: Et voi aloittaa keskustelua sellaisen osallistujan kanssa, joka on estänyt yksityisviestit.
@@ -38,23 +63,19 @@ fi:
       message_block:
         title: Yksityisviestit eivät ole käytössä
         content_html: |
-          <p class="text-lg pb-4">
+          <p class="text-center pb-4">
             Käyttääksesi tätä toimintoa, sinun täytyy ottaa yksityisviestit käyttöön tilisi asetusten alta löytyvien "yksityisyysasetusten" kautta.
           </p>
         back: Edellinen sivu
       privacy_settings:
         show:
           profile_publicity_html: |
-            <p>
-              Näiden yksityisyysasetusten avulla voit hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyymina,
-              mutta se rajoittaa, mitä voit tehdä tällä alustalla.
-            </p>
             <h2 class="heading3 h3 pt-4">Profiilin julkisuus</h2>
             <p class="pt-4">
               Profiilin julkaiseminen mahdollistaa tiettyjen julkisten toimintojen suorittamisen tällä alustalla, kuten
               kommentoinnin, keskusteluihin osallistumisen, ehdotusten tekemisen, jne.
             </p>
-            <p>
+            <p class="pt-2">
               Tekemällä profiilistasi julkisen, muut osallistujat voivat nähdä nimesi julkisesti tällä alustalla
               ja myös muuta julkista tietoa sinusta, kuten nimimerkkisi, profiilikuvasi, julkisen toimintasi tällä alustalla,
               seuraajasi ja keitä sinä seuraat.
@@ -78,21 +99,45 @@ fi:
           error: Yksityisyysasetusten päivittäminen epäonnistui.
           success: Yksityisyysasetusten päivitys onnistui.
       privacy_block:
-        title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
-        content_html: |
-          <p class="text-lg">
-            Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii
-            muiden osallistujien nähdä sinua koskevia tietoja.
-          </p>
-          <p class="text-lg py-4">
-            <strong>
-              Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
-            </strong>
-          </p>
-        button: "Julkaise profiilisi"
+        private:
+          title: Profiilisi tulee olla julkinen suorittaaksesi tämän toiminnon
+          content_html: |
+            <p class="text-center">
+              Yrität päästä sivulle, joka vaatii julkisen profiilin. Profiilisi julkaiseminen sallii
+              muiden osallistujien nähdä sinua koskevia tietoja.
+            </p>
+            <p class="text-center my-4">
+              <strong>
+                Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
+              </strong>
+            </p>
+          button: "Julkaise profiilisi"
+        anonymous:
+          title: Profiilisi on anonyymi
+          content_html: |
+            <p class="text-center">
+              Olet siirtymässä sivulle anonyymina. Jos haluat muiden käyttäjien näkevän tietoja sinusta, voit myös
+              tehdä profiilistasi julkisen.
+            </p>
+            <p class="text-center my-4">
+              <strong>
+                Saat lisätietoja profiilisi julkaisemisesta alla olevan painikkeen painamisen jälkeen.
+              </strong>
+            </p>
+          button: "Jatka"
       private_account:
         unnamed_user: Nimetön osallistuja
       partials:
+        anonymity_prompt:
+          title: Profiilin julkisuus
+          close_modal: Sulje
+          content_html: |
+            <p>
+              Profiilisi on oletuksena anonyymi tällä alustalla. Julkaisemasi ideat ja kommentit näkyvät muille
+              anonyymeinä. Jos haluat toimia julkisesti, valitse vaihtoehto "Haluan, että profiilini on julkinen".
+            </p>
+          continue: Jatka anonyyminä
+          publicize: Haluan profiilini olevan julkinen
         privacy_consent:
           make_profile_public: Tee profiilistasi julkinen
           content_html: |
@@ -121,9 +166,12 @@ fi:
           agree_to_public_profile: Hyväksyn, että minusta luodaan julkinen profiili
           do_not_agree: Ei, en halua tehdä profiilistani julkista
           profile_settings: Profiilin asetukset
+          continue_anonymous: En halua profiilistani julkista, jatka anonyyminä
       publish_account:
         unauthorized: Vain julkiset osallistujat voivat suorittaa tämän toiminnon.
     profile:
+      anonymous: Anonyymi osallistuja
+      anonymous_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan anonyymin. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
   devise:

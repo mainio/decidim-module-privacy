@@ -9,6 +9,11 @@
     <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.deleted_accounts"), callout_class: "warning") %>
   <% elsif conversation.interlocutors(current_user).count == 1 &&
   conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
+  conversation.interlocutors(current_user).first.anonymous?
+  %>
+    <div class="callout warning margin-top-2"><%= t("decidim.messaging.conversations.show.anonymous_account") %></div>
+  <% elsif conversation.interlocutors(current_user).count == 1 &&
+  conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
   !conversation.interlocutors(current_user).first.public?
   %>
     <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.private_account"), callout_class: "warning") %>

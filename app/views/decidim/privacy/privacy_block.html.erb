@@ -1,13 +1,29 @@
-<div class="text-center">
-  <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
-    <%= t("decidim.privacy.privacy_block.title") %>
-  </span>
-  <p class="help-text pb-8">
-    <%= t("decidim.privacy.privacy_block.content_html") %>
-  </p>
-  <div class="form__wrapper-block flex justify-center">
-    <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
-      <%= t("decidim.privacy.privacy_block.button") %>
-    </button>
+<% if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?%>
+  <div class="text-center">
+    <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
+      <%= t("decidim.privacy.privacy_block.anonymous.title") %>
+    </span>
+    <p class="help-text pb-8">
+      <%= t("decidim.privacy.privacy_block.anonymous.content_html") %>
+    </p>
+    <div class="flex justify-center mb-4">
+      <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="anonymityModal" data-redirect-url=<%= request.original_url %>>
+        <%= t("decidim.privacy.privacy_block.anonymous.button") %>
+      </button>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="text-center">
+    <span class="uppercase pt-2 text-2xl font-semibold text-gray-2 block">
+      <%= t("decidim.privacy.privacy_block.private.title") %>
+    </span>
+    <p class="help-text pb-8">
+      <%= t("decidim.privacy.privacy_block.private.content_html") %>
+    </p>
+    <div class="flex justify-center mb-4">
+      <button class="button button__sm md:button__lg button__secondary mx-auto" data-dialog-open="publishAccountModal" data-redirect-url=<%= request.original_url %>>
+        <%= t("decidim.privacy.privacy_block.private.button") %>
+      </button>
+    </div>
+  </div>
+<% end %>

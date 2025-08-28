@@ -51,9 +51,27 @@ module Decidim
       #
       # user - the user to check for authorship
       def authored_by?(other_author)
+        return false if other_author.nil?
+
+        return other_author.id == decidim_author_id if Decidim::Privacy.anonymity_enabled && other_author.anonymous?
+
         return false if author.nil?
 
         other_author == author || (other_author.respond_to?(:user_groups) && other_author.user_groups.include?(user_group))
+      end
+
+      def author
+        if Decidim::Privacy.anonymity_enabled
+          hidden_user = Decidim::User.entire_collection.where(id: decidim_author_id).first
+
+          if is_a?(Decidim::Debates::Debate) && current_action == "update" && hidden_user.anonymous?
+            hidden_user
+          else
+            super
+          end
+        else
+          super
+        end
       end
 
       # Returns the normalized author, whether it is a user group or a user. Ideally this should be
@@ -86,7 +104,15 @@ module Decidim
       def user_group_membership
         return unless user_group
 
-        errors.add :user_group, :invalid unless user_group.users.include? author
+        if Decidim::Privacy.anonymity_enabled
+          if author.anonymous?
+            errors.add :user_group, :invalid unless user_group.users.entire_collection.include? author
+          else
+            errors.add :user_group, :invalid unless user_group.users.include? author
+          end
+        else
+          errors.add :user_group, :invalid unless user_group.users.include? author
+        end
       end
 
       def author_belongs_to_organization

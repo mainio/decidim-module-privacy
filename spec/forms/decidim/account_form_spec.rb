@@ -53,6 +53,14 @@ describe Decidim::AccountForm do
         end
       end
 
+      context "and belongs to an anonymous user", :anonymity do
+        let!(:existing_user) { create(:user, :anonymous, email:, organization:) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+        end
+      end
+
       context "and belongs to a public user" do
         let!(:existing_user) { create(:user, email:, organization:, published_at: Time.current) }
 
@@ -83,6 +91,14 @@ describe Decidim::AccountForm do
     context "when it's already in use in the same organization" do
       context "and belongs to a private user" do
         let!(:existing_user) { create(:user, nickname:, organization:) }
+
+        it "is invalid" do
+          expect(subject).not_to be_valid
+        end
+      end
+
+      context "and belongs to an anonymous user", :anonymity do
+        let!(:existing_user) { create(:user, :anonymous, nickname:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid

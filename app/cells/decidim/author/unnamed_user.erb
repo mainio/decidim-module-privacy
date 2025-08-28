@@ -1,0 +1,9 @@
+<div class="author__container">
+  <%= content_tag :span, class: "author__avatar-container" do %>
+    <%= image_tag avatar_url, alt: t("decidim.author.avatar", name: t("unnamed_user", scope: "decidim.privacy.private_account")) %>
+  <% end %>
+
+  <span class="author__name">
+    <%= t("unnamed_user", scope: "decidim.privacy.private_account") %>
+  </span>
+</div>

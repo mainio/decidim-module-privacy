@@ -147,6 +147,14 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
           end
         end
       end
+
+      context "when user is anonymous", :anonymity do
+        let!(:first_user) { create(:user, :anonymous, :confirmed, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
+
+        it "does not returns matching users" do
+          expect(response["users"]).not_to include("name" => first_user.name)
+        end
+      end
     end
   end
 end

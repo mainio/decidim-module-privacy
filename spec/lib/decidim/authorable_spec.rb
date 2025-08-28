@@ -24,6 +24,14 @@ describe Decidim::Authorable do
           expect(subject).to be(true)
         end
       end
+
+      context "when user anonymous", :anonymity do
+        let(:user) { create(:user, :anonymous, :confirmed, organization: component.organization) }
+
+        it "finds author" do
+          expect(subject).to be(true)
+        end
+      end
     end
 
     context "when resource is a debate" do
@@ -38,6 +46,14 @@ describe Decidim::Authorable do
 
       context "when user private" do
         let(:user) { create(:user, :confirmed, organization: component.organization) }
+
+        it "finds author" do
+          expect(subject).to be(true)
+        end
+      end
+
+      context "when user anonymous", :anonymity do
+        let(:user) { create(:user, :anonymous, :confirmed, organization: component.organization) }
 
         it "finds author" do
           expect(subject).to be(true)
