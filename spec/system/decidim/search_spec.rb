@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "User privacy" do
+describe "UserPrivacy" do
   let(:organization) { create(:organization) }
   let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let!(:user) { create(:user, :confirmed, organization:) }
@@ -25,7 +25,7 @@ describe "User privacy" do
         it "does not show up in search" do
           within "#form-search_topbar" do
             fill_in "term", with: user.name
-            find("button[type='submit']").click
+            find("input#input-search").native.send_keys :enter
           end
 
           expect(page).to have_content("0 Results for the search: \"#{user.name}")
@@ -38,11 +38,11 @@ describe "User privacy" do
 
           find(".admin-bar__button", text: "Admin dashboard").click
           within ".layout-nav" do
-            click_link "Participants"
+            click_on "Participants"
           end
 
           within ".sidebar-menu" do
-            click_link "Participants"
+            click_on "Participants"
           end
 
           expect(page).to have_content(user.name)
@@ -55,7 +55,7 @@ describe "User privacy" do
 
           within "#form-search_topbar" do
             fill_in "term", with: user.name
-            find("button[type='submit']").click
+            find("input#input-search").native.send_keys :enter
           end
 
           expect(page).to have_content("1 Results for the search: \"#{user.name}")
@@ -71,7 +71,7 @@ describe "User privacy" do
         it "does not show up in search" do
           within "#form-search_topbar" do
             fill_in "term", with: user_group.name
-            find("button[type='submit']").click
+            find("input#input-search").native.send_keys :enter
           end
 
           expect(page).to have_content("0 Results for the search: \"#{user_group.name}")
@@ -84,11 +84,11 @@ describe "User privacy" do
 
           find(".admin-bar__button", text: "Admin dashboard").click
           within ".layout-nav" do
-            click_link "Participants"
+            click_on "Participants"
           end
 
           within ".sidebar-menu" do
-            click_link "Groups"
+            click_on "Groups"
           end
 
           expect(page).to have_content(user_group.name)
@@ -101,7 +101,7 @@ describe "User privacy" do
         it "shows up in search" do
           within "#form-search_topbar" do
             fill_in "term", with: user_group.name
-            find("button[type='submit']").click
+            find("input#input-search").native.send_keys :enter
           end
 
           expect(page).to have_content("1 Results for the search: \"#{user_group.name}")
@@ -115,7 +115,7 @@ describe "User privacy" do
         it "does not show up in search" do
           within "#form-search_topbar" do
             fill_in "term", with: user_group.name
-            find("button[type='submit']").click
+            find("input#input-search").native.send_keys :enter
           end
 
           expect(page).to have_content("0 Results for the search: \"#{user_group.name}")
@@ -128,11 +128,11 @@ describe "User privacy" do
 
           find(".admin-bar__button", text: "Admin dashboard").click
           within ".layout-nav" do
-            click_link "Participants"
+            click_on "Participants"
           end
 
           within ".sidebar-menu" do
-            click_link "Groups"
+            click_on "Groups"
           end
 
           expect(page).to have_content(user_group.name)
@@ -149,7 +149,7 @@ describe "User privacy" do
         it "does not show up in search" do
           within "#form-search_topbar" do
             fill_in "term", with: user.name
-            find("button[type='submit']").click
+            find("input#input-search").native.send_keys :enter
           end
 
           expect(page).to have_content("0 Results for the search: \"#{user.name}")
@@ -162,11 +162,11 @@ describe "User privacy" do
 
           find(".admin-bar__button", text: "Admin dashboard").click
           within ".layout-nav" do
-            click_link "Participants"
+            click_on "Participants"
           end
 
           within ".sidebar-menu" do
-            click_link "Participants"
+            click_on "Participants"
           end
 
           expect(page).to have_content(user.name)

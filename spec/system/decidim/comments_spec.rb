@@ -96,7 +96,7 @@ describe "Comments" do
           "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
         )
 
-        click_button "Continue anonymous"
+        click_on "Continue anonymous"
 
         expect(page).to have_content("Hello there!")
         expect(page).to have_content("Unnamed participant")
@@ -107,7 +107,7 @@ describe "Comments" do
           comment_blog_post
 
           expect(page).to have_css("#anonymityModal")
-          click_button "I want my profile to be public"
+          click_on "I want my profile to be public"
           expect(page).to have_css("#publishAccountModal")
 
           expect(page).to have_content(
@@ -116,7 +116,7 @@ describe "Comments" do
 
           find_by_id("publish_account_agree_public_profile").check
 
-          click_button "Make your profile public"
+          click_on "Make your profile public"
 
           expect(page).to have_content("Hello there!")
         end

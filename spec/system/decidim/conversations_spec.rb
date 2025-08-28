@@ -34,7 +34,7 @@ describe "Conversations" do
       it "does not show up in the search" do
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
         fill_in "add_conversation_users", with: receiver.name
 
         expect(page).to have_no_css("#autoComplete_list_1")
@@ -301,7 +301,7 @@ describe "Conversations" do
       it "shows the user as anonymous but shows all messages" do
         visit decidim.conversations_path
 
-        click_button "New conversation"
+        click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
         find_by_id("autoComplete_result_0").click
@@ -309,13 +309,13 @@ describe "Conversations" do
         fill_in "add_conversation_users", with: group_chat_participant.name
         find_by_id("autoComplete_result_0").click
 
-        click_button "Next"
+        click_on "Next"
 
         expect(page).to have_content("Conversation with")
 
         fill_in "conversation_body", with: "Hello there receiver!"
 
-        click_button "Send"
+        click_on "Send"
 
         initiate_convo
 

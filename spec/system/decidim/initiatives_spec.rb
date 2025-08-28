@@ -20,7 +20,7 @@ describe "Initiatives" do
       context "when user private" do
         it "renders a site that tells user to publish your account" do
           visit decidim_initiatives.initiatives_path
-          click_link "New initiative"
+          click_on "New initiative"
           find(".card__highlight").click
           expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
         end
@@ -31,7 +31,7 @@ describe "Initiatives" do
 
         it "renders the site to create a new initiative" do
           visit decidim_initiatives.initiatives_path
-          click_link "New initiative"
+          click_on "New initiative"
           find(".card__highlight").click
 
           expect(page).to have_content("Create a new initiative")
@@ -45,8 +45,8 @@ describe "Initiatives" do
 
             find("label", text: "My initiatives").click
             uncheck("Open")
-            click_link initiative.title["en"]
-            click_link "Edit"
+            click_on initiative.title["en"]
+            click_on "Edit"
 
             expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
           end
@@ -60,8 +60,8 @@ describe "Initiatives" do
 
             find("label", text: "My initiatives").click
             uncheck("Open")
-            click_link initiative.title["en"]
-            click_link "Edit"
+            click_on initiative.title["en"]
+            click_on "Edit"
 
             expect(page).to have_content("Edit Initiative")
           end
@@ -77,7 +77,7 @@ describe "Initiatives" do
       context "when user anonymous" do
         it "renders a site that tells user to publish your account" do
           visit decidim_initiatives.initiatives_path
-          click_link "New initiative"
+          click_on "New initiative"
           find(".card__highlight").click
           expect(page).to have_content("Your profile is anonymous".upcase)
         end
@@ -92,8 +92,8 @@ describe "Initiatives" do
 
             find("label", text: "My initiatives").click
             uncheck("Open")
-            click_link initiative.title["en"]
-            click_link "Edit"
+            click_on initiative.title["en"]
+            click_on "Edit"
 
             expect(page).to have_content("Edit Initiative")
           end

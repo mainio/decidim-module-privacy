@@ -6,7 +6,7 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        before_action :set_current_action, only: [:update]
+        before_action :set_current_action, only: [:update] # rubocop:disable Rails/LexicallyScopedActionFilter
 
         def update
           enforce_permission_to(:edit, :debate, debate:)

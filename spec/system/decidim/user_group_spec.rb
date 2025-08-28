@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "User group", type: :system do
+describe "UserGroup" do
   let!(:organization) { create(:organization) }
   let!(:user_group) { create(:user_group, :verified, :confirmed, organization:, users: group_users) }
   let(:group_users) { [public_member, private_member] }
@@ -73,11 +73,11 @@ describe "User group", type: :system do
     context "when creating a user group" do
       it "gives a flash alert to check email for confirmation" do
         visit decidim.profile_path(public_member.nickname)
-        click_link "Create group"
+        click_on "Create group"
         fill_in(:group_name, with: "Example group")
         fill_in(:group_nickname, with: "eg")
         fill_in(:group_email, with: "example@group.org")
-        click_button "Create group"
+        click_on "Create group"
         expect(page).to have_content("Group successfully created! Please verify the group's email address by clicking the link included in the verification email message in order to act on behalf of the group on this platform.")
       end
     end

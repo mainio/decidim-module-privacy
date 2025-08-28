@@ -8,7 +8,7 @@ module Decidim
       included do
         def author
           if Decidim::Privacy.anonymity_enabled
-            hidden_user = Decidim::User.entire_collection.all.where(id: decidim_author_id).first
+            hidden_user = Decidim::User.entire_collection.where(id: decidim_author_id).first
 
             if hidden_user&.anonymous?
               hidden_user

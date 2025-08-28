@@ -3,7 +3,7 @@
 require "spec_helper"
 require "decidim/privacy/test/rspec_support/component"
 
-describe "Proposals", type: :system do
+describe "Proposals" do
   include ComponentTestHelper
 
   let!(:organization) { create(:organization) }
@@ -24,7 +24,7 @@ describe "Proposals", type: :system do
         visit_component
 
         expect(page).to have_content("New proposal")
-        click_link "New proposal"
+        click_on "New proposal"
 
         expect(page).to have_content("Make your profile public")
         expect(page).to have_content(
@@ -33,7 +33,7 @@ describe "Proposals", type: :system do
 
         find_by_id("publish_account_agree_public_profile").check
 
-        click_button "Make your profile public"
+        click_on "Make your profile public"
 
         expect(page).to have_content("Create your proposal")
         expect(page).to have_content("Title")
@@ -48,11 +48,11 @@ describe "Proposals", type: :system do
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-          click_button "Publish your profile"
+          click_on "Publish your profile"
 
           find_by_id("publish_account_agree_public_profile").check
 
-          click_button "Make your profile public"
+          click_on "Make your profile public"
 
           expect(page).to have_content("Create your proposal")
           expect(page).to have_content("Title")
@@ -86,7 +86,7 @@ describe "Proposals", type: :system do
         context "when user private" do
           it "doesn't render edit button" do
             visit_component
-            click_link proposal.title["en"]
+            click_on proposal.title["en"]
 
             expect(page).to have_no_link("Edit proposal")
           end
@@ -102,8 +102,8 @@ describe "Proposals", type: :system do
         user.update(published_at: Time.current)
         visit_component
 
-        click_link proposal.title["en"]
-        click_button "Like"
+        click_on proposal.title["en"]
+        click_on "Like"
         refresh
 
         within ".endorsers-list__trigger" do
@@ -115,8 +115,8 @@ describe "Proposals", type: :system do
         user.update!(published_at: Time.current)
         visit_component
 
-        click_link proposal.title["en"]
-        click_button "Like"
+        click_on proposal.title["en"]
+        click_on "Like"
         refresh
 
         expect(page).to have_css(".endorsers-list__trigger")
@@ -131,7 +131,7 @@ describe "Proposals", type: :system do
       it "hides endorsement if user private" do
         visit_component
 
-        click_link proposal.title["en"]
+        click_on proposal.title["en"]
         expect(page).to have_no_button("Like")
       end
     end
@@ -184,13 +184,13 @@ describe "Proposals", type: :system do
       before do
         sign_in user, scope: :user
         visit main_component_path(component)
-        click_link "Access collaborative drafts"
+        click_on "Access collaborative drafts"
       end
 
       context "when private user" do
         it "hides the button to request access" do
           expect(page).to have_content(collaborative_draft.title)
-          click_link collaborative_draft.title
+          click_on collaborative_draft.title
           within ".layout-item__aside" do
             expect(page).to have_content("Version number")
             expect(page).to have_no_button("Request access")
@@ -202,7 +202,7 @@ describe "Proposals", type: :system do
         it "renders a button to request access" do
           user.update(published_at: Time.current)
           expect(page).to have_content(translated(collaborative_draft.title))
-          click_link translated(collaborative_draft.title)
+          click_on translated(collaborative_draft.title)
           within ".layout-item__aside" do
             expect(page).to have_content("Version number")
             expect(page).to have_button("Request access")
@@ -215,7 +215,7 @@ describe "Proposals", type: :system do
           it "doesn't render the edit button" do
             author.update(published_at: nil)
             sign_in author, scope: :user
-            click_link translated(collaborative_draft.title)
+            click_on translated(collaborative_draft.title)
 
             expect(page).to have_no_link("Edit collaborative draft")
           end
@@ -232,14 +232,14 @@ describe "Proposals", type: :system do
         visit_component
 
         expect(page).to have_content("New proposal")
-        click_link "New proposal"
+        click_on "New proposal"
 
         expect(page).to have_content("Profile publicity")
         expect(page).to have_content(
           "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
         )
 
-        click_button "Continue anonymous"
+        click_on "Continue anonymous"
 
         expect(page).to have_content("Create your proposal")
         expect(page).to have_content("Title")
@@ -254,9 +254,9 @@ describe "Proposals", type: :system do
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-          click_button "Continue"
+          click_on "Continue"
 
-          click_button "Continue anonymous"
+          click_on "Continue anonymous"
 
           expect(page).to have_content("Create your proposal")
           expect(page).to have_content("Title")
@@ -282,7 +282,7 @@ describe "Proposals", type: :system do
         context "when user anonymous" do
           it "renders edit button" do
             visit_component
-            click_link proposal.title["en"]
+            click_on proposal.title["en"]
 
             expect(page).to have_link("Edit proposal")
           end
@@ -298,8 +298,8 @@ describe "Proposals", type: :system do
       it "hides user's name in endorsements list if anonymous" do
         visit_component
 
-        click_link proposal.title["en"]
-        click_button "Like"
+        click_on proposal.title["en"]
+        click_on "Like"
 
         refresh
 
@@ -313,7 +313,7 @@ describe "Proposals", type: :system do
       it "renders endorsement if user anonymous" do
         visit_component
 
-        click_link proposal.title["en"]
+        click_on proposal.title["en"]
         expect(page).to have_button("Like")
       end
     end
@@ -357,13 +357,13 @@ describe "Proposals", type: :system do
       before do
         sign_in user, scope: :user
         visit main_component_path(component)
-        click_link "Access collaborative drafts"
+        click_on "Access collaborative drafts"
       end
 
       context "when anonymous user" do
         it "renders the button to request access" do
           expect(page).to have_content(collaborative_draft.title)
-          click_link collaborative_draft.title
+          click_on collaborative_draft.title
           within ".layout-item__aside" do
             expect(page).to have_content("Version number")
             expect(page).to have_button("Request access")
@@ -376,7 +376,7 @@ describe "Proposals", type: :system do
           it "renders the edit button" do
             author.update(published_at: nil)
             sign_in author, scope: :user
-            click_link translated(collaborative_draft.title)
+            click_on translated(collaborative_draft.title)
 
             expect(page).to have_no_link("Edit collaborative draft")
           end

@@ -24,7 +24,7 @@ describe "Debates" do
         visit_component
 
         expect(page).to have_content("New debate")
-        click_link "New debate"
+        click_on "New debate"
 
         expect(page).to have_content("Make your profile public")
         expect(page).to have_content(
@@ -33,7 +33,7 @@ describe "Debates" do
 
         find_by_id("publish_account_agree_public_profile").check
 
-        click_button "Make your profile public"
+        click_on "Make your profile public"
 
         expect(page).to have_content("New debate")
         expect(page).to have_content("Title")
@@ -48,11 +48,11 @@ describe "Debates" do
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-          click_button "Publish your profile"
+          click_on "Publish your profile"
 
           find_by_id("publish_account_agree_public_profile").check
 
-          click_button "Make your profile public"
+          click_on "Make your profile public"
 
           expect(page).to have_content("New debate")
           expect(page).to have_content("Title")
@@ -66,14 +66,14 @@ describe "Debates" do
         visit_component
 
         expect(page).to have_content("New debate")
-        click_link "New debate"
+        click_on "New debate"
 
         expect(page).to have_css("#anonymityModal")
         expect(page).to have_content(
           "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
         )
 
-        click_button "Continue anonymous"
+        click_on "Continue anonymous"
 
         expect(page).to have_content("New debate")
         expect(page).to have_content("Title")
@@ -86,9 +86,9 @@ describe "Debates" do
 
           expect(page).to have_content("New debate")
 
-          click_link "New debate"
+          click_on "New debate"
           expect(page).to have_css("#anonymityModal")
-          click_button "I want my profile to be public"
+          click_on "I want my profile to be public"
 
           expect(page).to have_css("#publishAccountModal")
           expect(page).to have_content(
@@ -97,7 +97,7 @@ describe "Debates" do
 
           find_by_id("publish_account_agree_public_profile").check
 
-          click_button "Make your profile public"
+          click_on "Make your profile public"
 
           expect(page).to have_content("New debate")
           expect(page).to have_content("Title")
@@ -110,16 +110,16 @@ describe "Debates" do
 
             expect(page).to have_content("New debate")
 
-            click_link "New debate"
+            click_on "New debate"
             expect(page).to have_css("#anonymityModal")
-            click_button "I want my profile to be public"
+            click_on "I want my profile to be public"
 
             expect(page).to have_css("#publishAccountModal")
             expect(page).to have_content(
               "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
             )
 
-            click_button "No, I do not want to make my profile public, continue anonymous"
+            click_on "No, I do not want to make my profile public, continue anonymous"
 
             expect(page).to have_content("New debate")
             expect(page).to have_content("Title")
@@ -136,14 +136,14 @@ describe "Debates" do
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-          click_button "Continue"
+          click_on "Continue"
 
           expect(page).to have_css("#anonymityModal")
           expect(page).to have_content(
             "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
           )
 
-          click_button "Continue anonymous"
+          click_on "Continue anonymous"
 
           expect(page).to have_content("New debate")
           expect(page).to have_content("Title")
@@ -162,7 +162,7 @@ describe "Debates" do
         context "when user private" do
           it "doesn't render edit button" do
             visit_component
-            click_link debate.title["en"]
+            click_on debate.title["en"]
 
             expect(page).to have_no_link("Edit")
           end
@@ -177,7 +177,7 @@ describe "Debates" do
         context "when user anonymous" do
           it "renders edit button" do
             visit_component
-            click_link debate.title["en"]
+            click_on debate.title["en"]
 
             expect(page).to have_link("Edit")
           end

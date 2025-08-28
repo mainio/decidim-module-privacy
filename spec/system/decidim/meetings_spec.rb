@@ -24,7 +24,7 @@ describe "Meetings" do
         visit_component
 
         expect(page).to have_content("New meeting")
-        click_link "New meeting"
+        click_on "New meeting"
 
         expect(page).to have_content("Make your profile public")
         expect(page).to have_content(
@@ -33,7 +33,7 @@ describe "Meetings" do
 
         find_by_id("publish_account_agree_public_profile").check
 
-        click_button "Make your profile public"
+        click_on "Make your profile public"
 
         expect(page).to have_content("Create Your Meeting")
         expect(page).to have_content("Title")
@@ -48,11 +48,11 @@ describe "Meetings" do
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-          click_button "Publish your profile"
+          click_on "Publish your profile"
 
           find_by_id("publish_account_agree_public_profile").check
 
-          click_button "Make your profile public"
+          click_on "Make your profile public"
 
           expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
@@ -69,7 +69,7 @@ describe "Meetings" do
         context "when user private" do
           it "doesn't render edit button" do
             visit_component
-            click_link meeting.title["en"]
+            click_on meeting.title["en"]
 
             expect(page).to have_no_link("Edit")
           end
@@ -86,14 +86,14 @@ describe "Meetings" do
         visit_component
 
         expect(page).to have_content("New meeting")
-        click_link "New meeting"
+        click_on "New meeting"
 
         expect(page).to have_content("Profile publicity")
         expect(page).to have_content(
           "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
         )
 
-        click_button "Continue anonymous"
+        click_on "Continue anonymous"
 
         expect(page).to have_content("Create Your Meeting")
         expect(page).to have_content("Title")
@@ -108,9 +108,9 @@ describe "Meetings" do
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
-          click_button "Continue"
+          click_on "Continue"
 
-          click_button "Continue anonymous"
+          click_on "Continue anonymous"
 
           expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
@@ -128,7 +128,7 @@ describe "Meetings" do
         context "when user anonymous" do
           it "renders edit button" do
             visit_component
-            click_link meeting.title["en"]
+            click_on meeting.title["en"]
 
             expect(page).to have_link("Edit")
           end

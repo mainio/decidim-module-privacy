@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Private Participatory Processes" do
+describe "PrivateParticipatoryProcesses" do
   let!(:organization) { create(:organization) }
   let!(:participatory_process) { create(:participatory_process, :published, organization:) }
   let!(:private_participatory_process) { create(:participatory_process, :published, organization:, private_space: true) }

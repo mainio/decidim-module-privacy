@@ -11,7 +11,7 @@ module Decidim
           form.select(
             name,
             user_groups.map { |g| [g.name, g.id] },
-            selected: @form.user_group_id.presence,
+            selected: @form.user_group_id.presence, # rubocop:disable Rails/HelperInstanceVariable
             include_blank: current_user.name,
             label: options.has_key?(:label) ? options[:label] : true,
             help_text: options[:help_text].presence
