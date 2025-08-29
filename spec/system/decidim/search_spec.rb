@@ -9,7 +9,7 @@ describe "UserPrivacy" do
   let!(:admin) { create(:user, :confirmed, :admin, organization:) }
 
   before do
-    login_as user, scope: :user
+    login_as admin, scope: :user
     switch_to_host(organization.host)
     visit decidim.root_path
     expect(page).to have_content(organization.name)
@@ -32,8 +32,6 @@ describe "UserPrivacy" do
         end
 
         it "shows up in the admin search" do
-          login_as admin, scope: :user
-          refresh
           expect(page).to have_css("#admin-bar")
 
           find(".admin-bar__button", text: "Admin dashboard").click
@@ -78,8 +76,6 @@ describe "UserPrivacy" do
         end
 
         it "shows up in the admin search" do
-          login_as admin, scope: :user
-          refresh
           expect(page).to have_css("#admin-bar")
 
           find(".admin-bar__button", text: "Admin dashboard").click
@@ -122,8 +118,6 @@ describe "UserPrivacy" do
         end
 
         it "shows up in the admin search" do
-          login_as admin, scope: :user
-          refresh
           expect(page).to have_css("#admin-bar")
 
           find(".admin-bar__button", text: "Admin dashboard").click
@@ -156,8 +150,6 @@ describe "UserPrivacy" do
         end
 
         it "shows up in the admin search" do
-          login_as admin, scope: :user
-          refresh
           expect(page).to have_css("#admin-bar")
 
           find(".admin-bar__button", text: "Admin dashboard").click

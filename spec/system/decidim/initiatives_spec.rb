@@ -79,7 +79,7 @@ describe "Initiatives" do
           visit decidim_initiatives.initiatives_path
           click_on "New initiative"
           find(".card__highlight").click
-          expect(page).to have_content("Your profile is anonymous".upcase)
+          expect(page).to have_content("Your profile is anonymous")
         end
       end
 

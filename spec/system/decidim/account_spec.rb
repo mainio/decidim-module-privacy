@@ -252,7 +252,7 @@ describe "Account" do
         find("label[for='published_at']").click
         expect(page).to have_content("Private messaging")
         expect(page).to have_content("Enable private messaging")
-        expect(page).to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
+        expect(page).to have_content("Allow public contacting")
       end
     end
 

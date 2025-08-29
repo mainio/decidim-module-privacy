@@ -44,7 +44,7 @@ describe "Debates" do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_debate_path(component)
 
-          expect(page).to have_content("Public profile is required for this action".upcase)
+          expect(page).to have_content("Public profile is required for this action")
           expect(page).to have_content("You are trying to access a page which requires your profile to be public. Making your profile public allows other participants to see information about you.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
@@ -154,7 +154,7 @@ describe "Debates" do
         it "renders a custom page with a prompt which has to be accepted in order to proceed" do
           visit new_debate_path(component)
 
-          expect(page).to have_content("Your profile is anonymous".upcase)
+          expect(page).to have_content("Your profile is anonymous")
           expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
           expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
