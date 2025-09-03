@@ -7,17 +7,18 @@ module Decidim
 
       included do
         def author
-          if Decidim::Privacy.anonymity_enabled
-            hidden_user = Decidim::User.entire_collection.where(id: decidim_author_id).first
+          return private_author if Decidim::Privacy.anonymity_enabled && private_author&.anonymous?
 
-            if hidden_user&.anonymous?
-              hidden_user
-            else
-              super
-            end
-          else
-            super
-          end
+          super
+        end
+
+        # Allows to fetch the original author if they have not published their
+        # profile. Use this extremely carefully, only meant to be used when
+        # dealing with author events considering the user itself, such as
+        # notifying proposal authors about something (after they hid their
+        # profile).
+        def private_author
+          @private_author ||= Decidim::User.entire_collection.find_by(id: decidim_author_id)
         end
       end
     end

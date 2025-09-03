@@ -58,6 +58,56 @@ module Decidim
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
       end
 
+      if Decidim.module_installed?(:debates)
+        # Redefine the debates comments subscriber granting score to the debate
+        # comments badge.
+        initializer "decidim_privacy.commented_debates_badge", after: "decidim_debates.commented_debates_badge" do
+          config.to_prepare do
+            subscriber = ActiveSupport::Notifications.notifier.listeners_for(
+              Decidim::Comments::CommentCreation::EVENT_NAME
+            ).find do |listener|
+              delegate = listener.instance_variable_get(:@delegate)
+              next unless delegate.is_a?(Proc)
+
+              source_file, = delegate.source_location
+              next unless source_file.start_with?(Decidim::Comments::Engine.root.to_s)
+
+              listener
+            end
+            next unless subscriber
+
+            ActiveSupport::Notifications.unsubscribe(subscriber)
+
+            # TODO: Re-implement the subscriber
+            Decidim::Comments::CommentCreation.subscribe do |data|
+              comment = Decidim::Comments::Comment.find(data[:comment_id])
+              next unless comment.decidim_root_commentable_type == "Decidim::Debates::Debate"
+
+              if comment.user_group.present?
+                comments = Decidim::Comments::Comment.where(
+                  decidim_root_commentable_id: comment.decidim_root_commentable_id,
+                  decidim_root_commentable_type: comment.decidim_root_commentable_type,
+                  user_group: comment.user_group
+                )
+
+                Decidim::Gamification.increment_score(comment.user_group, :commented_debates) if comments.count == 1
+              else
+                author = Decidim::User.entire_collection.find_by(id: comment.decidim_author_id)
+                next if author.blank?
+
+                comments = Decidim::Comments::Comment.where(
+                  decidim_root_commentable_id: comment.decidim_root_commentable_id,
+                  decidim_root_commentable_type: comment.decidim_root_commentable_type,
+                  author:
+                )
+
+                Decidim::Gamification.increment_score(author, :commented_debates) if comments.count == 1
+              end
+            end
+          end
+        end
+      end
+
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
         next unless Decidim::Privacy.apply_extensions?
 
@@ -263,6 +313,14 @@ module Decidim
             )
             Decidim::Proposals::CollaborativeDraftsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
+            )
+
+            # commands
+            Decidim::Proposals::PublishProposal.include(
+              Decidim::Privacy::Proposals::PublishProposalExtensions
+            )
+            Decidim::Proposals::Admin::NotifyProposalAnswer.include(
+              Decidim::Privacy::Proposals::NotifyProposalAnswerExtensions
             )
 
             # models
