@@ -62,7 +62,7 @@ module Decidim
 
       def author
         if Decidim::Privacy.anonymity_enabled
-          hidden_user = Decidim::User.entire_collection.where(id: decidim_author_id).first
+          hidden_user = Decidim::User.entire_collection.find_by(id: decidim_author_id)
 
           if is_a?(Decidim::Debates::Debate) && current_action == "update" && hidden_user.anonymous?
             hidden_user

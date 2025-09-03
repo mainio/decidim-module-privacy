@@ -23,7 +23,7 @@ module Decidim
 
         def created_by?(author)
           author == if Decidim::Privacy.anonymity_enabled && author.anonymous?
-                      Decidim::User.entire_collection.where(id: creator.decidim_author_id).first
+                      Decidim::User.entire_collection.find_by(id: creator.decidim_author_id)
                     else
                       creator_author
                     end
