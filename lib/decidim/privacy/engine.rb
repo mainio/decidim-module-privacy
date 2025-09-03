@@ -9,6 +9,16 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Privacy
 
+      def delete_initializer(engine, name)
+        original = engine.initializers.find do |initializer|
+          initializer.name == name
+        end
+        return false unless original
+
+        engine.initializers.delete(original)
+        true
+      end
+
       routes do
         authenticate(:user) do
           resource :privacy_settings, only: [:show, :update], controller: "privacy_settings", path: "/privacy_settings"
@@ -59,26 +69,26 @@ module Decidim
       end
 
       if Decidim.module_installed?(:debates)
-        # Redefine the debates comments subscriber granting score to the debate
-        # comments badge.
-        initializer "decidim_privacy.commented_debates_badge", after: "decidim_debates.commented_debates_badge" do
-          config.to_prepare do
-            subscriber = ActiveSupport::Notifications.notifier.listeners_for(
-              Decidim::Comments::CommentCreation::EVENT_NAME
-            ).find do |listener|
-              delegate = listener.instance_variable_get(:@delegate)
-              next unless delegate.is_a?(Proc)
+        raise "Initializer name has changed! Please review the code." unless delete_initializer(Decidim::Debates::Engine, "decidim_debates.commented_debates_badge")
 
-              source_file, = delegate.source_location
-              next unless source_file.start_with?(Decidim::Comments::Engine.root.to_s)
+        # Redefine the debates comments gamification initializer to fix issue
+        # with passing the correct author to the scoring events.
+        initializer "decidim_privacy.commented_debates_badge" do
+          Decidim::Gamification.register_badge(:commented_debates) do |badge|
+            badge.levels = [1, 5, 10, 30, 50]
 
-              listener
+            badge.valid_for = [:user, :user_group]
+
+            badge.reset = lambda do |user|
+              debates = Decidim::Comments::Comment.where(
+                author: user,
+                decidim_root_commentable_type: "Decidim::Debates::Debate"
+              )
+              debates.pluck(:decidim_root_commentable_id).uniq.count
             end
-            next unless subscriber
+          end
 
-            ActiveSupport::Notifications.unsubscribe(subscriber)
-
-            # TODO: Re-implement the subscriber
+          config.to_prepare do
             Decidim::Comments::CommentCreation.subscribe do |data|
               comment = Decidim::Comments::Comment.find(data[:comment_id])
               next unless comment.decidim_root_commentable_type == "Decidim::Debates::Debate"
