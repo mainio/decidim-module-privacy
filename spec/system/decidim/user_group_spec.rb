@@ -14,6 +14,7 @@ describe "UserGroup" do
     switch_to_host(organization.host)
     login_as public_member, scope: :user
     visit decidim.profile_members_path(nickname: user_group.nickname)
+    expect(page).to have_content(organization.name)
   end
 
   context "when anonymity disabled" do
@@ -43,6 +44,7 @@ describe "UserGroup" do
         expect(page).to have_content(user_group.name)
         login_as public_user, scope: :user
         visit current_path
+        expect(page).to have_content("My public profile")
       end
 
       it "displays the join group button" do
