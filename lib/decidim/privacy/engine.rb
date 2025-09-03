@@ -201,7 +201,6 @@ module Decidim
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
           Decidim::Admin::BlockUserController.include(Decidim::Privacy::Admin::BlockUserControllerExtensions)
-          Decidim::Debates::DebatesController.include(Decidim::Privacy::DebatesControllerExtensions)
 
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
@@ -228,7 +227,6 @@ module Decidim
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
           Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
           Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
-          Decidim::Debates::Debate.include(Decidim::Privacy::DebateExtensions)
           Decidim::Coauthorship.include(Decidim::Privacy::CoauthorshipExtensions)
 
           Decidim::InitiativesCommitteeMember.include(Decidim::Privacy::InitiativesCommitteeMemberExtensions) if Decidim.module_installed? :initiatives
@@ -364,6 +362,11 @@ module Decidim
           end
 
           if Decidim.module_installed? :debates
+            # commands
+            Decidim::Debates::UpdateDebate.include(
+              Decidim::Privacy::Debates::UpdateDebateExtensions
+            )
+
             # controllers
             Decidim::Debates::DebatesController.include(
               Decidim::Privacy::PrivacyActionsExtensions

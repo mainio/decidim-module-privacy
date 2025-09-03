@@ -60,20 +60,6 @@ module Decidim
         other_author == author || (other_author.respond_to?(:user_groups) && other_author.user_groups.include?(user_group))
       end
 
-      def author
-        if Decidim::Privacy.anonymity_enabled
-          hidden_user = Decidim::User.entire_collection.find_by(id: decidim_author_id)
-
-          if is_a?(Decidim::Debates::Debate) && current_action == "update" && hidden_user.anonymous?
-            hidden_user
-          else
-            super
-          end
-        else
-          super
-        end
-      end
-
       # Returns the normalized author, whether it is a user group or a user. Ideally this should be
       # the *author* method, but it is pending a refactor.
       #
