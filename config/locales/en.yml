@@ -37,8 +37,9 @@ en:
   decidim:
     anonymous:
       help:
-        anonymous_user: "Your profile is anonymous. If %{resource} is created as yourself instead of a user group, your name will be hidden
-                        until you publicize your profile."
+        anonymous_user: |-
+          Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later
+          decide to make your profile public.
     components:
       privacy:
         name: Privacy settings

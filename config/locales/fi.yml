@@ -36,8 +36,9 @@ fi:
   decidim:
     anonymous:
       help:
-        anonymous_user: Profiilisi on anonyymi. Jos luot ehdotuksen omana itsenäsi käyttäjäryhmän sijaan, nimesi
-                        piilotetaan kunnes julkistat profiilisi.
+        anonymous_user: |-
+          Profiilisi on anonyymi. Jos käytät omaa tiliäsi luontiin, nimeäsi ei näytetä, ellet myöhemmin päätä julkaista
+          profiiliasi.
     components:
       privacy:
         name: Yksityisyysasetukset
