@@ -36,9 +36,13 @@ group :development, :test do
   # rubocop & rubocop-rspec are set to the following versions because of a change where FactoryBot/CreateList
   # must be a boolean instead of contextual. These version locks can be removed when this problem is handled
   # through decidim-dev.
-  gem "rubocop", "~>1.28"
+  gem "rubocop", "~> 1.28"
   gem "rubocop-faker"
   gem "rubocop-rspec", "2.20"
+
+  # Fix issue with simplecov-cobertura
+  # See: https://github.com/jessebs/simplecov-cobertura/pull/44
+  gem "rexml", "3.4.1"
 end
 
 group :development do
