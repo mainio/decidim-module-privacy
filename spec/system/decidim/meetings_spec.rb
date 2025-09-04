@@ -112,7 +112,7 @@ describe "Meetings" do
             "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
           )
 
-          click_on "Continue anonymous"
+          click_on "Continue anonymously"
 
           expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
@@ -130,7 +130,7 @@ describe "Meetings" do
 
           click_on "Continue"
 
-          click_on "Continue anonymous"
+          click_on "Continue anonymously"
 
           expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")

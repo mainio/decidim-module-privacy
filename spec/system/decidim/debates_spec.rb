@@ -93,7 +93,7 @@ describe "Debates" do
               "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
             )
 
-            click_on "Continue anonymous"
+            click_on "Continue anonymously"
 
             expect(page).to have_content("Create new debate")
             expect(page).to have_content("Title")
@@ -126,7 +126,7 @@ describe "Debates" do
           expect(page).to have_content("Description")
         end
 
-        context "when 'I want to continue anonymous' is pressed instead of making profile public" do
+        context "when 'I want to continue anonymously' is pressed instead of making profile public" do
           it "keeps user anonymous and redirects to new debate page" do
             visit_component
 
@@ -141,7 +141,7 @@ describe "Debates" do
               "If you want to perform public activities on this platform, you must create a public profile. This means that other participants will see your name and nickname alongside your public activity on this platform, such as the proposals or comments you have submitted. The public profile displays the following information about you:"
             )
 
-            click_on "No, I do not want to make my profile public, continue anonymous"
+            click_on "No, I do not want to make my profile public, continue anonymously"
 
             expect(page).to have_content("New debate")
             expect(page).to have_content("Title")
@@ -165,7 +165,7 @@ describe "Debates" do
             "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
           )
 
-          click_on "Continue anonymous"
+          click_on "Continue anonymously"
 
           expect(page).to have_content("Create new debate")
           expect(page).to have_content("Title")

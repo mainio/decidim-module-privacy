@@ -111,7 +111,7 @@ describe "Comments" do
             "Your profile on this platform is anonymous by default. The ideas and comments you post will appear as anonymous to others."
           )
 
-          click_on "Continue anonymous"
+          click_on "Continue anonymously"
 
           expect(page).to have_content("Hello there!")
           expect(page).to have_content("Unnamed participant")
