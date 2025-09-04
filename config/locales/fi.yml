@@ -1,9 +1,5 @@
 ---
 fi:
-  activemodel:
-    attributes:
-      user:
-        old_password: Nykyinen salasana
   layouts:
     decidim:
       user_profile:
@@ -14,7 +10,7 @@ fi:
         message: "Profiilisi on asetettu julkiseksi tällä alustalla ja muut ihmiset voivat nähdä sinua koskevia tietoja, kuten nimesi, nimimerkkisi, profiilikuvasi ja julkisen toimintasi tällä alustalla. Voit muuttaa profiilisi näkyvyyttä yksityisyysasetuksista. Profiilisi löytyy osoitteesta:"
       shared:
         layout_center:
-          enable_anonymity: Anonyymi profiili
+          enable_anonymity: Ota anonyymi profiili käyttöön
           profile_publicity_intro_anonymous_html: |
             <p>
               Näiden yksityisyysasetusten avulla voi hallita, kuinka esiinnyt tällä alustalla. Voit pysyä täysin anonyyminä,
@@ -40,7 +36,9 @@ fi:
   decidim:
     anonymous:
       help:
-        anonymous_user: "Profiilisi on anonyymi. Jos luot ehdotuksen omana itsenäsi käyttäjäryhmän sijaan, nimesi piilotetaan kunnes julkistat profiilisi."
+        anonymous_user: |-
+          Profiilisi on anonyymi. Jos käytät omaa tiliäsi luontiin, nimeäsi ei näytetä, ellet myöhemmin päätä julkaista
+          profiiliasi.
     components:
       privacy:
         name: Yksityisyysasetukset
@@ -192,7 +190,3 @@ fi:
       anonymous_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan anonyymin. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
-  devise:
-    passwords:
-      edit:
-        old_password_help: Vahvistaaksesi muutokset käyttäjätiliisi, anna nykyinen salasanasi.
