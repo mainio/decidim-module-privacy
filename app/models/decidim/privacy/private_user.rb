@@ -20,6 +20,14 @@ module Decidim
         attached_uploader(:avatar).default_url
       end
 
+      def confirmed?
+        true
+      end
+
+      def blocked?
+        false
+      end
+
       def deleted?
         false
       end
