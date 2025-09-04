@@ -19,20 +19,6 @@ module Decidim
             end
           end
         end
-
-        # Fixes the following bug for the proposal serializer:
-        # https://github.com/decidim/decidim/pull/13681
-        def author_url(author)
-          return "" if author.respond_to?(:deleted?) && author.deleted?
-
-          if author.respond_to?(:nickname)
-            profile_url(author.nickname) # is a Decidim::User or Decidim::UserGroup
-          elsif author.respond_to?(:title)
-            meeting_url(author) # is a Decidim::Meetings::Meeting
-          else
-            root_url # is a Decidim::Organization
-          end
-        end
       end
     end
   end
