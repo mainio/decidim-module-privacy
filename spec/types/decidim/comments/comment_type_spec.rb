@@ -7,12 +7,14 @@ describe Decidim::Comments::CommentType do
   include_context "with a graphql class type"
 
   let(:model) { create(:comment, commentable:, author:, user_group:) }
-  let(:commentable) { create(:dummy_resource) }
+  let(:participatory_space) { create(:participatory_process) }
+  let(:component) { create(:dummy_component, :published, participatory_space:) }
+  let(:commentable) { create(:dummy_resource, :published, component:) }
   let(:author) { create(:user, :confirmed, :published, organization: commentable.organization) }
   let(:user_group) { nil }
 
   describe "author" do
-    let(:query) { "{ author { id name nickname avatarUrl profilePath badge organizationName } }" }
+    let(:query) { "{ id author { id name nickname avatarUrl profilePath badge organizationName } }" }
 
     context "when the author is public" do
       let(:avatar_url) { author.attached_uploader(:avatar).path(variant: :thumb) }
@@ -86,12 +88,24 @@ describe Decidim::Comments::CommentType do
 
         let(:dummy_class) do
           parent = Class.new(Decidim::ApplicationRecord) do
+            def self.name
+              "FooBar"
+            end
+
             def author
               nil
             end
 
             def user_group
               nil
+            end
+
+            def hidden?
+              false
+            end
+
+            def deleted?
+              false
             end
           end
 
@@ -155,12 +169,24 @@ describe Decidim::Comments::CommentType do
 
         let(:dummy_class) do
           parent = Class.new(Decidim::ApplicationRecord) do
+            def self.name
+              "FooBar"
+            end
+
             def author
               nil
             end
 
             def user_group
               nil
+            end
+
+            def hidden?
+              false
+            end
+
+            def deleted?
+              false
             end
           end
 

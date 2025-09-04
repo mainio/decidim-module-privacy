@@ -6,7 +6,7 @@ describe Decidim::UserActivitiesController do
   routes { Decidim::Core::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let!(:user) { create(:user, nickname: "Nick", organization:, published_at: Time.current) }
+  let!(:user) { create(:user, nickname: "nick", organization:, published_at: Time.current) }
 
   before do
     request.env["decidim.current_organization"] = organization
@@ -14,7 +14,7 @@ describe Decidim::UserActivitiesController do
 
   describe "#show" do
     context "when user is private" do
-      let!(:user) { create(:user, nickname: "Nick", organization:) }
+      let!(:user) { create(:user, nickname: "nick", organization:) }
 
       it "renders private view" do
         expect do
@@ -24,7 +24,7 @@ describe Decidim::UserActivitiesController do
     end
 
     context "when user is anonymous", :anonymity do
-      let!(:user) { create(:user, :anonymous, nickname: "Nick", organization:) }
+      let!(:user) { create(:user, :anonymous, nickname: "nick", organization:) }
 
       it "renders private view" do
         expect do

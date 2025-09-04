@@ -165,10 +165,15 @@ describe "Account" do
         end
         expect(page).to have_content("Confirmation email resent successfully to #{pending_email}")
         perform_enqueued_jobs
-        perform_enqueued_jobs
 
         expect(emails.count).to eq(2)
-        visit last_email_link
+        expect(emails[0].subject).to eq("Confirmation instructions")
+        expect(emails[0].to).to eq([pending_email])
+        expect(emails[1].subject).to eq("Your account was updated")
+        expect(emails[1].to).to eq([user.email])
+
+        confirm_link = Nokogiri::HTML(email_body(emails[0])).css("table.content a").last["href"]
+        visit confirm_link
         expect(page).to have_content("Your email address has been successfully confirmed")
       end
 

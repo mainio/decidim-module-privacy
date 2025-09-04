@@ -35,7 +35,7 @@ describe "Meetings" do
 
         click_on "Make your profile public"
 
-        expect(page).to have_content("Create Your Meeting")
+        expect(page).to have_content("Create new meeting")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -54,7 +54,7 @@ describe "Meetings" do
 
           click_on "Make your profile public"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -91,11 +91,11 @@ describe "Meetings" do
           expect(page).to have_content("New meeting")
           click_on "New meeting"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
           within "label[for='meeting_user_group_id']" do
-            expect(page).to have_content("Your profile is anonymous. If meeting is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+            expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
           end
         end
       end
@@ -114,7 +114,7 @@ describe "Meetings" do
 
           click_on "Continue anonymous"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -132,7 +132,7 @@ describe "Meetings" do
 
           click_on "Continue anonymous"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -161,7 +161,7 @@ describe "Meetings" do
               click_on meeting.title["en"]
               click_on "Edit meeting"
               within "label[for='meeting_user_group_id']" do
-                expect(page).to have_content("Your profile is anonymous. If meeting is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+                expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
               end
             end
           end

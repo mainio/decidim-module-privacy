@@ -18,7 +18,7 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a private user" do
-      let(:author) { create(:user, organization: model.participatory_space.organization) }
+      let(:author) { create(:user, :confirmed, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do
@@ -31,7 +31,7 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a deleted user" do
-      let(:author) { create(:user, :deleted, organization: model.participatory_space.organization) }
+      let(:author) { create(:user, :confirmed, :deleted, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do
@@ -44,7 +44,7 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a public user" do
-      let(:author) { create(:user, :published, organization: model.participatory_space.organization) }
+      let(:author) { create(:user, :confirmed, :published, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do
@@ -57,7 +57,7 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a user group" do
-      let(:user_group) { create(:user_group, organization: model.participatory_space.organization) }
+      let(:user_group) { create(:user_group, :verified, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do

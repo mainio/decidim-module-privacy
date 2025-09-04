@@ -59,7 +59,12 @@ module Decidim
           expect do
             perform_enqueued_jobs { command.call }
           end.to broadcast(:ok, true)
-          expect(last_email.to).to include("new@example.com")
+
+          expect(emails.count).to eq(2)
+          expect(emails[0].subject).to eq("Instrucciones de confirmación")
+          expect(emails[0].to).to eq(["new@example.com"])
+          expect(emails[1].subject).to eq("Se ha actualizado tu cuenta")
+          expect(emails[1].to).to eq([user.email])
         end
       end
 
