@@ -97,7 +97,7 @@ describe "Comments" do
           click_on post.title["en"]
 
           within ".new_comment" do
-            expect(page).to have_css(".help-text", text: "Your profile is anonymous. If comment is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+            expect(page).to have_css(".help-text", text: "Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
           end
         end
       end

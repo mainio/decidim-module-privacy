@@ -241,7 +241,7 @@ describe "Proposals" do
           expect(page).to have_content("Title")
           expect(page).to have_content("Body")
           within "label[for='proposal_user_group_id']" do
-            expect(page).to have_content("Your profile is anonymous. If proposal is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+            expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
           end
         end
       end
@@ -315,7 +315,7 @@ describe "Proposals" do
               click_on proposal.title["en"]
               click_on "Edit proposal"
               within "label[for='proposal_user_group_id']" do
-                expect(page).to have_content("Your profile is anonymous. If proposal is created as yourself instead of a user group, your name will be hidden until you publicize your profile.")
+                expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
               end
             end
           end
