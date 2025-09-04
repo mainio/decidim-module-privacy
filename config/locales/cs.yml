@@ -1,9 +1,5 @@
 ---
 cs:
-  activemodel:
-    attributes:
-      user:
-        old_password: Stávající heslo
   layouts:
     decidim:
       user_profile:
@@ -41,7 +37,9 @@ cs:
   decidim:
     anonymous:
       help:
-        anonymous_user: "Your profile is anonymous. If %{resource} is created as yourself instead of a user group, your name will be hidden until you publicize your profile."
+        anonymous_user: |-
+          Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later
+          decide to make your profile public.
     components:
       privacy:
         name: Nastavení soukromí
@@ -149,7 +147,7 @@ cs:
               appear as anonymous to others. If you want to act publicly, select the option "I want my profile
               to be public" below.
             </p>
-          continue: Continue anonymous
+          continue: Continue anonymously
           publicize: I want my profile to be public
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
@@ -177,7 +175,7 @@ cs:
           agree_to_public_profile: Souhlasím s tím, aby o mně byl vytvořen veřejný profil
           do_not_agree: Ne, nechci zveřejnit svůj profil
           profile_settings: Nastavení profilu
-          continue_anonymous: No, I do not want to make my profile public, continue anonymous.
+          continue_anonymous: No, I do not want to make my profile public, continue anonymously.
       publish_account:
         unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
       groups:
@@ -190,7 +188,3 @@ cs:
       anonymous_info_html: <i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i>
       private: Soukromý účastník
       private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
-  devise:
-    passwords:
-      edit:
-        old_password_help: Chcete-li potvrdit změny vašeho účtu, zadejte prosím své aktuální heslo.
