@@ -20,19 +20,19 @@ module Decidim
 
           recipients
         end
-      end
 
-      private
+        private
 
-      def recipients_base_query
-        Decidim::User
-          .entire_collection
-          .available
-          .where(organization: @form.current_organization)
-          .where.not(newsletter_notifications_at: nil)
-          .where.not(email: nil)
-          .where.not(confirmed_at: nil)
-          .not_deleted
+        def recipients_base_query
+          Decidim::User
+            .entire_collection
+            .available
+            .where(organization: @form.current_organization)
+            .where.not(newsletter_notifications_at: nil)
+            .where.not(email: nil)
+            .where.not(confirmed_at: nil)
+            .not_deleted
+        end
       end
     end
   end
