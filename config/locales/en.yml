@@ -1,9 +1,5 @@
 ---
 en:
-  activemodel:
-    attributes:
-      user:
-        old_password: Current password
   layouts:
     decidim:
       user_profile:
@@ -197,7 +193,3 @@ en:
       anonymous_info_html: <i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i>
       private: Private participant
       private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
-  devise:
-    passwords:
-      edit:
-        old_password_help: In order to confirm the changes to your account, please provide your current password.

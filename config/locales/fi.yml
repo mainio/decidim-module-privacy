@@ -1,9 +1,5 @@
 ---
 fi:
-  activemodel:
-    attributes:
-      user:
-        old_password: Nykyinen salasana
   layouts:
     decidim:
       user_profile:
@@ -188,7 +184,3 @@ fi:
       anonymous_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan anonyymin. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
       private: Yksityinen osallistuja
       private_info_html: <i>Tämä osallistuja on päättänyt tehdä profiilistaan yksityisen. Uudet viestit tähän keskusteluun on siksi poistettu käytöstä.</i>
-  devise:
-    passwords:
-      edit:
-        old_password_help: Vahvistaaksesi muutokset käyttäjätiliisi, anna nykyinen salasanasi.

@@ -1,9 +1,5 @@
 ---
 sv:
-  activemodel:
-    attributes:
-      user:
-        old_password: Nuvarande lösenord
   layouts:
     decidim:
       user_profile:
@@ -117,7 +113,3 @@ sv:
     profile:
       private: Privat deltagare
       private_info_html: <i>Denna deltagare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
-  devise:
-    passwords:
-      edit:
-        old_password_help: För att bekräfta ändringarna av ditt konto, vänligen ange ditt nuvarande lösenord.
