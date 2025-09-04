@@ -1,9 +1,5 @@
 ---
 sv:
-  activemodel:
-    attributes:
-      user:
-        old_password: Nuvarande lösenord
   layouts:
     decidim:
       user_profile:
@@ -41,7 +37,9 @@ sv:
   decidim:
     anonymous:
       help:
-        anonymous_user: "Your profile is anonymous. If %{resource} is created as yourself instead of a user group, your name will be hidden until you publicize your profile."
+        anonymous_user: |-
+          Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later
+          decide to make your profile public.
     components:
       privacy:
         name: Integritetsinställningar
@@ -63,23 +61,27 @@ sv:
       message_block:
         title: Direktmeddelanden är inte aktiverat
         content_html: |
-          <p class="text-center pb-4">
-            To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
+          <p class="text-lg pb-4">
+            För att komma åt den här sidan måste du aktivera privata meddelanden från "Integritetsinställningar" under dina profilinställningar.
           </p>
         back: Föregående sida
       privacy_settings:
         show:
           anonymous_profile: Enable anonymous profile
           profile_publicity_html: |
-            <h2 class="heading3 h3 pt-4">Profile publicity</h2>
-            <p class="pt-4">
-              Making your profile public allows you to perform public activities on this platform, such as sending
-              comments, participating in discussions, creating proposals, etc.
+            <p>
+              Dessa integritetsinställningar låter dig kontrollera hur du visas på denna plattform offentligt. Du kan välja att
+              förbli helt anonym men det kommer att begränsa vad du kan göra på denna plattform.
             </p>
-            <p class="pt-2">
-              When you make your profile public, other participants can see your name publicly on this platform and also
-              see other public information about you, such as your nickname and profile photo (avatar), your public
-              activity on this platform, your followers and who you follow.
+            <h2 class="heading5 h5">Profilpublicitet</h2>
+            <p>
+              Att göra din profil offentlig låter dig utföra offentliga aktiviteter på denna plattform, såsom att skicka
+              kommentarer, delta i diskussioner, skapa förslag etc.
+            </p>
+            <p>
+              När du offentliggör din profil andra deltagare kan se ditt namn offentligt på denna plattform och även
+              se offentlig information om dig, såsom ditt smeknamn och profilbild, din offentliga
+              verksamhet på denna plattform, dina följare och vem du följer.
             </p>
           profile_publicity_with_anonymity_html: |
             <h2 class="heading3 h3 pt-4">Public profile</h2>
@@ -107,7 +109,7 @@ sv:
           enable_private_messaging: Aktivera direktmeddelanden
           private_messaging: Allow private messages
           save_privacy_settings: Spara integritetsinställningar
-          allow_public_contact: Enable public contacting
+          allow_public_contact: Tillåt alla att skicka direktmeddelanden till mig, även de som jag inte följer.
           public_contact: Allow public contacting
         update:
           error: Det gick inte att uppdatera dina integritetsinställningar.
@@ -151,39 +153,37 @@ sv:
               appear as anonymous to others. If you want to act publicly, select the option "I want my profile
               to be public" below.
             </p>
-          continue: Continue anonymous
+          continue: Continue anonymously
           publicize: I want my profile to be public
         privacy_consent:
           make_profile_public: Gör din profil offentlig
           content_html: |
             <p>
-              If you want to perform public activities on this platform, you must create a public profile. This means
-              that other participants will see your name and nickname alongside your public activity on this platform,
-              such as the proposals or comments you have submitted. The public profile displays the following
-              information about you:
+              Om du vill utföra publika aktiviteter på denna plattform, måste du skapa en offentlig profil. Detta innebär
+              att andra deltagare kommer att se ditt namn och smeknamn vid sidan av din offentliga aktivitet på denna plattform,
+              såsom de förslag eller kommentarer som du har lämnat in. Den publika profilen visar följande
+              information om dig:
             </p>
-            <ul class="list-disc pl-4 mt-2">
-              <li>your name (%{user_name})</li>
-              <li>your nickname (%{nickname})</li>
-              <li>your public activity on this platform, such as the proposals and comments you have submitted</li>
-              <li>who you follow and who follows you on this platform</li>
+            <ul>
+              <li>ditt namn</li>
+              <li>ditt smeknamn</li>
+              <li>din offentliga aktivitet på denna plattform, t. ex. förslag och kommentarer som du har lämnat in till</li>
+              <li>vem du följer och vilka som följer dig på denna plattform</li>
             </ul>
-            <p class="my-2">If you wish, you can also add the following information to your public profile:</p>
-            <ul class="list-disc pl-4">
-              <li>a profile photo (avatar)</li>
-              <li>a profile description</li>
+            <p>Om du vill, du kan också lägga till följande information till din publika profil:</p>
+            <ul>
+              <li>en profilbild (avatar)</li>
+              <li>en beskrivning av profilen</li>
             </ul>
-            <p class="mt-2 mb-1">You can change this info through the profile settings:</p>
-            <p>%{profile_settings}</p>
-            <p class="mt-2">
-              If you change your mind later, you can always change your profile back to private through your account's
-              privacy settings.
+            <p>
+              Om du ändrar dig senare, du kan alltid ändra din profil tillbaka till privat genom ditt kontos
+              sekretessinställningar.
             </p>
           close_modal: Stäng
           agree_to_public_profile: Jag godkänner att en offentlig profil skapas om mig
           do_not_agree: Nej, jag vill inte göra min profil offentlig
           profile_settings: Profile settings
-          continue_anonymous: No, I do not want to make my profile public, continue anonymous.
+          continue_anonymous: No, I do not want to make my profile public, continue anonymously.
       publish_account:
         unauthorized: Endast deltagare med offentliga profiler tillåts utföra denna åtgärd.
       groups:
@@ -195,8 +195,4 @@ sv:
       anonymous: Anonymous participant
       anonymous_info_html: <i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i>
       private: Privat deltagare
-      private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
-  devise:
-    passwords:
-      edit:
-        old_password_help: För att bekräfta ändringarna av ditt konto, vänligen ange ditt nuvarande lösenord.
+      private_info_html: <i>Denna deltagare har bestämt sig för att göra sin profil privat. Nya meddelanden till denna konversation har därför inaktiverats.</i>
