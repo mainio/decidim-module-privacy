@@ -17,7 +17,7 @@ module Decidim
           raise "Undefined association on #{name}: #{association_name}" unless reflection
 
           # Find the correct association builder class
-          association = reflection.association_class.name.split("::").last.sub(/Association$/, "")
+          association = reflection.association_class.name.split("::").last.sub(/Association$/, "").sub(/Polymorphic$/, "")
           builder = ActiveRecord::Associations::Builder.const_get(association)
 
           # Redefine the association with the modified scope
