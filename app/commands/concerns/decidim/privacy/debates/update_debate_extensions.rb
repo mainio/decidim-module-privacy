@@ -7,7 +7,7 @@ module Decidim
         extend ActiveSupport::Concern
 
         included do
-          alias_method :execute_update_debate, :update_debate
+          alias_method :execute_update_debate, :update_debate unless method_defined?(:execute_update_debate)
 
           def update_debate
             if Decidim::Privacy.anonymity_enabled && !@form.debate.author
