@@ -127,8 +127,8 @@ fi:
           title: Profiilisi on anonyymi
           content_html: |
             <p class="text-center">
-              Olet siirtymässä sivulle anonyymina. Jos haluat muiden käyttäjien näkevän tietoja sinusta, voit myös
-              tehdä profiilistasi julkisen.
+              Olet siirtymässä sivulle anonyyminä. Voit halutessasi muuttaa käyttäjätilin asetuksista profiilin
+              yksityisyyttä.
             </p>
             <p class="text-center my-4">
               <strong>
@@ -145,7 +145,7 @@ fi:
           content_html: |
             <p>
               Profiilisi on oletuksena anonyymi tällä alustalla. Julkaisemasi ideat ja kommentit näkyvät muille
-              anonyymeinä. Jos haluat toimia julkisesti, valitse vaihtoehto "Haluan profiilini olevan julkinen".
+              anonyymeinä.
             </p>
           continue: Jatka anonyyminä
           publicize: Haluan profiilini olevan julkinen
