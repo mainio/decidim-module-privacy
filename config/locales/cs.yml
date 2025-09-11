@@ -125,12 +125,12 @@ cs:
           title: Váš profil je anonymní
           content_html: |
             <p class="text-center">
-              You are entering a page anonymously. If you want other participants to see information about you,
-              you can also make your profile public.
+              Vstupujete na stránku anonymně. Pokud chcete, aby ostatní účastníci viděli informace o vás,
+              můžete také zveřejnit svůj profil.
             </p>
             <p class="text-center my-4">
               <strong>
-                Additional information about making your profile public will be presented after clicking the button below.
+                Další informace o zveřejnění vašeho profilu se zobrazí po kliknutí na tlačítko níže.
               </strong>
             </p>
           button: "Pokračovat"
