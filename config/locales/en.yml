@@ -128,8 +128,8 @@ en:
           title: Your profile is anonymous
           content_html: |
             <p class="text-center">
-              You are entering a page anonymously. If you want other participants to see information about you,
-              you can also make your profile public.
+              You are entering a page anonymously. If you want, you can change your profile privacy in your account
+              settings.
             </p>
             <p class="text-center my-4">
               <strong>
@@ -145,9 +145,8 @@ en:
           close_modal: Close
           content_html: |
             <p>
-              Your profile on this platform is anonymous by default. The ideas and comments you post will
-              appear as anonymous to others. If you want to act publicly, select the option "I want my profile
-              to be public" below.
+              Your profile on this platform is anonymous by default. The ideas and comments you post will appear as
+              anonymous to others.
             </p>
           continue: Continue anonymously
           publicize: I want my profile to be public
