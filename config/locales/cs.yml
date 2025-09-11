@@ -125,12 +125,12 @@ cs:
           title: Váš profil je anonymní
           content_html: |
             <p class="text-center">
-              Vstupujete na stránku anonymně. Pokud chcete, aby ostatní účastníci viděli informace o vás,
-              můžete také zveřejnit svůj profil.
+              You are entering a page anonymously. If you want, you can change your profile privacy in your account
+              settings.
             </p>
             <p class="text-center my-4">
               <strong>
-                Další informace o zveřejnění vašeho profilu se zobrazí po kliknutí na tlačítko níže.
+                Additional information about making your profile public will be presented after clicking the button below.
               </strong>
             </p>
           button: "Pokračovat"
@@ -142,9 +142,8 @@ cs:
           close_modal: Zavřít
           content_html: |
             <p>
-              Váš profil na této platformě je ve výchozím nastavení anonymní. Myšlenky a komentáře, které publikujete, se budou
-              jevit jako anonymní pro ostatní. Pokud chcete jednat veřejně, vyberte možnost "Chci, aby můj profil
-              byl zveřejněn" níže.
+              Your profile on this platform is anonymous by default. The ideas and comments you post will appear as
+              anonymous to others.
             </p>
           continue: Pokračovat anonymně
           publicize: Chci, aby můj profil byl veřejný
