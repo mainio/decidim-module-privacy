@@ -131,12 +131,12 @@ sv:
           title: Din profil är anonym
           content_html: |
             <p class="text-center">
-              Du går in på en sida anonymt. Om du vill att andra deltagare ska se information om dig kan du 
-              också göra din profil offentlig.
+              You are entering a page anonymously. If you want, you can change your profile privacy in your account
+              settings.
             </p>
             <p class="text-center my-4">
               <strong>
-                Ytterligare information om hur du gör din profil offentlig presenteras efter att du klickat på knappen nedan.
+                Additional information about making your profile public will be presented after clicking the button below.
               </strong>
             </p>
           button: "Fortsätt"
@@ -148,9 +148,8 @@ sv:
           close_modal: Stäng
           content_html: |
             <p>
-              Din profil på denna plattform är anonym som standard. De idéer och kommentarer du lägger upp kommer
-              att framstå som anonyma för andra. Om du vill agera offentligt väljer du alternativet "Jag vill att min profil
-              ska vara offentlig" nedan.
+              Your profile on this platform is anonymous by default. The ideas and comments you post will appear as
+              anonymous to others.
             </p>
           continue: Fortsätt anonymt
           publicize: Jag vill att min profil är offentlig
