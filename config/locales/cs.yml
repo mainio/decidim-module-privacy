@@ -10,36 +10,35 @@ cs:
         message: "Váš profil je na této platformě nastaven jako veřejný a další lidé o vás mohou vidět podrobnosti. jako je vaše jméno, přezdívka, profilový obrázek a veřejná aktivita na této platformě. Viditelnost svého profilu můžete změnit prostřednictvím stránky s nastavením soukromí. Váš profil je k dispozici na:"
       shared:
         layout_center:
-          enable_anonymity: Enable anonymity
+          enable_anonymity: Povolit anonymitu
           profile_publicity_intro_anonymous_html: |
             <p>
-              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
-              remain completely anonymous but it will limit the information others can see about you, if you choose to
-              be private instead of anonymous it will limit what you can do on this platform.
+              Tato nastavení soukromí vám umožňují kontrolovat, jak se na této platformě veřejně prezentujete. Můžete se rozhodnout
+              zůstat zcela anonymní, ale tím omezíte informace, které o vás mohou ostatní vidět. Pokud se rozhodnete
+              být soukromí místo anonymní, omezí to vaše možnosti na této platformě.
             </p>
-            <h2 class="heading3 h3 pt-4">Anonymity</h2>
+            <h2 class="heading3 h3 pt-4">Anonymita</h2>
             <p class="pt-4">
-              Making your profile anonymous allows you to perform certain public activities on this platform, such as
-              sending comments, participating in discussions, creating proposals, etc.
+              Anonymizace vašeho profilu vám umožňuje provádět určité veřejné aktivity na této platformě, jako je
+              zasílání komentářů, účast v diskusích, vytváření návrhů atd.
             </p>
             <p class="pt-2">
-              While being anonymous, other participants cannot see your name, or other public information, such as your
-              nickname or profile photo (avatar), your public activity on this platform, your followers or who you
-              follow. Your public profile page is also inaccessible and you cannot be found through the platform search
-              feature.
+              Pokud jste anonymní, ostatní účastníci nemohou vidět vaše jméno ani jiné veřejné informace, jako je vaše
+              přezdívka nebo profilová fotografie (avatar), vaše veřejná aktivita na této platformě, vaši sledující nebo koho
+              sledujete. Vaše veřejná profilová stránka je také nepřístupná a nelze vás najít pomocí vyhledávací funkce platformy.
             </p>
           profile_publicity_intro_private_html: |
             <p>
-              These privacy settings allow you to control how you appear on this platform publicly. You can decide to
-              remain completely private but it will limit what you can do on this platform.
+              Tato nastavení soukromí vám umožňují kontrolovat, jak se na této platformě veřejně prezentujete. Můžete se rozhodnout
+              zůstat zcela v soukromí, ale tím se omezí vaše možnosti na této platformě.
             </p>
           save_privacy_settings: Uložit nastavení soukromí
   decidim:
     anonymous:
       help:
         anonymous_user: |-
-          Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later
-          decide to make your profile public.
+          Váš profil je anonymní. Pokud k vytvoření používáte svůj vlastní účet, vaše jméno není viditelné, dokud se později
+          nerozhodne zveřejnit svůj profil.
     components:
       privacy:
         name: Nastavení soukromí
@@ -49,7 +48,7 @@ cs:
     messaging:
       conversations:
         show:
-          anonymous_account: You cannot have a conversation with an anonymous participant.
+          anonymous_account: Nemůžete mít konverzaci s anonymním účastníkem.
           private_account: Nemůžete mít konverzaci se soukromým účastníkem.
           private_messaging_disabled: Nemůžete mít konverzaci s účastníkem, který má vypnuté soukromé zprávy.
           private_messaging_disabled_new: Nelze zahájit konverzaci s účastníkem, který má vypnuté soukromé zprávy.
@@ -64,66 +63,66 @@ cs:
         title: Soukromé zprávy nejsou povoleny
         content_html: |
           <p class="text-center pb-4">
-            To access this page you have to enable private messaging from the "Privacy settings" under your profile settings.
+            Pro přístup na tuto stránku musíte povolit soukromé zprávy v části „Nastavení soukromí“ v nastavení svého profilu.
           </p>
         back: Předchozí strana
       privacy_settings:
         show:
-          anonymous_profile: Enable anonymous profile
+          anonymous_profile: Povolit anonymní profil
           profile_publicity_html: |
-            <h2 class="heading3 h3 pt-4">Profile publicity</h2>
+            <h2 class="heading3 h3 pt-4">Zveřejnění profilu</h2>
             <p class="pt-4">
-              Making your profile public allows you to perform public activities on this platform, such as sending
-              comments, participating in discussions, creating proposals, etc.
+              Zveřejnění profilu vám umožňuje provádět veřejné aktivity na této platformě, jako je zasílání
+              komentářů, účast v diskusích, vytváření návrhů atd.
             </p>
             <p class="pt-2">
-              When you make your profile public, other participants can see your name publicly on this platform and also
-              see other public information about you, such as your nickname and profile photo (avatar), your public
-              activity on this platform, your followers and who you follow.
+              Když svůj profil zveřejníte, ostatní účastníci mohou na této platformě veřejně vidět vaše jméno a také
+              další veřejné informace o vás, jako je vaše přezdívka a profilová fotografie (avatar), vaše veřejná
+              aktivita na této platformě, vaši sledující a osoby, které sledujete.
             </p>
           profile_publicity_with_anonymity_html: |
-            <h2 class="heading3 h3 pt-4">Public profile</h2>
+            <h2 class="heading3 h3 pt-4">Veřejný profil</h2>
             <p class="pt-4">
-              When your profile is public, you perform activities on this platform with your own name which appears with
-              your comments, proposals and other public activity. Also a public profile is created about you where other
-              platform participants can see your activity on this platform.
+              Pokud je váš profil veřejný, provádíte aktivity na této platformě pod svým vlastním jménem, které se zobrazuje u
+              vašich komentářů, návrhů a dalších veřejných aktivit. Také je o vás vytvořen veřejný profil, kde ostatní
+              účastníci platformy mohou vidět vaši aktivitu na této platformě.
             </p>
             <p class="pt-2">
-              When you make your profile public, other participants can see your name publicly on this platform and also
-              see other public information about you, such as your nickname and profile photo (avatar), your public
-              activity on this platform, your followers and who you follow.
+              Když svůj profil zveřejníte, ostatní účastníci mohou na této platformě veřejně vidět vaše jméno a také
+              další veřejné informace o vás, jako je vaše přezdívka a profilová fotografie (avatar), vaše veřejné
+              aktivity na této platformě, vaši sledující a osoby, které sledujete.
             </p>
           private_messaging_html: |
             <h2 class="heading5 h5">Soukromé zprávy</h2>
             <p>Toto nastavení umožňuje komunikovat s ostatními účastníky na této platformě. Ostatní účastníci vám mohou posílat soukromé zprávy a můžete je poslat i ostatním. Aby bylo možné povolit tuto funkci, Váš profil musí být veřejný,  protože vás ostatní lidé potřebují najít na této platformě, aby s vámi mohli konverzovat.
             </p>
-          enable_anonymity: Enable anonymous profile
+          enable_anonymity: Povolit anonymní profil
           enable_public_profile: Povolit veřejný profil
-          public_profile: Public profile enabled
+          public_profile: Veřejný profil povolen
           enable_private_messaging: Povolit soukromé zprávy
-          private_messaging: Allow private messages
+          private_messaging: Povolit soukromé zprávy
           save_privacy_settings: Uložit nastavení soukromí
-          allow_public_contact: Enable public contacting
-          public_contact: Allow public contacting
+          allow_public_contact: Povolit veřejné kontaktování
+          public_contact: Umožnit veřejné kontaktování
         update:
           error: Při aktualizaci nastavení soukromí došlo k chybě.
           success: Nastavení ochrany soukromí bylo úspěšně aktualizováno.
       privacy_block:
         private:
-          title: Public profile is required for this action
+          title: Pro tuto akci je vyžadován veřejný profil
           content_html: |
             <p class="text-center">
-              You are trying to access a page which requires your profile to be public. Making your profile public allows
-              other participants to see information about you.
+              Snažíte se přistupovat ke stránce, která vyžaduje, aby byl váš profil veřejný. Zveřejnění vašeho profilu umožní
+              ostatním účastníkům zobrazit informace o vás.
             </p>
             <p class="text-center my-4">
               <strong>
-                Additional information about making your profile public will be presented after clicking the button below.
+                Další informace o zveřejnění vašeho profilu se zobrazí po kliknutí na tlačítko níže.
               </strong>
             </p>
-          button: "Publish your profile"
+          button: "Zveřejnit svůj profil"
         anonymous:
-          title: Your profile is anonymous
+          title: Váš profil je anonymní
           content_html: |
             <p class="text-center">
               You are entering a page anonymously. If you want other participants to see information about you,
@@ -134,21 +133,21 @@ cs:
                 Additional information about making your profile public will be presented after clicking the button below.
               </strong>
             </p>
-          button: "Continue"
+          button: "Pokračovat"
       private_account:
         unnamed_user: Nepojmenovaný uživatel
       partials:
         anonymity_prompt:
-          title: Profile publicity
-          close_modal: Close
+          title: Zveřejnění profilu
+          close_modal: Zavřít
           content_html: |
             <p>
-              Your profile on this platform is anonymous by default. The ideas and comments you post will
-              appear as anonymous to others. If you want to act publicly, select the option "I want my profile
-              to be public" below.
+              Váš profil na této platformě je ve výchozím nastavení anonymní. Myšlenky a komentáře, které publikujete, se budou
+              jevit jako anonymní pro ostatní. Pokud chcete jednat veřejně, vyberte možnost "Chci, aby můj profil
+              byl zveřejněn" níže.
             </p>
-          continue: Continue anonymously
-          publicize: I want my profile to be public
+          continue: Pokračovat anonymně
+          publicize: Chci, aby můj profil byl veřejný
         privacy_consent:
           make_profile_public: Zveřejnit svůj profil
           content_html: |
@@ -175,7 +174,7 @@ cs:
           agree_to_public_profile: Souhlasím s tím, aby o mně byl vytvořen veřejný profil
           do_not_agree: Ne, nechci zveřejnit svůj profil
           profile_settings: Nastavení profilu
-          continue_anonymous: No, I do not want to make my profile public, continue anonymously.
+          continue_anonymous: Ne, nechci svůj profil zveřejnit, pokračujte anonymně.
       publish_account:
         unauthorized: Tuto akci mohou provádět pouze účastníci s veřejnými profily.
       groups:
@@ -184,7 +183,7 @@ cs:
         verify:
           email_confirmation: E-mailová adresa skupiny musí být potvrzena pro ověření skupiny.
     profile:
-      anonymous: Anonymous participant
-      anonymous_info_html: <i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i>
+      anonymous: Anonymní uživatel
+      anonymous_info_html: <i>Tento uživatel se rozhodl učinit svůj profil anonymní. Nové zprávy pro tuto konverzaci byly proto zakázány.</i>
       private: Soukromý účastník
-      private_info_html: <i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i>
+      private_info_html: <i>Tento uživatel se rozhodl učinit svůj profil soukromým. Nové zprávy v této konverzaci byly proto zakázány.</i>
