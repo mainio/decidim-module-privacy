@@ -270,7 +270,7 @@ describe "Proposals" do
             visit new_proposal_path(component)
 
             expect(page).to have_content("Your profile is anonymous")
-            expect(page).to have_content("You are entering a page anonymously. If you want other participants to see information about you, you can also make your profile public.")
+            expect(page).to have_content("You are entering a page anonymously. If you want, you can change your profile privacy in your account settings.")
             expect(page).to have_content("Additional information about making your profile public will be presented after clicking the button below.")
 
             click_on "Continue"
