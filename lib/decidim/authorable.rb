@@ -91,7 +91,7 @@ module Decidim
         return unless user_group
 
         if Decidim::Privacy.anonymity_enabled
-          if author.anonymous?
+          if author.respond_to?(:anonymous?) && author.anonymous?
             errors.add :user_group, :invalid unless user_group.users.entire_collection.include? author
           else
             errors.add :user_group, :invalid unless user_group.users.include? author

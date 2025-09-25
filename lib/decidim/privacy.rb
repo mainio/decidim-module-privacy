@@ -22,10 +22,19 @@ module Decidim
     # https://github.com/decidim/decidim/pull/10934
     # https://github.com/decidim/decidim/pull/10939
     def self.apply_extensions?
+      return false if seeding?
       return true unless defined?(Rake)
       return false if ENV["DEV_APP_GENERATION"] == "true"
 
       true
+    end
+
+    def self.seeding?
+      tasks.any? { |t| Rake.application.top_level_tasks.include?(t) }
+    end
+
+    def self.tasks
+      ["db:seed", "db:reset", "db:setup"]
     end
 
     config_accessor :anonymity_enabled do
