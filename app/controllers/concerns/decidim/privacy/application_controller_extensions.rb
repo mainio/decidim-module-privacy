@@ -6,10 +6,16 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        before_action :privacy_modal_snippets
+        before_action :privacy_modal_snippets, :privacy_javascript
       end
 
       private
+
+      def privacy_javascript
+        return unless current_user && !current_user.public?
+
+        snippets.add(:foot, view_context.javascript_pack_tag("decidim_account_publish_handler"))
+      end
 
       def privacy_modal_snippets
         return unless respond_to?(:snippets)
