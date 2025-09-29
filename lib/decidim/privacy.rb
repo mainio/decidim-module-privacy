@@ -22,8 +22,8 @@ module Decidim
     # https://github.com/decidim/decidim/pull/10934
     # https://github.com/decidim/decidim/pull/10939
     def self.apply_extensions?
+      return true if ENV["NODE_ENV"] == "test"
       return false if seeding?
-      return true if ENV["NODE_ENV"] ||= "test"
       return false if ENV["DEV_APP_GENERATION"] == "true"
       return true unless defined?(Rake)
 

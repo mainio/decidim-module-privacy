@@ -5,6 +5,36 @@ require "spec_helper"
 describe Decidim::UserPresenter, :anonymity, type: :helper do
   let(:user) { build(:user) }
 
+  describe "#name" do
+    subject { described_class.new(user).name }
+
+    context "when user is deleted" do
+      let(:user) { build(:user, :deleted) }
+
+      it { is_expected.to eq("Deleted participant") }
+    end
+
+    context "when user is private" do
+      it { is_expected.to eq("Unnamed participant") }
+    end
+
+    context "when user is anonymous" do
+      before do
+        user.anonymity = true
+      end
+
+      it { is_expected.to eq("Unnamed participant") }
+    end
+
+    context "when public account" do
+      before do
+        user.published_at = Time.current
+      end
+
+      it { is_expected.to eq(user.name) }
+    end
+  end
+
   describe "#nickname" do
     subject { described_class.new(user).nickname }
 
