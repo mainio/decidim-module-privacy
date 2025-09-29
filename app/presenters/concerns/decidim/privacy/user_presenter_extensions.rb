@@ -38,6 +38,7 @@ module Decidim
         end
 
         def name
+          return I18n.t("deleted_user", scope: "decidim.components.comment") if respond_to?(:deleted?) && deleted?
           return I18n.t("unnamed_user", scope: "decidim.privacy.private_account") unless public_user?
 
           super
