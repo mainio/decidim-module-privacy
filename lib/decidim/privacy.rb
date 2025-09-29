@@ -22,20 +22,26 @@ module Decidim
     # https://github.com/decidim/decidim/pull/10934
     # https://github.com/decidim/decidim/pull/10939
     def self.apply_extensions?
-      return true if ENV["NODE_ENV"] ||= "test"
-      return true unless defined?(Rake)
       return false if seeding?
+      return true if ENV["NODE_ENV"] ||= "test"
       return false if ENV["DEV_APP_GENERATION"] == "true"
+      return true unless defined?(Rake)
 
       true
     end
 
     def self.seeding?
-      tasks.any? { |t| Rake.application.top_level_tasks.include?(t) }
+      all_tasks = (seeding_tasks + decidim_tasks)
+
+      all_tasks.any? { |t| Rake.application.top_level_tasks.include?(t) }
     end
 
-    def self.tasks
-      ["db:seed", "db:reset", "db:setup"]
+    def self.decidim_tasks
+      Rake.application.top_level_tasks.select { |t| t.start_with?("decidim:") }
+    end
+
+    def self.seeding_tasks
+      Rake.application.top_level_tasks.select { |t| t.start_with?("db:") }
     end
 
     config_accessor :anonymity_enabled do
