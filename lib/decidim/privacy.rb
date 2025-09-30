@@ -31,6 +31,8 @@ module Decidim
     end
 
     def self.seeding?
+      return unless Rake.respond_to?(:application)
+
       all_tasks = (seeding_tasks + decidim_tasks)
 
       all_tasks.any? { |t| Rake.application.top_level_tasks.include?(t) }
