@@ -1,3 +1,5 @@
+import RemoteModal from "src/decidim/remote_modal"
+
 $(() => {
   let $anonymityModal = $("#anonymityModal");
   if ($anonymityModal.length < 1) {
@@ -9,7 +11,7 @@ $(() => {
     $publishAccountModal = null;
   }
 
-  let triggeredLoginElement = localStorage.getItem("loginTriggeringElement")
+  let triggeredLoginElement = localStorage.getItem("loginTriggeringElement");
   // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
   // have logged in. These elements might or might not have the public account requirement to show the modal.
   const setFormValues =  (ev) => {
@@ -163,7 +165,7 @@ $(() => {
     if ($anonymityModal) {
       document.querySelectorAll("[data-dialog-open='anonymityModal']").forEach((item) => {
         item.removeEventListener("click", setFormValues);
-        let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+        let dataPrivacy = JSON.parse(item.getAttribute("data-dialog-privacy"));
 
         if (!dataPrivacy) {
           return;
@@ -172,9 +174,9 @@ $(() => {
         if (dataPrivacy.open && dataPrivacy.openUrl) {
           item.setAttribute("data-dialog-open", dataPrivacy.open);
           $(item).data("open", dataPrivacy.open);
-          item.setAttribute("data-open-url", dataPrivacy.openUrl);
+          item.setAttribute("data-dialog-remote-url", dataPrivacy.openUrl);
           $(item).data("open-url", dataPrivacy.openUrl);
-          item.removeAttribute("data-privacy");
+          item.removeAttribute("data-dialog-privacy");
         } else {
           item.removeAttribute("data-dialog-open");
         }
@@ -189,7 +191,7 @@ $(() => {
     } else {
       document.querySelectorAll("[data-dialog-open='publishAccountModal']").forEach((item) => {
         item.removeEventListener("click", setFormValues);
-        let dataPrivacy = JSON.parse(item.getAttribute("data-privacy"));
+        let dataPrivacy = JSON.parse(item.getAttribute("data-dialog-privacy"));
         if (!dataPrivacy) {
           return;
         }
@@ -197,9 +199,9 @@ $(() => {
         if (dataPrivacy.open && dataPrivacy.openUrl) {
           item.setAttribute("data-dialog-open", dataPrivacy.open);
           $(item).data("open", dataPrivacy.open);
-          item.setAttribute("data-open-url", dataPrivacy.openUrl);
+          item.setAttribute("data-dialog-remote-url", dataPrivacy.openUrl);
           $(item).data("open-url", dataPrivacy.openUrl);
-          item.removeAttribute("data-privacy");
+          item.removeAttribute("data-dialog-privacy");
         } else {
           item.removeAttribute("data-dialog-open");
         }
@@ -216,9 +218,12 @@ $(() => {
     removePrompt();
     $("[data-popup-comment-id]").click();
   }
+
   const handleAuthorizationPopup = (el) => {
     removePrompt();
-    $(`#${el}`).click();
+    // eslint-disable-next-line
+    new RemoteModal(el);
+    el.click();
   }
 
   if ($anonymityModal) {
@@ -229,6 +234,7 @@ $(() => {
       if (redirectDestination) {
         window.location.href = el.target.getAttribute("data-redirect-url");
       } else if (dataTriggeringPrivacy) {
+        dataTriggeringPrivacy = document.getElementById(dataTriggeringPrivacy)
         handleAuthorizationPopup(dataTriggeringPrivacy);
       } else {
         handleCommentSubmission();
@@ -247,9 +253,11 @@ $(() => {
 
     let redirectDestination =  el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
+    console.log(dataTriggeringPrivacy)
     if (redirectDestination) {
       window.location.href = el.target.getAttribute("data-redirect-url");
     } else if (dataTriggeringPrivacy) {
+      dataTriggeringPrivacy = document.getElementById(dataTriggeringPrivacy)
       handleAuthorizationPopup(dataTriggeringPrivacy);
     } else {
       handleCommentSubmission();
