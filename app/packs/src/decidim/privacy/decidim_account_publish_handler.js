@@ -253,7 +253,7 @@ $(() => {
 
     let redirectDestination =  el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
-    console.log(dataTriggeringPrivacy)
+
     if (redirectDestination) {
       window.location.href = el.target.getAttribute("data-redirect-url");
     } else if (dataTriggeringPrivacy) {
