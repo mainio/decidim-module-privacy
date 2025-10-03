@@ -116,8 +116,12 @@ describe "ActionAuthorizationModal", :anonymity do
         context "and prompts user to choose publicity status" do
           let(:other_scope) { create(:scope, organization:) }
           let!(:user_authorization) do
-            create(:authorization, name: "dummy_authorization_handler", user:, granted_at: 1.second.ago,
-                                  metadata: { postal_code: "1234", scope_id: other_scope.id })
+            create(:authorization,
+                   name: "dummy_authorization_handler",
+                   user:,
+                   granted_at: 1.second.ago,
+                   metadata: { postal_code: "1234",
+                               scope_id: other_scope.id })
           end
 
           context "when anonymous status chosen" do
