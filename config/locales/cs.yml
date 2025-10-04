@@ -142,8 +142,8 @@ cs:
           close_modal: Zavřít
           content_html: |
             <p>
-              Your profile on this platform is anonymous by default. The ideas and comments you post will appear as
-              anonymous to others.
+              Váš profil na této platformě je ve výchozím nastavení anonymní. Myšlenky a komentáře, které publikujete, se objeví jako
+              anonymní pro ostatní.
             </p>
           continue: Pokračovat anonymně
           publicize: Chci, aby můj profil byl veřejný
