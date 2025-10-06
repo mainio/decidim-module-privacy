@@ -192,6 +192,11 @@ module Decidim
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
 
+          # lib
+          Decidim::Gamification::BaseEvent.include(
+            Decidim::Privacy::BaseEventExtensions
+          )
+
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
           Decidim::Authorization.include(Decidim::Privacy::UnscopedUserRelation)
