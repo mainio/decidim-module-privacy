@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def author
-          return private_author if Decidim::Privacy.anonymity_enabled && private_author&.anonymous?
+          return private_author if Decidim::Privacy.anonymity_enabled && private_author&.anonymous? && decidim_author_type != "Decidim::Organization"
 
           super
         end
