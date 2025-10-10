@@ -248,6 +248,9 @@ module Decidim
           Decidim::UserPresenter.include(
             Decidim::Privacy::UserPresenterExtensions
           )
+          Decidim::AdminLog::UserModerationPresenter.include(
+            Decidim::Privacy::AdminLog::UserModerationPresenterExtensions
+          )
 
           # Queries
           Decidim::UserGroups::AcceptedMemberships.include(
