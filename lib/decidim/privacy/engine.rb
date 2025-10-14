@@ -200,6 +200,7 @@ module Decidim
           # models
           Decidim::ActionLog.include(Decidim::Privacy::ActionLogExtensions)
           Decidim::Authorization.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Comments::Comment.include(Decidim::Privacy::CommentExtensions)
           Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ImpersonationLog.include(Decidim::Privacy::ImpersonationLogExtensions)
           Decidim::Notification.include(Decidim::Privacy::UnscopedUserRelation)
