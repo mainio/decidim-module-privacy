@@ -30,11 +30,12 @@ describe Decidim::Comments::UpdateComment, :anonymity do
     )
   end
   let(:current_user) { author }
-  let(:command) { described_class.new(comment, current_user, form) }
+  let(:command) { described_class.new(Decidim::Comments::Comment.find(comment.id), current_user, form) }
 
   context "when author anonymous" do
     it "updates the comment" do
       expect(subject).to broadcast(:ok)
+      comment.reload
       expect(comment.body).to be_a(Hash)
       expect(comment.body["en"]).to eq body
     end
@@ -45,6 +46,7 @@ describe Decidim::Comments::UpdateComment, :anonymity do
 
     it "updates the comment" do
       expect(subject).to broadcast(:ok)
+      comment.reload
       expect(comment.body).to be_a(Hash)
       expect(comment.body["en"]).to eq body
     end
