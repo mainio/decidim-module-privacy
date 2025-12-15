@@ -331,7 +331,7 @@ module Decidim
           end
 
           if Decidim.module_installed? :comments
-            #commands
+            # commands
             Decidim::Comments::UpdateComment.include(
               Decidim::Privacy::Comments::UpdateCommentExtensions
             )
