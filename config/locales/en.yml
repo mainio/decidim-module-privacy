@@ -35,6 +35,17 @@ en:
             </p>
           save_privacy_settings: Save privacy settings
   decidim:
+    account:
+      show:
+        details: Account details
+        preferences: Preferences
+        preferences_details: These settings control how you can access your account and how the platform behaves when
+                             you have logged in. These details are not shown publicly anywhere on the platform and they
+                             are only available for you.
+        public_details_html: >
+          These details appear in your public profile in case you have decided to make your profile public.
+          You can control your profile publicity from the <a href="%{privacy_settings_path}">Privacy settings</a> section.
+        public_status: Your profile is currently public.
     anonymous:
       help:
         anonymous_user: |-

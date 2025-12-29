@@ -34,6 +34,17 @@ fi:
             </p>
           save_privacy_settings: Tallenna yksityisyysasetukset
   decidim:
+    account:
+      show:
+        details: Tilin tiedot
+        preferences: Käyttäjän asetukset
+        preferences_details: Nämä asetukset määrittävät kuinka pääset käsiksi tiliisi ja miten alusta käyttäytyy kun
+                             olet kirjautunut sisään. Näitä tietoja ei näytetä alustalla julkisesti ja ne ovat saatavilla
+                             vain sinulle.
+        public_details_html: >
+          Nämä tiedot näkyvät julkisessa profiilissasi jos olet julkaissut profiilisi.
+          Voit hallita profiilisi julkisuutta <a href="%{privacy_settings_path}">Yksityisyysasetukset</a> osiosta.
+        public_status: Profiilisi on tällä hetkellä julkinen.
     anonymous:
       help:
         anonymous_user: |-
