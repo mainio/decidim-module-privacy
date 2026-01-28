@@ -14,7 +14,7 @@ describe Decidim::Comments::CommentType do
   let(:user_group) { nil }
 
   describe "author" do
-    let(:query) { "{ id author { id name nickname avatarUrl profilePath badge organizationName } }" }
+    let(:query) { '{ id author { id name nickname avatarUrl profilePath badge organizationName { translation(locale: "en") } } }' }
 
     context "when the author is public" do
       let(:avatar_url) { author.attached_uploader(:avatar).path(variant: :thumb) }
@@ -40,12 +40,12 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns the user's organization name" do
-        expect(response["author"]).to include("organizationName" => commentable.organization.name)
+        expect(response["author"]).to include("organizationName" => { "translation" => translated_attribute(commentable.organization.name) })
       end
     end
 
     context "when the author is private" do
-      let(:avatar_url) { "//#{commentable.organization.host}:#{Capybara.server_port}#{ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")}" }
+      let(:avatar_url) { ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg") }
 
       before do
         # This can happen if the user commented and later made their profile
@@ -65,7 +65,7 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns the default avatar URL" do
-        expect(response["author"]).to include("avatarUrl" => avatar_url)
+        expect(response["author"]["avatarUrl"]).to end_with(avatar_url)
       end
 
       it "returns an empty profile_path" do
@@ -77,14 +77,14 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns the user's organization name" do
-        expect(response["author"]).to include("organizationName" => commentable.organization.name)
+        expect(response["author"]).to include("organizationName" => { "translation" => translated_attribute(commentable.organization.name) })
       end
 
       # This should not be possible through DB constraints but apparently not
       # all these constraints apply to all old data which may cause the
       # organization to fail to be fetched.
       context "and the original record does not return an author" do
-        let(:query) { "{ author { organizationName } }" }
+        let(:query) { '{ author { organizationName { translation(locale: "en") } } }' }
 
         let(:dummy_class) do
           parent = Class.new(Decidim::ApplicationRecord) do
@@ -120,13 +120,13 @@ describe Decidim::Comments::CommentType do
         let(:model) { dummy_class.find(comment.id) }
 
         it "returns an empty organization name" do
-          expect(response["author"]).to include("organizationName" => "")
+          expect(response["author"]).to include("organizationName" => { "translation" => nil })
         end
       end
     end
 
     context "when the author is anonymous", :anonymity do
-      let(:avatar_url) { "//#{commentable.organization.host}:#{Capybara.server_port}#{ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")}" }
+      let(:avatar_url) { ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg") }
 
       before do
         # This can happen if the user commented and later made their profile
@@ -146,7 +146,7 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns the default avatar URL" do
-        expect(response["author"]).to include("avatarUrl" => avatar_url)
+        expect(response["author"]["avatarUrl"]).to end_with(avatar_url)
       end
 
       it "returns an empty profile_path" do
@@ -158,14 +158,14 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns the user's organization name" do
-        expect(response["author"]).to include("organizationName" => commentable.organization.name)
+        expect(response["author"]).to include("organizationName" => { "translation" => translated_attribute(commentable.organization.name) })
       end
 
       # This should not be possible through DB constraints but apparently not
       # all these constraints apply to all old data which may cause the
       # organization to fail to be fetched.
       context "and the original record does not return an author" do
-        let(:query) { "{ author { organizationName } }" }
+        let(:query) { '{ author { organizationName { translation(locale:"en") } } }' }
 
         let(:dummy_class) do
           parent = Class.new(Decidim::ApplicationRecord) do
@@ -201,7 +201,7 @@ describe Decidim::Comments::CommentType do
         let(:model) { dummy_class.find(comment.id) }
 
         it "returns an empty organization name" do
-          expect(response["author"]).to include("organizationName" => "")
+          expect(response["author"]).to include("organizationName" => { "translation" => nil })
         end
       end
     end

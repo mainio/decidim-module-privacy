@@ -31,7 +31,7 @@ describe Decidim::Proposals::VoteProposal do
 
       perform_enqueued_jobs { subject }
 
-      expect(last_email.subject).to eq("You have earned a new badge: Proposal supports!")
+      expect(last_email.subject).to eq("You have earned a new badge: Proposal votes!")
       expect(last_email_body).to include(user_badges_url)
     end
   end

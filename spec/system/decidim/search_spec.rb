@@ -12,7 +12,7 @@ describe "UserPrivacy" do
     login_as admin, scope: :user
     switch_to_host(organization.host)
     visit decidim.root_path
-    expect(page).to have_content(organization.name)
+    expect(page).to have_content(strip_tags(translated_attribute(organization.description)))
 
     # Ensure there is no "on_next_request" block stored at Warden before running
     # the test in case we want to login some other user.

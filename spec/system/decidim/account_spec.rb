@@ -373,7 +373,6 @@ describe "Account" do
 
       it "updates the administrator's notifications" do
         find("label[for=\"email_on_moderations\"]").click
-
         find("label[for=\"user_notification_settings[close_meeting_reminder]\"]").click
 
         click_on "Save changes"

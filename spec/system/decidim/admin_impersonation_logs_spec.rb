@@ -32,8 +32,8 @@ describe "AdminImpersonationLogs" do
       fill_in(:impersonate_user_reason, with: reason)
       fill_in :impersonate_user_authorization_document_number, with: document_number
       fill_in :impersonate_user_authorization_postal_code, with: "00210"
+      fill_in_datepicker :impersonate_user_authorization_birthday_date, with: Time.current.strftime("%d/%m/%Y")
     end
-    page.find_by_id("impersonate_user_authorization_birthday").set(Time.current.strftime("%d/%m/%Y").to_s)
 
     click_on "Impersonate"
   end

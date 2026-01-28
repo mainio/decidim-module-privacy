@@ -54,7 +54,7 @@ describe Decidim::Proposals::ProposalSerializer do
         end
 
         context "when author is deleted" do
-          let!(:user) { create(:user, :published, :deleted, name: "", nickname: "", organization: component.organization) }
+          let!(:user) { create(:user, :published, :deleted, organization: component.organization) }
           let!(:proposal) { create(:proposal, component:, users: [user]) }
 
           it "serializes the user id" do

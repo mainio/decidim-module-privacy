@@ -35,7 +35,7 @@ describe "Meetings" do
 
         click_on "Make your profile public"
 
-        expect(page).to have_content("Create new meeting")
+        expect(page).to have_content("Create Your Meeting")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -54,7 +54,7 @@ describe "Meetings" do
 
           click_on "Make your profile public"
 
-          expect(page).to have_content("Create new meeting")
+          expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -91,7 +91,7 @@ describe "Meetings" do
           expect(page).to have_content("New meeting")
           click_on "New meeting"
 
-          expect(page).to have_content("Create new meeting")
+          expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
           within "label[for='meeting_user_group_id']" do
@@ -114,7 +114,7 @@ describe "Meetings" do
 
           click_on "Continue anonymously"
 
-          expect(page).to have_content("Create new meeting")
+          expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -132,7 +132,7 @@ describe "Meetings" do
 
           click_on "Continue anonymously"
 
-          expect(page).to have_content("Create new meeting")
+          expect(page).to have_content("Create Your Meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end

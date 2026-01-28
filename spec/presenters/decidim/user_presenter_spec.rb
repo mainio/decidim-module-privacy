@@ -94,7 +94,7 @@ describe Decidim::UserPresenter, :anonymity, type: :helper do
   describe "#default_avatar_url" do
     subject { described_class.new(user).default_avatar_url }
 
-    it { is_expected.to eq("//#{user.organization.host}:#{Capybara.server_port}#{ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")}") }
+    it { is_expected.to end_with(ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")) }
   end
 
   describe "#user_avatar_url" do
