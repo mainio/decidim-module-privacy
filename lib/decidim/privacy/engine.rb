@@ -191,6 +191,12 @@ module Decidim
           Decidim::OwnUserGroupsController.include(
             Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
+          Decidim::Comments::CommentsController.include(
+            Decidim::Privacy::CommentsControllerExtensions
+          )
+          Decidim::Meetings::RegistrationsController.include(
+            Decidim::Privacy::RegistrationsControllerExtensions
+          )
 
           # lib
           Decidim::Gamification::BaseEvent.include(

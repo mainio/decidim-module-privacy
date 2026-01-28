@@ -21,20 +21,20 @@ module Decidim
 
         # Internal: A method to cache to queries to find the valuators for the
         # current space.
-        # rubocop:disable Rails/HelperInstanceVariable
-        def find_valuators_for_select(participatory_space)
-          return @valuators_for_select if @valuators_for_select
-
-          valuator_roles = participatory_space.user_roles(:valuator)
+        def find_valuators_for_select(participatory_space, current_user)
+          valuator_roles = participatory_space.user_roles(:valuator).order_by_name
           valuators = Decidim::User.entire_collection.where(id: valuator_roles.pluck(:decidim_user_id)).to_a
 
-          @valuators_for_select = valuator_roles.map do |role|
+          filtered_valuator_roles = valuator_roles.filter do |role|
+            role.decidim_user_id != current_user.id
+          end
+
+          filtered_valuator_roles.map do |role|
             valuator = valuators.find { |user| user.id == role.decidim_user_id }
 
             [valuator.name, role.id]
           end
         end
-        # rubocop:enable Rails/HelperInstanceVariable
       end
     end
   end
