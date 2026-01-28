@@ -32,7 +32,7 @@ module Decidim
     end
 
     def self.seeding?
-      return unless Rake.respond_to?(:application)
+      return false unless Rake.respond_to?(:application)
 
       all_tasks = (seeding_tasks + decidim_tasks)
 

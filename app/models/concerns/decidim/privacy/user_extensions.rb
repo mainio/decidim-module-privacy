@@ -53,7 +53,7 @@ module Decidim
         end
 
         def anonymous?
-          return unless Decidim::Privacy.anonymity_enabled
+          return false unless Decidim::Privacy.anonymity_enabled
 
           anonymity == true
         end
