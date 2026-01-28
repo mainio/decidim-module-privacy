@@ -10,6 +10,8 @@ describe "Proposals" do
   let!(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
   let!(:user) { create(:user, :admin, :confirmed, organization:) }
   let!(:proposal) { create(:proposal, :official, :published, component:) }
+  let!(:valuator) { create(:user, :admin, :confirmed, organization:) }
+  let!(:process_valuator) { create(:participatory_process_user_role, participatory_process:, user: valuator, role: "valuator") }
 
   before do
     switch_to_host(organization.host)
@@ -24,6 +26,7 @@ describe "Proposals" do
       click_on "Processes"
       click_on participatory_process.title["en"]
       click_on "Proposals"
+
       expect(page).to have_content(proposal.title["en"])
       within("a.action-icon--edit-proposal") do
         expect(page).to have_css('svg[aria-label="Edit proposal"]')
