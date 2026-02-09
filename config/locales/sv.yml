@@ -102,6 +102,8 @@ sv:
               <li>en profilbild (avatar)</li>
               <li>en beskrivning av profilen</li>
             </ul>
+            <p>Du kan ändra den här informationen i dina profilinställningar:</p>
+            <p>%{profile_settings}</p>
             <p>
               Om du ändrar dig senare, du kan alltid ändra din profil tillbaka till privat genom ditt kontos
               sekretessinställningar.
@@ -109,6 +111,7 @@ sv:
           close_modal: Stäng
           agree_to_public_profile: Jag godkänner att en offentlig profil skapas om mig
           do_not_agree: Nej, jag vill inte göra min profil offentlig
+          profile_settings: Profilinställningar
       publish_account:
         unauthorized: Endast deltagare med offentliga profiler tillåts utföra denna åtgärd.
       groups:
