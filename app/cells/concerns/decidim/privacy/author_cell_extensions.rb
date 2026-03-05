@@ -37,7 +37,7 @@ module Decidim
         private
 
         def profile_public?
-          return false unless model.present?
+          return false if model.blank?
 
           # E.g. with decidim-apiext the Decidim::ApiUser does not respond to
           # `.public?`.
