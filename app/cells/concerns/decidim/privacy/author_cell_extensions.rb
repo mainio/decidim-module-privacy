@@ -33,6 +33,18 @@ module Decidim
         def avatar_url
           ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")
         end
+
+        private
+
+        def profile_public?
+          return false unless model.present?
+
+          # E.g. with decidim-apiext the Decidim::ApiUser does not respond to
+          # `.public?`.
+          return false unless model.respond_to?(:public?)
+
+          model.public?
+        end
       end
     end
   end
