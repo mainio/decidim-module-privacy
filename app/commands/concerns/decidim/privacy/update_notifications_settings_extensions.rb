@@ -13,6 +13,7 @@ module Decidim
         # decidim, this feature may be added to the decdidim core along with other changes.
         def update_notifications_settings
           current_user.newsletter_notifications_at = @form.newsletter_notifications_at
+          current_user.notification_types = @form.notification_types
           current_user.direct_message_types = @form.direct_message_types
           current_user.email_on_moderations = @form.email_on_moderations
           current_user.notification_settings = current_user.notification_settings.merge(@form.notification_settings)
