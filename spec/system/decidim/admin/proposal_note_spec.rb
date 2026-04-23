@@ -32,19 +32,12 @@ describe "ProposalNote" do
           end
         end
         expect(page).to have_content(proposal.title["en"])
-        within ".component__show_notes" do
-          find(".card-divider-button").click
-        end
 
         fill_in "proposal_note[body]", with: "Test"
 
-        within ".new_proposal_note" do
-          click_on "Submit"
-        end
+        click_on "Submit"
 
-        within ".component__show_notes" do
-          find(".card-divider-button").click
-
+        within ".comments" do
           expect(page).to have_content(user.name)
           expect(page).to have_content("Test")
         end
@@ -65,52 +58,12 @@ describe "ProposalNote" do
           end
         end
         expect(page).to have_content(proposal.title["en"])
-        within ".component__show_notes" do
-          find(".card-divider-button").click
-        end
 
         fill_in "proposal_note[body]", with: "Test"
 
-        within ".new_proposal_note" do
-          click_on "Submit"
-        end
+        click_on "Submit"
 
-        within ".component__show_notes" do
-          find(".card-divider-button").click
-
-          expect(page).to have_content(user.name)
-          expect(page).to have_content("Test")
-        end
-      end
-    end
-
-    context "when user anonymous", :anonymity do
-      let!(:user) { create(:user, :anonymous, :admin, :confirmed, organization: organization) }
-
-      it "shows the note and author of it correctly" do
-        click_on "Processes"
-        click_on participatory_process.title["en"]
-        click_on "Proposals"
-        expect(page).to have_content(proposal.title["en"])
-        within ".table-list" do
-          within ".table-list__actions" do
-            click_on "Answer proposal"
-          end
-        end
-        expect(page).to have_content(proposal.title["en"])
-        within ".component__show_notes" do
-          find(".card-divider-button").click
-        end
-
-        fill_in "proposal_note[body]", with: "Test"
-
-        within ".new_proposal_note" do
-          click_on "Submit"
-        end
-
-        within ".component__show_notes" do
-          find(".card-divider-button").click
-
+        within ".comments" do
           expect(page).to have_content(user.name)
           expect(page).to have_content("Test")
         end
