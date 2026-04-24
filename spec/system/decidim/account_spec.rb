@@ -118,13 +118,16 @@ describe "Account", type: :system do
           find("*[type=submit]").click
         end
 
-        within "form.new_user" do
+        within "#old_password_field" do
           fill_in :user_old_password, with: "wrong password"
-          find("*[type=submit]").click
         end
+
+        click_on "Update account"
+
         within ".flash.alert" do
           expect(page).to have_content "There was a problem updating your account."
         end
+
         find("#old_password_field").click
         within "#old_password_field" do
           expect(page).to have_css('[role="alert"]', text: "is invalid")
