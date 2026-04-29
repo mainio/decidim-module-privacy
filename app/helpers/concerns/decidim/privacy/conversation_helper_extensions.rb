@@ -42,23 +42,20 @@ module Decidim
         end
 
         def username_list(users, shorten: false)
-          content_tags = []
           first_users = shorten ? users.first(3) : users
           deleted_user_tag = content_tag(:span, t("decidim.profile.deleted"), class: "label label--small label--basic")
           private_user_tag = content_tag(:span, t("decidim.profile.private"), class: "label label--small label--basic")
           anonymous_user_tag = content_tag(:span, t("decidim.profile.anonymous"), class: "label label--small label--basic")
-          first_users.each do |u|
-            content_tags.push(
-              if u.deleted?
-                deleted_user_tag
-              elsif u.is_a?(Decidim::User) && u.anonymous?
-                anonymous_user_tag
-              elsif u.public?
-                content_tag(:strong, u.name)
-              else
-                private_user_tag
-              end
-            )
+          content_tags = first_users.map do |u|
+            if u.deleted?
+              deleted_user_tag
+            elsif u.is_a?(Decidim::User) && u.anonymous?
+              anonymous_user_tag
+            elsif u.public?
+              content_tag(:strong, u.name)
+            else
+              private_user_tag
+            end
           end
 
           return content_tags.join(", ") unless shorten
