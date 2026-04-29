@@ -118,13 +118,18 @@ describe "Proposals" do
         click_on proposal.title["en"]
         click_on "Like"
 
-        expect(page).to have_css(".endorsers-list__container")
+        within ".endorsers-list__container" do
+          expect(page).to have_content("Liked by you")
+        end
+
         user.update!(published_at: nil)
         user.reload
         logout :user
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__container")
+        within ".endorsers-list__container" do
+          expect(page).to have_content("Liked by Unnamed participant")
+        end
       end
 
       it "hides endorsement if user private" do
@@ -155,8 +160,7 @@ describe "Proposals" do
         visit_component
 
         within ".card__list" do
-          expect(page).to have_css(".author__container .author__name", text: "Unnamed participant")
-          expect(page).to have_css(".author img[alt='Avatar: #{coauthor.name}']")
+          expect(page).to have_css(".author__avatar-container img[alt='Avatar: Unnamed participant']")
         end
       end
     end
@@ -343,12 +347,16 @@ describe "Proposals" do
         click_on proposal.title["en"]
         click_on "Like"
 
-        expect(page).to have_css(".endorsers-list__container")
+        within ".endorsers-list__container" do
+          expect(page).to have_content("Liked by you")
+        end
 
         logout :user
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__container")
+        within ".endorsers-list__container" do
+          expect(page).to have_content("Liked by Unnamed participant")
+        end
       end
 
       it "renders endorsement if user anonymous" do

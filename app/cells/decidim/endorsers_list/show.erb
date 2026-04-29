@@ -9,7 +9,10 @@
     <div class="text-center">
       <div class="endorsers-list__text">
         <%= t("decidim.endorsers_list.endorsed_by",
-              visible: display_link(voted_by_me? ? t("decidim.endorsers_list.you") : visible_endorsers.first.try(:name)),
+              visible: display_link(voted_by_me? ? t("decidim.endorsers_list.you") :
+                       visible_endorsers.first.is_a?(Decidim::NilPresenter) ?
+                       t("unnamed_user", scope: "decidim.privacy.private_account") :
+                       visible_endorsers.first.try(:name)),
               others: display_link(t("decidim.endorsers_list.others", count: endorsers_count - 1), css_class: " first-letter:uppercase"),
               count: endorsers_count
             ) %>

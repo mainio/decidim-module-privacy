@@ -14,13 +14,9 @@ module Decidim
                                      present(identity.normalized_author)
                                    end
 
-                                   other_endorsers = other_endorsers.reject { |author| author.is_a?(Decidim::NilPresenter) }
-
                                    other_endorsers + [present(current_user)]
                                  else
-                                   endorsers = base_relation.limit(Decidim::EndorsersListCell::MAX_ITEMS_STACKED).map { |identity| present(identity.normalized_author) }
-
-                                   endorsers.reject { |author| author.is_a?(Decidim::NilPresenter) }
+                                   base_relation.limit(Decidim::EndorsersListCell::MAX_ITEMS_STACKED).map { |identity| present(identity.normalized_author) }
                                  end
         end
       end
