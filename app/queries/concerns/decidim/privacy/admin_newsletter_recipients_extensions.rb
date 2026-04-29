@@ -8,15 +8,16 @@ module Decidim
       included do
         def query
           recipients = recipients_base_query
-          recipients = recipients.interested_in_scopes(@form.scope_ids) if @form.scope_ids.present?
 
-          followers = recipients.where(id: user_id_of_followers) if @form.send_to_followers
+          return recipients if @form.send_to_all_users
+          return verified_users if @form.send_to_verified_users
 
-          participants = recipients.where(id: participant_ids) if @form.send_to_participants
+          if filters_present?
+            filtered_recipients = apply_filters(recipients)
+            return recipients.none if filtered_recipients.empty?
 
-          recipients = participants if @form.send_to_participants
-          recipients = followers if @form.send_to_followers
-          recipients = (followers + participants).uniq if @form.send_to_followers && @form.send_to_participants
+            return filtered_recipients
+          end
 
           recipients
         end

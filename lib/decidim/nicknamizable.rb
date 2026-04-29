@@ -40,6 +40,8 @@ module Decidim
       def nicknamize(name, scope = {})
         return unless name
 
+        scope = { decidim_organization_id: scope } if scope.is_a?(Integer)
+
         disambiguate(
           name.parameterize(separator: "_")[nickname_length_range],
           scope

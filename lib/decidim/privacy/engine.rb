@@ -141,14 +141,14 @@ module Decidim
           Decidim::AuthorCell.include(
             Decidim::Privacy::AuthorCellExtensions
           )
-          Decidim::ProfileSidebarCell.include(
-            Decidim::Privacy::ProfileSidebarCellExtensions
-          )
           Decidim::ProfileActionsCell.include(
             Decidim::Privacy::ProfileActionsCellExtensions
           )
           Decidim::UserGroupPendingRequestsListCell.include(
             Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
+          )
+          Decidim::EndorsersListCell.include(
+            Decidim::Privacy::EndorsersListCellExtensions
           )
 
           # commands
@@ -445,8 +445,8 @@ module Decidim
 
           if Decidim.module_installed? :assemblies
             # controllers
-            Decidim::Assemblies::AssemblyMembersController.include(
-              Decidim::Privacy::AssemblyMembersControllerExtensions
+            Decidim::Assemblies::ParticipatorySpacePrivateUsersController.include(
+              Decidim::Privacy::ParticipatorySpacePrivateUsersControllerExtensions
             )
           end
 

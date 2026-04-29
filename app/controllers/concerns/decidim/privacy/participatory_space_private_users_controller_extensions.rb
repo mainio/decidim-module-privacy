@@ -2,7 +2,7 @@
 
 module Decidim
   module Privacy
-    module AssemblyMembersControllerExtensions
+    module ParticipatorySpacePrivateUsersControllerExtensions
       extend ActiveSupport::Concern
       included do
         def index
@@ -15,10 +15,10 @@ module Decidim
         private
 
         def members
-          @members ||= begin
-            collection = current_participatory_space.members.not_ceased
-            collection.filter { |item| item.user.is_a?(::Decidim::User) && !item.user.nil? }
-          end
+          @members ||= current_participatory_space
+                       .participatory_space_private_users
+                       .published
+                       .filter { |item| item.user.is_a?(::Decidim::User) && item.user.published_at.present? }
         end
       end
     end
