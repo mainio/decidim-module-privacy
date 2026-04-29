@@ -22,6 +22,14 @@ module Decidim
           end
         end
 
+        def author_name
+          if resource_name == "proposal_note"
+            model["name"]
+          else
+            options[:author_name_text] || model.name
+          end
+        end
+
         def profile_path?
           return false if model.is_a?(PrivateUser)
           return false if model.nil?
