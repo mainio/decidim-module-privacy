@@ -70,22 +70,13 @@ describe "Account" do
       expect(page).to have_css("h2", text: "Profile publicity")
     end
 
-    it "shows the my interests page" do
-      within "#dropdown-menu-profile" do
-        click_on "My interests"
-      end
-
-      expect(page).to have_css("h1", text: "Participant settings")
-      expect(page).to have_css("span", text: "MY INTERESTS")
-    end
-
     it "shows the my data page" do
       within "#dropdown-menu-profile" do
         click_on "My data"
       end
 
       expect(page).to have_css("h1", text: "Participant settings")
-      expect(page).to have_css("span", text: "DOWNLOAD THE DATA")
+      expect(page).to have_button(text: "Request")
     end
 
     it "shows the delete my account page" do
@@ -201,7 +192,6 @@ describe "Account" do
 
     it "toggles old and new password fields" do
       within "form.edit_user" do
-        expect(page).to have_content("must not be too common (e.g. 123456) and must be different from your nickname and your email.")
         expect(page).to have_field("user[password]", with: "", type: "password")
         expect(page).to have_field("user[old_password]", with: "", type: "password")
         click_on "Change password"

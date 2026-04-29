@@ -18,11 +18,11 @@ describe "Initiatives" do
   context "when anonymity disabled" do
     context "when trying to create a new initiative" do
       context "when user private" do
-        it "renders a site that tells user to publish your account" do
+        it "renders a popup that tells user to publish your account" do
           visit decidim_initiatives.initiatives_path
           click_on "New initiative"
-          find(".card__highlight").click
-          expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
+
+          expect(page).to have_content("If you want to perform public activities on this platform, you must create a public profile.")
         end
       end
 
@@ -32,7 +32,6 @@ describe "Initiatives" do
         it "renders the site to create a new initiative" do
           visit decidim_initiatives.initiatives_path
           click_on "New initiative"
-          find(".card__highlight").click
 
           expect(page).to have_content("Create a new initiative")
         end
@@ -40,7 +39,7 @@ describe "Initiatives" do
 
       context "when user tries to edit initiative" do
         context "when user private" do
-          it "renders a site that tells user to publish your account" do
+          it "renders a popup that tells user to publish your account" do
             visit decidim_initiatives.initiatives_path
 
             find("label", text: "My initiatives").click
@@ -48,7 +47,7 @@ describe "Initiatives" do
             click_on initiative.title["en"]
             click_on "Edit"
 
-            expect(page).to have_content("You are trying to access a page which requires your profile to be public.")
+            expect(page).to have_content("Public profile is required for this action")
           end
         end
 
@@ -74,12 +73,11 @@ describe "Initiatives" do
     let!(:user) { create(:user, :confirmed, organization:) }
 
     context "when trying to create a new initiative" do
-      context "when user anonymous" do
-        it "renders a site that tells user to publish your account" do
+      context "when user anonymous by default" do
+        it "renders a popup that tells user to publish your account" do
           visit decidim_initiatives.initiatives_path
           click_on "New initiative"
-          find(".card__highlight").click
-          expect(page).to have_content("Your profile is anonymous")
+          expect(page).to have_content("Your profile on this platform is anonymous by default")
         end
       end
 

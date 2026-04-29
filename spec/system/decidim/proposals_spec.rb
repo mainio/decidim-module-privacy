@@ -94,11 +94,11 @@ describe "Proposals" do
       end
     end
 
-    context "when user leaves an endorsement" do
+    context "when user leaves a like" do
       let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
       let!(:proposal) { create(:proposal, component:, users: [user]) }
 
-      it "shows user's name in endorsements list if public" do
+      it "shows user's name in likes list if public" do
         user.update(published_at: Time.current)
         visit_component
 
@@ -106,7 +106,7 @@ describe "Proposals" do
         click_on "Like"
         refresh
 
-        within ".endorsers-list__trigger" do
+        within ".endorsers-list__container" do
           expect(page).to have_css(".author__avatar-container img[alt='Avatar: #{user.name}']")
         end
       end
@@ -117,15 +117,14 @@ describe "Proposals" do
 
         click_on proposal.title["en"]
         click_on "Like"
-        refresh
 
-        expect(page).to have_css(".endorsers-list__trigger")
+        expect(page).to have_css(".endorsers-list__container")
         user.update!(published_at: nil)
         user.reload
-
+        logout :user
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__trigger")
+        expect(page).to have_no_css(".endorsers-list__container")
       end
 
       it "hides endorsement if user private" do
@@ -304,7 +303,11 @@ describe "Proposals" do
             visit_component
             click_on proposal.title["en"]
 
-            expect(page).to have_link("Edit proposal")
+            click_on "Resource controls"
+
+            within "#dropdown-menu-resource-#{proposal.id}" do
+              expect(page).to have_link("Edit")
+            end
           end
 
           context "when part of user group" do
@@ -313,7 +316,13 @@ describe "Proposals" do
             it "create as -field has a help text" do
               visit_component
               click_on proposal.title["en"]
-              click_on "Edit proposal"
+
+              click_on "Resource controls"
+
+              within "#dropdown-menu-resource-#{proposal.id}" do
+                click_on "Edit"
+              end
+
               within "label[for='proposal_user_group_id']" do
                 expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
               end
@@ -334,13 +343,12 @@ describe "Proposals" do
         click_on proposal.title["en"]
         click_on "Like"
 
+        expect(page).to have_css(".endorsers-list__container")
+
+        logout :user
         refresh
 
-        expect(page).to have_css(".endorsers-list__trigger")
-
-        within ".endorsers-list__trigger" do
-          expect(page).to have_css(".author__container .author__name", text: "Unnamed participant", visible: :all)
-        end
+        expect(page).to have_no_css(".endorsers-list__container")
       end
 
       it "renders endorsement if user anonymous" do

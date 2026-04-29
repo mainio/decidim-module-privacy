@@ -92,15 +92,13 @@ describe "ActionAuthorizationModal", :anonymity do
     end
 
     context "and action authorized with custom action authorizer options" do
-      let(:scope) { create(:scope, organization:) }
       let(:permissions) do
         {
           create: {
             authorization_handlers: {
               dummy_authorization_handler: {
                 options: {
-                  allowed_postal_codes: "1234, 4567",
-                  allowed_scope_id: scope.id
+                  allowed_postal_codes: "1235, 4567"
                 }
               }
             }
@@ -114,14 +112,12 @@ describe "ActionAuthorizationModal", :anonymity do
 
       context "when the user does not match the authorization criteria" do
         context "and prompts user to choose publicity status" do
-          let(:other_scope) { create(:scope, organization:) }
           let!(:user_authorization) do
             create(:authorization,
                    name: "dummy_authorization_handler",
                    user:,
                    granted_at: 1.second.ago,
-                   metadata: { postal_code: "1234",
-                               scope_id: other_scope.id })
+                   metadata: { postal_code: "1234" })
           end
 
           context "when anonymous status chosen" do
@@ -135,7 +131,6 @@ describe "ActionAuthorizationModal", :anonymity do
 
               expect(page).to have_content("Not authorized")
               expect(page).to have_content("Sorry, you cannot perform this action as some of your authorization data does not match.")
-              expect(page).to have_content("Participation is restricted to participants with the scope #{scope.name["en"]}, and your scope is #{other_scope.name["en"]}.")
             end
           end
 
@@ -156,7 +151,6 @@ describe "ActionAuthorizationModal", :anonymity do
 
               expect(page).to have_content("Not authorized")
               expect(page).to have_content("Sorry, you cannot perform this action as some of your authorization data does not match.")
-              expect(page).to have_content("Participation is restricted to participants with the scope #{scope.name["en"]}, and your scope is #{other_scope.name["en"]}.")
             end
           end
 
@@ -176,7 +170,6 @@ describe "ActionAuthorizationModal", :anonymity do
 
               expect(page).to have_content("Not authorized")
               expect(page).to have_content("Sorry, you cannot perform this action as some of your authorization data does not match.")
-              expect(page).to have_content("Participation is restricted to participants with the scope #{scope.name["en"]}, and your scope is #{other_scope.name["en"]}.")
             end
           end
         end

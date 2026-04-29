@@ -38,8 +38,8 @@ describe Decidim::Devise::OmniauthRegistrationsController do
         expect(controller).to be_user_signed_in
       end
 
-      it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations/first_login")
+      it "redirects to the root" do
+        expect(subject).to redirect_to("/")
       end
 
       it "creates a new user" do
@@ -66,8 +66,8 @@ describe Decidim::Devise::OmniauthRegistrationsController do
         expect(controller).to be_user_signed_in
       end
 
-      it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations/first_login")
+      it "redirects to the root" do
+        expect(subject).to redirect_to("/")
       end
 
       it "creates a new user" do
@@ -92,8 +92,8 @@ describe Decidim::Devise::OmniauthRegistrationsController do
         expect(controller).to be_user_signed_in
       end
 
-      it "redirects to the authorizations path" do
-        expect(subject).to redirect_to("/authorizations/first_login")
+      it "redirects to the root" do
+        expect(subject).to redirect_to("/")
       end
 
       it "creates a new user" do

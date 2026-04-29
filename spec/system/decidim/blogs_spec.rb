@@ -27,11 +27,14 @@ describe "Blogs" do
         user.update(published_at: Time.current)
         visit_blog_post
 
-        within ".blog__actions" do
+        click_on "Resource controls"
+
+        within "#dropdown-menu-resource-#{post.id}" do
           expect(page).to have_link("Follow")
-          expect(page).to have_button("Like")
-          expect(page).to have_link("Comment")
         end
+
+        expect(page).to have_button("Like")
+        expect(page).to have_link("Comment")
       end
     end
 
@@ -41,11 +44,14 @@ describe "Blogs" do
       it "shows endorse, follow and comments -buttons" do
         visit_blog_post
 
-        within ".blog__actions" do
+        click_on "Resource controls"
+
+        within "#dropdown-menu-resource-#{post.id}" do
           expect(page).to have_link("Follow")
-          expect(page).to have_button("Like")
-          expect(page).to have_link("Comment")
         end
+
+        expect(page).to have_button("Like")
+        expect(page).to have_link("Comment")
       end
     end
 
@@ -53,10 +59,8 @@ describe "Blogs" do
       it "hides endorse button" do
         visit_blog_post
 
-        within ".blog__actions-left" do
-          expect(page).to have_no_button("Like")
-          expect(page).to have_link("Comment")
-        end
+        expect(page).to have_no_button("Like")
+        expect(page).to have_link("Comment")
       end
     end
 
@@ -70,9 +74,7 @@ describe "Blogs" do
           click_on "Log out"
         end
 
-        within ".blog__actions-left" do
-          expect(page).to have_no_button("Like")
-        end
+        expect(page).to have_no_button("Like")
       end
     end
   end

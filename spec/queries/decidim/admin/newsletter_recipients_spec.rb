@@ -11,7 +11,9 @@ describe Decidim::Admin::NewsletterRecipients do
   let(:send_to_followers) { false }
   let(:send_to_participants) { false }
   let(:participatory_space_types) { [] }
-  let(:scope_ids) { [] }
+  let(:send_to_verified_users) { false }
+  let(:send_to_private_members) { false }
+  let(:verification_types) { [] }
 
   let(:form_params) do
     {
@@ -19,7 +21,9 @@ describe Decidim::Admin::NewsletterRecipients do
       send_to_followers:,
       send_to_participants:,
       participatory_space_types:,
-      scope_ids:
+      send_to_verified_users:,
+      send_to_private_members:,
+      verification_types:
     }
   end
 
@@ -38,15 +42,6 @@ describe Decidim::Admin::NewsletterRecipients do
       it "returns all users" do
         expect(subject.query).to match_array recipients
         expect(recipients.count).to eq 5
-      end
-
-      context "with the scope_ids array containing an empty value" do
-        let(:scope_ids) { [""] }
-
-        it "returns all users" do
-          expect(subject.query).to match_array recipients
-          expect(recipients.count).to eq 5
-        end
       end
 
       context "with blocked accounts" do
@@ -149,35 +144,6 @@ describe Decidim::Admin::NewsletterRecipients do
             expect(subject.query).to match_array(recipients)
             expect(recipients.count).to eq 4
           end
-        end
-      end
-    end
-
-    context "with scopes segment" do
-      let(:scopes) do
-        create_list(:scope, 5, organization:)
-      end
-      let(:scope_ids) { scopes.pluck(:id) }
-
-      context "when recipients interested in scopes" do
-        let!(:recipients) do
-          create_list(:user, 3, :confirmed, organization:, newsletter_notifications_at: Time.current, extended_data: { "interested_scopes" => scopes.first.id })
-        end
-
-        it "returns all users" do
-          expect(subject.query).to match_array recipients
-          expect(recipients.count).to eq 3
-        end
-      end
-
-      context "when interest not match the selected scopes" do
-        let(:user_interset) { create(:scope, organization:) }
-        let!(:recipients) do
-          create_list(:user, 3, :confirmed, organization:, newsletter_notifications_at: Time.current, extended_data: { "interested_scopes" => user_interset.id })
-        end
-
-        it "do not return recipients" do
-          expect(subject.query).to be_empty
         end
       end
     end

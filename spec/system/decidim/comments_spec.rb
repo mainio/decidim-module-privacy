@@ -80,6 +80,8 @@ describe "Comments" do
         user.reload
 
         refresh
+        click_on "1 answer"
+
         within "#comment-#{Decidim::Comments::Comment.first.id}-replies" do
           expect(page).to have_no_content(user.name)
           expect(page).to have_no_selector("a[href='/profiles/#{user.nickname}']")

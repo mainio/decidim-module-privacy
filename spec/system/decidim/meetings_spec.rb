@@ -35,7 +35,7 @@ describe "Meetings" do
 
         click_on "Make your profile public"
 
-        expect(page).to have_content("Create Your Meeting")
+        expect(page).to have_content("Create new meeting")
         expect(page).to have_content("Title")
         expect(page).to have_content("Description")
       end
@@ -54,7 +54,7 @@ describe "Meetings" do
 
           click_on "Make your profile public"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -71,7 +71,11 @@ describe "Meetings" do
             visit_component
             click_on meeting.title["en"]
 
-            expect(page).to have_no_link("Edit")
+            click_on "Resource controls"
+
+            within "#dropdown-menu-resource-#{meeting.id}" do
+              expect(page).to have_no_link("Edit")
+            end
           end
         end
       end
@@ -91,7 +95,7 @@ describe "Meetings" do
           expect(page).to have_content("New meeting")
           click_on "New meeting"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
           within "label[for='meeting_user_group_id']" do
@@ -114,7 +118,7 @@ describe "Meetings" do
 
           click_on "Continue anonymously"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -132,7 +136,7 @@ describe "Meetings" do
 
           click_on "Continue anonymously"
 
-          expect(page).to have_content("Create Your Meeting")
+          expect(page).to have_content("Create new meeting")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -150,7 +154,11 @@ describe "Meetings" do
             visit_component
             click_on meeting.title["en"]
 
-            expect(page).to have_link("Edit")
+            click_on "Resource controls"
+
+            within "#dropdown-menu-resource-#{meeting.id}" do
+              expect(page).to have_link("Edit")
+            end
           end
 
           context "when part of user group" do
@@ -159,7 +167,12 @@ describe "Meetings" do
             it "create as -field has a help text" do
               visit_component
               click_on meeting.title["en"]
-              click_on "Edit meeting"
+              click_on "Resource controls"
+
+              within "#dropdown-menu-resource-#{meeting.id}" do
+                click_on "Edit"
+              end
+
               within "label[for='meeting_user_group_id']" do
                 expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
               end

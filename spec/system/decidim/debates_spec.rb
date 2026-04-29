@@ -54,7 +54,7 @@ describe "Debates" do
 
           click_on "Make your profile public"
 
-          expect(page).to have_content("New debate")
+          expect(page).to have_content("Create new debate")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -72,7 +72,7 @@ describe "Debates" do
             expect(page).to have_content("New debate")
             click_on "New debate"
 
-            expect(page).to have_content("New debate")
+            expect(page).to have_content("Create new debate")
             expect(page).to have_content("Title")
             expect(page).to have_content("Description")
             within "label[for='debate_user_group_id']" do
@@ -95,7 +95,7 @@ describe "Debates" do
 
             click_on "Continue anonymously"
 
-            expect(page).to have_content("New debate")
+            expect(page).to have_content("Create new debate")
             expect(page).to have_content("Title")
             expect(page).to have_content("Description")
           end
@@ -121,7 +121,7 @@ describe "Debates" do
 
           click_on "Make your profile public"
 
-          expect(page).to have_content("New debate")
+          expect(page).to have_content("Create new debate")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -143,7 +143,7 @@ describe "Debates" do
 
             click_on "No, I do not want to make my profile public, continue anonymously"
 
-            expect(page).to have_content("New debate")
+            expect(page).to have_content("Create new debate")
             expect(page).to have_content("Title")
             expect(page).to have_content("Description")
           end
@@ -167,7 +167,7 @@ describe "Debates" do
 
           click_on "Continue anonymously"
 
-          expect(page).to have_content("New debate")
+          expect(page).to have_content("Create new debate")
           expect(page).to have_content("Title")
           expect(page).to have_content("Description")
         end
@@ -201,7 +201,11 @@ describe "Debates" do
             visit_component
             click_on debate.title["en"]
 
-            expect(page).to have_link("Edit")
+            click_on "Resource controls"
+
+            within "#dropdown-menu-resource-#{debate.id}" do
+              expect(page).to have_link("Edit")
+            end
           end
         end
       end

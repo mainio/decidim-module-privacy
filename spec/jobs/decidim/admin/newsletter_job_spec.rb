@@ -14,16 +14,20 @@ describe Decidim::Admin::NewsletterJob do
   let(:send_to_all_users) { true }
   let(:send_to_followers) { false }
   let(:send_to_participants) { false }
+  let(:send_to_verified_users) { false }
+  let(:send_to_private_members) { true }
   let(:participatory_space_types) { [] }
-  let(:scope_ids) { [] }
+  let(:verification_types) { [] }
 
   let(:form_params) do
     {
       send_to_all_users:,
+      send_to_verified_users:,
       send_to_followers:,
       send_to_participants:,
+      send_to_private_members:,
       participatory_space_types:,
-      scope_ids:
+      verification_types:
     }
   end
 
@@ -60,8 +64,10 @@ describe Decidim::Admin::NewsletterJob do
       "send_to_all_users" => true,
       "send_to_followers" => false,
       "send_to_participants" => false,
+      "send_to_private_members" => true,
+      "send_to_verified_users" => false,
       "participatory_space_types" => [],
-      "scope_ids" => []
+      "verification_types" => []
     )
   end
 end

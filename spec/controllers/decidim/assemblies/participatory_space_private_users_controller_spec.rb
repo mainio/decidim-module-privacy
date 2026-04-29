@@ -4,13 +4,13 @@ require "spec_helper"
 
 module Decidim
   module Assemblies
-    class AssemblyMembersController
-      include ::Decidim::Privacy::AssemblyMembersControllerExtensions
+    class ParticipatorySpacePrivateUsersController
+      include ::Decidim::Privacy::ParticipatorySpacePrivateUsersControllerExtensions
     end
   end
 end
 
-describe Decidim::Assemblies::AssemblyMembersController do
+describe Decidim::Assemblies::ParticipatorySpacePrivateUsersController do
   routes { Decidim::Assemblies::Engine.routes }
 
   let(:organization) { create(:organization) }
@@ -31,17 +31,19 @@ describe Decidim::Assemblies::AssemblyMembersController do
     context "when assembly has no members" do
       it "displays an empty array of members" do
         get :index, params: { assembly_slug: assembly.slug }
-
         expect(controller.helpers.collection).to be_empty
       end
     end
 
     context "when there are members" do
-      let!(:first_member) { create(:assembly_member, :with_user, assembly:) }
-      let!(:second_member) { create(:assembly_member, assembly:) }
-      let!(:non_member) { create(:assembly_member) }
+      let!(:first_member) { create(:assembly_private_user, user: first_user, privatable_to: assembly, published: true) }
+      let!(:second_member) { create(:assembly_private_user, user: second_user, privatable_to: assembly, published: true) }
+      let!(:non_member) { create(:assembly_private_user, published: true) }
 
       context "when assembly has no public members" do
+        let(:first_user) { create(:user, :confirmed, organization:) }
+        let(:second_user) { create(:user, :confirmed, organization:) }
+
         it "displays an empty array of members" do
           get :index, params: { assembly_slug: assembly.slug }
 
@@ -50,9 +52,8 @@ describe Decidim::Assemblies::AssemblyMembersController do
       end
 
       context "when assembly has some public members" do
-        before do
-          first_member.user.update!(published_at: Time.current)
-        end
+        let(:first_user) { create(:user, :published, :confirmed, organization:) }
+        let(:second_user) { create(:user, :confirmed, organization:) }
 
         context "when user has permissions" do
           it "displays only public members" do
@@ -64,9 +65,8 @@ describe Decidim::Assemblies::AssemblyMembersController do
       end
 
       context "when assembly has some anonymous members", :anonymity do
-        before do
-          first_member.user.update!(anonymity: true)
-        end
+        let(:first_user) { create(:user, :anonymous, :confirmed, organization:) }
+        let(:second_user) { create(:user, :confirmed, organization:) }
 
         it "displays an empty array of members" do
           get :index, params: { assembly_slug: assembly.slug }
