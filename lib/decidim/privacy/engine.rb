@@ -144,12 +144,6 @@ module Decidim
           Decidim::ProfileActionsCell.include(
             Decidim::Privacy::ProfileActionsCellExtensions
           )
-          Decidim::UserGroupPendingRequestsListCell.include(
-            Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
-          )
-          Decidim::EndorsersListCell.include(
-            Decidim::Privacy::EndorsersListCellExtensions
-          )
 
           # commands
           Decidim::UpdateNotificationsSettings.include(
@@ -164,8 +158,8 @@ module Decidim
           Decidim::Messaging::StartConversation.include(
             Decidim::Privacy::StartConversationExtensions
           )
-          Decidim::EndorseResource.include(
-            Decidim::Privacy::EndorseResourceExtensions
+          Decidim::LikeResource.include(
+            Decidim::Privacy::LikeResourceExtensions
           )
           Decidim::InviteUser.include(Decidim::Privacy::InviteUserExtensions)
 
@@ -184,12 +178,6 @@ module Decidim
           )
           Decidim::Messaging::ConversationsController.include(
             Decidim::Privacy::ConversationsControllerExtensions
-          )
-          Decidim::GroupsController.include(
-            Decidim::Privacy::GroupsControllerExtensions
-          )
-          Decidim::OwnUserGroupsController.include(
-            Decidim::Privacy::OwnUserGroupsControllerExtensions
           )
           Decidim::Comments::CommentsController.include(
             Decidim::Privacy::CommentsControllerExtensions

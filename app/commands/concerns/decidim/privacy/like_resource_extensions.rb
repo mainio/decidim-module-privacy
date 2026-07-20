@@ -2,18 +2,17 @@
 
 module Decidim
   module Privacy
-    module EndorseResourceExtensions
+    module LikeResourceExtensions
       extend ActiveSupport::Concern
 
       included do
         def call
           return broadcast(:invalid) unless @current_user.public? || @current_user.anonymous?
-          return broadcast(:invalid) if existing_group_endorsement?
 
-          endorsement = build_resource_endorsement
-          if endorsement.save
-            notify_endorser_followers
-            broadcast(:ok, endorsement)
+          like = build_resource_like
+          if like.save
+            notify_liker_followers
+            broadcast(:ok, like)
           else
             broadcast(:invalid)
           end
