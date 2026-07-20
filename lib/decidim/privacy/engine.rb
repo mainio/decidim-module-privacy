@@ -210,7 +210,6 @@ module Decidim
           Decidim::Messaging::Conversation.include(Decidim::Privacy::ConversationExtensions)
           Decidim::Messaging::Message.include(Decidim::Privacy::MessageExtensions)
           Decidim::User.include(Decidim::Privacy::UserExtensions)
-          Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
@@ -220,7 +219,6 @@ module Decidim
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
-          Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
           Decidim::Messaging::ConversationForm.include(
             Decidim::Privacy::ConversationFormExtensions
           )
@@ -232,11 +230,8 @@ module Decidim
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
           )
-          Decidim::EndorsableHelper.include(
-            Decidim::Privacy::EndorsableHelperExtensions
-          )
-          Decidim::UserGroupHelper.include(
-            Decidim::Privacy::UserGroupHelperExtensions
+          Decidim::LikeableHelper.include(
+            Decidim::Privacy::LikeableHelperExtensions
           )
 
           # presenters
@@ -248,15 +243,6 @@ module Decidim
           )
 
           # Queries
-          Decidim::UserGroups::AcceptedMemberships.include(
-            Decidim::Privacy::AcceptedMembershipsExtensions
-          )
-          Decidim::UserGroups::MemberMemberships.include(
-            Decidim::Privacy::MemberMembershipsExtensions
-          )
-          Decidim::UserGroups::AdminMemberships.include(
-            Decidim::Privacy::AdminMembershipsExtensions
-          )
           Decidim::StatsUsersCount.include(
             Decidim::Privacy::StatsUsersCountExtensions
           )
@@ -286,7 +272,7 @@ module Decidim
 
           if Decidim.module_installed? :forms
             # models
-            Decidim::Forms::Answer.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Forms::Response.include(Decidim::Privacy::UnscopedUserRelation)
           end
 
           if Decidim.module_installed? :proposals
@@ -364,7 +350,7 @@ module Decidim
 
           if Decidim.module_installed? :meetings
             # models
-            Decidim::Meetings::Answer.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Meetings::Response.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Meetings::Registration.include(Decidim::Privacy::UnscopedUserRelation)
 
@@ -381,9 +367,6 @@ module Decidim
 
           if Decidim.module_installed? :admin
             # controllers
-            Decidim::Admin::UserGroupsController.include(
-              Decidim::Privacy::Admin::UserGroupsControllerExtensions
-            )
             Decidim::Admin::BlockUserController.include(
               Decidim::Privacy::Admin::BlockUserControllerExtensions
             )
@@ -399,9 +382,6 @@ module Decidim
             Decidim::Admin::ManagedUsers::ImpersonationLogsController.include(
               Decidim::Privacy::ImpersonationLogsControllerExtensions
             )
-            Decidim::Admin::UserGroupsController.include(
-              Decidim::Privacy::UserGroupsControllerExtensions
-            )
             Decidim::Admin::OrganizationController.include(
               Decidim::Privacy::AdminOrganizationControllerExtensions
             )
@@ -409,12 +389,6 @@ module Decidim
             # commands
             Decidim::Admin::CreateParticipatorySpacePrivateUser.include(
               Decidim::Privacy::Admin::CreateParticipatorySpacePrivateUserExtensions
-            )
-            Decidim::Admin::VerifyUserGroup.include(
-              Decidim::Privacy::VerifyUserGroupExtensions
-            )
-            Decidim::Admin::RejectUserGroup.include(
-              Decidim::Privacy::RejectUserGroupExtensions
             )
 
             # forms

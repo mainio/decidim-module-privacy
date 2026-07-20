@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe Decidim::EndorseResource do
+describe Decidim::LikeResource do
   let(:resource) { create(:dummy_resource) }
   let(:current_user) { create(:user, :confirmed, :published, organization: resource.component.organization) }
   let(:command) { described_class.new(resource, current_user) }

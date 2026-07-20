@@ -2,15 +2,15 @@
 
 require "spec_helper"
 
-describe Decidim::Privacy::EndorsableHelperExtensions do
-  let(:endorsements_enabled) { true }
+describe Decidim::Privacy::LikeableHelperExtensions do
+  let(:likes_enabled) { true }
   let(:user) { create(:user, :confirmed) }
 
-  describe "#endorsements_enabled?" do
-    subject { helper.endorsements_enabled? }
+  describe "#likes_enabled?" do
+    subject { helper.likes_enabled? }
 
     before do
-      allow(helper).to receive_messages(current_settings: double(endorsements_enabled:), current_user: user)
+      allow(helper).to receive_messages(current_settings: double(likes_enabled:), current_user: user)
     end
 
     context "when user is private" do
@@ -36,8 +36,8 @@ describe Decidim::Privacy::EndorsableHelperExtensions do
     end
   end
 
-  describe "#show_endorsements_card?" do
-    subject { helper.show_endorsements_card? }
+  describe "#show_likes_card?" do
+    subject { helper.show_likes_card? }
 
     context "when user not logged in" do
       it "returns false" do
