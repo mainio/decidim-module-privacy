@@ -28,7 +28,7 @@ describe "UserPrivacy" do
             find("input#input-search").native.send_keys :enter
           end
 
-          expect(page).to have_content("0 Results for the search: \"#{user.name}")
+          expect(page).to have_content("0 results for the search: \"#{user.name}")
         end
 
         it "shows up in the admin search" do
@@ -56,7 +56,7 @@ describe "UserPrivacy" do
             find("input#input-search").native.send_keys :enter
           end
 
-          expect(page).to have_content("1 Results for the search: \"#{user.name}")
+          expect(page).to have_content("1 results for the search: \"#{user.name}")
           expect(page).to have_css("a", text: user.name)
         end
       end
@@ -74,7 +74,7 @@ describe "UserPrivacy" do
             find("input#input-search").native.send_keys :enter
           end
 
-          expect(page).to have_content("0 Results for the search: \"#{user.name}")
+          expect(page).to have_content("0 results for the search: \"#{user.name}")
         end
 
         it "shows up in the admin search" do

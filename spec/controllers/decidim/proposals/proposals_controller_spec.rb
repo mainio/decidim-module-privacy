@@ -11,8 +11,6 @@ module Decidim
 end
 
 describe Decidim::Proposals::ProposalsController do
-  routes { Decidim::Proposals::Engine.routes }
-
   let!(:user) { create(:user, :confirmed, organization: component.organization) }
   let!(:component) { create(:proposal_component, :with_creation_enabled, :with_attachments_allowed) }
 

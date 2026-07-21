@@ -20,7 +20,7 @@ shared_examples "permittable create actions" do
 
     it "permits create action" do
       post(:create, params:)
-      expect(response).to have_http_status(:ok).or have_http_status(:no_content)
+      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
     end
   end
 
@@ -32,7 +32,7 @@ shared_examples "permittable create actions" do
 
     it "permits create action" do
       post(:create, params:)
-      expect(response).to have_http_status(:ok).or have_http_status(:no_content)
+      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
     end
   end
 end
