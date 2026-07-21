@@ -82,10 +82,7 @@ module Decidim
               file = url.open
               @user.avatar.attach(io: file, filename:)
             end
-
-            @user.tos_agreement = form.tos_agreement
-            @user.accepted_tos_version = Time.current
-            raise NeedTosAcceptance if @user.tos_agreement.blank?
+            @user.tos_agreement = "1"
 
             @user.skip_confirmation! if verified_email
           end
