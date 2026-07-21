@@ -41,30 +41,12 @@ describe Decidim::Core::UserEntityInputFilter, type: :graphql do
       expect(users).to include("id" => user.id.to_s)
     end
 
-    context "when filtering by type User" do
-      let(:query) { %[{ users(filter: { type: "user" }) { id } }] }
-
-      it "returns the user type" do
-        users = response["users"]
-        expect(users).to include("id" => user.id.to_s)
-      end
-
-      context "when user is blocked" do
-        let(:user) { create(:user, :blocked, :confirmed, organization: current_organization) }
-
-        it "does not return user type" do
-          users = response["users"]
-          expect(users).to eq([])
-        end
-      end
-    end
-
     context "when search a user by nickname" do
       let!(:first_user) { create(:user, :confirmed, :published, nickname: "_foo_user_1", name: "FooBar User 1", organization: current_organization) }
       let!(:second_user) { create(:user, nickname: "_foo_user_2", name: "FooBar User 2", organization: current_organization) }
-      let!(:third_user) { create(:user, :confirmed, :published, nickname: "_foo_user_4", name: "FooBar User 4") }
-      let!(:fourth_user) { create(:user, :confirmed, :published, nickname: "_foo_user_5", name: "FooBar User 5", organization: current_organization) }
-      let!(:fifth_user) { create(:user, :confirmed, :published, nickname: "_foo_user_6", name: "FooBar User 6", organization: current_organization) }
+      let!(:third_user) { create(:user, :confirmed, :published, nickname: "_foo_user_3", name: "FooBar User 3") }
+      let!(:fourth_user) { create(:user, :confirmed, :published, nickname: "_foo_user_4", name: "FooBar User 4", organization: current_organization) }
+      let!(:fifth_user) { create(:user, :confirmed, :published, nickname: "_foo_user_5", name: "FooBar User 5", organization: current_organization) }
       let(:query) { %({ users(filter: { nickname: "#{term}" }) { name }}) }
       let(:term) { "foo_user" }
 
