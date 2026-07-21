@@ -7,7 +7,7 @@ module Decidim
 
       included do
         def likes_enabled?
-          current_settings.endorsements_enabled && (current_user&.public? || (Decidim::Privacy.anonymity_enabled && current_user&.anonymous?))
+          current_settings.likes_enabled && (current_user&.public? || (Decidim::Privacy.anonymity_enabled && current_user&.anonymous?))
         end
 
         def show_likes_card?
