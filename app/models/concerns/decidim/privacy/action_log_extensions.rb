@@ -13,7 +13,7 @@ module Decidim
         # record, the validations would fail.
 
         def resource
-          return super unless ["Decidim::UserGroup", "Decidim::User", "Decidim::UserBaseEntity"].include?(resource_type)
+          return super unless ["Decidim::User", "Decidim::UserBaseEntity"].include?(resource_type)
 
           resource_type.constantize.entire_collection.find_by(id: resource_id)
         end

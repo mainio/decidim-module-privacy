@@ -9,14 +9,12 @@ describe Decidim::UserBaseEntity, :anonymity do
   let(:published_user) { create(:user, :confirmed, :published, organization:) }
   let(:private_user) { create(:user, :confirmed, organization:) }
   let(:anonymous_user) { create(:user, :anonymous, :confirmed, organization:) }
-  let(:user_group) { create(:user_group, organization:) }
 
   describe "#default_scope" do
     it "returns only published profiles by default" do
       expect(subject.all).to include(published_user)
       expect(subject.all).not_to include(private_user)
       expect(subject.all).not_to include(anonymous_user)
-      expect(subject.all).to include(user_group)
     end
   end
 
@@ -25,7 +23,6 @@ describe Decidim::UserBaseEntity, :anonymity do
       expect(subject.entire_collection.all).to include(published_user)
       expect(subject.entire_collection.all).to include(private_user)
       expect(subject.entire_collection.all).to include(anonymous_user)
-      expect(subject.entire_collection.all).to include(user_group)
     end
   end
 

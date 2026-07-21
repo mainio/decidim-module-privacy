@@ -6,12 +6,11 @@ require "decidim/api/test/type_context"
 describe Decidim::Comments::CommentType do
   include_context "with a graphql class type"
 
-  let(:model) { create(:comment, commentable:, author:, user_group:) }
+  let(:model) { create(:comment, commentable:, author:) }
   let(:participatory_space) { create(:participatory_process) }
   let(:component) { create(:dummy_component, :published, participatory_space:) }
   let(:commentable) { create(:dummy_resource, :published, component:) }
   let(:author) { create(:user, :confirmed, :published, organization: commentable.organization) }
-  let(:user_group) { nil }
 
   describe "author" do
     let(:query) { '{ id author { id name nickname avatarUrl profilePath badge organizationName { translation(locale: "en") } } }' }
@@ -96,10 +95,6 @@ describe Decidim::Comments::CommentType do
               nil
             end
 
-            def user_group
-              nil
-            end
-
             def hidden?
               false
             end
@@ -116,7 +111,7 @@ describe Decidim::Comments::CommentType do
           end
         end
 
-        let(:comment) { create(:comment, commentable:, author:, user_group:) }
+        let(:comment) { create(:comment, commentable:, author:) }
         let(:model) { dummy_class.find(comment.id) }
 
         it "returns an empty organization name" do
@@ -177,10 +172,6 @@ describe Decidim::Comments::CommentType do
               nil
             end
 
-            def user_group
-              nil
-            end
-
             def hidden?
               false
             end
@@ -197,7 +188,7 @@ describe Decidim::Comments::CommentType do
           end
         end
 
-        let(:comment) { create(:comment, commentable:, author:, user_group:) }
+        let(:comment) { create(:comment, commentable:, author:) }
         let(:model) { dummy_class.find(comment.id) }
 
         it "returns an empty organization name" do

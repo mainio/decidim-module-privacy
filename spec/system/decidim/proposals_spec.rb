@@ -95,7 +95,7 @@ describe "Proposals" do
     end
 
     context "when user leaves a like" do
-      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
+      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_likes_enabled, participatory_space: participatory_process) }
       let!(:proposal) { create(:proposal, component:, users: [user]) }
 
       it "shows user's name in likes list if public" do
@@ -141,7 +141,7 @@ describe "Proposals" do
     end
 
     context "when creating a coauthored proposal" do
-      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
+      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_likes_enabled, participatory_space: participatory_process) }
       let!(:proposal) { create(:proposal, component:, users: [user, coauthor], skip_injection: true) }
       let!(:coauthor) { create(:user, :confirmed, :published, organization:) }
 
@@ -231,24 +231,6 @@ describe "Proposals" do
     context "when creating a proposal" do
       let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
 
-      context "when anonymous while being part of a user group" do
-        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
-        let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
-
-        it "create as -field has a help text" do
-          visit_component
-          expect(page).to have_content("New proposal")
-          click_on "New proposal"
-
-          expect(page).to have_content("Create your proposal")
-          expect(page).to have_content("Title")
-          expect(page).to have_content("Body")
-          within "label[for='proposal_user_group_id']" do
-            expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
-          end
-        end
-      end
-
       context "when pressing create new proposal -button" do
         it "gives you a popup for consent, which has to be accepted in order to proceed" do
           visit_component
@@ -313,31 +295,12 @@ describe "Proposals" do
               expect(page).to have_link("Edit")
             end
           end
-
-          context "when part of user group" do
-            let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
-
-            it "create as -field has a help text" do
-              visit_component
-              click_on proposal.title["en"]
-
-              click_on "Resource controls"
-
-              within "#dropdown-menu-resource-#{proposal.id}" do
-                click_on "Edit"
-              end
-
-              within "label[for='proposal_user_group_id']" do
-                expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
-              end
-            end
-          end
         end
       end
     end
 
     context "when user leaves an endorsement" do
-      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
+      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_likes_enabled, participatory_space: participatory_process) }
       let!(:proposal) { create(:proposal, component:, users: [user]) }
       let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
 
@@ -368,7 +331,7 @@ describe "Proposals" do
     end
 
     context "when creating a coauthored proposal" do
-      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_endorsements_enabled, participatory_space: participatory_process) }
+      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_likes_enabled, participatory_space: participatory_process) }
       let!(:proposal) { create(:proposal, component:, users: [user, coauthor], skip_injection: true) }
       let!(:coauthor) { create(:user, :confirmed, :published, organization:) }
       let!(:user) { create(:user, :anonymous, :confirmed, organization:) }

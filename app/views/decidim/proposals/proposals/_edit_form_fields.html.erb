@@ -45,7 +45,3 @@
                       help_text: t("attachment_legend", scope: "decidim.proposals.proposals.edit"),
                       paragraph: true %>
 <% end %>
-
-<% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-  <%= user_group_select_field form, :user_group_id, help_text: (t("anonymous_user", scope: "decidim.anonymous.help", resource: "proposal") if Decidim::Privacy.anonymity_enabled && current_user.anonymous?) %>
-<% end %>

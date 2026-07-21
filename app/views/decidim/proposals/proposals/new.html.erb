@@ -11,12 +11,7 @@
     <%= form_required_explanation %>
 
     <div class="form__wrapper">
-      <%= form.text_field :title, class: "js-hashtags" %>
-      <%= text_editor_for_proposal_body(form) %>
-
-      <% if current_organization.user_groups_enabled? && Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.any? %>
-        <%= user_group_select_field form, :user_group_id, help_text: (t("anonymous_user", scope: "decidim.anonymous.help", resource: "proposal") if Decidim::Privacy.anonymity_enabled && current_user.anonymous?) %>
-      <% end %>
+      <%= render partial: "edit_form_fields", locals: { form: , new_proposal: true } %>
     </div>
 
     <div class="form__wrapper-block flex-col-reverse md:flex-row justify-between">

@@ -90,20 +90,6 @@ describe "Comments" do
     end
 
     context "when anonymity enabled", :anonymity do
-      context "when anonymous and part of a user group" do
-        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
-        let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
-
-        it "create as -field has a help text" do
-          visit_component
-          click_on post.title["en"]
-
-          within ".new_comment" do
-            expect(page).to have_css(".help-text", text: "Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
-          end
-        end
-      end
-
       context "when posting a comment" do
         it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
           comment_blog_post

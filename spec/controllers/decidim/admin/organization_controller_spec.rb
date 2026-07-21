@@ -21,37 +21,6 @@ describe Decidim::Admin::OrganizationController do
     sign_in current_user, scope: :user
   end
 
-  describe "GET users and user groups in json format" do
-    let(:parsed_response) { response.parsed_body.map(&:symbolize_keys) }
-
-    context "when user is blocked" do
-      let!(:user) { create(:user, :blocked, name: "Daisy Miller", nickname: "daisy_m", organization:) }
-
-      it "returns an empty json array" do
-        get :users, format: :json, params: { term: "daisy" }
-        expect(parsed_response).to eq([])
-      end
-    end
-
-    context "when user is managed" do
-      let!(:user) { create(:user, :managed, name: "Daisy Miller", nickname: "daisy_m", organization:) }
-
-      it "returns an empty json array" do
-        get :users, format: :json, params: { term: "daisy" }
-        expect(parsed_response).to eq([])
-      end
-    end
-
-    context "when user is deleted" do
-      let!(:user) { create(:user, :deleted, name: "Daisy Miller", nickname: "daisy_m", organization:) }
-
-      it "returns an empty json array" do
-        get :users, format: :json, params: { term: "daisy" }
-        expect(parsed_response).to eq([])
-      end
-    end
-  end
-
   describe "GET users in json format" do
     let!(:user) { create(:user, name: "Daisy Miller", nickname: "daisy_m", organization:) }
     let!(:public_user) { create(:user, name: "Daisy Public", nickname: "daisy_p", organization:, published_at: Time.current) }

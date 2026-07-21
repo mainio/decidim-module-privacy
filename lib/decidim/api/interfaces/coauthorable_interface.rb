@@ -36,7 +36,6 @@ module Decidim
 
       def public?(author)
         return false if deleted?(author)
-        return true if author.is_a?(Decidim::UserGroup)
 
         author.is_a?(Decidim::User) && !author.published_at.nil?
       end

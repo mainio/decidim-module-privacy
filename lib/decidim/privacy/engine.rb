@@ -77,7 +77,7 @@ module Decidim
           Decidim::Gamification.register_badge(:commented_debates) do |badge|
             badge.levels = [1, 5, 10, 30, 50]
 
-            badge.valid_for = [:user, :user_group]
+            badge.valid_for = [:user]
 
             badge.reset = lambda do |user|
               debates = Decidim::Comments::Comment.where(
@@ -93,26 +93,16 @@ module Decidim
               comment = Decidim::Comments::Comment.find(data[:comment_id])
               next unless comment.decidim_root_commentable_type == "Decidim::Debates::Debate"
 
-              if comment.user_group.present?
-                comments = Decidim::Comments::Comment.where(
-                  decidim_root_commentable_id: comment.decidim_root_commentable_id,
-                  decidim_root_commentable_type: comment.decidim_root_commentable_type,
-                  user_group: comment.user_group
-                )
+              author = Decidim::User.entire_collection.find_by(id: comment.decidim_author_id)
+              next if author.blank?
 
-                Decidim::Gamification.increment_score(comment.user_group, :commented_debates) if comments.count == 1
-              else
-                author = Decidim::User.entire_collection.find_by(id: comment.decidim_author_id)
-                next if author.blank?
+              comments = Decidim::Comments::Comment.where(
+                decidim_root_commentable_id: comment.decidim_root_commentable_id,
+                decidim_root_commentable_type: comment.decidim_root_commentable_type,
+                author:
+              )
 
-                comments = Decidim::Comments::Comment.where(
-                  decidim_root_commentable_id: comment.decidim_root_commentable_id,
-                  decidim_root_commentable_type: comment.decidim_root_commentable_type,
-                  author:
-                )
-
-                Decidim::Gamification.increment_score(author, :commented_debates) if comments.count == 1
-              end
+              Decidim::Gamification.increment_score(author, :commented_debates) if comments.count == 1
             end
           end
         end
@@ -140,9 +130,6 @@ module Decidim
           )
           Decidim::AuthorCell.include(
             Decidim::Privacy::AuthorCellExtensions
-          )
-          Decidim::ProfileActionsCell.include(
-            Decidim::Privacy::ProfileActionsCellExtensions
           )
 
           # commands

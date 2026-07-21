@@ -19,18 +19,16 @@ module Decidim
       field :nickname, String, "The author's nickname", null: false
 
       field :avatar_url, String, "The author's avatar url", null: false
-      field :profile_path, String, "The author's profile path", null: false
       field :badge, String, "The author's badge icon", null: false
       field :organization_name, Decidim::Core::TranslatedFieldType, "The authors's organization name", null: false
+      field :profile_path, String, "The author's profile path", null: false
 
       def organization_name
         object.organization.name
       end
 
       def self.resolve_type(obj, _ctx)
-        return Decidim::Core::UserType if obj.is_a?(Decidim::User) || obj.is_a?(Decidim::Privacy::PrivateUser)
-
-        Decidim::Core::UserGroupType if obj.is_a? Decidim::UserGroup
+        Decidim::Core::UserType if obj.is_a?(Decidim::User) || obj.is_a?(Decidim::Privacy::PrivateUser)
       end
     end
   end

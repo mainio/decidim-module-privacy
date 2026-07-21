@@ -68,14 +68,6 @@ describe Decidim::AccountForm do
           expect(subject).not_to be_valid
         end
       end
-
-      context "and belongs to a group" do
-        let!(:existing_group) { create(:user_group, email:, organization:) }
-
-        it "is invalid" do
-          expect(subject).not_to be_valid
-        end
-      end
     end
 
     context "when it's already in use in another organization" do
@@ -107,14 +99,6 @@ describe Decidim::AccountForm do
 
       context "and belongs to a public user" do
         let!(:existing_user) { create(:user, nickname:, organization:, published_at: Time.current) }
-
-        it "is invalid" do
-          expect(subject).not_to be_valid
-        end
-      end
-
-      context "and belongs to a group" do
-        let!(:existing_group) { create(:user_group, nickname:, organization:) }
 
         it "is invalid" do
           expect(subject).not_to be_valid

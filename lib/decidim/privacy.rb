@@ -13,7 +13,7 @@ module Decidim
     autoload :BaseEventExtensions, "decidim/privacy/base_event_extensions"
 
     # The default migrations and seeds can fail during the application
-    # generation because of the extensions added to the User/UserGroup models,
+    # generation because of the extensions added to the User models,
     # mainly the default scope. This is why we need to detect if the application
     # is loaded by one of these rake tasks and skip adding the user related
     # extensions during these tasks to make them work as they normally would.

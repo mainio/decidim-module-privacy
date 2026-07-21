@@ -86,24 +86,6 @@ describe "Meetings" do
     context "when creating a meeting" do
       let!(:component) { create(:meeting_component, :with_creation_enabled, participatory_space: participatory_process) }
 
-      context "when anonymous while being part of a user group" do
-        let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
-        let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
-
-        it "create as -field has a help text" do
-          visit_component
-          expect(page).to have_content("New meeting")
-          click_on "New meeting"
-
-          expect(page).to have_content("Create new meeting")
-          expect(page).to have_content("Title")
-          expect(page).to have_content("Description")
-          within "label[for='meeting_user_group_id']" do
-            expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
-          end
-        end
-      end
-
       context "when pressing create new meeting -button" do
         it "gives you an anonymity popup for consent, which has to be accepted in order to proceed" do
           visit_component
@@ -158,24 +140,6 @@ describe "Meetings" do
 
             within "#dropdown-menu-resource-#{meeting.id}" do
               expect(page).to have_link("Edit")
-            end
-          end
-
-          context "when part of user group" do
-            let!(:user_group) { create(:user_group, :confirmed, :verified, users: [user], organization: user.organization) }
-
-            it "create as -field has a help text" do
-              visit_component
-              click_on meeting.title["en"]
-              click_on "Resource controls"
-
-              within "#dropdown-menu-resource-#{meeting.id}" do
-                click_on "Edit"
-              end
-
-              within "label[for='meeting_user_group_id']" do
-                expect(page).to have_content("Your profile is anonymous. If you use your own account for creation, your name is not visible unless you later decide to make your profile public.")
-              end
             end
           end
         end

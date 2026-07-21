@@ -13,8 +13,8 @@ module Decidim
 
         default_scope { profile_published }
 
-        scope :profile_published, -> { where(type: "Decidim::UserGroup").or(where.not(published_at: nil)) }
-        scope :entire_collection, -> { unscope(where: [:published_at, :type]) }
+        scope :profile_published, -> { where.not(published_at: nil) }
+        scope :entire_collection, -> { unscope(where: [:published_at]) }
       end
     end
   end

@@ -110,15 +110,13 @@ module Decidim
       end
 
       def author_fields
-        is_author_user_group = resource.coauthorships.map(&:decidim_user_group_id).any?
-
         {
           id: resource.authors.map(&:id),
           name: resource.authors.map do |author|
-            author_name(is_author_user_group ? resource.coauthorships.first.user_group : author)
+            author_name(author)
           end,
           url: resource.authors.map do |author|
-            author_url(is_author_user_group ? resource.coauthorships.first.user_group : author)
+            author_url(author)
           end
         }
       end
@@ -127,7 +125,7 @@ module Decidim
         if author.deleted?
           ""
         elsif author.respond_to?(:name)
-          translated_attribute(author.name) # is a Decidim::User or Decidim::Organization or Decidim::UserGroup
+          translated_attribute(author.name) # is a Decidim::User or Decidim::Organization
         elsif author.respond_to?(:title)
           translated_attribute(author.title) # is a Decidim::Meetings::Meeting
         end
@@ -137,7 +135,7 @@ module Decidim
         if author.deleted?
           ""
         elsif author.respond_to?(:nickname)
-          profile_url(author) # is a Decidim::User or Decidim::UserGroup
+          profile_url(author) # is a Decidim::User
         elsif author.respond_to?(:title)
           meeting_url(author) # is a Decidim::Meetings::Meeting
         else

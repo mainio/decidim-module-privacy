@@ -8,7 +8,6 @@ describe "Conversations" do
   let!(:user) { create(:user, :published, :confirmed, organization:) }
   let!(:receiver) { create(:user, :confirmed, organization:) }
   let!(:group_chat_participant) { create(:user, :confirmed, organization:) }
-  let!(:user_group) { create(:user_group, :confirmed, :verified, organization:) }
 
   before do
     switch_to_host(organization.host)
@@ -54,43 +53,6 @@ describe "Conversations" do
         within "#autoComplete_result_0" do
           expect(page).to have_content("This participant does not want to receive private messages")
         end
-      end
-    end
-  end
-
-  context "when searching for user groups in 'new conversation'" do
-    context "when user group is verified and confirmed" do
-      it "shows up in the search" do
-        visit decidim.conversations_path
-
-        click_on "New conversation"
-        fill_in "add_conversation_users", with: user_group.name
-
-        expect(page).to have_css("#autoComplete_list_1")
-      end
-    end
-
-    context "when user group is not verified" do
-      it "does not show up in the search" do
-        user_group.update(extended_data: { verified_at: nil })
-        visit decidim.conversations_path
-
-        click_on "New conversation"
-        fill_in "add_conversation_users", with: user_group.name
-
-        expect(page).to have_no_css("#autoComplete_list_1")
-      end
-    end
-
-    context "when user group is not confirmed" do
-      it "does not show up in the search" do
-        user_group.update(confirmed_at: nil)
-        visit decidim.conversations_path
-
-        click_on "New conversation"
-        fill_in "add_conversation_users", with: user_group.name
-
-        expect(page).to have_no_css("#autoComplete_list_1")
       end
     end
   end
@@ -148,25 +110,6 @@ describe "Conversations" do
   end
 
   context "when two person conversation" do
-    context "when starting a conversation with a user group" do
-      it "is possible even if user group is private" do
-        user_group_conversation
-
-        within ".conversation__message-text" do
-          expect(page).to have_content("Hello there receiver!")
-        end
-      end
-
-      it "is possible even if user group has private messaging disabled" do
-        user_group.update(published_at: Time.current, allow_private_messaging: false)
-        user_group_conversation
-
-        within ".conversation__message-text" do
-          expect(page).to have_content("Hello there receiver!")
-        end
-      end
-    end
-
     context "when starting conversation" do
       context "when receiver profile has private messaging turned off" do
         it "blocks people from sending messages to them" do
@@ -237,28 +180,6 @@ describe "Conversations" do
 
   context "when group conversation" do
     let!(:receiver) { create(:user, :published, :confirmed, organization:) }
-
-    context "when starting a group conversation with a user group and the user group is private" do
-      it "is possible to start the group conversation" do
-        visit decidim.conversations_path
-        click_on "New conversation"
-        fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0").click
-
-        fill_in "add_conversation_users", with: user_group.name
-        find_by_id("autoComplete_result_0").click
-        click_on "Next"
-
-        expect(page).to have_content("Conversation with")
-        fill_in "conversation_body", with: "Hello there receiver!"
-
-        click_on "Send"
-
-        within ".conversation__message-text" do
-          expect(page).to have_content("Hello there receiver!")
-        end
-      end
-    end
 
     context "when a group conversation established and one user goes private" do
       let!(:group_chat_participant) { create(:user, :published, :confirmed, organization:) }
@@ -395,16 +316,6 @@ describe "Conversations" do
     receiver.update(published_at: Time.current)
     visit decidim.profile_path(nickname: receiver.nickname)
 
-    within ".profile__actions-main" do
-      find("a[title='Message']").click
-    end
-
-    fill_in "conversation_body", with: "Hello there receiver!"
-    click_on "Send"
-  end
-
-  def user_group_conversation
-    visit decidim.profile_path(nickname: user_group.nickname)
     within ".profile__actions-main" do
       find("a[title='Message']").click
     end

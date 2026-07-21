@@ -79,14 +79,4 @@
   <label><%= t(".disclaimer", organization: current_component.organization.name) %></label><br>
 </div>
 
-<div class="field space-y-2">
-  <%= form.select(
-    :user_group_id,
-    Decidim::UserGroups::ManageableUserGroups.for(current_user).verified.map { |g| [g.name, g.id] },
-    prompt: current_user.name,
-    label: t(".create_as"),
-    help_text: (t("anonymous_user", scope: "decidim.anonymous.help", resource: "meeting") if Decidim::Privacy.anonymity_enabled && current_user.anonymous?)
-  ) %>
-</div>
-
 <%= append_javascript_pack_tag "decidim_meetings" %>

@@ -36,7 +36,7 @@ module Decidim
         end
 
         def author_name
-          user_group&.name || author&.name
+          author&.name
         end
       end
     end

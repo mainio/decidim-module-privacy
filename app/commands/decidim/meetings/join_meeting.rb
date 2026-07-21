@@ -16,7 +16,6 @@ module Decidim
       def initialize(meeting, user, form)
         @meeting = meeting
         @user = user
-        @user_group = Decidim::UserGroup.find_by(id: form.user_group_id)
         @form = form
       end
 
@@ -43,16 +42,16 @@ module Decidim
 
       private
 
-      attr_reader :meeting, :user, :user_group, :registration, :form
+      attr_reader :meeting, :user, :registration, :form
 
       def accept_invitation
         meeting.invites.find_by(user:)&.accept!
       end
 
-      def answer_questionnaire
+      def response_questionnaire
         return unless questionnaire?
 
-        Decidim::Forms::AnswerQuestionnaire.call(form, user, meeting.questionnaire) do
+        Decidim::Forms::ResponseQuestionnaire.call(form, user, meeting.questionnaire) do
           on(:ok) do
             return :valid
           end
@@ -67,7 +66,6 @@ module Decidim
         @registration = Decidim::Meetings::Registration.create!(
           meeting:,
           user:,
-          user_group:,
           public_participation: form.public_participation
         )
       end
