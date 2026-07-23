@@ -263,6 +263,8 @@ describe "Conversations" do
         find_by_id("autoComplete_result_0").click
 
         fill_in "add_conversation_users", with: group_chat_participant.name
+                expect(page).to have_content("ASS")
+
         find_by_id("autoComplete_result_0").click
 
         click_on "Next"

@@ -28,6 +28,8 @@ describe "ProposalNote" do
         expect(page).to have_content(proposal.title["en"])
         within ".table-list" do
           within ".table-list__actions" do
+            find("button[data-controller='dropdown']").click
+
             click_on "Answer proposal"
           end
         end
@@ -61,6 +63,7 @@ describe "ProposalNote" do
         expect(page).to have_content(proposal.title["en"])
         within ".table-list" do
           within ".table-list__actions" do
+            find("button[data-controller='dropdown']").click
             click_on "Answer proposal"
           end
         end
@@ -94,6 +97,7 @@ describe "ProposalNote" do
         expect(page).to have_content(proposal.title["en"])
         within ".table-list" do
           within ".table-list__actions" do
+            find("button[data-controller='dropdown']").click
             click_on "Answer proposal"
           end
         end

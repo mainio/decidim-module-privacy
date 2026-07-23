@@ -87,6 +87,8 @@ describe Decidim::Comments::CommentType do
 
         let(:dummy_class) do
           parent = Class.new(Decidim::ApplicationRecord) do
+            self.abstract_class = true
+
             def self.name
               "FooBar"
             end
@@ -164,6 +166,8 @@ describe Decidim::Comments::CommentType do
 
         let(:dummy_class) do
           parent = Class.new(Decidim::ApplicationRecord) do
+            self.abstract_class = true
+
             def self.name
               "FooBar"
             end

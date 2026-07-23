@@ -32,8 +32,9 @@ describe Decidim::Initiatives::Admin::PublishInitiative do
     it "sends the badge notification" do
       perform_enqueued_jobs { subject }
 
-      badge_email = emails[0]
-      expect(badge_email.subject).to eq("You have earned a new badge: Published initiatives!")
+      badge_email = emails.find { |e| e.subject == "You have earned a new badge: Published initiatives!" }
+      expect(badge_email).to be_present
+      expect(badge_email.to).to include(author.email)
       expect(email_body(badge_email)).to include(author_badges_url)
     end
   end

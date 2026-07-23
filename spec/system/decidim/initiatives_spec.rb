@@ -42,10 +42,9 @@ describe "Initiatives" do
           it "renders a popup that tells user to publish your account" do
             visit decidim_initiatives.initiatives_path
 
-            find("label", text: "My initiatives").click
-            uncheck("Open")
+            find_by_id("pending_initiatives").click
+
             click_on initiative.title["en"]
-            click_on "Edit"
 
             expect(page).to have_content("Public profile is required for this action")
           end
@@ -57,12 +56,11 @@ describe "Initiatives" do
           it "renders the site to edit initiative" do
             visit decidim_initiatives.initiatives_path
 
-            find("label", text: "My initiatives").click
-            uncheck("Open")
-            click_on initiative.title["en"]
-            click_on "Edit"
+            find_by_id("pending_initiatives").click
 
-            expect(page).to have_content("Edit Initiative")
+            click_on initiative.title["en"]
+
+            expect(page).to have_content("Create a new initiative")
           end
         end
       end
@@ -88,12 +86,11 @@ describe "Initiatives" do
           it "renders the site to edit initiative" do
             visit decidim_initiatives.initiatives_path
 
-            find("label", text: "My initiatives").click
-            uncheck("Open")
-            click_on initiative.title["en"]
-            click_on "Edit"
+            find_by_id("pending_initiatives").click
 
-            expect(page).to have_content("Edit Initiative")
+            click_on initiative.title["en"]
+
+            expect(page).to have_content("Create a new initiative")
           end
         end
       end

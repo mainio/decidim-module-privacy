@@ -106,19 +106,19 @@ describe "Proposals" do
         click_on "Like"
         refresh
 
-        within ".endorsers-list__container" do
+        within ".likes-list__container" do
           expect(page).to have_css(".author__avatar-container img[alt='Avatar: #{user.name}']")
         end
       end
 
-      it "hides user's name in endorsements list if private" do
+      it "hides user's name in likes list if private" do
         user.update!(published_at: Time.current)
         visit_component
 
         click_on proposal.title["en"]
         click_on "Like"
 
-        within ".endorsers-list__container" do
+        within ".likes-list__container" do
           expect(page).to have_content("Liked by you")
         end
 
@@ -127,12 +127,12 @@ describe "Proposals" do
         logout :user
         refresh
 
-        within ".endorsers-list__container" do
+        within ".likes-list__container" do
           expect(page).to have_content("Liked by Unnamed participant")
         end
       end
 
-      it "hides endorsement if user private" do
+      it "hides like if user private" do
         visit_component
 
         click_on proposal.title["en"]
@@ -299,30 +299,30 @@ describe "Proposals" do
       end
     end
 
-    context "when user leaves an endorsement" do
+    context "when user leaves a like" do
       let!(:component) { create(:proposal_component, :with_creation_enabled, :with_likes_enabled, participatory_space: participatory_process) }
       let!(:proposal) { create(:proposal, component:, users: [user]) }
       let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
 
-      it "hides user's name in endorsements list if anonymous" do
+      it "hides user's name in likes list if anonymous" do
         visit_component
 
         click_on proposal.title["en"]
         click_on "Like"
 
-        within ".endorsers-list__container" do
+        within ".likes-list__container" do
           expect(page).to have_content("Liked by you")
         end
 
         logout :user
         refresh
 
-        within ".endorsers-list__container" do
+        within ".likes-list__container" do
           expect(page).to have_content("Liked by Unnamed participant")
         end
       end
 
-      it "renders endorsement if user anonymous" do
+      it "renders like if user anonymous" do
         visit_component
 
         click_on proposal.title["en"]

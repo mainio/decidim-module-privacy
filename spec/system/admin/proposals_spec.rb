@@ -28,8 +28,9 @@ describe "Proposals" do
       click_on "Proposals"
 
       expect(page).to have_content(proposal.title["en"])
-      within("a.action-icon--edit-proposal") do
-        expect(page).to have_css('svg[aria-label="Edit proposal"]')
+      within(".table-list__actions") do
+        find("button[data-controller='dropdown']").click
+        expect(page).to have_css("a", text: "Edit proposal")
       end
     end
   end

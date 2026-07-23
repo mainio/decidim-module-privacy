@@ -22,8 +22,9 @@ describe "AdminImpersonationLogs" do
     visit decidim_admin.root_path
     click_on "Participants"
     click_on "Impersonations"
-    within "tr", text: impersonated_user.name do
-      click_on "Impersonate"
+    within ".table-list__actions" do
+      find("button[data-controller='dropdown']").click
+      find(".dropdown__item a", text: "Impersonate").click
     end
 
     # Fill in the impersonation details and start the impersonation session
@@ -43,8 +44,9 @@ describe "AdminImpersonationLogs" do
 
     expect(page).to have_content("successfully")
 
-    within "tr", text: impersonated_user.name do
-      click_on "View logs"
+    within ".table-list__actions" do
+      find("button[data-controller='dropdown']").click
+      find(".dropdown__item a", text: "View logs").click
     end
 
     expect(page).to have_css("tbody tr", count: 1)
