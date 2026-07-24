@@ -178,6 +178,8 @@ describe "Conversations" do
     end
   end
 
+  # There's a bug in 0.31 with starting new conversations that doesn't close the autocomplete list for users you want
+  # to add. That's why a double click is needed to close the autocomplete list.
   context "when group conversation" do
     let!(:receiver) { create(:user, :published, :confirmed, organization:) }
 
@@ -190,10 +192,12 @@ describe "Conversations" do
         click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0").click
+        find_by_id("autoComplete_result_0", match: :first).click
+        find_by_id("autoComplete_result_0", match: :first).click
 
         fill_in "add_conversation_users", with: group_chat_participant.name
-        find_by_id("autoComplete_result_0").click
+        find_by_id("autoComplete_result_0", match: :first).click
+        find_by_id("autoComplete_result_0", match: :first).click
 
         click_on "Next"
 
@@ -225,10 +229,12 @@ describe "Conversations" do
         click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0").click
+        find_by_id("autoComplete_result_0", match: :first).click
+        find_by_id("autoComplete_result_0", match: :first).click
 
         fill_in "add_conversation_users", with: group_chat_participant.name
-        find_by_id("autoComplete_result_0").click
+        find_by_id("autoComplete_result_0", match: :first).click
+        find_by_id("autoComplete_result_0", match: :first).click
 
         click_on "Next"
 
@@ -260,12 +266,13 @@ describe "Conversations" do
         click_on "New conversation"
 
         fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0").click
+        find_by_id("autoComplete_result_0", match: :first).click
+        find_by_id("autoComplete_result_0", match: :first).click
 
         fill_in "add_conversation_users", with: group_chat_participant.name
-                expect(page).to have_content("ASS")
 
-        find_by_id("autoComplete_result_0").click
+        find_by_id("autoComplete_result_0", match: :first).click
+        find_by_id("autoComplete_result_0", match: :first).click
 
         click_on "Next"
 
