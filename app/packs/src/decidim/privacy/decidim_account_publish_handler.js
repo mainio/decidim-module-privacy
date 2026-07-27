@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import RemoteModal from "src/decidim/remote_modal"
 
 $(() => {

@@ -5,7 +5,7 @@
       "node": {
         "extensions": [".js"],
         "moduleDirectory": [
-          "app/packs",
+          "app/packs/",
           "node_modules/"
         ]
       }
