@@ -119,7 +119,7 @@ module Decidim
         config.to_prepare do
           # this has to be added because of a bug in decidim core, other 'valid_email2' gem will not be
           # available through the account form, which leads an error.
-          Decidim::User # rubocop:disable Lint/Void
+          Decidim::User
 
           # cells
           Decidim::ActivityCell.include(
