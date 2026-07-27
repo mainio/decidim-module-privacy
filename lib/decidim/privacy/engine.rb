@@ -184,6 +184,7 @@ module Decidim
           Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ImpersonationLog.include(Decidim::Privacy::ImpersonationLogExtensions)
           Decidim::Notification.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Notification.include(Decidim::Privacy::NotificationExtensions)
           Decidim::Reminder.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Report.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ShareToken.include(Decidim::Privacy::UnscopedUserRelation)
@@ -227,6 +228,9 @@ module Decidim
           )
           Decidim::AdminLog::UserModerationPresenter.include(
             Decidim::Privacy::AdminLog::UserModerationPresenterExtensions
+          )
+          Decidim::NotificationToMailerPresenter.include(
+            Decidim::Privacy::NotificationToMailerPresenterExtensions
           )
 
           # Queries

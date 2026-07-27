@@ -74,7 +74,7 @@ describe Decidim::Proposals::ProposalSerializer do
   end
 
   def profile_url(nickname)
-    Decidim::Core::Engine.routes.url_helpers.profile_url(nickname, host:)
+    Decidim::Core::Engine.routes.url_helpers.profile_url(nickname, host:, port: 5000)
   end
 
   def host
