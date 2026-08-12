@@ -274,9 +274,6 @@ module Decidim
             Decidim::Proposals::ProposalsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
             )
-            Decidim::Proposals::CollaborativeDraftsController.include(
-              Decidim::Privacy::PrivacyActionsExtensions
-            )
 
             # commands
             Decidim::Proposals::PublishProposal.include(
@@ -289,8 +286,6 @@ module Decidim
             # models
             Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
             Decidim::Proposals::Proposal.include(Decidim::Privacy::ValuatableExtensions)
-            Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
-            Decidim::Proposals::CollaborativeDraft.include(CollaborativeDraftsExtensions)
             Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
 
             # permissions
@@ -372,9 +367,6 @@ module Decidim
             )
             Decidim::Admin::ManagedUsers::ImpersonationLogsController.include(
               Decidim::Privacy::ImpersonationLogsControllerExtensions
-            )
-            Decidim::Admin::OrganizationController.include(
-              Decidim::Privacy::AdminOrganizationControllerExtensions
             )
 
             # commands
