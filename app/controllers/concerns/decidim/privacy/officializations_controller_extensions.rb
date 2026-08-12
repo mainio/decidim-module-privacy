@@ -4,6 +4,7 @@ module Decidim
   module Privacy
     module OfficializationsControllerExtensions
       extend ActiveSupport::Concern
+
       included do
         private
 

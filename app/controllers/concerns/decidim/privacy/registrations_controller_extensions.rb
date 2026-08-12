@@ -6,6 +6,7 @@ module Decidim
   module Privacy
     module RegistrationsControllerExtensions
       extend ActiveSupport::Concern
+
       included do
         def answer
           enforce_permission_to(:join, :meeting, meeting:)

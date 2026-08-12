@@ -6,6 +6,7 @@ module Decidim
   module Privacy
     module CommentsControllerExtensions
       extend ActiveSupport::Concern
+
       included do
         def update
           set_comment

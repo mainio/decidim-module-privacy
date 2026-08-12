@@ -8,6 +8,7 @@ module Decidim
     # author. These users are anonymized in the API.
     module AuthorInterface
       include Decidim::Api::Types::BaseInterface
+
       graphql_name "Author"
       description "An author"
 

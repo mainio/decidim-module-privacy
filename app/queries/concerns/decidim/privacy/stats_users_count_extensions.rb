@@ -4,6 +4,7 @@ module Decidim
   module Privacy
     module StatsUsersCountExtensions
       extend ActiveSupport::Concern
+
       included do
         def query
           users = Decidim::User.entire_collection.where(organization: @organization).not_deleted.not_blocked.confirmed

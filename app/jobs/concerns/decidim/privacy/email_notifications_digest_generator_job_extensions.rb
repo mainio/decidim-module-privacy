@@ -4,6 +4,7 @@ module Decidim
   module Privacy
     module EmailNotificationsDigestGeneratorJobExtensions
       extend ActiveSupport::Concern
+
       included do
         def perform(user_id, frequency, time: Time.now.utc, force: false)
           user = Decidim::User.entire_collection.find_by(id: user_id)
