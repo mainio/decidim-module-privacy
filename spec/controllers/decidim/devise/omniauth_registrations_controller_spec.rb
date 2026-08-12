@@ -5,6 +5,8 @@ require "spec_helper"
 describe Decidim::Devise::OmniauthRegistrationsController do
   routes { Decidim::Core::Engine.routes }
 
+  include Decidim::Core::Engine.routes.url_helpers
+
   let(:organization) { create(:organization) }
 
   before do
@@ -31,7 +33,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
 
     context "with successful sign in" do
       before do
-        post :create
+        post :create, params: { locale: I18n.locale }
       end
 
       it "logs in" do
@@ -39,7 +41,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       end
 
       it "redirects to the root" do
-        expect(subject).to redirect_to("/")
+        expect(subject).to redirect_to("/en")
       end
 
       it "creates a new user" do
@@ -59,7 +61,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       before do
         another_user.update!(nickname: "u_#{next_user_id}")
 
-        post :create
+        post :create, params: { locale: I18n.locale }
       end
 
       it "logs in" do
@@ -67,7 +69,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       end
 
       it "redirects to the root" do
-        expect(subject).to redirect_to("/")
+        expect(subject).to redirect_to("/en")
       end
 
       it "creates a new user" do
@@ -85,7 +87,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       let!(:another_user) { create(:user, organization:, nickname: "facebook_user") }
 
       before do
-        post :create
+        post :create, params: { locale: I18n.locale }
       end
 
       it "logs in" do
@@ -93,7 +95,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       end
 
       it "redirects to the root" do
-        expect(subject).to redirect_to("/")
+        expect(subject).to redirect_to("/en")
       end
 
       it "creates a new user" do
@@ -110,7 +112,7 @@ describe Decidim::Devise::OmniauthRegistrationsController do
       let!(:user) { create(:user, organization:, email:) }
 
       before do
-        post :create
+        post :create, params: { locale: I18n.locale }
       end
 
       it "doesn't create a new user" do

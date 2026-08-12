@@ -20,7 +20,7 @@ shared_examples "permittable create actions" do
 
     it "permits create action" do
       post(:create, params:)
-      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
     end
   end
 
@@ -32,7 +32,7 @@ shared_examples "permittable create actions" do
 
     it "permits create action" do
       post(:create, params:)
-      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
     end
   end
 end
@@ -84,7 +84,7 @@ shared_examples "permittable update actions" do
 
     it "does not permit update action" do
       patch(:update, params:)
-      expect(response).to redirect_to("/")
+      expect(response).to redirect_to("/en")
       expect(flash[:alert]).to be_present
     end
   end
@@ -124,7 +124,7 @@ shared_examples "permittable edit actions" do
 
     it "does not permit edit action" do
       get(:edit, params:)
-      expect(response).to redirect_to("/")
+      expect(response).to redirect_to("/en")
       expect(flash[:alert]).to be_present
     end
   end

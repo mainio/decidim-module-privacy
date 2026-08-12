@@ -21,9 +21,9 @@ describe "Conversations" do
         visit decidim.conversations_path
 
         click_on "New conversation"
-        fill_in "add_conversation_users", with: receiver.name
+        fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        expect(page).to have_no_css("#autoComplete_list_1")
+        expect(page).to have_css(".ts-dropdown.single", text: "No results")
       end
     end
 
@@ -34,9 +34,9 @@ describe "Conversations" do
         visit decidim.conversations_path
 
         click_on "New conversation"
-        fill_in "add_conversation_users", with: receiver.name
+        fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        expect(page).to have_no_css("#autoComplete_list_1")
+        expect(page).to have_css(".ts-dropdown.single", text: "No results")
       end
     end
 
@@ -48,9 +48,9 @@ describe "Conversations" do
         visit decidim.conversations_path
         click_on "New conversation"
 
-        fill_in "add_conversation_users", with: receiver.name
+        fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        within "#autoComplete_result_0" do
+        within ".ts-dropdown.single" do
           expect(page).to have_content("This participant does not want to receive private messages")
         end
       end
@@ -136,7 +136,7 @@ describe "Conversations" do
           expect(page).to have_content("Hello there receiver!")
           expect(page).to have_content("Hello there user!")
           expect(page).to have_content("You cannot have a conversation with a participant that has private messaging disabled.")
-          expect(page).to have_css("a[href='/profiles/#{receiver.nickname}']")
+          expect(page).to have_css("a[href='/en/profiles/#{receiver.nickname}']")
         end
       end
 
@@ -191,13 +191,19 @@ describe "Conversations" do
 
         click_on "New conversation"
 
-        fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0", match: :first).click
-        find_by_id("autoComplete_result_0", match: :first).click
+        fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        fill_in "add_conversation_users", with: group_chat_participant.name
-        find_by_id("autoComplete_result_0", match: :first).click
-        find_by_id("autoComplete_result_0", match: :first).click
+        within "#add_conversation_users-ts-dropdown" do
+          find(".option[data-selectable]", text: receiver.name).click
+        end
+
+        expect(page).to have_css(".conversation__modal-results")
+
+        fill_in "add_conversation_users-ts-control", with: group_chat_participant.name
+
+        within "#add_conversation_users-ts-dropdown" do
+          find(".option[data-selectable]", text: group_chat_participant.name).click
+        end
 
         click_on "Next"
 
@@ -228,13 +234,19 @@ describe "Conversations" do
 
         click_on "New conversation"
 
-        fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0", match: :first).click
-        find_by_id("autoComplete_result_0", match: :first).click
+        fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        fill_in "add_conversation_users", with: group_chat_participant.name
-        find_by_id("autoComplete_result_0", match: :first).click
-        find_by_id("autoComplete_result_0", match: :first).click
+        within "#add_conversation_users-ts-dropdown" do
+          find(".option[data-selectable]", text: receiver.name).click
+        end
+
+        expect(page).to have_css(".conversation__modal-results")
+
+        fill_in "add_conversation_users-ts-control", with: group_chat_participant.name
+
+        within "#add_conversation_users-ts-dropdown" do
+          find(".option[data-selectable]", text: group_chat_participant.name).click
+        end
 
         click_on "Next"
 
@@ -265,14 +277,19 @@ describe "Conversations" do
 
         click_on "New conversation"
 
-        fill_in "add_conversation_users", with: receiver.name
-        find_by_id("autoComplete_result_0", match: :first).click
-        find_by_id("autoComplete_result_0", match: :first).click
+        fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        fill_in "add_conversation_users", with: group_chat_participant.name
+        within "#add_conversation_users-ts-dropdown" do
+          find(".option[data-selectable]", text: receiver.name).click
+        end
 
-        find_by_id("autoComplete_result_0", match: :first).click
-        find_by_id("autoComplete_result_0", match: :first).click
+        expect(page).to have_css(".conversation__modal-results")
+
+        fill_in "add_conversation_users-ts-control", with: group_chat_participant.name
+
+        within "#add_conversation_users-ts-dropdown" do
+          find(".option[data-selectable]", text: group_chat_participant.name).click
+        end
 
         click_on "Next"
 

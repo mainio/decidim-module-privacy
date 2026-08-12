@@ -217,7 +217,7 @@ describe "Account" do
         find("*[type=submit]").click
       end
       within_flash_messages do
-        expect(page).to have_content("successfully")
+        expect(page).to have_content("Your account was successfully updated.")
       end
       expect(user.reload.encrypted_password).not_to eq(encrypted_password)
       expect(page).to have_no_field("user[password]", with: "", type: "password")
@@ -349,7 +349,7 @@ describe "Account" do
       click_on "Save changes"
 
       within_flash_messages do
-        expect(page).to have_content("successfully")
+        expect(page).to have_content("Your notifications settings were successfully updated.")
       end
     end
 
@@ -368,7 +368,7 @@ describe "Account" do
         click_on "Save changes"
 
         within_flash_messages do
-          expect(page).to have_content("successfully")
+          expect(page).to have_content("Your notifications settings were successfully updated.")
         end
       end
     end

@@ -43,7 +43,7 @@ describe "Comments" do
         within ".comment-thread" do
           within ".author" do
             expect(page).to have_content(user.name)
-            expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
+            expect(page).to have_css("a[href='/en/profiles/#{user.nickname}']")
           end
         end
       end
@@ -69,7 +69,7 @@ describe "Comments" do
 
         within "#comment-#{Decidim::Comments::Comment.first.id}-replies" do
           expect(page).to have_content(user.name)
-          expect(page).to have_css("a[href='/profiles/#{user.nickname}']")
+          expect(page).to have_css("a[href='/en/profiles/#{user.nickname}']")
         end
       end
 
@@ -80,11 +80,11 @@ describe "Comments" do
         user.reload
 
         refresh
-        click_on "1 answer"
+        click_on "1 reply"
 
         within "#comment-#{Decidim::Comments::Comment.first.id}-replies" do
           expect(page).to have_no_content(user.name)
-          expect(page).to have_no_selector("a[href='/profiles/#{user.nickname}']")
+          expect(page).to have_no_selector("a[href='/en/profiles/#{user.nickname}']")
         end
       end
     end

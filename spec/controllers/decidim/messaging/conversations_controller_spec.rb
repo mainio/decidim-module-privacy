@@ -30,7 +30,7 @@ describe Decidim::Messaging::ConversationsController do
   end
 
   describe "GET new" do
-    subject { get :new, params: { recipient_id: user.id } }
+    subject { get :new, params: { recipient_id: user.id, locale: I18n.locale } }
 
     context "when is private user" do
       it "renders 404 error" do
@@ -62,7 +62,7 @@ describe Decidim::Messaging::ConversationsController do
       end
 
       context "when conversation with a private user" do
-        subject { get :new, params: { recipient_id: user1.id } }
+        subject { get :new, params: { recipient_id: user1.id, locale: I18n.locale } }
 
         let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
 
@@ -72,7 +72,7 @@ describe Decidim::Messaging::ConversationsController do
       end
 
       context "when conversation with an anonymous user", :anonymity do
-        subject { get :new, params: { recipient_id: user1.id } }
+        subject { get :new, params: { recipient_id: user1.id, locale: I18n.locale } }
 
         let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
         let(:user1) { create(:user, :anonymous, organization:) }
@@ -83,7 +83,7 @@ describe Decidim::Messaging::ConversationsController do
       end
 
       context "when conversation with a public user" do
-        subject { get :new, params: { recipient_id: user1.id } }
+        subject { get :new, params: { recipient_id: user1.id, locale: I18n.locale } }
 
         let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
         let!(:user1) { create(:user, organization:, published_at: Time.current) }

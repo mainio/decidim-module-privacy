@@ -87,7 +87,7 @@ describe Decidim::UserPresenter, :anonymity, type: :helper do
         user.published_at = Time.current
       end
 
-      it { is_expected.to eq("http://#{user.organization.host}:#{Capybara.server_port}/profiles/#{user.nickname}") }
+      it { is_expected.to eq("http://#{user.organization.host}:#{Capybara.server_port}/en/profiles/#{user.nickname}") }
     end
   end
 
@@ -151,7 +151,7 @@ describe Decidim::UserPresenter, :anonymity, type: :helper do
         user.published_at = Time.current
       end
 
-      it { is_expected.to eq("/profiles/#{user.nickname}") }
+      it { is_expected.to eq("/en/profiles/#{user.nickname}") }
     end
   end
 end

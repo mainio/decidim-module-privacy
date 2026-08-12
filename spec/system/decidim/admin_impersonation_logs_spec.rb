@@ -42,7 +42,7 @@ describe "AdminImpersonationLogs" do
   it "allows admin to check the impersonation logs" do
     click_on "Close session"
 
-    expect(page).to have_content("successfully")
+    expect(page).to have_content("The current impersonation session has been successfully ended.")
 
     within ".table-list__actions" do
       find("button[data-controller='dropdown']").click

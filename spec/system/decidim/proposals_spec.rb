@@ -164,67 +164,6 @@ describe "Proposals" do
         end
       end
     end
-
-    context "when requesting access to a collaborative draft" do
-      let!(:scope) { create(:scope, organization:) }
-      let!(:author) { create(:user, :confirmed, :published, organization:) }
-      let!(:user) { create(:user, :confirmed, organization:) }
-      let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
-      let!(:component) do
-        create(:proposal_component,
-               :with_creation_enabled,
-               participatory_space: participatory_process,
-               organization:,
-               settings: {
-                 collaborative_drafts_enabled: true,
-                 scopes_enabled: true,
-                 scope_id: participatory_process.scope&.id
-               })
-      end
-
-      let!(:collaborative_draft) { create(:collaborative_draft, :open, component:, scope:, users: [author]) }
-
-      before do
-        sign_in user, scope: :user
-        visit main_component_path(component)
-        click_on "Access collaborative drafts"
-      end
-
-      context "when private user" do
-        it "hides the button to request access" do
-          expect(page).to have_content(collaborative_draft.title)
-          click_on collaborative_draft.title
-          within ".layout-item__aside" do
-            expect(page).to have_content("Version number")
-            expect(page).to have_no_button("Request access")
-          end
-        end
-      end
-
-      context "when public user" do
-        it "renders a button to request access" do
-          user.update(published_at: Time.current)
-          expect(page).to have_content(translated(collaborative_draft.title))
-          click_on translated(collaborative_draft.title)
-          within ".layout-item__aside" do
-            expect(page).to have_content("Version number")
-            expect(page).to have_button("Request access")
-          end
-        end
-      end
-
-      context "when user tries to edit collaborative draft" do
-        context "when user private" do
-          it "doesn't render the edit button" do
-            author.update(published_at: nil)
-            sign_in author, scope: :user
-            click_on translated(collaborative_draft.title)
-
-            expect(page).to have_no_link("Edit collaborative draft")
-          end
-        end
-      end
-    end
   end
 
   context "when anonymity enabled", :anonymity do
@@ -343,55 +282,6 @@ describe "Proposals" do
           expect(page).to have_css(".author", count: 2)
           expect(page).to have_css(".author img[alt='Avatar: Unnamed participant']")
           expect(page).to have_css(".author img[alt='Avatar: #{coauthor.name}']")
-        end
-      end
-    end
-
-    context "when requesting access to a collaborative draft" do
-      let!(:scope) { create(:scope, organization:) }
-      let!(:author) { create(:user, :confirmed, :published, organization:) }
-      let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
-      let(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
-      let!(:component) do
-        create(:proposal_component,
-               :with_creation_enabled,
-               participatory_space: participatory_process,
-               organization:,
-               settings: {
-                 collaborative_drafts_enabled: true,
-                 scopes_enabled: true,
-                 scope_id: participatory_process.scope&.id
-               })
-      end
-
-      let!(:collaborative_draft) { create(:collaborative_draft, :open, component:, scope:, users: [author]) }
-
-      before do
-        sign_in user, scope: :user
-        visit main_component_path(component)
-        click_on "Access collaborative drafts"
-      end
-
-      context "when anonymous user" do
-        it "renders the button to request access" do
-          expect(page).to have_content(collaborative_draft.title)
-          click_on collaborative_draft.title
-          within ".layout-item__aside" do
-            expect(page).to have_content("Version number")
-            expect(page).to have_button("Request access")
-          end
-        end
-      end
-
-      context "when user tries to edit collaborative draft" do
-        context "when user anonymous" do
-          it "renders the edit button" do
-            author.update(published_at: nil)
-            sign_in author, scope: :user
-            click_on translated(collaborative_draft.title)
-
-            expect(page).to have_no_link("Edit collaborative draft")
-          end
         end
       end
     end

@@ -31,7 +31,7 @@ describe Decidim::Comments::CommentType do
       end
 
       it "returns the user's profile_path" do
-        expect(response["author"]).to include("profilePath" => "/profiles/#{author.nickname}")
+        expect(response["author"]).to include("profilePath" => "/en/profiles/#{author.nickname}")
       end
 
       it "returns the user's badge" do
