@@ -2,8 +2,9 @@
 
 module Decidim
   module Privacy
-    module ParticipatorySpacePrivateUsersControllerExtensions
+    module MembersControllerExtensions
       extend ActiveSupport::Concern
+
       included do
         def index
           unless members.none?
