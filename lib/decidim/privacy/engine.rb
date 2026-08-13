@@ -370,8 +370,8 @@ module Decidim
             )
 
             # commands
-            Decidim::Admin::CreateParticipatorySpacePrivateUser.include(
-              Decidim::Privacy::Admin::CreateParticipatorySpacePrivateUserExtensions
+            Decidim::Admin::ParticipatorySpace::CreateMember.include(
+              Decidim::Privacy::Admin::CreateMemberExtensions
             )
 
             # forms
@@ -390,8 +390,8 @@ module Decidim
 
           if Decidim.module_installed? :assemblies
             # controllers
-            Decidim::Assemblies::ParticipatorySpacePrivateUsersController.include(
-              Decidim::Privacy::ParticipatorySpacePrivateUsersControllerExtensions
+            Decidim::Assemblies::MembersController.include(
+              Decidim::Privacy::MembersControllerExtensions
             )
           end
 

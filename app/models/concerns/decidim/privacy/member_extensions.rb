@@ -2,7 +2,7 @@
 
 module Decidim
   module Privacy
-    module ParticipatorySpacePrivateUserExtensions
+    module MemberExtensions
       extend ActiveSupport::Concern
 
       included do
