@@ -5,15 +5,15 @@ require "spec_helper"
 describe "PrivateParticipatoryProcesses" do
   let!(:organization) { create(:organization) }
   let!(:participatory_process) { create(:participatory_process, :published, organization:) }
-  let!(:private_participatory_process) { create(:participatory_process, :published, organization:, private_space: true) }
-  let!(:private_user) { create(:user, :confirmed, organization:) }
-  let!(:participatory_space_private_user) { create(:participatory_space_private_user, user: private_user, privatable_to: private_participatory_process) }
+  let!(:private_participatory_process) { create(:participatory_process, :restricted, organization:) }
+  let!(:user) { create(:user, :confirmed, organization:) }
+  let!(:participatory_space_private_user) { create(:member, user:, participatory_space: private_participatory_process) }
 
   context "when anonymity disabled" do
     context "when user is logged in and is a \"private participatory process\" -user and also a private user" do
       before do
         switch_to_host(organization.host)
-        login_as private_user, scope: :user
+        login_as user, scope: :user
         visit decidim_participatory_processes.participatory_processes_path
       end
 
@@ -33,7 +33,7 @@ describe "PrivateParticipatoryProcesses" do
         first(".card__grid", text: translated(private_participatory_process.title, locale: :en)).click
 
         expect(page).to have_current_path decidim_participatory_processes.participatory_process_path(private_participatory_process)
-        expect(page).to have_content "This is a private process"
+        expect(page).to have_content "This is a restricted space. Only members and administrators can view it and participate."
       end
     end
 
@@ -44,21 +44,23 @@ describe "PrivateParticipatoryProcesses" do
         switch_to_host(organization.host)
         login_as admin, scope: :user
         visit decidim_admin_participatory_processes.edit_participatory_process_path(private_participatory_process)
-        find("a[href*='participatory_space_private_users']").click
+        within_admin_sidebar_menu do
+          click_on "Members"
+        end
       end
 
       it "shows user in the list" do
-        expect(page).to have_content(private_user.name)
-        expect(page).to have_content(private_user.email)
+        expect(page).to have_content(user.name)
+        expect(page).to have_content(user.email)
       end
     end
   end
 
   context "when anonymity enabled", :anonymity do
     let!(:anonymous_user) { create(:user, :anonymous, :confirmed, organization:) }
-    let!(:participatory_space_private_user) { create(:participatory_space_private_user, user: anonymous_user, privatable_to: private_participatory_process) }
+    let!(:participatory_space_private_user) { create(:member, user: anonymous_user, participatory_space: private_participatory_process) }
 
-    context "when user is logged in and is a \"private participatory process\" -user and also a private user" do
+    context "when user is logged in and is a \"private participatory process\" -user and also anonymous" do
       before do
         switch_to_host(organization.host)
         login_as anonymous_user, scope: :user
@@ -81,7 +83,7 @@ describe "PrivateParticipatoryProcesses" do
         first(".card__grid", text: translated(private_participatory_process.title, locale: :en)).click
 
         expect(page).to have_current_path decidim_participatory_processes.participatory_process_path(private_participatory_process)
-        expect(page).to have_content "This is a private process"
+        expect(page).to have_content "This is a restricted space. Only members and administrators can view it and participate."
       end
     end
 
@@ -92,7 +94,9 @@ describe "PrivateParticipatoryProcesses" do
         switch_to_host(organization.host)
         login_as admin, scope: :user
         visit decidim_admin_participatory_processes.edit_participatory_process_path(private_participatory_process)
-        find("a[href*='participatory_space_private_users']").click
+        within_admin_sidebar_menu do
+          click_on "Members"
+        end
       end
 
       it "shows user in the list" do
