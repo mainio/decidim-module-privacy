@@ -4,13 +4,13 @@ require "spec_helper"
 
 module Decidim
   module Assemblies
-    class ParticipatorySpacePrivateUsersController
-      include ::Decidim::Privacy::ParticipatorySpacePrivateUsersControllerExtensions
+    class MembersController
+      include ::Decidim::Privacy::MembersControllerExtensions
     end
   end
 end
 
-describe Decidim::Assemblies::ParticipatorySpacePrivateUsersController do
+describe Decidim::Assemblies::MembersController do
   routes { Decidim::Assemblies::Engine.routes }
 
   let(:organization) { create(:organization) }
@@ -30,22 +30,22 @@ describe Decidim::Assemblies::ParticipatorySpacePrivateUsersController do
   describe "GET index" do
     context "when assembly has no members" do
       it "displays an empty array of members" do
-        get :index, params: { assembly_slug: assembly.slug }
+        get :index, params: { assembly_slug: assembly.slug, locale: I18n.locale }
         expect(controller.helpers.collection).to be_empty
       end
     end
 
     context "when there are members" do
-      let!(:first_member) { create(:assembly_private_user, user: first_user, privatable_to: assembly, published: true) }
-      let!(:second_member) { create(:assembly_private_user, user: second_user, privatable_to: assembly, published: true) }
-      let!(:non_member) { create(:assembly_private_user, published: true) }
+      let!(:first_member) { create(:member, user: first_user, participatory_space: assembly, published: true) }
+      let!(:second_member) { create(:member, user: second_user, participatory_space: assembly, published: true) }
+      let!(:non_member) { create(:member, published: true) }
 
       context "when assembly has no public members" do
         let(:first_user) { create(:user, :confirmed, organization:) }
         let(:second_user) { create(:user, :confirmed, organization:) }
 
         it "displays an empty array of members" do
-          get :index, params: { assembly_slug: assembly.slug }
+          get :index, params: { assembly_slug: assembly.slug, locale: I18n.locale }
 
           expect(controller.helpers.collection).to be_empty
         end
@@ -57,7 +57,7 @@ describe Decidim::Assemblies::ParticipatorySpacePrivateUsersController do
 
         context "when user has permissions" do
           it "displays only public members" do
-            get :index, params: { assembly_slug: assembly.slug }
+            get :index, params: { assembly_slug: assembly.slug, locale: I18n.locale }
 
             expect(controller.helpers.collection).to contain_exactly(first_member)
           end
@@ -69,7 +69,7 @@ describe Decidim::Assemblies::ParticipatorySpacePrivateUsersController do
         let(:second_user) { create(:user, :confirmed, organization:) }
 
         it "displays an empty array of members" do
-          get :index, params: { assembly_slug: assembly.slug }
+          get :index, params: { assembly_slug: assembly.slug, locale: I18n.locale }
 
           expect(controller.helpers.collection).to be_empty
         end

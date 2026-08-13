@@ -2,8 +2,8 @@
 
 require "spec_helper"
 
-describe Decidim::Privacy::Admin::CreateParticipatorySpacePrivateUserExtensions do
-  subject { Decidim::Admin::CreateParticipatorySpacePrivateUser.new(form, privatable_to, via_csv:) }
+describe Decidim::Privacy::Admin::CreateMemberExtensions do
+  subject { Decidim::Admin::ParticipatorySpace::CreateMember.new(form, privatable_to, via_csv:) }
 
   let!(:via_csv) { false }
   let!(:privatable_to) { create(:participatory_process) }
@@ -14,7 +14,7 @@ describe Decidim::Privacy::Admin::CreateParticipatorySpacePrivateUserExtensions 
   let!(:form) do
     double(
       invalid?: invalid,
-      delete_current_private_participants?: delete,
+      delete_current_members?: delete,
       email:,
       current_user:,
       name:

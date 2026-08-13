@@ -17,7 +17,7 @@ module Decidim
 
         def members
           @members ||= current_participatory_space
-                       .participatory_space_private_users
+                       .members
                        .published
                        .filter { |item| item.user.is_a?(::Decidim::User) && item.user.published_at.present? }
         end
