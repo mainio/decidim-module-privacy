@@ -34,6 +34,20 @@ describe "Comments" do
 
       expect(page).to have_content("Hello there!")
     end
+  
+    it "shows an error when trying to publish without accepting the checkbox" do
+      comment_blog_post
+      expect(page).to have_content("Make your profile public")
+
+      click_on "Make your profile public"
+      expect(page).to have_css(".form-error", text: "must be accepted")
+
+      find_by_id("publish_account_agree_public_profile").check
+      expect(page).to have_no_css(".form-error")
+
+      click_on "Make your profile public"
+      expect(page).to have_content("Hello there!")
+    end
 
     context "when comment left" do
       it "shows author name if user public" do
@@ -122,6 +136,23 @@ describe "Comments" do
 
           click_on "Make your profile public"
 
+          expect(page).to have_content("Hello there!")
+        end
+
+        it "shows an error in the publish modal when checkbox is not accepted" do
+          comment_blog_post
+
+          expect(page).to have_css("#anonymityModal")
+          click_on "I want my profile to be public"
+          expect(page).to have_css("#publishAccountModal")
+
+          click_on "Make your profile public"
+          expect(page).to have_css(".form-error", text: "must be accepted")
+
+          find_by_id("publish_account_agree_public_profile").check
+          expect(page).to have_no_css(".form-error")
+
+          click_on "Make your profile public"
           expect(page).to have_content("Hello there!")
         end
       end

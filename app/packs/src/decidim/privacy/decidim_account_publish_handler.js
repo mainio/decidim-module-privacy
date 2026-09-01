@@ -13,9 +13,8 @@ $(() => {
   }
 
   let triggeredLoginElement = localStorage.getItem("loginTriggeringElement");
-  // We capture the element which has a login modal attached with it to check after login if they have the publish condition after they
-  // have logged in. These elements might or might not have the public account requirement to show the modal.
-  const setFormValues =  (ev) => {
+
+  const setFormValues = (ev) => {
     if (!$publishAccountModal) {
       return
     }
@@ -118,6 +117,44 @@ $(() => {
     }
   });
 
+  const privacyCheckbox = document.querySelector("#update-privacy-form input[type='checkbox']");
+  if (privacyCheckbox) {
+    privacyCheckbox.addEventListener("change", () => {
+      const errorEl = privacyCheckbox.closest("div").querySelector(".form-error");
+      if (errorEl && privacyCheckbox.checked) {
+        errorEl.remove();
+        const label = privacyCheckbox.closest("label");
+        if (label) {
+          label.classList.remove("is-invalid-label");
+        }
+      }
+    });
+  }
+
+  const showCheckboxError = (form) => {
+    const checkbox = form.querySelector("input[type='checkbox']");
+    if (checkbox && !checkbox.checked) {
+      let errorEl = form.querySelector(".form-error");
+      if (!errorEl) {
+        errorEl = document.createElement("small");
+        errorEl.className = "form-error is-visible";
+        errorEl.setAttribute("role", "alert");
+        errorEl.textContent = "must be accepted";
+        const label = checkbox.closest("label");
+        if (label) {
+          label.classList.add("is-invalid-label");
+          label.appendChild(errorEl);
+        } else {
+          checkbox.closest("div").appendChild(errorEl);
+        }
+      }
+    }
+  }
+
+  $("#update-privacy-form").closest("form").on("ajax:error", (ev) => {
+    showCheckboxError(ev.target);
+  });
+
   const setCommentData = (buttonElement) => {
     buttonElement.setAttribute("data-popup-comment-id", buttonElement.closest("form").id)
   }
@@ -214,7 +251,6 @@ $(() => {
     }
   }
 
-
   const handleCommentSubmission = () => {
     removePrompt();
     $("[data-popup-comment-id]").click();
@@ -229,7 +265,7 @@ $(() => {
 
   if ($anonymityModal) {
     $("#update-anonymity-form, #update-anonymity-publish-form").closest("form").on("ajax:complete", (el) => {
-      let redirectDestination =  el.target.getAttribute("data-redirect-url");
+      let redirectDestination = el.target.getAttribute("data-redirect-url");
       let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
 
       if (redirectDestination) {
@@ -244,6 +280,10 @@ $(() => {
   }
 
   $("#update-privacy-form").closest("form").on("ajax:complete", (el) => {
+    if (el.detail && el.detail[1] !== "OK" && el.detail[1] !== "ok") {
+      return;
+    }
+
     if ($anonymityModal) {
       let anonymityForm = document.getElementById("update-anonymity-publish-form");
       let anonymityHiddenField = document.getElementById("anonymity-hidden-field");
@@ -252,7 +292,7 @@ $(() => {
       anonymityForm.requestSubmit();
     }
 
-    let redirectDestination =  el.target.getAttribute("data-redirect-url");
+    let redirectDestination = el.target.getAttribute("data-redirect-url");
     let dataTriggeringPrivacy = el.target.getAttribute("data-triggering-privacy");
 
     if (redirectDestination) {

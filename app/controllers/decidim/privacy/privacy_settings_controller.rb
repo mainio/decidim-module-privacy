@@ -37,6 +37,12 @@ module Decidim
               format.json { render json: {}, status: :ok }
             end
           end
+
+          on(:invalid) do
+            respond_to do |format|
+              format.json { render json: { error: @form.errors.full_messages }, status: :unprocessable_entity }
+            end
+          end
         end
       end
 
