@@ -235,6 +235,7 @@ describe "Proposals", versioning: true do
         visit_component
 
         click_on proposal.title["en"]
+        click_on "Resource controls"
         expect(page).to have_link("Amend")
       end
 
@@ -242,6 +243,7 @@ describe "Proposals", versioning: true do
         visit_component
 
         click_on proposal.title["en"]
+        click_on "Resource controls"
         expect(page).to have_no_link("Amend")
       end
     end
@@ -425,6 +427,7 @@ describe "Proposals", versioning: true do
         visit_component
 
         click_on proposal.title["en"]
+        click_on "Resource controls"
         click_on "Amend"
 
         expect(page).to have_content("Create Amendment Draft")
@@ -433,10 +436,6 @@ describe "Proposals", versioning: true do
         fill_in("amendment_emendation_params_body", with: "This is a different body")
 
         click_on "Create"
-
-        expect(page).to have_content("Edit Amendment Draft")
-
-        click_on "Preview"
 
         expect(page).to have_content("Publish Amendment Draft")
         within ".author" do

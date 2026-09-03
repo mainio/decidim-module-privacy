@@ -8,7 +8,7 @@ module Decidim
       included do
         # rubocop:disable Metrics/CyclomaticComplexity
         def amend_action?
-          return unless permission_action.subject == :amendment
+          return false unless permission_action.subject == :amendment
           return disallow! unless component.settings.amendments_enabled && (user.public? || user.anonymous?)
 
           case permission_action.action
