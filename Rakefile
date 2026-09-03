@@ -8,6 +8,10 @@ def install_module(path)
     system("bundle exec rake db:migrate")
 
     system("npm i '@tarekraafat/autocomplete.js@<=10.2.7'")
+
+    # Added version lock for test app because graphql defaults to a version with
+    # ES class-field syntax, which cannot be compiled
+    system("npm i graphql@16.8.1")
   end
 end
 
