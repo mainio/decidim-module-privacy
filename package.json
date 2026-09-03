@@ -18,6 +18,7 @@
     "@decidim/dev": "^0.28.6",
     "@decidim/eslint-config": "^0.28.6",
     "@decidim/prettier-config": "^0.28.6",
-    "@decidim/stylelint-config": "^0.28.6"
+    "@decidim/stylelint-config": "^0.28.6",
+    "eslint-plugin-import": "^2.32.0"
   }
 }
