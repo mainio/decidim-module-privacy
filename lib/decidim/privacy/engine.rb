@@ -324,6 +324,9 @@ module Decidim
 
             # permissions
             Decidim::Proposals::Permissions.include(
+              Decidim::Privacy::ProposalPermissionsExtensions
+            )
+            Decidim::Permissions.include(
               Decidim::Privacy::PermissionsExtensions
             )
 
