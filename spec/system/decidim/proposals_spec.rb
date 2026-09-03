@@ -455,10 +455,6 @@ describe "Proposals", versioning: true do
 
         click_on "Create"
 
-        expect(page).to have_content("Edit Amendment Draft")
-
-        click_on "Preview"
-
         expect(page).to have_content("Publish Amendment Draft")
         within ".author" do
           expect(page).to have_css(".author__name", text: "Unnamed participant")
