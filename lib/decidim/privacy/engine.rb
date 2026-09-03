@@ -197,6 +197,9 @@ module Decidim
           Decidim::Meetings::RegistrationsController.include(
             Decidim::Privacy::RegistrationsControllerExtensions
           )
+          Decidim::AmendmentsController.include(
+            Decidim::Privacy::PrivacyActionsExtensions
+          )
 
           # lib
           Decidim::Gamification::BaseEvent.include(
@@ -327,6 +330,7 @@ module Decidim
             Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
             Decidim::Proposals::CollaborativeDraft.include(CollaborativeDraftsExtensions)
             Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
+            Decidim::Amendment.include(Decidim::Privacy::AmendmentExtensions)
 
             # permissions
             Decidim::Proposals::Permissions.include(
