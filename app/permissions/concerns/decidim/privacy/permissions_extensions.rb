@@ -6,9 +6,10 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
+        # rubocop:disable Metrics/CyclomaticComplexity
         def amend_action?
           return unless permission_action.subject == :amendment
-          return disallow! unless component.settings.amendments_enabled && user.public?
+          return disallow! unless component.settings.amendments_enabled && (user.public? || user.anonymous?)
 
           case permission_action.action
           when :create
@@ -23,6 +24,7 @@ module Decidim
           amendment = context.fetch(:amendment, nil)
           toggle_allow(amendment&.amender == user)
         end
+        # rubocop:enable Metrics/CyclomaticComplexity
       end
     end
   end

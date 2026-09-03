@@ -3,7 +3,7 @@
 require "spec_helper"
 require "decidim/privacy/test/rspec_support/component"
 
-describe "Proposals" do
+describe "Proposals", versioning: true do
   include ComponentTestHelper
 
   let!(:organization) { create(:organization) }
@@ -225,6 +225,26 @@ describe "Proposals" do
         end
       end
     end
+
+    context "when user leaves an amendment" do
+      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_amendments_enabled, participatory_space: participatory_process) }
+      let!(:proposal) { create(:proposal, component:) }
+
+      it "shows amend -button in proposal page if user public" do
+        user.update(published_at: Time.current)
+        visit_component
+
+        click_on proposal.title["en"]
+        expect(page).to have_link("Amend")
+      end
+
+      it "hides amend -button in proposal page if user private" do
+        visit_component
+
+        click_on proposal.title["en"]
+        expect(page).to have_no_link("Amend")
+      end
+    end
   end
 
   context "when anonymity enabled", :anonymity do
@@ -392,6 +412,42 @@ describe "Proposals" do
 
             expect(page).to have_no_link("Edit collaborative draft")
           end
+        end
+      end
+    end
+
+    context "when user leaves an amendment as anonymous" do
+      let!(:component) { create(:proposal_component, :with_creation_enabled, :with_amendments_enabled, participatory_space: participatory_process) }
+      let!(:proposal) { create(:proposal, component:) }
+      let!(:user) { create(:user, :anonymous, :confirmed, organization:) }
+
+      it "lets user to create it" do
+        visit_component
+
+        click_on proposal.title["en"]
+        click_on "Amend"
+
+        expect(page).to have_content("Create Amendment Draft")
+
+        fill_in("amendment_emendation_params_title", with: "This is a different title")
+        fill_in("amendment_emendation_params_body", with: "This is a different body")
+
+        click_on "Create"
+
+        expect(page).to have_content("Edit Amendment Draft")
+
+        click_on "Preview"
+
+        expect(page).to have_content("Publish Amendment Draft")
+        within ".author" do
+          expect(page).to have_css(".author__name", text: "Unnamed participant")
+        end
+
+        click_on "Publish"
+
+        expect(page).to have_css(".flash__message", text: "Amendment successfully published.")
+        within ".author" do
+          expect(page).to have_css(".author__name", text: "Unnamed participant")
         end
       end
     end
