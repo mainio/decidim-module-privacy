@@ -34,7 +34,7 @@ describe "Comments" do
 
       expect(page).to have_content("Hello there!")
     end
-  
+
     it "shows an error when trying to publish without accepting the checkbox" do
       comment_blog_post
       expect(page).to have_content("Make your profile public")
