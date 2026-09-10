@@ -141,9 +141,6 @@ module Decidim
           Decidim::AuthorCell.include(
             Decidim::Privacy::AuthorCellExtensions
           )
-          Decidim::ProfileSidebarCell.include(
-            Decidim::Privacy::ProfileSidebarCellExtensions
-          )
           Decidim::ProfileActionsCell.include(
             Decidim::Privacy::ProfileActionsCellExtensions
           )
