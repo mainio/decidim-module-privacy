@@ -2,7 +2,7 @@
 
 module Decidim
   module Privacy
-    module EndorsementExtensions
+    module LikeExtensions
       extend ActiveSupport::Concern
 
       included do

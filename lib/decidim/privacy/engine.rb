@@ -207,8 +207,8 @@ module Decidim
           Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
           Decidim::Coauthorship.include(Decidim::Privacy::CoauthorshipExtensions)
           Decidim::Proposals::ProposalNote.include(Decidim::Privacy::ProposalNoteExtensions)
-          Decidim::Endorsement.include(
-            Decidim::Privacy::EndorsementExtensions
+          Decidim::Like.include(
+            Decidim::Privacy::LikeExtensions
           )
 
           # forms

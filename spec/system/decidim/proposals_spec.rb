@@ -118,17 +118,17 @@ describe "Proposals", versioning: true do
         click_on proposal.title["en"]
         click_on "Like"
 
-        expect(page).to have_no_css(".endorsers-list__container")
+        expect(page).to have_no_css(".likes-list__container")
 
         user.update!(published_at: nil)
         user.reload
         logout :user
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__container")
+        expect(page).to have_no_css(".likes-list__container")
       end
 
-      it "does not count endorsement from unpublished user" do
+      it "does not count like from unpublished user" do
         user.update!(published_at: Time.current)
         visit_component
 
@@ -136,14 +136,14 @@ describe "Proposals", versioning: true do
         click_on "Like"
         refresh
 
-        expect(page).to have_css(".endorsers-list__container")
+        expect(page).to have_css(".likes-list__container")
 
         user.update!(published_at: nil)
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__container")
-        expect(Decidim::Endorsement.where(resource: proposal).count).to eq(0)
-        expect(Decidim::Endorsement.unscoped.where(resource: proposal).count).to eq(1)
+        expect(page).to have_no_css(".likes-list__container")
+        expect(Decidim::Like.where(resource: proposal).count).to eq(0)
+        expect(Decidim::Like.unscoped.where(resource: proposal).count).to eq(1)
       end
 
       it "hides like if user private" do
@@ -354,7 +354,7 @@ describe "Proposals", versioning: true do
         expect(page).to have_no_css(".endorsers-list__trigger")
       end
 
-      it "filters endorsement from list when user is unpublished" do
+      it "filters like from list when user is unpublished" do
         visit_component
 
         click_on proposal.title["en"]
@@ -362,8 +362,8 @@ describe "Proposals", versioning: true do
         refresh
 
         expect(page).to have_no_css(".endorsers-list__trigger")
-        expect(Decidim::Endorsement.where(resource: proposal).count).to eq(0)
-        expect(Decidim::Endorsement.unscoped.where(resource: proposal).count).to eq(1)
+        expect(Decidim::Like.where(resource: proposal).count).to eq(0)
+        expect(Decidim::Like.unscoped.where(resource: proposal).count).to eq(1)
       end
 
       it "renders like if user anonymous" do
