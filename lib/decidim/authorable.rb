@@ -12,6 +12,11 @@ module Decidim
     included do
       belongs_to :author, polymorphic: true, foreign_key: "decidim_author_id", foreign_type: "decidim_author_type"
 
+      if Decidim.module_installed?(:group_users)
+        belongs_to :user_group, foreign_key: "decidim_user_group_id", class_name: "Decidim::UserGroup", optional: true
+        validate :verified_user_group, :user_group_membership
+      end
+
       scope :with_official_origin, lambda {
         where(decidim_author_type: "Decidim::Organization")
       }
@@ -48,7 +53,11 @@ module Decidim
 
         return false if author.nil?
 
-        other_author == author
+        return true if other_author == author
+
+        return false unless respond_to?(:user_group)
+
+        other_author.respond_to?(:user_groups) && other_author.user_groups.include?(user_group)
       end
 
       # Returns the normalized author. Ideally this should be
@@ -56,7 +65,7 @@ module Decidim
       #
       # Returns an Author or nil.
       def normalized_author
-        author
+        user_group || author
       end
 
       # Public: Checks whether the resource is official or not.
@@ -71,6 +80,26 @@ module Decidim
       end
 
       private
+
+      def verified_user_group
+        return unless user_group
+
+        errors.add :user_group, :invalid unless user_group.verified?
+      end
+
+      def user_group_membership
+        return unless user_group
+
+        if Decidim::Privacy.anonymity_enabled
+          if author.respond_to?(:anonymous?) && author.anonymous?
+            errors.add :user_group, :invalid unless user_group.users.entire_collection.include? author
+          else
+            errors.add :user_group, :invalid unless user_group.users.include? author
+          end
+        else
+          errors.add :user_group, :invalid unless user_group.users.include? author
+        end
+      end
 
       def author_belongs_to_organization
         return if !author || !organization
