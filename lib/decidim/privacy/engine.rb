@@ -211,6 +211,12 @@ module Decidim
             Decidim::Privacy::LikeExtensions
           )
 
+          if Decidim.module_installed?(:group_users)
+            Decidim::GroupUsers::UserGroup.include(
+              Decidim::Privacy::UserGroupExtensions
+            )
+          end
+
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
           Decidim::Messaging::ConversationForm.include(
