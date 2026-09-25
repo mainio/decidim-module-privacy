@@ -13,7 +13,13 @@ module Decidim
 
         default_scope { profile_published }
 
-        scope :profile_published, -> { where.not(published_at: nil) }
+        scope :profile_published, lambda {
+          if Decidim.module_installed?(:group_users)
+            where(type: "Decidim::GroupUsers::UserGroup").or(where.not(published_at: nil))
+          else
+            where.not(published_at: nil)
+          end
+        }
         scope :entire_collection, -> { unscope(where: [:published_at]) }
       end
     end
