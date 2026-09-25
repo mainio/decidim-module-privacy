@@ -13,7 +13,7 @@ module Decidim
       belongs_to :author, polymorphic: true, foreign_key: "decidim_author_id", foreign_type: "decidim_author_type"
 
       if Decidim.module_installed?(:group_users)
-        belongs_to :user_group, foreign_key: "decidim_user_group_id", class_name: "Decidim::UserGroup", optional: true
+        belongs_to :user_group, foreign_key: "decidim_user_group_id", class_name: "Decidim::GroupUsers::UserGroup", optional: true
         validate :verified_user_group, :user_group_membership
       end
 
