@@ -20,7 +20,7 @@ module Decidim
             where.not(published_at: nil)
           end
         }
-        scope :entire_collection, -> { unscope(where: [:published_at]) }
+        scope :entire_collection, -> { unscope(where: [:published_at, :type]) }
       end
     end
   end
