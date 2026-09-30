@@ -25,7 +25,7 @@ module Decidim
         end
       end
 
-      initializer "decidim_pricacy.add_privacy_settings_to_account", before: "decidim.user_menu" do
+      initializer "decidim_privacy.add_privacy_settings_to_account", before: "decidim.user_menu" do
         Decidim.menu :user_menu do |menu|
           menu.add_item :privacy_settings,
                         t("privacy_settings", scope: "layouts.decidim.user_profile"),
