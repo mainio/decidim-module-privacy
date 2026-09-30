@@ -128,6 +128,24 @@ describe "Proposals", versioning: true do
         expect(page).to have_no_css(".endorsers-list__trigger")
       end
 
+      it "does not count endorsement from unpublished user" do
+        user.update!(published_at: Time.current)
+        visit_component
+
+        click_on proposal.title["en"]
+        click_on "Like"
+        refresh
+
+        expect(page).to have_css(".endorsers-list__trigger")
+
+        user.update!(published_at: nil)
+        refresh
+
+        expect(page).to have_no_css(".endorsers-list__trigger")
+        expect(Decidim::Endorsement.where(resource: proposal).count).to eq(0)
+        expect(Decidim::Endorsement.unscoped.where(resource: proposal).count).to eq(1)
+      end
+
       it "hides endorsement if user private" do
         visit_component
 
@@ -356,11 +374,19 @@ describe "Proposals", versioning: true do
 
         refresh
 
-        expect(page).to have_css(".endorsers-list__trigger")
+        expect(page).to have_no_css(".endorsers-list__trigger")
+      end
 
-        within ".endorsers-list__trigger" do
-          expect(page).to have_css(".author__container .author__name", text: "Unnamed participant", visible: :all)
-        end
+      it "filters endorsement from list when user is unpublished" do
+        visit_component
+
+        click_on proposal.title["en"]
+        click_on "Like"
+        refresh
+
+        expect(page).to have_no_css(".endorsers-list__trigger")
+        expect(Decidim::Endorsement.where(resource: proposal).count).to eq(0)
+        expect(Decidim::Endorsement.unscoped.where(resource: proposal).count).to eq(1)
       end
 
       it "renders endorsement if user anonymous" do
