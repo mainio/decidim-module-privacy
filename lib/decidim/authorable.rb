@@ -65,6 +65,8 @@ module Decidim
       #
       # Returns an Author or nil.
       def normalized_author
+        return author unless respond_to?(:user_group)
+
         user_group || author
       end
 
