@@ -285,12 +285,12 @@ describe "Proposals", versioning: true do
         click_on proposal.title["en"]
         click_on "Like"
 
-        expect(page).to have_no_css(".endorsers-list__container")
+        expect(page).to have_no_css(".likers-list__container")
 
         logout :user
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__trigger")
+        expect(page).to have_no_css(".likers-list__trigger")
       end
 
       it "filters like from list when user is unpublished" do
@@ -300,7 +300,7 @@ describe "Proposals", versioning: true do
         click_on "Like"
         refresh
 
-        expect(page).to have_no_css(".endorsers-list__trigger")
+        expect(page).to have_no_css(".likers-list__trigger")
         expect(Decidim::Like.where(resource: proposal).count).to eq(0)
         expect(Decidim::Like.unscoped.where(resource: proposal).count).to eq(1)
       end
