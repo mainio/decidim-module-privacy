@@ -12,7 +12,7 @@
               visible: display_link(voted_by_me? ? t("decidim.likes_list.you") :
                        visible_likers.first.is_a?(Decidim::NilPresenter) ?
                        t("unnamed_user", scope: "decidim.privacy.private_account") :
-                       visible_endorsers.first.try(:name)),
+                       visible_likers.first.try(:name)),
               others: display_link(t("decidim.likes_list.others", count: likers_count - 1), css_class: " first-letter:uppercase"),
               count: likers_count
             ) %>
