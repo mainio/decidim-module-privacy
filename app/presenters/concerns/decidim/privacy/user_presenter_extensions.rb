@@ -54,7 +54,8 @@ module Decidim
         def public_user?
           object = __getobj__
           return false if object.nil?
-          return true if object.is_a?(::Decidim::GroupUsers::UserGroup)
+          return true if defined?(::Decidim::GroupUsers) &&
+            object.is_a?(::Decidim::GroupUsers::UserGroup)
 
           object.published_at.present?
         end
