@@ -1,13 +1,17 @@
-<div class="comment__as">
-  <% if Decidim::Privacy.anonymity_enabled && current_user.anonymous? %>
-    <div class="help-text"><%= t("anonymous_user", scope: "decidim.anonymous.help", resource: "comment") %></div>
-  <% end %>
+<% if Decidim.module_installed?(:group_users) %>
+  <%= group_users_comment_as %>
+<% else %>
+  <div class="comment__as">
+    <% if Decidim::Privacy.anonymity_enabled && current_user.anonymous? %>
+      <div class="help-text"><%= t("anonymous_user", scope: "decidim.anonymous.help", resource: "comment") %></div>
+    <% end %>
 
-  <div class="comment__as-author-info">
-    <div class="author__avatar-container border border-white">
-      <%= image_tag author_presenter.avatar_url(:thumb), alt: t("decidim.author.avatar", name: author_presenter.name), class: "author__avatar" %>
+    <div class="comment__as-author-info">
+      <div class="author__avatar-container border border-white">
+        <%= image_tag author_presenter.avatar_url(:thumb), alt: t("decidim.author.avatar", name: author_presenter.name), class: "author__avatar" %>
+      </div>
+
+      <p class="comment__as-author-name"><%= author_presenter.name %></p>
     </div>
-
-    <p class="comment__as-author-name"><%= author_presenter.name %></p>
   </div>
-</div>
+<% end %>
