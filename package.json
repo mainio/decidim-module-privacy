@@ -11,8 +11,7 @@
     "stylelint": "stylelint app/packs/**/*.scss"
   },
   "dependencies": {
-    "@decidim/browserslist-config": "^0.32.0",
-    "@decidim/webpacker": "^0.32.0"
+    "@decidim/browserslist-config": "^0.32.0"
   },
   "devDependencies": {
     "@decidim/dev": "^0.32.0",
