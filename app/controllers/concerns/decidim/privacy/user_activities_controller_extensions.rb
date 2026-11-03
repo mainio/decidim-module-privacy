@@ -7,6 +7,8 @@ module Decidim
 
       included do
         def index
+          enforce_permission_to :read, :profile
+
           raise ActionController::RoutingError, "Missing user: #{params[:nickname]}" unless user
           raise ActionController::RoutingError, "Missing user: #{params[:nickname]}" if private_user?
           raise ActionController::RoutingError, "Blocked User" if user.blocked? && !current_user&.admin?

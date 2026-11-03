@@ -23,7 +23,7 @@ describe "Conversations" do
         click_on "New conversation"
         fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        expect(page).to have_css(".ts-dropdown.single", text: "No results")
+        expect(page).to have_css(".ts-dropdown.single div.no-results")
       end
     end
 
@@ -36,7 +36,7 @@ describe "Conversations" do
         click_on "New conversation"
         fill_in "add_conversation_users-ts-control", with: receiver.name
 
-        expect(page).to have_css(".ts-dropdown.single", text: "No results")
+        expect(page).to have_css(".ts-dropdown.single div.no-results")
       end
     end
 

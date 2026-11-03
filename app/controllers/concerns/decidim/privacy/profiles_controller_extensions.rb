@@ -9,6 +9,8 @@ module Decidim
         before_action :add_nofollow_meta_tag
 
         def show
+          enforce_permission_to :read, :profile
+
           raise ActionController::RoutingError, "Not Found" if profile_holder.published_at.nil?
 
           redirect_to profile_activity_path(nickname: params[:nickname].downcase)

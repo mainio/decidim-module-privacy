@@ -13,11 +13,14 @@ module Decidim
 
         rescue_from Decidim::Privacy::ActionForbidden, with: :user_is_not_public
 
+        # rubocop:disable Decidim/EnforcePermissionTo
+        # Remove lint from authorization check itself
         def enforce_permission_to(action, subject, extra_context = {})
           super
 
           raise ActionForbidden unless allowed_participation_to?(action)
         end
+        # rubocop:enable Decidim/EnforcePermissionTo
       end
 
       def allowed_participation_to?(action)
