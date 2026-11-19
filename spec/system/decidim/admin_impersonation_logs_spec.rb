@@ -22,8 +22,9 @@ describe "AdminImpersonationLogs" do
     visit decidim_admin.root_path
     click_on "Participants"
     click_on "Impersonations"
-    within "tr", text: impersonated_user.name do
-      click_on "Impersonate"
+    within ".table-list__actions" do
+      find("button[data-controller='dropdown']").click
+      find(".dropdown__item a", text: "Impersonate").click
     end
 
     # Fill in the impersonation details and start the impersonation session
@@ -32,8 +33,8 @@ describe "AdminImpersonationLogs" do
       fill_in(:impersonate_user_reason, with: reason)
       fill_in :impersonate_user_authorization_document_number, with: document_number
       fill_in :impersonate_user_authorization_postal_code, with: "00210"
+      fill_in_datepicker :impersonate_user_authorization_birthday_date, with: Time.current.strftime("%d/%m/%Y")
     end
-    page.find_by_id("impersonate_user_authorization_birthday").set(Time.current.strftime("%d/%m/%Y").to_s)
 
     click_on "Impersonate"
   end
@@ -41,10 +42,11 @@ describe "AdminImpersonationLogs" do
   it "allows admin to check the impersonation logs" do
     click_on "Close session"
 
-    expect(page).to have_content("successfully")
+    expect(page).to have_content("The current impersonation session has been successfully ended.")
 
-    within "tr", text: impersonated_user.name do
-      click_on "View logs"
+    within ".table-list__actions" do
+      find("button[data-controller='dropdown']").click
+      find(".dropdown__item a", text: "View logs").click
     end
 
     expect(page).to have_css("tbody tr", count: 1)

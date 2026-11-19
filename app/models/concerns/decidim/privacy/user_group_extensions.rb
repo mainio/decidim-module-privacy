@@ -9,7 +9,7 @@ module Decidim
         def unscope_verified_at
           scope = all
 
-          remove_clause = unscoped.unscope(where: :type).where.not("extended_data->>'verified_at' IS ?", nil).where_clause
+          remove_clause = unscoped.unscope(where: :type).where.not("extended_data->>'verified_at' IS NULL").where_clause
           scope.where_clause -= remove_clause
 
           scope
@@ -17,9 +17,11 @@ module Decidim
       end
 
       included do
+        include Decidim::Searchable
+
         default_scope { visible }
 
-        scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS ?", nil).unscope(where: :published_at) }
+        scope :visible, -> { confirmed.where.not("extended_data->>'verified_at' IS NULL").unscope(where: :published_at) }
         scope :entire_collection, -> { unscope_verified_at.unscope(where: :confirmed_at) }
 
         searchable_fields(

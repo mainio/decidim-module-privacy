@@ -3,8 +3,6 @@
 require "spec_helper"
 
 describe Decidim::Debates::DebatesController do
-  routes { Decidim::Debates::Engine.routes }
-
   let(:organization) { create(:organization) }
   let(:component) { create(:debates_component, :with_creation_enabled, organization:) }
   let!(:debate) { create(:debate, component:, author: user) }

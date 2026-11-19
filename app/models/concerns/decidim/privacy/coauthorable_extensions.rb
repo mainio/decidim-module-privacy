@@ -18,7 +18,15 @@ module Decidim
           authors = authors.flat_map do |klass, ids|
             klass.constantize.where(id: ids)
           end
-          @authors = authors.filter { |author| author.is_a?(Decidim::User) && !author.published_at.nil? }.compact.uniq
+          @authors = authors.filter { |author| !author.is_a?(Decidim::User) || author.published_at.present? }.compact.uniq
+        end
+
+        def created_by?(author)
+          author == if Decidim::Privacy.anonymity_enabled && author.anonymous?
+                      Decidim::User.entire_collection.find_by(id: creator.decidim_author_id)
+                    else
+                      creator_author
+                    end
         end
       end
     end

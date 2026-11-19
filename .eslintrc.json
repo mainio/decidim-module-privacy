@@ -1,3 +1,15 @@
 {
-  "extends": ["@decidim"]
+  "extends": ["@decidim"],
+  "plugins": ["import"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js"],
+        "moduleDirectory": [
+          "app/packs/",
+          "node_modules/"
+        ]
+      }
+    }
+  }
 }

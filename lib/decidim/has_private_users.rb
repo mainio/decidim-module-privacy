@@ -26,12 +26,16 @@ module Decidim
           where(
             id: public_spaces +
                 private_spaces
-                  .joins(:participatory_space_private_users)
-                  .where(decidim_participatory_space_private_users: { decidim_user_id: user.id })
+                .joins(:participatory_space_private_users)
+                .where(decidim_participatory_space_private_users: { decidim_user_id: user.id })
           )
         else
           public_spaces
         end
+      end
+
+      def members_public_page?
+        private_space && participatory_space_private_users.published.any?
       end
 
       def can_participate?(user)

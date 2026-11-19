@@ -18,11 +18,11 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a private user" do
-      let(:author) { create(:user, organization: model.participatory_space.organization) }
+      let(:author) { create(:user, :confirmed, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do
-        model.update(author:, user_group: nil)
+        model.update(author:)
       end
 
       it "does not include the author" do
@@ -31,11 +31,11 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a deleted user" do
-      let(:author) { create(:user, :deleted, organization: model.participatory_space.organization) }
+      let(:author) { create(:user, :confirmed, :deleted, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do
-        model.update(author:, user_group: nil)
+        model.update(author:)
       end
 
       it "does not include the author" do
@@ -44,28 +44,15 @@ shared_examples_for "authorable interface" do
     end
 
     describe "with a public user" do
-      let(:author) { create(:user, :published, organization: model.participatory_space.organization) }
+      let(:author) { create(:user, :confirmed, :published, organization: model.participatory_space.organization) }
       let(:query) { "{ author { name } }" }
 
       before do
-        model.update(author:, user_group: nil)
+        model.update(author:)
       end
 
       it "includes the user's name" do
         expect(response["author"]["name"]).to eq(author.name)
-      end
-    end
-
-    describe "with a user group" do
-      let(:user_group) { create(:user_group, organization: model.participatory_space.organization) }
-      let(:query) { "{ author { name } }" }
-
-      before do
-        model.update(user_group:, author: nil)
-      end
-
-      it "includes the user group's name" do
-        expect(response["author"]["name"]).to eq(user_group.name)
       end
     end
 
@@ -74,7 +61,7 @@ shared_examples_for "authorable interface" do
       let(:query) { "{ author { name } }" }
 
       before do
-        model.update(author: organization, user_group: nil)
+        model.update(author: organization)
       end
 
       it "does not return a main author" do

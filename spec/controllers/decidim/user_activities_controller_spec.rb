@@ -6,7 +6,7 @@ describe Decidim::UserActivitiesController do
   routes { Decidim::Core::Engine.routes }
 
   let(:organization) { create(:organization) }
-  let!(:user) { create(:user, nickname: "Nick", organization:, published_at: Time.current) }
+  let!(:user) { create(:user, nickname: "nick", organization:, published_at: Time.current) }
 
   before do
     request.env["decidim.current_organization"] = organization
@@ -14,11 +14,21 @@ describe Decidim::UserActivitiesController do
 
   describe "#show" do
     context "when user is private" do
-      let!(:user) { create(:user, nickname: "Nick", organization:) }
+      let!(:user) { create(:user, nickname: "nick", organization:) }
 
       it "renders private view" do
         expect do
-          get :index, params: { nickname: "NICK" }
+          get :index, params: { nickname: "NICK", locale: I18n.locale }
+        end.to raise_error(ActionController::RoutingError, "Missing user: NICK")
+      end
+    end
+
+    context "when user is anonymous", :anonymity do
+      let!(:user) { create(:user, :anonymous, nickname: "nick", organization:) }
+
+      it "renders private view" do
+        expect do
+          get :index, params: { nickname: "NICK", locale: I18n.locale }
         end.to raise_error(ActionController::RoutingError, "Missing user: NICK")
       end
     end
@@ -26,14 +36,14 @@ describe Decidim::UserActivitiesController do
     context "with an unknown user" do
       it "raises an ActionController::RoutingError" do
         expect do
-          get :index, params: { nickname: "foobar" }
+          get :index, params: { nickname: "foobar", locale: I18n.locale }
         end.to raise_error(ActionController::RoutingError, "Missing user: foobar")
       end
     end
 
     context "with an user with uppercase" do
       it "returns the lowercased user" do
-        get :index, params: { nickname: "NICK" }
+        get :index, params: { nickname: "NICK", locale: I18n.locale }
         expect(response).to render_template(:index)
       end
     end

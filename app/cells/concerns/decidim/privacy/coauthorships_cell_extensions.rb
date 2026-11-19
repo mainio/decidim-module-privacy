@@ -10,7 +10,7 @@ module Decidim
           if official?
             "#{model.class.module_parent}::OfficialAuthorPresenter".constantize.new
           else
-            authorable.user_group&.presenter || authorable.try(:author).try(:presenter)
+            authorable.try(:author).try(:presenter)
           end
         end
       end

@@ -23,6 +23,7 @@ module Decidim
 
         def avatar_url(variant = nil)
           return Decidim::AvatarUploader.new(Decidim::User.new, :avatar).default_url if __getobj__.nil?
+          return default_avatar_url unless __getobj__.respond_to?(:public?)
           return default_avatar_url unless __getobj__.public?
           return default_avatar_url if __getobj__.blocked?
           return default_avatar_url unless avatar.attached?
@@ -38,6 +39,7 @@ module Decidim
         end
 
         def name
+          return I18n.t("deleted_user", scope: "decidim.components.comment") if respond_to?(:deleted?) && deleted?
           return I18n.t("unnamed_user", scope: "decidim.privacy.private_account") unless public_user?
 
           super
@@ -52,7 +54,8 @@ module Decidim
         def public_user?
           object = __getobj__
           return false if object.nil?
-          return true if object.is_a?(::Decidim::UserGroup)
+          return true if defined?(::Decidim::GroupUsers) &&
+                         object.is_a?(::Decidim::GroupUsers::UserGroup)
 
           object.published_at.present?
         end

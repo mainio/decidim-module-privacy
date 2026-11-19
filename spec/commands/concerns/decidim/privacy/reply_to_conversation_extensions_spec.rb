@@ -55,6 +55,16 @@ describe Decidim::Privacy::ReplyToConversationExtensions do
     end
   end
 
+  context "when an anonymous user", :anonymity do
+    let!(:receiver) { create(:user, :anonymous, :confirmed, organization:) }
+
+    it "broadcasts invalid" do
+      expect do
+        command.call
+      end.to broadcast(:invalid)
+    end
+  end
+
   context "when public user with messages disabled" do
     it "broadcasts invalid" do
       receiver.update(published_at: Time.current, allow_private_messaging: false)
@@ -94,6 +104,16 @@ describe Decidim::Privacy::ReplyToConversationExtensions do
       it "broadcasts ok" do
         participant.update(published_at: Time.current)
 
+        expect do
+          command.call
+        end.to broadcast(:ok)
+      end
+    end
+
+    context "when 1 participant is anonymous", :anonymity do
+      let(:participant) { create(:user, :anonymous, :confirmed, organization:) }
+
+      it "broadcasts ok" do
         expect do
           command.call
         end.to broadcast(:ok)

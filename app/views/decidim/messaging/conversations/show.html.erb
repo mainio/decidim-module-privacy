@@ -1,5 +1,5 @@
 <%= render layout: "show", locals: { participants: conversation.interlocutors(current_user) } do %>
-  <div id="messages" class="space-y-6" data-scroll-last-child>
+  <div id="messages" class="space-y-6 mb-4" data-controller="scroll-to-last">
     <% user_grouped_messages.each do |sender, messages| %>
       <%= render "messages", sender:, messages: %>
     <% end %>
@@ -7,6 +7,11 @@
 
   <% if conversation.with_deleted_users?(current_user) %>
     <%= cell("decidim/announcement", t("decidim.messaging.conversations.show.deleted_accounts"), callout_class: "warning") %>
+  <% elsif conversation.interlocutors(current_user).count == 1 &&
+  conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
+  conversation.interlocutors(current_user).first.anonymous?
+  %>
+    <div class="callout warning margin-top-2"><%= t("decidim.messaging.conversations.show.anonymous_account") %></div>
   <% elsif conversation.interlocutors(current_user).count == 1 &&
   conversation.interlocutors(current_user).first.instance_of?(Decidim::User) &&
   !conversation.interlocutors(current_user).first.public?

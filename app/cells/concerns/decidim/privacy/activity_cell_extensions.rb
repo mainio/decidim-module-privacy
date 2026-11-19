@@ -14,8 +14,6 @@ module Decidim
                         return unless user.public?
 
                         UserPresenter.new(user)
-                      when Decidim::UserGroup
-                        UserGroupPresenter.new(user)
                       end
 
           return unless presenter

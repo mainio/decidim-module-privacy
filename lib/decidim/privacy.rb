@@ -1,16 +1,20 @@
 # frozen_string_literal: true
 
 require "decidim/privacy/engine"
+require "decidim/has_private_users"
 
 module Decidim
   # This namespace holds the logic of the `Privacy` component. This component
   # allows users to create privacy in a participatory space.
   module Privacy
+    mattr_accessor :anonymity_enabled, default: false
+
     autoload :OrmAdapter, "decidim/privacy/orm_adapter"
     autoload :CommentSerializerExtensions, "decidim/privacy/comment_serializer_extensions"
+    autoload :BaseEventExtensions, "decidim/privacy/base_event_extensions"
 
     # The default migrations and seeds can fail during the application
-    # generation because of the extensions added to the User/UserGroup models,
+    # generation because of the extensions added to the User models,
     # mainly the default scope. This is why we need to detect if the application
     # is loaded by one of these rake tasks and skip adding the user related
     # extensions during these tasks to make them work as they normally would.
@@ -21,9 +25,27 @@ module Decidim
     # https://github.com/decidim/decidim/pull/10939
     def self.apply_extensions?
       return true unless defined?(Rake)
+      return true if ENV["NODE_ENV"] == "test"
+      return false if seeding?
       return false if ENV["DEV_APP_GENERATION"] == "true"
 
       true
+    end
+
+    def self.seeding?
+      return false unless Rake.respond_to?(:application)
+
+      all_tasks = (seeding_tasks + decidim_tasks)
+
+      all_tasks.any? { |t| Rake.application.top_level_tasks.include?(t) }
+    end
+
+    def self.decidim_tasks
+      Rake.application.top_level_tasks.select { |t| t.start_with?("decidim:") }
+    end
+
+    def self.seeding_tasks
+      Rake.application.top_level_tasks.select { |t| t.start_with?("db:") }
     end
   end
 end

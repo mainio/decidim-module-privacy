@@ -13,5 +13,13 @@ describe Decidim::Identity do
     it "knows its user" do
       expect(subject).to eq(user)
     end
+
+    context "when user anonymous", :anonymity do
+      let(:user) { create(:user, :anonymous, :confirmed, organization:) }
+
+      it "knows its user" do
+        expect(subject).to eq(user)
+      end
+    end
   end
 end

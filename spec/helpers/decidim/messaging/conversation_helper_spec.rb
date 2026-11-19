@@ -11,8 +11,13 @@ describe Decidim::Messaging::ConversationHelper do
       helper.instance_variable_set(:@virtual_path, "decidim.messaging.conversations.show")
     end
 
-    it "does not includes the user name for private users" do
+    it "does not include the user name for private users" do
       expect(helper.conversation_label_for(participants)).to eq "Conversation with Private participant"
+    end
+
+    it "does not include the user name for anonymous users", :anonymity do
+      user.update!(anonymity: true)
+      expect(helper.conversation_label_for(participants)).to eq "Conversation with Anonymous participant"
     end
 
     context "when public user" do
@@ -41,8 +46,16 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when private user" do
-      it "includes the user name" do
+      it "does not include the user name" do
         expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span>"
+      end
+    end
+
+    context "when anonymous user", :anonymity do
+      let(:user) { create(:user, :anonymous, :confirmed) }
+
+      it "includes the user name" do
+        expect(helper.username_list(participants)).to eq "<span class=\"label label--small label--basic\">Anonymous participant</span>"
       end
     end
 
@@ -80,8 +93,16 @@ describe Decidim::Messaging::ConversationHelper do
     end
 
     context "when private user" do
+      it "does not include the user name" do
+        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\"><i>This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</i></span>"
+      end
+    end
+
+    context "when anonymous user", :anonymity do
+      let!(:user) { create(:user, :anonymous, :confirmed) }
+
       it "includes the user name" do
-        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Private participant</span><br><span class=\"muted\">This participant has decided to make their profile private. New messages to this conversation have been therefore disabled.</span>"
+        expect(helper.conversation_name_for(participants)).to eq "<span class=\"label label--small label--basic\">Anonymous participant</span><br><span class=\"muted\"><i>This participant has decided to make their profile anonymous. New messages to this conversation have been therefore disabled.</i></span>"
       end
     end
 

@@ -9,6 +9,16 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::Privacy
 
+      def delete_initializer(engine, name)
+        original = engine.initializers.find do |initializer|
+          initializer.name == name
+        end
+        return false unless original
+
+        engine.initializers.delete(original)
+        true
+      end
+
       routes do
         authenticate(:user) do
           resource :privacy_settings, only: [:show, :update], controller: "privacy_settings", path: "/privacy_settings"
@@ -16,6 +26,7 @@ module Decidim
           # match "/update_account_publicity", to: "privacy_settings#update_publicity", via: :post, constraints: ->(request) { request.xhr? }
 
           put "consent_to_privacy", to: "privacy_settings#update_publicity", as: "update_account_publicity", constraints: ->(request) { request.xhr? }
+          put "set_anonymity", to: "privacy_settings#update_anonymity", as: "update_anonymity", constraints: ->(request) { request.xhr? }
         end
       end
 
@@ -25,7 +36,7 @@ module Decidim
         end
       end
 
-      initializer "decidim_pricacy.add_privacy_settings_to_account", before: "decidim.user_menu" do
+      initializer "decidim_privacy.add_privacy_settings_to_account", before: "decidim.user_menu" do
         Decidim.menu :user_menu do |menu|
           menu.add_item :privacy_settings,
                         t("privacy_settings", scope: "layouts.decidim.user_profile"),
@@ -57,6 +68,46 @@ module Decidim
         Cell::ViewModel.view_paths << File.expand_path("#{Decidim::Privacy::Engine.root}/app/views")
       end
 
+      if Decidim.module_installed?(:debates)
+        raise "Initializer name has changed! Please review the code." unless delete_initializer(Decidim::Debates::Engine, "decidim_debates.commented_debates_badge")
+
+        # Redefine the debates comments gamification initializer to fix issue
+        # with passing the correct author to the scoring events.
+        initializer "decidim_privacy.commented_debates_badge" do
+          Decidim::Gamification.register_badge(:commented_debates) do |badge|
+            badge.levels = [1, 5, 10, 30, 50]
+
+            badge.valid_for = [:user]
+
+            badge.reset = lambda do |user|
+              debates = Decidim::Comments::Comment.where(
+                author: user,
+                decidim_root_commentable_type: "Decidim::Debates::Debate"
+              )
+              debates.pluck(:decidim_root_commentable_id).uniq.count
+            end
+          end
+
+          config.to_prepare do
+            Decidim::Comments::CommentCreation.subscribe do |data|
+              comment = Decidim::Comments::Comment.find(data[:comment_id])
+              next unless comment.decidim_root_commentable_type == "Decidim::Debates::Debate"
+
+              author = Decidim::User.entire_collection.find_by(id: comment.decidim_author_id)
+              next if author.blank?
+
+              comments = Decidim::Comments::Comment.where(
+                decidim_root_commentable_id: comment.decidim_root_commentable_id,
+                decidim_root_commentable_type: comment.decidim_root_commentable_type,
+                author:
+              )
+
+              Decidim::Gamification.increment_score(author, :commented_debates) if comments.count == 1
+            end
+          end
+        end
+      end
+
       initializer "decidim_privacy.add_customizations", before: "decidim_comments.query_extensions" do
         next unless Decidim::Privacy.apply_extensions?
 
@@ -68,7 +119,7 @@ module Decidim
         config.to_prepare do
           # this has to be added because of a bug in decidim core, other 'valid_email2' gem will not be
           # available through the account form, which leads an error.
-          Decidim::User # rubocop:disable Lint/Void
+          Decidim::User
 
           # cells
           Decidim::ActivityCell.include(
@@ -79,15 +130,6 @@ module Decidim
           )
           Decidim::AuthorCell.include(
             Decidim::Privacy::AuthorCellExtensions
-          )
-          Decidim::ProfileSidebarCell.include(
-            Decidim::Privacy::ProfileSidebarCellExtensions
-          )
-          Decidim::ProfileActionsCell.include(
-            Decidim::Privacy::ProfileActionsCellExtensions
-          )
-          Decidim::UserGroupPendingRequestsListCell.include(
-            Decidim::Privacy::UserGroupPendingRequestsListCellExtensions
           )
 
           # commands
@@ -103,13 +145,10 @@ module Decidim
           Decidim::Messaging::StartConversation.include(
             Decidim::Privacy::StartConversationExtensions
           )
-          Decidim::EndorseResource.include(
-            Decidim::Privacy::EndorseResourceExtensions
+          Decidim::LikeResource.include(
+            Decidim::Privacy::LikeResourceExtensions
           )
           Decidim::InviteUser.include(Decidim::Privacy::InviteUserExtensions)
-          # The following changes are related to "Ask old password for changing email/password(PR #11737)"
-          # These changes should be removed once it has been backported to v.27
-          Decidim::UpdateAccount.include(Decidim::Privacy::UpdateAccountExtensions)
 
           # controllers
           Decidim::ApplicationController.include(
@@ -127,11 +166,19 @@ module Decidim
           Decidim::Messaging::ConversationsController.include(
             Decidim::Privacy::ConversationsControllerExtensions
           )
-          Decidim::GroupsController.include(
-            Decidim::Privacy::GroupsControllerExtensions
+          Decidim::Comments::CommentsController.include(
+            Decidim::Privacy::CommentsControllerExtensions
           )
-          Decidim::OwnUserGroupsController.include(
-            Decidim::Privacy::OwnUserGroupsControllerExtensions
+          Decidim::Meetings::RegistrationsController.include(
+            Decidim::Privacy::RegistrationsControllerExtensions
+          )
+          Decidim::AmendmentsController.include(
+            Decidim::Privacy::PrivacyActionsExtensions
+          )
+
+          # lib
+          Decidim::Gamification::BaseEvent.include(
+            Decidim::Privacy::BaseEventExtensions
           )
 
           # models
@@ -140,6 +187,7 @@ module Decidim
           Decidim::Identity.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ImpersonationLog.include(Decidim::Privacy::ImpersonationLogExtensions)
           Decidim::Notification.include(Decidim::Privacy::UnscopedUserRelation)
+          Decidim::Notification.include(Decidim::Privacy::NotificationExtensions)
           Decidim::Reminder.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::Report.include(Decidim::Privacy::UnscopedUserRelation)
           Decidim::ShareToken.include(Decidim::Privacy::UnscopedUserRelation)
@@ -153,14 +201,24 @@ module Decidim
           Decidim::Messaging::Conversation.include(Decidim::Privacy::ConversationExtensions)
           Decidim::Messaging::Message.include(Decidim::Privacy::MessageExtensions)
           Decidim::User.include(Decidim::Privacy::UserExtensions)
-          Decidim::UserGroup.include(Decidim::Privacy::UserGroupExtensions)
           Decidim::UserBaseEntity.include(Decidim::Privacy::UserBaseEntityExtensions)
           Decidim::Organization.include(Decidim::Privacy::OrganizationExtensions)
           Decidim::EditorImage.include(Decidim::Privacy::EditorImageExtensions)
+          Decidim::Newsletter.include(Decidim::Privacy::NewsletterExtensions)
+          Decidim::Coauthorship.include(Decidim::Privacy::CoauthorshipExtensions)
+          Decidim::Proposals::ProposalNote.include(Decidim::Privacy::ProposalNoteExtensions)
+          Decidim::Like.include(
+            Decidim::Privacy::LikeExtensions
+          )
+
+          if Decidim.module_installed?(:group_users)
+            Decidim::GroupUsers::UserGroup.include(
+              Decidim::Privacy::UserGroupExtensions
+            )
+          end
 
           # forms
           Decidim::AccountForm.include(Decidim::Privacy::AccountFormExtensions)
-          Decidim::UserGroupForm.include(Decidim::Privacy::UserGroupFormExtensions)
           Decidim::Messaging::ConversationForm.include(
             Decidim::Privacy::ConversationFormExtensions
           )
@@ -172,27 +230,29 @@ module Decidim
           Decidim::Messaging::ConversationHelper.include(
             Decidim::Privacy::ConversationHelperExtensions
           )
-          Decidim::EndorsableHelper.include(
-            Decidim::Privacy::EndorsableHelperExtensions
+          Decidim::LikeableHelper.include(
+            Decidim::Privacy::LikeableHelperExtensions
           )
 
           # presenters
           Decidim::UserPresenter.include(
             Decidim::Privacy::UserPresenterExtensions
           )
+          Decidim::AdminLog::UserModerationPresenter.include(
+            Decidim::Privacy::AdminLog::UserModerationPresenterExtensions
+          )
+          Decidim::NotificationToMailerPresenter.include(
+            Decidim::Privacy::NotificationToMailerPresenterExtensions
+          )
 
           # Queries
-          Decidim::UserGroups::AcceptedMemberships.include(
-            Decidim::Privacy::AcceptedMembershipsExtensions
-          )
-          Decidim::UserGroups::MemberMemberships.include(
-            Decidim::Privacy::MemberMembershipsExtensions
-          )
-          Decidim::UserGroups::AdminMemberships.include(
-            Decidim::Privacy::AdminMembershipsExtensions
-          )
           Decidim::StatsUsersCount.include(
             Decidim::Privacy::StatsUsersCountExtensions
+          )
+
+          # Jobs
+          Decidim::EmailNotificationsDigestGeneratorJob.include(
+            Decidim::Privacy::EmailNotificationsDigestGeneratorJobExtensions
           )
 
           # Initialize concerns for each installed Decidim-module
@@ -215,7 +275,7 @@ module Decidim
 
           if Decidim.module_installed? :forms
             # models
-            Decidim::Forms::Answer.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Forms::Response.include(Decidim::Privacy::UnscopedUserRelation)
           end
 
           if Decidim.module_installed? :proposals
@@ -226,18 +286,23 @@ module Decidim
             Decidim::Proposals::ProposalsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
             )
-            Decidim::Proposals::CollaborativeDraftsController.include(
-              Decidim::Privacy::PrivacyActionsExtensions
+
+            # commands
+            Decidim::Proposals::PublishProposal.include(
+              Decidim::Privacy::Proposals::PublishProposalExtensions
+            )
+            Decidim::Proposals::Admin::NotifyProposalAnswer.include(
+              Decidim::Privacy::Proposals::NotifyProposalAnswerExtensions
             )
 
             # models
             Decidim::Proposals::Proposal.include(Decidim::Privacy::CoauthorableExtensions)
             Decidim::Proposals::Proposal.include(Decidim::Privacy::ValuatableExtensions)
-            Decidim::Proposals::CollaborativeDraft.include(Decidim::Privacy::CoauthorableExtensions)
-            Decidim::Proposals::CollaborativeDraft.include(CollaborativeDraftsExtensions)
+            Decidim::Proposals::ProposalVote.include(Decidim::Privacy::ProposalVoteExtensions)
+            Decidim::Amendment.include(Decidim::Privacy::AmendmentExtensions)
 
             # permissions
-            Decidim::Proposals::Permissions.include(
+            Decidim::Permissions.include(
               Decidim::Privacy::PermissionsExtensions
             )
 
@@ -246,6 +311,11 @@ module Decidim
           end
 
           if Decidim.module_installed? :comments
+            # commands
+            Decidim::Comments::UpdateComment.include(
+              Decidim::Privacy::Comments::UpdateCommentExtensions
+            )
+
             # controllers
             Decidim::Comments::CommentsController.include(
               Decidim::Privacy::PrivacyActionsExtensions
@@ -258,9 +328,19 @@ module Decidim
             Decidim::Comments::CommentCell.include(
               Decidim::Privacy::CommentCellExtensions
             )
+
+            # Services
+            Decidim::Comments::NewCommentNotificationCreator.include(
+              Decidim::Privacy::NewCommentNotificationCreatorExtensions
+            )
           end
 
           if Decidim.module_installed? :debates
+            # commands
+            Decidim::Debates::UpdateDebate.include(
+              Decidim::Privacy::Debates::UpdateDebateExtensions
+            )
+
             # controllers
             Decidim::Debates::DebatesController.include(
               Decidim::Privacy::PrivacyActionsExtensions
@@ -269,7 +349,7 @@ module Decidim
 
           if Decidim.module_installed? :meetings
             # models
-            Decidim::Meetings::Answer.include(Decidim::Privacy::UnscopedUserRelation)
+            Decidim::Meetings::Response.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Meetings::Invite.include(Decidim::Privacy::UnscopedUserRelation)
             Decidim::Meetings::Registration.include(Decidim::Privacy::UnscopedUserRelation)
 
@@ -286,6 +366,9 @@ module Decidim
 
           if Decidim.module_installed? :admin
             # controllers
+            Decidim::Admin::BlockUserController.include(
+              Decidim::Privacy::Admin::BlockUserControllerExtensions
+            )
             Decidim::Admin::OfficializationsController.include(
               Decidim::Privacy::OfficializationsControllerExtensions
             )
@@ -298,31 +381,38 @@ module Decidim
             Decidim::Admin::ManagedUsers::ImpersonationLogsController.include(
               Decidim::Privacy::ImpersonationLogsControllerExtensions
             )
-            Decidim::Admin::UserGroupsController.include(
-              Decidim::Privacy::UserGroupsControllerExtensions
-            )
-            Decidim::Admin::OrganizationController.include(
-              Decidim::Privacy::AdminOrganizationControllerExtensions
-            )
 
             # commands
-            Decidim::Admin::VerifyUserGroup.include(
-              Decidim::Privacy::VerifyUserGroupExtensions
+            Decidim::Admin::ParticipatorySpace::CreateMember.include(
+              Decidim::Privacy::Admin::CreateMemberExtensions
             )
-            Decidim::Admin::RejectUserGroup.include(
-              Decidim::Privacy::RejectUserGroupExtensions
+
+            # forms
+            Decidim::Admin::BlockUserForm.include(Decidim::Privacy::BlockUserFormExtensions)
+
+            # jobs
+            Decidim::Admin::NewsletterJob.include(
+              Decidim::Privacy::AdminNewsletterJobExtensions
+            )
+
+            # queries
+            Decidim::Admin::NewsletterRecipients.include(
+              Decidim::Privacy::AdminNewsletterRecipientsExtensions
             )
           end
 
           if Decidim.module_installed? :assemblies
             # controllers
-            Decidim::Assemblies::AssemblyMembersController.include(
-              Decidim::Privacy::AssemblyMembersControllerExtensions
+            Decidim::Assemblies::MembersController.include(
+              Decidim::Privacy::MembersControllerExtensions
             )
           end
 
           if Decidim.module_installed? :initiatives
             # models
+            Decidim::InitiativesCommitteeMember.include(
+              Decidim::Privacy::InitiativesCommitteeMemberExtensions
+            )
             Decidim::Initiative.include(Decidim::Privacy::InitiativeExtensions)
 
             # controllers

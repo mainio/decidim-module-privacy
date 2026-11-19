@@ -3,7 +3,38 @@
   <% content_for(:subtitle) { t("privacy_settings", scope: "layouts.decidim.user_profile") } %>
 
   <%= form_for(@privacy_settings, url: privacy_settings_path, method: :put, class: "user-form") do |f| %>
-    <%= t("profile_publicity_html", scope: "decidim.privacy.privacy_settings.show") %>
+    <% if Decidim::Privacy.anonymity_enabled %>
+      <%= t(".profile_publicity_intro_anonymous_html") %>
+      <div class="form__wrapper pt-4">
+        <label>
+          <%= t("enable_anonymity", scope: "decidim.privacy.privacy_settings.show") %>
+        </label>
+        <div class="toggle__switch-trigger">
+          <label for="anonymity" class="toggle__switch-toggle">
+            <span>
+              <input type="hidden" name="anonymity" value="false">
+              <input
+                <%== %(checked="checked") if ActiveModel::Type::Boolean.new.cast(@privacy_settings.anonymity) %>
+                id="anonymity"
+                type="checkbox"
+                name="anonymity"
+                data-anonymity=<%= @privacy_settings.anonymity %>>
+              <span class="toggle__switch-toggle-content">
+              </span>
+              <%= icon "check-line", class: "toggle__switch-toggle-icon" %>
+              <%= icon "close-line", class: "toggle__switch-toggle-icon" %>
+            </span>
+            <span class="toggle__switch-trigger-text font-semibold">
+              <%= t("anonymous_profile", scope: "decidim.privacy.privacy_settings.show") %>
+            </span>
+          </label>
+        </div>
+      </div>
+      <%= t("profile_publicity_with_anonymity_html", scope: "decidim.privacy.privacy_settings.show") %>
+    <% else %>
+      <%= t(".profile_publicity_intro_private_html") %>
+      <%= t("profile_publicity_html", scope: "decidim.privacy.privacy_settings.show") %>
+    <% end %>
     <div class="form__wrapper pt-4">
       <label>
         <%= t("enable_public_profile", scope: "decidim.privacy.privacy_settings.show") %>
@@ -12,6 +43,7 @@
         <div class="toggle__switch-trigger">
           <label for="published_at" class="toggle__switch-toggle">
             <span>
+              <input type="hidden" name="published_at" value="false">
               <input
                 <%== %(checked="checked") if @privacy_settings.published_at %>
                 id="published_at"
@@ -84,7 +116,13 @@
         </div>
       </div>
     </div>
+
     <%= f.submit t(".save_privacy_settings"), class: "button button__sm md:button__lg button__secondary mr-auto !ml-0" %>
   <% end %>
+
   <%= append_javascript_pack_tag "decidim_privacy_settings" %>
+
+  <% if Decidim::Privacy.anonymity_enabled %>
+    <%= append_javascript_pack_tag "decidim_anonymity_settings" %>
+  <% end %>
 <% end %>

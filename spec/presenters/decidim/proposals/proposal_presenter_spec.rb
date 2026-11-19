@@ -14,5 +14,11 @@ describe Decidim::Proposals::ProposalPresenter, type: :helper do
     context "when the author is private (default)" do
       it { is_expected.to be_nil }
     end
+
+    context "when the author is anonymous", :anonymity do
+      let(:author) { create(:user, :anonymous, :confirmed, organization: component.organization) }
+
+      it { is_expected.to be_nil }
+    end
   end
 end

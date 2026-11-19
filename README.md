@@ -76,7 +76,7 @@ bundle exec rails db:migrate
 ## Console queries
 
 This module includes changes made to the default scope of the `Decidim::User`
-and `Decidim::UserGroup` models, which also affects the console environment.
+models, which also affects the console environment.
 
 For example the User model has been scoped to only find public users by default
 (users that have a value in the attribute `published_at`). To list users that

@@ -20,6 +20,16 @@ describe Decidim::Comments::Comment do
       end
     end
 
+    context "when anonymous", :anonymity do
+      before do
+        author.update(anonymity: true, published_at: nil)
+      end
+
+      it "returns privateuser instance" do
+        expect(subject.author).to be_an_instance_of(Decidim::Privacy::PrivateUser)
+      end
+    end
+
     context "when public" do
       it "returns author" do
         expect(subject.author).to eq(author)

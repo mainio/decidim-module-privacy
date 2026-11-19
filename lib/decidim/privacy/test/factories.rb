@@ -16,4 +16,12 @@ FactoryBot.define do
       end
     end
   end
+
+  FactoryBot.modify do
+    factory :user do
+      trait :anonymous do
+        anonymity { true }
+      end
+    end
+  end
 end

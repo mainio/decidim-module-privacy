@@ -39,11 +39,17 @@ module Decidim
             url = "#"
           end
 
-          if controller.respond_to?(:allowed_publicly_to?) && !controller.allowed_publicly_to?(action)
+          if (controller.respond_to?(:allowed_publicly_to?) && !controller.allowed_publicly_to?(action)) ||
+             (controller.respond_to?(:allowed_participation_to?) && !controller.allowed_participation_to?(action))
             html_options = clean_authorized_to_data_open(html_options)
             html_options[:id] ||= generate_authorized_action_id(tag, action, url) unless html_options.has_key?("id")
             html_options["data-dialog-privacy"] = { open: html_options["data-dialog-open"], openUrl: html_options["data-dialog-remote-url"] }.compact.to_json
-            html_options["data-dialog-open"] = "publishAccountModal"
+            html_options["data-dialog-open"] = if Decidim::Privacy.anonymity_enabled && current_user.anonymity.nil?
+                                                 "anonymityModal"
+                                               else
+                                                 "publishAccountModal"
+                                               end
+
             html_options.delete("data-dialog-remote-url")
             url = "#"
           end

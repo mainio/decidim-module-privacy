@@ -70,22 +70,13 @@ describe "Account" do
       expect(page).to have_css("h2", text: "Profile publicity")
     end
 
-    it "shows the my interests page" do
-      within "#dropdown-menu-profile" do
-        click_on "My interests"
-      end
-
-      expect(page).to have_css("h1", text: "Participant settings")
-      expect(page).to have_css("span", text: "MY INTERESTS")
-    end
-
     it "shows the my data page" do
       within "#dropdown-menu-profile" do
         click_on "My data"
       end
 
       expect(page).to have_css("h1", text: "Participant settings")
-      expect(page).to have_css("span", text: "DOWNLOAD THE DATA")
+      expect(page).to have_button(text: "Request")
     end
 
     it "shows the delete my account page" do
@@ -165,10 +156,15 @@ describe "Account" do
         end
         expect(page).to have_content("Confirmation email resent successfully to #{pending_email}")
         perform_enqueued_jobs
-        perform_enqueued_jobs
 
         expect(emails.count).to eq(2)
-        visit last_email_link
+        expect(emails[0].subject).to eq("Confirmation instructions")
+        expect(emails[0].to).to eq([pending_email])
+        expect(emails[1].subject).to eq("Your account was updated")
+        expect(emails[1].to).to eq([user.email])
+
+        confirm_link = Nokogiri::HTML(email_body(emails[0])).css("table.content a").last["href"]
+        visit confirm_link
         expect(page).to have_content("Your email address has been successfully confirmed")
       end
 
@@ -196,7 +192,6 @@ describe "Account" do
 
     it "toggles old and new password fields" do
       within "form.edit_user" do
-        expect(page).to have_content("must not be too common (e.g. 123456) and must be different from your nickname and your email.")
         expect(page).to have_field("user[password]", with: "", type: "password")
         expect(page).to have_field("user[old_password]", with: "", type: "password")
         click_on "Change password"
@@ -222,7 +217,7 @@ describe "Account" do
         find("*[type=submit]").click
       end
       within_flash_messages do
-        expect(page).to have_content("successfully")
+        expect(page).to have_content("Your account was successfully updated.")
       end
       expect(user.reload.encrypted_password).not_to eq(encrypted_password)
       expect(page).to have_no_field("user[password]", with: "", type: "password")
@@ -252,7 +247,7 @@ describe "Account" do
         find("label[for='published_at']").click
         expect(page).to have_content("Private messaging")
         expect(page).to have_content("Enable private messaging")
-        expect(page).to have_content("Allow anyone to send me a direct message, even if I do not follow them.")
+        expect(page).to have_content("Allow public contacting")
       end
     end
 
@@ -287,6 +282,60 @@ describe "Account" do
         expect(user.direct_message_types).to eq("followed-only")
       end
     end
+
+    context "when anonymity enabled", :anonymity do
+      context "when anonymous account" do
+        let(:user) { create(:user, :anonymous, :confirmed, password:, password_confirmation: password) }
+
+        it "disables publicity", :anonymity do
+          visit "/privacy_settings"
+
+          expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+          expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
+        end
+
+        context "when switching anonymity off" do
+          it "keeps anonymity and publicity off" do
+            visit "/privacy_settings"
+            expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
+
+            find("label[for='anonymity']").click
+
+            expect(page.find_by_id("anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
+          end
+        end
+
+        context "when switching publicity on" do
+          it "turns anonymity off" do
+            visit "/privacy_settings"
+            expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
+
+            find("label[for='published_at']").click
+
+            expect(page.find_by_id("anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).to be_checked
+          end
+        end
+
+        context "when publicity enabled and switching to anonymous" do
+          let(:user) { create(:user, :published, :confirmed, password:, password_confirmation: password) }
+
+          it "turns publicity off" do
+            visit "/privacy_settings"
+            expect(page.find_by_id("anonymity", visible: :hidden)).not_to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).to be_checked
+
+            find("label[for='anonymity']").click
+
+            expect(page.find_by_id("anonymity", visible: :hidden)).to be_checked
+            expect(page.find_by_id("published_at", visible: :hidden)).not_to be_checked
+          end
+        end
+      end
+    end
   end
 
   context "when on the notifications settings page" do
@@ -300,7 +349,7 @@ describe "Account" do
       click_on "Save changes"
 
       within_flash_messages do
-        expect(page).to have_content("successfully")
+        expect(page).to have_content("Your notifications settings were successfully updated.")
       end
     end
 
@@ -314,13 +363,12 @@ describe "Account" do
 
       it "updates the administrator's notifications" do
         find("label[for=\"email_on_moderations\"]").click
-
         find("label[for=\"user_notification_settings[close_meeting_reminder]\"]").click
 
         click_on "Save changes"
 
         within_flash_messages do
-          expect(page).to have_content("successfully")
+          expect(page).to have_content("Your notifications settings were successfully updated.")
         end
       end
     end

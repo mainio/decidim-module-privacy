@@ -11,6 +11,17 @@ describe Decidim::Privacy::PrivacySettingsForm do
 
   describe "#map_model" do
     context "when private user" do
+      it "maps the model correctly", :anonymity do
+        expect(subject.published_at).to be(false)
+        expect(subject.allow_private_messaging).to be(true)
+        expect(subject.allow_public_contact).to be(true)
+        expect(subject.anonymity).to be_nil
+      end
+    end
+
+    context "when anonymous user", :anonymity do
+      let(:user) { create(:user, :anonymous, organization:) }
+
       it "maps the model correctly" do
         expect(subject.published_at).to be(false)
         expect(subject.allow_private_messaging).to be(true)
@@ -27,10 +38,10 @@ describe Decidim::Privacy::PrivacySettingsForm do
     end
 
     context "with no direct message allowed" do
-      let!(:user) { create(:user, organization:, direct_message_types: "followed-only") }
+      let!(:user) { create(:user, :published, organization:, allow_private_messaging: false) }
 
       it "maps the model correctly" do
-        expect(subject.published_at).to be(false)
+        expect(subject.allow_private_messaging).to be(false)
       end
     end
   end

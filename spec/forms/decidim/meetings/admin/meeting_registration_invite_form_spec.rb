@@ -36,6 +36,12 @@ describe Decidim::Meetings::Admin::MeetingRegistrationInviteForm do
       it { is_expected.to be_valid }
     end
 
+    context "and an anonymous user exists", :anonymity do
+      let(:user_id) { create(:user, :anonymous, organization:).id }
+
+      it { is_expected.to be_valid }
+    end
+
     context "and a public user exists" do
       let(:user_id) { create(:user, organization:, published_at: Time.current).id }
 

@@ -1,0 +1,37 @@
+# frozen_string_literal: true
+
+require "spec_helper"
+require "decidim/privacy/test/rspec_support/component"
+
+describe "Proposals" do
+  include ComponentTestHelper
+
+  let!(:organization) { create(:organization) }
+  let!(:participatory_process) { create(:participatory_process, :with_steps, organization:) }
+  let!(:user) { create(:user, :admin, :confirmed, organization:) }
+  let!(:proposal) { create(:proposal, :official, :published, component:) }
+  let!(:valuator) { create(:user, :admin, :confirmed, organization:) }
+  let!(:process_valuator) { create(:participatory_process_user_role, participatory_process:, user: valuator, role: "valuator") }
+
+  before do
+    switch_to_host(organization.host)
+    login_as user, scope: :user
+    visit decidim_admin.root_path
+  end
+
+  context "when trying to edit an official proposal" do
+    let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_process) }
+
+    it "lets the admin user to edit" do
+      click_on "Processes"
+      click_on participatory_process.title["en"]
+      click_on "Proposals"
+
+      expect(page).to have_content(proposal.title["en"])
+      within(".table-list__actions") do
+        find("button[data-controller='dropdown']").click
+        expect(page).to have_css("a", text: "Edit proposal")
+      end
+    end
+  end
+end

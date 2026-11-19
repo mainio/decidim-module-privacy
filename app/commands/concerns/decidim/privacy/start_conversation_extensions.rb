@@ -12,7 +12,6 @@ module Decidim
 
           if conversation.save
             notify_interlocutors
-            notify_comanagers if originator.is_a?(UserGroup)
 
             broadcast(:ok, conversation)
           else

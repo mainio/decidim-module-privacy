@@ -6,13 +6,25 @@ module Decidim
       extend ActiveSupport::Concern
 
       included do
-        def can_request_access_collaborative_draft?
-          return toggle_allow(false) unless collaborative_drafts_enabled? && collaborative_draft.open?
-          return toggle_allow(false) if collaborative_draft.requesters.include?(user)
-          return toggle_allow(false) unless user.public?
+        # rubocop:disable Metrics/CyclomaticComplexity
+        def amend_action?
+          return false unless permission_action.subject == :amendment
+          return disallow! unless component.settings.amendments_enabled && (user.public? || user.anonymous?)
 
-          toggle_allow(!collaborative_draft.editable_by?(user))
+          case permission_action.action
+          when :create
+            return allow! if component.current_settings.amendment_creation_enabled
+          when :accept,
+              :reject
+            return allow! if component.current_settings.amendment_reaction_enabled
+          when :promote
+            return allow! if component.current_settings.amendment_promotion_enabled
+          end
+
+          amendment = context.fetch(:amendment, nil)
+          toggle_allow(amendment&.amender == user)
         end
+        # rubocop:enable Metrics/CyclomaticComplexity
       end
     end
   end

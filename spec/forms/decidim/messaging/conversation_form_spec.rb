@@ -27,4 +27,10 @@ describe Decidim::Messaging::ConversationForm do
 
     it { is_expected.not_to be_valid }
   end
+
+  context "when anonymous recipient", :anonymity do
+    let!(:recipient_id) { create(:user, :anonymous, organization: sender.organization).id }
+
+    it { is_expected.to be_invalid }
+  end
 end

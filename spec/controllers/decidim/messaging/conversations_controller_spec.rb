@@ -30,9 +30,15 @@ describe Decidim::Messaging::ConversationsController do
   end
 
   describe "GET new" do
-    subject { get :new, params: { recipient_id: user.id } }
+    subject { get :new, params: { recipient_id: user.id, locale: I18n.locale } }
 
     context "when is private user" do
+      it "renders 404 error" do
+        expect(subject).to render_template("decidim/privacy/message_block")
+      end
+    end
+
+    context "when is anonymous user", :anonymity do
       it "renders 404 error" do
         expect(subject).to render_template("decidim/privacy/message_block")
       end
@@ -56,7 +62,7 @@ describe Decidim::Messaging::ConversationsController do
       end
 
       context "when conversation with a private user" do
-        subject { get :new, params: { recipient_id: user1.id } }
+        subject { get :new, params: { recipient_id: user1.id, locale: I18n.locale } }
 
         let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
 
@@ -65,8 +71,19 @@ describe Decidim::Messaging::ConversationsController do
         end
       end
 
+      context "when conversation with an anonymous user", :anonymity do
+        subject { get :new, params: { recipient_id: user1.id, locale: I18n.locale } }
+
+        let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
+        let(:user1) { create(:user, :anonymous, organization:) }
+
+        it "redirects to previous 2 participant created conversation" do
+          expect(subject).to redirect_to profile_path(user.nickname)
+        end
+      end
+
       context "when conversation with a public user" do
-        subject { get :new, params: { recipient_id: user1.id } }
+        subject { get :new, params: { recipient_id: user1.id, locale: I18n.locale } }
 
         let!(:user) { create(:user, :confirmed, organization:, published_at: Time.current) }
         let!(:user1) { create(:user, organization:, published_at: Time.current) }

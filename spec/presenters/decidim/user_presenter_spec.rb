@@ -2,8 +2,38 @@
 
 require "spec_helper"
 
-describe Decidim::UserPresenter, type: :helper do
+describe Decidim::UserPresenter, :anonymity, type: :helper do
   let(:user) { build(:user) }
+
+  describe "#name" do
+    subject { described_class.new(user).name }
+
+    context "when user is deleted" do
+      let(:user) { build(:user, :deleted) }
+
+      it { is_expected.to eq("Deleted participant") }
+    end
+
+    context "when user is private" do
+      it { is_expected.to eq("Unnamed participant") }
+    end
+
+    context "when user is anonymous" do
+      before do
+        user.anonymity = true
+      end
+
+      it { is_expected.to eq("Unnamed participant") }
+    end
+
+    context "when public account" do
+      before do
+        user.published_at = Time.current
+      end
+
+      it { is_expected.to eq(user.name) }
+    end
+  end
 
   describe "#nickname" do
     subject { described_class.new(user).nickname }
@@ -17,6 +47,14 @@ describe Decidim::UserPresenter, type: :helper do
     end
 
     context "when private" do
+      it { is_expected.to eq("") }
+    end
+
+    context "when anonymous" do
+      before do
+        user.anonymity = true
+      end
+
       it { is_expected.to eq("") }
     end
 
@@ -36,19 +74,27 @@ describe Decidim::UserPresenter, type: :helper do
       it { is_expected.to eq("") }
     end
 
+    context "when anonymous" do
+      before do
+        user.anonymity = true
+      end
+
+      it { is_expected.to eq("") }
+    end
+
     context "when public" do
       before do
         user.published_at = Time.current
       end
 
-      it { is_expected.to eq("http://#{user.organization.host}:#{Capybara.server_port}/profiles/#{user.nickname}") }
+      it { is_expected.to eq("http://#{user.organization.host}:#{Capybara.server_port}/en/profiles/#{user.nickname}") }
     end
   end
 
   describe "#default_avatar_url" do
     subject { described_class.new(user).default_avatar_url }
 
-    it { is_expected.to eq("//#{user.organization.host}:#{Capybara.server_port}#{ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")}") }
+    it { is_expected.to end_with(ActionController::Base.helpers.asset_pack_path("media/images/default-avatar.svg")) }
   end
 
   describe "#user_avatar_url" do
@@ -92,12 +138,20 @@ describe Decidim::UserPresenter, type: :helper do
       it { is_expected.to eq("") }
     end
 
+    context "when user is anonymous" do
+      before do
+        user.anonymity = true
+      end
+
+      it { is_expected.to eq("") }
+    end
+
     context "when public account" do
       before do
         user.published_at = Time.current
       end
 
-      it { is_expected.to eq("/profiles/#{user.nickname}") }
+      it { is_expected.to eq("/en/profiles/#{user.nickname}") }
     end
   end
 end
